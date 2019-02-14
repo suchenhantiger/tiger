@@ -1,0 +1,51 @@
+{
+    "data": [
+        {
+            "text": "提醒",
+            "icon": "tip",
+            "key": "tip",
+            "dot": true
+        },
+        {
+            "text": "专项业务",
+            "icon": "profession",
+            "key": "profession"
+        },
+        {
+            "text": "资讯",
+            "icon": "news",
+            "key": "news",
+            "dot": true
+        },
+        {
+            "text": "消息公告",
+            "icon": "notice",
+            "key": "notice"
+        },
+        {
+            "text": "交易",
+            "icon": "transaction",
+            "key": "transaction"
+        },
+        {
+            "text": "日志",
+            "icon": "log",
+            "key": "log"
+        },
+        {
+            "text": "龙虎榜",
+            "icon": "topTen",
+            "key": "topTen"
+        },
+        {
+            "text": "添加客户",
+            "icon": "addclient",
+            "key": "addclient"
+        },
+        {
+            "text": "业务介绍",
+            "icon": "bisintro",
+            "key": "bisintro"
+        }
+    ]
+}

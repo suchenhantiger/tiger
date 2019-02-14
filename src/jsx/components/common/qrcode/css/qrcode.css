@@ -1,0 +1,59 @@
+.popupbox{
+	position:fixed;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	z-index:100;
+}
+.popupinnerbox{
+	position:absolute;
+	width:70%;
+	background:url(./images/common/qrcode/bg_popupinnerbox.png) repeat;
+	border-radius:13px;
+	margin-left:-38%;
+	left:50%;
+	z-index:999;
+	padding: 3%;
+	top:50%;
+	margin-top:-50%
+}
+
+.popupinnerbox div{
+    padding: 15px;
+	background:#fff;
+	border-radius:13px;
+}
+.popupinnerbox .touchtxt{
+	background-color: #fff;
+	display: block;
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	font-size: 1.2em;
+	color: #999;
+}
+.popupinnerbox img{
+	width:100%;
+	height:100%;
+}
+.absp_savesuccesstxt{	padding: 10% 5% 5% 5%;   text-align: center; font-size: 1.5em;line-height: 140%;}
+
+.openwx{margin: 0 auto;}
+.openwx span{border: solid 1px #ddd;
+    border-radius: 30px;
+    padding: 4%;
+    display: block;
+    text-align: center;
+    margin: 0% auto 2%;
+    font-size: 1.3em;
+    width: 100px;
+}
+@media(max-width:375px){
+	.openwx span{font-size: 1.2em;}
+  .absp_savesuccesstxt{	padding: 10% 5% 5% 5%;   text-align: center;font-size: 1.4em;}
+}
+@media(max-width:320px){
+  .openwx span{font-size: 1.1em;}
+  .absp_savesuccesstxt{	padding: 10% 5% 5% 5%;   text-align: center;font-size: 1.3em;}
+}

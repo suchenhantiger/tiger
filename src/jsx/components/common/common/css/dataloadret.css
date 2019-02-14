@@ -1,0 +1,150 @@
+.box{width: 100%;overflow: hidden;background-color: #f0f1f5;}
+.ret{margin-top: 30%;}
+
+.ret span{
+  text-align: center;
+  font-size: 1.3em;
+  display: block;
+  margin: 0 auto;
+}
+.ret.timeout span{
+   background: url(./images/loading_timeout.png) center no-repeat;
+   background-size: 170px 130px;
+   width: 170px;
+   height: 130px;
+
+}
+.ret.error span{
+   background: url(./images/loading_error.png) center no-repeat;
+   background-size: 170px 130px;
+   width: 170px;
+   height: 130px;
+}
+.ret.nodatafound span{
+   background: url(./images/loading_nodata.png) center no-repeat;
+   background-size: 170px 130px;
+   width: 170px;
+   height: 130px;
+}
+.ret.nodatafound1 span{
+   background: url(./images/loading_nodata1.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound2 span{
+   background: url(./images/loading_nodata2.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound3 span{
+   background: url(./images/loading_nodata3.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound4 span{
+   background: url(./images/loading_nodata4.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound5 span{
+   background: url(./images/loading_nodata5.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound6 span{
+   background: url(./images/loading_nodata6.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound7 span{
+   background: url(./images/loading_nodata7.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound8 span{
+   background: url(./images/loading_nodata8.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound9 span{
+   background: url(./images/loading_nodata9.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound10 span{
+   background: url(./images/loading_nodata10.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound_hyrc span{
+   background: url(./images/hysyd_hyrc_none.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.nodatafound_hys span{
+   background: url(./images/hysyd_hys_none.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+.ret.timeout1 span{
+   background: url(./images/loading_timeout1.png) center no-repeat;
+   background-size: 150px 150px;
+   width: 150px;
+   height: 150px;
+}
+
+.ret p {
+      text-align: center;
+      font-size: 1.3em;
+      margin-top: 5%;
+      line-height: 1.3em;
+  }
+.btn.default {
+    cursor: pointer;
+    border: none;
+    background: #3681f4;
+    font-size: 1.3em;
+    color: #fff;
+    margin: 6% auto 0;
+    padding: 3% 8%;
+    border-radius: 8px;
+    display: block;
+    width: 80px;
+    text-align: center;
+  }
+
+.btn.theme1{
+  border: solid 1px #3492e9;
+  text-align: center;
+  color: #3492e9;
+  font-size: 1.3em;
+  display: block;
+  border-radius: 4px;
+  width: 20%;
+  margin: 5% auto;
+  line-height: 200%;
+}
+@media(max-width: 320px){
+  .ret p {font-size: 1.2em;}
+  .btn.default,.btn.theme1 {font-size: 1.2em;}
+  .ret.nodatafound1 span,.ret.nodatafound2 span,.ret.nodatafound3 span,.ret.nodatafound4 span,
+  .ret.nodatafound5 span,.ret.nodatafound6 span,.ret.nodatafound7 span,.ret.nodatafound8 span,.ret.nodatafound9 span,
+  .ret.timeout1 span{
+     background-size: 130px 130px;
+     width: 130px;
+     height: 130px;
+  }
+
+}

@@ -1,0 +1,48 @@
+.top_imgs{
+    position:relative;
+}
+.top_imgs .listItem {
+    height:350px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.ul_focus{
+    position:absolute;
+    bottom:3px;
+    right:10px;
+}
+.ul_focus li{
+	background-color:#999999;
+	border-radius:50%;
+	height:5px;
+	width:5px;
+	cursor:pointer;
+	display:inline-block;
+    margin:0 5px;
+}
+.ul_focus li.on{
+	background-color:#2e8be2;
+}
+
+
+@media screen and (max-width: 420px) { /*当屏幕尺寸小于420px时，应用下面的CSS样式*/
+    .top_imgs .listItem {
+        height:120px;
+    }
+}
+@media screen and (max-width: 375px) { /*当屏幕尺寸小于375px时，应用下面的CSS样式*/
+    .top_imgs .listItem {
+        height:108px;
+    }
+}
+@media screen and (max-width: 360px) { /*当屏幕尺寸小于360px时，应用下面的CSS样式*/
+    .top_imgs .listItem {
+        height:100px;
+    }
+}
+@media screen and (max-width: 320px) { /*当屏幕尺寸小于320px时，应用下面的CSS样式*/
+    .top_imgs .listItem {
+        height:87.5px;
+    }
+}

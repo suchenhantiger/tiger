@@ -1,0 +1,87 @@
+.baritem{float: left;     text-align: center;    padding:10px 0px 0px;display: inline-block;}
+.baritem a{position: relative;}
+.baritem  .program_dot{width: 100%; height: 10px;}
+.baritem .program_tips.show {
+  width: 6px;
+  height: 6px;
+  background: #808080;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+
+}
+
+.baritem .program_week {
+    font-size: 1.3em;
+    padding: 4% 0;
+    color: #acacac;
+    line-height: 140%;
+}
+.baritem.on .program_week { color: #3492e9;}
+.baritem.theme_blue.on .program_week {  color: #3492e9;}
+.baritem.theme_red.on .program_week {  color: #ff6060;}
+.baritem.theme_yellow.on .program_week {  color: #ffc600;}
+.baritem.theme_orange.on .program_week {  color: #ff6000;}
+.baritem.theme_purple.on .program_week {  color: #8948c5;}
+
+.baritem .program_day {
+    font-size: 2em;
+    /*font-family: "明黑";*/
+    background: #fff;
+    max-width: 32px;
+    max-height: 32px;
+    margin: 10px auto;
+    line-height: 32px;
+    letter-spacing: -2px;
+}
+.baritem.on .program_day {color: #fff;border-radius: 30px;background: #3492e9;}
+.baritem.theme_blue.on .program_day {  background: #3492e9;}
+.baritem.theme_red.on .program_day {  background: #ff6060;}
+.baritem.theme_yellow.on .program_day {  background: #ffc600;}
+.baritem.theme_orange.on .program_day {  background: #ff6000;}
+.baritem.theme_purple.on .program_day {  background: #8948c5;}
+
+.baritem .program_nl {
+    font-size: 12px;
+    color: #999;
+}
+.baritem.on .program_nl {  color: #3492e9;}
+.baritem.theme_blue.on .program_nl {  color: #3492e9;}
+.baritem.theme_red.on .program_nl {  color: #ff6060;}
+.baritem.theme_yellow.on .program_nl {  color: #ffc600;}
+.baritem.theme_orange.on .program_nl {  color: #ff6000;}
+.baritem.theme_purple.on .program_nl {  color: #8948c5;}
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width: 376px){
+  .baritem .program_week {font-size: 1.2em;line-height: 130%;}
+  .baritem .program_day {
+      font-size: 1.8em;
+
+  }
+}
+@media(max-width: 361px){
+  .baritem .program_week {font-size: 1.2em;line-height: 130%;}
+  .baritem .program_day {
+      font-size: 1.6em;
+  }
+}
+@media(max-width: 321px){
+  .baritem .program_week {font-size: 1.1em;line-height: 130%;}
+  .baritem .program_day {
+      font-size: 1.4em;
+      max-width: 28px;
+      max-height: 28px;
+      line-height: 28px;
+      margin: 5px auto;
+  }
+}

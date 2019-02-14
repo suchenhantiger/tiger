@@ -1,0 +1,29 @@
+{
+    "data": [
+      {
+          "app": "WeiXin",
+          "ios_schema": "weixin",
+          "android_schema": "weixin",
+          "package_name":"",
+          "action":""
+      },{
+          "app": "XYOA",
+          "ios_schema": "seeyoniphone",
+          "android_schema": "com.seeyon.mobile.android",
+          "package_name":"com.seeyon.mobile.android",
+          "action":"com.seeyon.m1.mtp.Login"
+      },{
+          "app": "WPS",
+          "ios_schema": "KingsoftOfficeApp",
+          "android_schema": "",
+          "package_name":"com.kingsoft.moffice_pro",
+          "action":""
+      },{
+          "app": "EMAIL",
+          "ios_schema": "MESSAGE",
+          "android_schema": "",
+          "package_name":"com.android.email",
+          "action":""
+      }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "config": [
+      {
+          "url": "/work/workbench",
+          "data": ["./images/intro/workbench0.png","./images/intro/workbench1.png"],
+          "appversion": "20080"
+      },{
+          "url": "/work/attendance",
+          "data": ["./images/intro/attendance.png"],
+          "appversion": "20080"
+      },{
+          "url": "/work/community/forum/post/:id",
+          "data": ["./images/intro/community.png"],
+          "appversion": "20080"
+      },{
+          "url": "/work/oanews/detail/:id",
+          "data": ["./images/intro/oanews.png"],
+          "appversion": "20080"
+      },{
+          "url": "/work/workbench/todo",
+          "data": ["./images/intro/todo.png"],
+          "appversion": "20080"
+      }
+    ]
+}

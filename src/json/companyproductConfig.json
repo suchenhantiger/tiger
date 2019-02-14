@@ -1,0 +1,340 @@
+{
+
+    "configData": [
+        {
+            "id": "jhlc_new",
+            "title": "集合理财",
+            "type": "12",
+            "iscache": true,
+            "cachename":"companyprod_jhlc_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":40,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":100,
+                "filter":"兴业证券|集合资产管理计划|兴证资管|集合计划|集合资产管理|集合资产",
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"jhlc_new"},
+              {"columnKey":"unitnv", "header":"单位净值","fixed":false,"celltype":"TextCell","width":80,
+                "isnumber":true},
+              {"columnKey":"accumulated_unitnv", "header":"累计净值","fixed":false,"celltype":"TextCell","width":80,
+                "isnumber":true},
+              {"columnKey":"sec_growthrate1", "header":"日涨幅","fixed":false,"celltype":"ColoredTextCell","width":70,
+                "percent":true,
+                "isnumber":true},
+              {"columnKey":"rec1yeargrowthrate", "header":"近一年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+                "percent":true,
+                "isnumber":true},
+              {"columnKey":"rec6monthgrowthrate", "header":"近半年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+                "percent":true,
+                "isnumber":true},
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "gmjj_new",
+            "title": "公募基金",
+            "type": "11",
+            "iscache": true,
+            "cachename":"companyprod_gmjj_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":60,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":100,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"gmjj_new"},
+              {"columnKey":"unitnv", "header":"单位净值","fixed":false,"celltype":"TextCell","width":90,
+              "isnumber":true},
+              {"columnKey":"accumulated_unitnv", "header":"累计净值","fixed":false,"celltype":"TextCell","width":90,
+              "isnumber":true},
+              {"columnKey":"sec_growthrate1", "header":"日涨幅","fixed":false,"celltype":"ColoredTextCell","width":80,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec1yeargrowthrate", "header":"近一年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec6monthgrowthrate", "header":"近半年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "xtcp_new",
+            "title": "信托产品",
+            "type": "13",
+            "iscache": true,
+            "cachename":"companyprod_xtcp_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":50,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":120,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"xtcp_new"},
+              {"columnKey":"unitnv", "header":"单位净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"accumulated_unitnv", "header":"累计净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"sec_growthrate1", "header":"日涨幅","fixed":false,"celltype":"ColoredTextCell","width":70,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec1yeargrowthrate", "header":"近一年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec6monthgrowthrate", "header":"近半年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "sm_new",
+            "title": "私募",
+            "type": "14",
+            "iscache": true,
+            "cachename":"companyprod_sm_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":50,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":120,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"sm_new"},
+              {"columnKey":"unitnv", "header":"单位净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"accumulated_unitnv", "header":"累计净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"sec_growthrate1", "header":"日涨幅","fixed":false,"celltype":"ColoredTextCell","width":70,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec1yeargrowthrate", "header":"近一年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec6monthgrowthrate", "header":"近半年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "zh_new",
+            "title": "专户",
+            "type": "15",
+            "iscache": true,
+            "cachename":"companyprod_zh_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":50,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":120,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"zh_new"},
+              {"columnKey":"unitnv", "header":"单位净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"accumulated_unitnv", "header":"累计净值","fixed":false,"celltype":"TextCell","width":80,
+              "isnumber":true},
+              {"columnKey":"sec_growthrate1", "header":"日涨幅","fixed":false,"celltype":"ColoredTextCell","width":70,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec1yeargrowthrate", "header":"近一年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"rec6monthgrowthrate", "header":"近半年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "yhlc_new",
+            "title": "银行理财",
+            "type": "16",
+            "iscache": true,
+            "cachename":"companyprod_yhlc_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":50,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":120,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"yhlc_new"},
+
+
+
+
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "sypz_new",
+            "title": "收益凭证",
+            "type": "19",
+            "iscache": true,
+            "cachename":"companyprod_sypz_new",
+            "cachetime":3600000,
+            "actionname":"QueryCorpProdAction",
+            "updatetimefield":"",
+            "table_attr":{
+              "rowHeight":50,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"product_name",
+            "columns":[
+              {"columnKey":"product_name", "header":"产品名称","fixed":true,"celltype":"LinkCell","width":120,
+                "route":"/work/companyproduct/detail","idColumnKey":"product_id","type":"sypz_new"},
+
+              {"columnKey":"prodsubtype1_name", "header":"产品收益特征名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"prodsubtype2_name", "header":"产品投向类型名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"riskgrade_name", "header":"风险特征等级名称","fixed":false,"celltype":"TextCell","width":140},
+              {"columnKey":"administrator_name", "header":"基金管理人","fixed":false,"celltype":"TextCell","width":180},
+              {"columnKey":"prodstatus", "header":"产品状态","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"seccode", "header":"交易代码","fixed":false,"celltype":"TextCell","width":80}
+            ]
+        },
+        {
+            "id": "bjhg_old",
+            "title": "报价回购",
+            "type": "2",
+            "iscache": false,
+            "cachename":"companyprod_bjhg_old",
+            "cachetime":null,
+            "actionname":"QueryServiceDCAction",
+            "updatetimefield":"init_Date,oc_time",
+            "table_attr":{
+              "rowHeight":40,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"stock_Name",
+            "columns":[
+              {"columnKey":"stock_Name", "header":"品种","fixed":true,"celltype":"TextCell","width":70},
+              {"columnKey":"stock_Code", "header":"代码","fixed":false,"celltype":"TextCell","width":60},
+              {"columnKey":"expire_Year_Rate", "header":"到期年收益率","fixed":false,"celltype":"ColoredTextCell","width":110,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"preend_year_rate", "header":"提前回购年收益率","fixed":false,"celltype":"ColoredTextCell","width":140,
+              "percent":true,
+              "isnumber":true},
+              {"columnKey":"QRP_Enable_Quota", "header":"可用额度(万元)","fixed":false,"celltype":"TextCell","width":120,
+              "color":"#d91f27",
+              "isnumber":true}
+            ]
+        },
+        {
+            "id": "rzrq_old",
+            "title": "融资融券",
+            "type": "3",
+            "iscache": false,
+            "cachename":"companyprod_rzrq_old",
+            "cachetime":null,
+            "actionname":"QueryServiceDCAction",
+            "updatetimefield":"oc_date,oc_time",
+            "table_attr":{
+              "rowHeight":30,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"stock_name",
+            "columns":[
+              {"columnKey":"exchange_type", "header":"交易类型","fixed":true,"celltype":"TextCell","width":100},
+              {"columnKey":"stock_code", "header":"证券代码","fixed":false,"celltype":"TextCell","width":100},
+              {"columnKey":"stock_name", "header":"证券名称","fixed":false,"celltype":"TextCell","width":110},
+              {"columnKey":"enable_count", "header":"可用数量","fixed":false,"celltype":"ColoredTextCell","width":90,
+              "color":"#d91f27",
+              "isnumber":true}
+            ]
+        },
+        {
+            "id": "xgsg_old",
+            "title": "新股申购",
+            "type": "11",
+            "iscache": true,
+            "cachename":"companyprod_xgsg_old",
+            "cachetime":3600000,
+            "actionname":"QueryServiceDCAction",
+            "updatetimefield":"today",
+            "table_attr":{
+              "rowHeight":40,
+              "headerHeight":30,
+              "sortable":true
+            },
+            "filterby":"stockName",
+            "columns":[
+              {"columnKey":"stockName", "header":"股票名称","fixed":true,"celltype":"TextCell","width":80},
+              {"columnKey":"subCode", "header":"申购代码","fixed":true,"celltype":"TextCell","width":80},
+              {"columnKey":"fundUnfreezeDate", "header":"申购日期","fixed":false,"celltype":"TextCell","width":80},
+              {"columnKey":"pubPrice", "header":"发行价格","fixed":false,"celltype":"ColoredTextCell","width":80,
+                "color":"#d91f27",
+                "isnumber":true},
+              {"columnKey":"subUplimit", "header":"申购上限(万股)","fixed":false,"celltype":"ColoredTextCell","width":120,
+                "color":"#d91f27",
+                "isnumber":true},
+              {"columnKey":"pubPe", "header":"发行市盈率","fixed":false,"celltype":"TextCell","width":100,
+                "isnumber":true}
+            ]
+        }
+    ]
+}

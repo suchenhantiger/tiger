@@ -1,0 +1,48 @@
+.item{
+	display: inline-block;
+	text-align: left;
+	font-size: 1.17em;
+	color: #333;
+	border-right:1px solid #eee;
+}
+.item:last-child{
+	border-right:none;
+}
+.item.iconBlue{
+
+}
+.item.on{
+	color:#2da8e1
+}
+.item.on.iconBlue{
+	color:#2da8e1
+}
+.item.on .attention{
+	background:url(./images/common/subtabs/attention_on.png) no-repeat left;
+	background-size: 20px;
+}
+.item.on .lately{
+	background:url(./images/common/subtabs/lately_on.png) no-repeat left;
+	background-size: 20px;
+}
+.item span{
+	line-height:40px;
+	height:40px;
+	display:block;
+}
+.attention{
+	display:block;
+	margin-left:30px;
+	padding-left:26px;
+	height:20px;
+	background:url(./images/common/subtabs/attention.png) no-repeat left;
+	background-size: 20px;
+}
+.lately{
+	display:block;
+	margin-left:30px;
+	padding-left:26px;
+	height:20px;
+	background:url(./images/common/subtabs/lately.png) no-repeat left;
+	background-size: 20px;
+}

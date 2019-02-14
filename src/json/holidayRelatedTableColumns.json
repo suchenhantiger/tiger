@@ -1,0 +1,15 @@
+{
+  "applyListColumns":[
+    {"text":"休假类别","columnKey":"leavetype","width":"24.56%","isnumber":false},
+    {"text":"申请日期","columnKey":"apdate","width":"26.32%","isnumber":false},
+    {"text":"休假时长","columnKey":"sumdays","width":"24.56%","isnumber":true,"suffix":"天"},
+    {"text":"审批状态","columnKey":"billstate","width":"23.56%","isnumber":false}
+  ],
+  "balanceDetailColumns":[
+    {"text":"年度","columnKey":"cyear","width":"18.7%","suffix":"年","isnumber":false},
+    {"text":"上期结余","columnKey":"lastperioddays","width":"19.5%","suffix":"天","isnumber":true},
+    {"text":"当前享有","columnKey":"currnowdays","width":"19.5%","suffix":"天","isnumber":true},
+    {"text":"已休天数","columnKey":"usedays","width":"19.5%","suffix":"天","isnumber":true},
+    {"text":"结余天数","columnKey":"balancedays","width":"19.5%","suffix":"天","isnumber":true}
+  ]
+}

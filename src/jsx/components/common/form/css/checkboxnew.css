@@ -1,0 +1,76 @@
+.box{
+  width: 20px;
+  height: 20px;
+  border:1px solid #a1a1a1;
+  background:#fff;
+  margin: 0 auto;
+  border-radius:4px;
+}
+.box.checked{
+  background: url(./images/common/form/checkon_theme1.png) no-repeat #daedff;
+  background-size: cover;
+  border: solid 1px #3492e9;
+}
+.box.disable{
+  background: #fff;
+  border: solid 1px #bbb;
+}
+.box.disable.checked{
+  background: url(./images/common/form/checkon_disable.png) no-repeat #f6f6f6;
+  border: solid 1px #bbb;
+  background-size: cover;
+}
+.box.circle{
+  border-radius:10px;
+}
+.box.inline{
+    display: inline-block;
+    vertical-align: middle;
+}
+.box.circle.checked{
+  background: url(./images/common/form/checkon_theme1.png) no-repeat #daedff;
+  background-size: cover;
+  border: solid 1px #3492e9;
+}
+.box.circle.disable{
+  background: #fff;
+  border: solid 1px #bbb;
+}
+.box.circle.disable.checked{
+  background: url(./images/common/form/checkon_disable.png) no-repeat #f6f6f6;
+  border: solid 1px #bbb;
+  background-size: cover;
+}
+
+
+
+
+
+@media(max-width: 376px){
+  .box{
+    width: 18px;
+    height: 18px;
+  }
+  .box.circle{
+    border-radius:9px;
+  }
+}
+
+@media (max-width: 361px) {
+  .box{
+    width: 18px;
+    height: 18px;
+  }
+  .box.circle{
+    border-radius:9px;
+  }
+}
+@media(max-width: 321px){
+  .box{
+    width: 16px;
+    height: 16px;
+  }
+  .box.circle{
+    border-radius:8px;
+  }
+}

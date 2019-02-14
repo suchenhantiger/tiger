@@ -1,0 +1,52 @@
+
+.tableList{
+    position:absolute;
+    left:0;
+    top:.66rem;
+    right:0;
+    bottom:0;
+}
+
+.floatTitle{
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    z-index: 10000;
+
+    .table{
+        background-color: #fff;
+        border-top: .02rem solid #eee;
+        width:100%;
+
+        th:first-child{
+            border-left: 0;
+        }
+    }
+}
+
+div.noData{
+    text-align: center;
+    padding: .5rem .1rem;
+}
+
+.noMoreFrame{
+    text-align:center;
+    margin-top:.5rem;
+    padding-bottom: .2rem;
+
+    .noMorePic{
+        display:inline-block;
+        height:.5rem;
+        width:.5rem;
+        background: data-uri("./images/nomore.png") no-repeat center;
+        background-size:contain;
+        margin-right:.2rem;
+        vertical-align: middle;
+    }
+    .noMoreText{
+        display:inline-block;
+        color:#999;
+        vertical-align: middle;
+    }
+}

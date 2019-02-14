@@ -1,0 +1,79 @@
+.frame{
+    background-color: #fff;
+}
+.title{
+    text-align: center;
+    margin-top:60px;
+    font-size: 1.6em;
+}
+.title.error{
+    color:red;
+}
+.secTitle{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.5em;
+    color: #3492e9;
+}
+.pwdFrame{
+    width:414px;
+    height: 400px;
+    margin:30px auto 0;
+}
+.pwdFrame canvas{
+    display: inline-block;
+}
+
+.gesture_box{
+  text-align: center;
+  margin-top: 10px;
+}
+.gesture_txt{
+  font-size:1.3em;
+  color:#333;
+  margin-right: 0.2rem;
+}
+.icon_gesture_open{
+  background: url(./images/login/icon_sign_open.png) no-repeat right;
+  background-size: 20px;
+  padding-right: 24px;
+  font-size:1.3em;
+  color:#3492E9;
+}
+.icon_gesture_hide{
+    background: url(./images/login/icon_sign_closed.png) no-repeat right;
+    background-size: 20px;
+    padding-right: 24px;
+    font-size:1.3em;
+    color:#3492E9;
+}
+@media(max-width:376px){
+  .pwdFrame{
+          width:375px;
+          margin:20px auto 0;
+      }
+  .title{font-size: 1.5em;}
+}
+@media(max-width:361px){
+  .pwdFrame{
+          width:375px;
+          margin:20px auto 0;
+      }
+  .title{font-size: 1.5em;}
+
+}
+@media(max-width:321px){
+  .pwdFrame{
+          width:320px;
+          margin:20px auto 0;
+      }
+  .title{font-size: 1.4em;}
+  .secTitle{
+      margin-top: 10px;
+      font-size: 1.3em;
+  }
+  .icon_gesture_open,.icon_gesture_hide{
+    font-size:1.2em;
+  }
+
+}

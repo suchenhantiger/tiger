@@ -1,0 +1,63 @@
+.frame{
+    position: fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+}
+.box{
+    position: absolute;
+    bottom:0px;
+    left:0;
+    right:0;
+    height: 240px;
+    background: #fff;
+}
+.buttons{
+  position: absolute;
+  bottom: 240px;
+  left: 0;
+  right: 0;
+  height: 44px;
+  line-height: 44px;
+  background: #fff;
+  text-align: center;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 1.4em;
+}
+.ok{
+  float: right;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  padding: 0 10px;
+  margin: 0px 10px;
+  color: #0ae;
+}
+.cancel{
+  float: left;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  padding: 0 10px;
+  margin: 0px 10px;
+  color: #0ae;
+}
+.text{
+    line-height: 36px;
+    color:#666;
+}
+
+@media(max-width: 320px){
+  .box{
+      height: 210px;
+  }
+  .buttons{
+    bottom: 210px;
+    font-size: 1.3em;
+  }
+
+}

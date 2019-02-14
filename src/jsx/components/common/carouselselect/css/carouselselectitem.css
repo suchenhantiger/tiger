@@ -1,0 +1,47 @@
+.main{
+    height:210px;
+    overflow: hidden;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+}
+.frame{
+    overflow: hidden;
+}
+.item{
+    height:30px;
+    line-height: 30px;
+    font-size: 1.3em;
+}
+.blank{
+    height:90px;
+}
+.upMask{
+    position: absolute;
+    top:0px;
+    left:0;
+    right:0;
+    height: 90px;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.6) 100%);
+
+    border-bottom: 1px solid #ddd;
+    background-position: top, bottom;
+    background-size: 100%;
+}
+.downMask{
+    position: absolute;
+    bottom:0px;
+    left:0;
+    right:0;
+    height: 90px;
+    background-image: linear-gradient(to top, rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.6) 100%);
+    border-top: 1px solid #ddd;
+    background-position: top, bottom;
+    background-size: 100%;
+}
+@media(max-width: 320px){
+  .item{
+      font-size: 1.2em;
+  }
+
+}

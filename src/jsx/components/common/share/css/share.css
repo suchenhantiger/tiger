@@ -1,0 +1,80 @@
+.popupbox{
+	position:fixed;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	z-index:100;
+}
+.pp_cont{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	padding-top:10px;
+	background-color:#f8f8f8;
+}
+.pp_cont h3{
+	border-bottom:1px solid #ddd;
+	padding-bottom:10px;
+	text-align:center
+}
+.share_icons{
+	padding:0 10px;
+	margin-top:10px;
+	overflow:hidden
+}
+.share_icons li{
+	border:1px solid #fff;
+	padding:6px;
+	float:left;
+	margin-right:5px;
+	margin-left:5px;
+	border-radius:6px;
+	background-color:#fff;
+}
+.share_icons li:hover{
+	border:1px solid #3eb135;
+}
+.share_icons li a{
+	padding-top:35px;
+	width:50px;
+	text-align:center;
+	display:block;
+}
+.share_icons li a:hover{
+	color:#3eb135
+}
+.share_icons li a.wx_friend{
+	background:url(./images/common/share/shareico02.png) no-repeat top;
+	background-size:30px 30px;
+}
+.share_icons li a.wx_friend:hover{
+	background:url(./images/common/share/shareico02_on.png) no-repeat top;
+	background-size:30px 30px;
+}
+.share_icons li a.wx_frcl{
+	background:url(./images/common/share/shareico01.png) no-repeat top;
+	background-size:30px 30px;
+}
+.share_icons li a.wx_frcl:hover{
+	background:url(./images/common/share/shareico01_on.png) no-repeat top;
+	background-size:30px 30px;
+}
+.btn_cancel{
+	border-top:1px solid #ddd;
+	margin-top:10px;
+}
+.btn_cancel a{
+    background: #fff;
+    color: #333;
+	display:block;
+	width:100%;
+	height:40px;
+	line-height:40px;
+	text-align:center
+}
+.btn_cancel a:hover{
+	background:#4f81e1;
+	color:#fff;
+}

@@ -1,0 +1,75 @@
+.item{
+	min-height: 32px;
+	line-height: 32px;
+	border-top: 1px solid #ddd;
+}
+.item:last-child{
+	border-bottom: 1px solid #ddd;
+}
+.item.on:last-child{
+	border-bottom: none;
+}
+.pro_list{
+	overflow: hidden;
+    display: block;
+	padding: 8px 10px;
+}
+.item.on .pro_list{
+	border-bottom: 1px solid #ddd;
+}
+.pro_list li span {
+    float: left;
+}
+.pro_list i.icon{
+    float: left;
+    width: 32px;
+    height: 32px;
+    display: block;
+    margin-right: 10px;
+}
+.smicon01{
+	background:url(./images/common/list/smicon01.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon02{
+	background:url(./images/common/list/smicon02.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon03{
+	background:url(./images/common/list/smicon03.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon04{
+	background:url(./images/common/list/smicon04.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon05{
+	background:url(./images/common/list/smicon05.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon06{
+	background:url(./images/common/list/smicon06.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon07{
+	background:url(./images/common/list/smicon07.png) no-repeat;
+	background-size:32px 32px;
+}
+.btn_down, .btn_up {
+    width: 34px;
+    height: 24px;
+    float: right;
+    margin: 0 -6px 0 6px;
+    padding: 6px 0 0 5px;
+    background-size: 22px 20px;
+}
+.btn_up {
+    background: url(./images/common/list/arrow_up.png) no-repeat 10px 50%;
+}
+.btn_down {
+    background: url(./images/common/list/arrow_down.png) no-repeat 10px 50%;
+}
+.pro_outer {
+    padding: 10px 10px 10px 10px;
+    background-color: #f8f8f8;
+}

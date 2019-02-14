@@ -1,0 +1,43 @@
+.pickerpopup_box{
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  background-color: #fff;
+
+}
+.pickerpopup_box .picker_popup_header{    background-image: -webkit-linear-gradient(top, #e7e7e7, #e7e7e7, transparent, transparent);
+    background-image: linear-gradient(to bottom, #e7e7e7, #e7e7e7, transparent, transparent);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;}
+.pickerpopup_box .picker_popup_header .picker_popup_item{color: #0ae;
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+
+}
+.pickerpopup_box .picker_popup_header .picker_popup_header_left{    padding-left: 15px;
+    padding-right: 15px;}
+.pickerpopup_box .picker_popup_header .picker_popup_header_title{    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    color: #666;
+    cursor: default;}
+.pickerpopup_box .picker_popup_header .picker_popup_header_right{    padding-left: 15px;
+    padding-right: 15px;}
+
+
+.pickerpopup_box  .picker_popup_content{padding:10px;}

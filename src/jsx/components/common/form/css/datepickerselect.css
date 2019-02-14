@@ -1,0 +1,69 @@
+.box{
+  background-color: #fff;
+  padding: 0 4%;
+  line-height: 440%;
+  width: 92%;
+  overflow: hidden;
+}
+.box label{
+  float: left;
+  width: 35%;
+  font-size: 1.3em;
+  line-height: 360%;
+  color: #333;
+  display: block;
+}
+.box label i{
+    color: #ff0000;
+    font-size: 1.3em;
+    font-style: normal;
+    vertical-align: middle;
+}
+
+.box.borderbottom{
+  border-bottom: 1px solid #f2f2f2;
+}
+.pickerpanel{
+    overflow: hidden;
+    width: 65%;
+    position: relative;
+}
+.box .formelem span.datac{
+  border: none;
+  width: 100%;
+  text-align: left;
+  float: right;
+  line-height: 360%;
+  font-size: 1.3em;
+  padding: 0px;
+  background-color: #fff;
+  -webkit-appearance: none;
+}
+.box .formelem i{
+    background: url(./images/arrow01.png) no-repeat right;
+    background-size: 16px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 0px;
+    top: 40%;
+}
+
+.box  .formelem.disabled span.datac{
+   color:#999;
+}
+
+
+
+@media(max-width: 375px){
+  .box .formelem span.datac{font-size: 1.2em;}
+  .box label{font-size: 1.2em;}
+  .box .formelem i{top:37%;}
+}
+
+@media(max-width: 320px){
+  .box .formelem span.datac{font-size: 1.1em;}
+  .box label{font-size: 1.1em;}
+  .box .formelem i{top:34%;}
+}

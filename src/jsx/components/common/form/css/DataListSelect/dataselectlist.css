@@ -1,0 +1,9 @@
+.content{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 110px;
+  background-color: #f0f1f5;
+}
+.cd_list{background-color: #fff;}

@@ -1,0 +1,96 @@
+.imgStyle(){
+    width: .8rem;
+    height: .8rem;
+    background: data-uri("./images/loading.gif") no-repeat center;
+    background-size: .55rem;
+    display:inline-block;
+    margin:0 auto;
+    vertical-align: middle;
+
+    &.showLoading{
+        background: none;
+    }
+}
+
+.arrowStyle(){
+    position:absolute;
+    left:0;
+    right:0;
+    text-align: center;
+    color: #999;
+}
+
+.frame{
+    overflow: hidden;
+    position: relative;
+
+    .mask{
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        background:rgba(0, 0, 0, 0.05);
+
+        .loading{
+            position: absolute;
+            left:50%;
+            top:40%;
+            width:.8rem;
+            height:.8rem;
+            margin-left:-.4rem;
+            margin-top:-.4rem;
+            background:url("./images/common/loading/loading.gif") no-repeat center;
+            background-size:.8rem;
+        }
+    }
+
+    .up{
+        display:block;
+        .arrowStyle();
+        top:-.8rem;
+        height: 1rem;
+
+        .upImg{
+            .imgStyle();
+        }
+    }
+
+    .down{
+        display:none;
+        .arrowStyle();
+        padding-bottom: .3rem;
+        bottom:-1.2rem;
+
+        &.showDownText{
+            display:block;
+        }
+
+        .downImg{
+            .imgStyle();
+        }
+    }
+
+}
+
+.div{
+    position:relative;
+
+    .vmid{
+        vertical-align:middle;
+    }
+}
+
+.statusBar{
+    text-align:center;
+    height:0;
+    line-height: .6rem;
+    color:#999;
+    opacity: 0;
+    transition: height 0.3s, opacity 0.3s;
+
+    &.show{
+        height:.6rem;
+        opacity: 1;
+    }
+}

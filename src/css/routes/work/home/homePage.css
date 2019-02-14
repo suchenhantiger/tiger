@@ -1,0 +1,15 @@
+.form{
+  width: 80%;
+  margin:  0 auto;;
+  margin-top: 100px;
+}
+.btn{
+  font-size: 15px;
+  text-align: center;
+  margin: 20% auto;
+  background-color: #3492E9;
+  width: 200px;
+  color: #fff;
+  height: 50px;
+  line-height: 50px;
+}

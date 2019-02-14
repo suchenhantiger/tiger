@@ -1,0 +1,60 @@
+.box{
+  background-color: #fff;
+  padding: 0 4%;
+  line-height: 440%;
+  width: 92%;
+  overflow: hidden;
+}
+.box label{
+    float: left;
+    width: 35%;
+    font-size: 1.3em;
+    /*line-height: 360%;*/
+    line-height: 320%;
+    color: #333;
+    display: block;
+
+}
+.box label i{
+    color: #ff0000;
+    font-size: 1.3em;
+    font-style: normal;
+    vertical-align: middle;
+
+}
+
+.box.borderbottom{
+  border-bottom: 1px solid #f2f2f2;
+}
+.box .formelem textarea{
+    background-color: #fff;
+    border: none;
+    width: 63%;
+    float: right;
+    /*line-height: 180%;*/
+    line-height: 150%;
+    font-size: 1.3em;
+    height: 80px;
+    padding-top: 3.5%;
+    color: black;
+}
+.box .formelem.disabled textarea{
+    color:#999;
+}
+
+.formelem textarea::-webkit-input-placeholder{
+    color: #999;
+}
+
+@media(max-width: 376px){
+  .box label{font-size: 1.2em;}
+  .box .formelem textarea{font-size: 1.2em;}
+}
+
+@media (max-width: 361px) {
+  .box label{line-height: 310%;}
+}
+@media(max-width: 321px){
+  .box label{font-size: 1.1em;line-height: 300%;}
+  .box .formelem textarea{font-size: 1.1em;height: 60px;  }
+}

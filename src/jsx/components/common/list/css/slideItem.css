@@ -1,0 +1,22 @@
+.li{
+    position: relative;
+}
+li:after{
+    content:"";
+    display: block;
+    clear:both;
+}
+.box{
+    /*position: absolute;*/
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.mot_inner03{
+	/*float:right*/
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+}

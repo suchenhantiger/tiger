@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+  	<meta content="telephone=no" name="format-detection" /> <!-- 禁止设备将页面中的数字识别为电话号码 -->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#000000">
+    <title>兴业银行-微办公</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/frame.css" />
+    <script>
+        //是否在电脑上调试
+        var isDebug = true;
+        //是否测试环境
+        var TestEnvironment = true;
+        //H5版本号 每次发布H5新版本 需要更新该参数
+        var h5version="1.0.0";
+        var iosready = false;
+    </script>
+</head>
+
+<body class="outerwrap">
+    <div id="main" class="viewport-new" ></div>
+    <script src="js/lib.js"></script>
+    <script src="js/vendor.js"></script>
+    <script>
+        function res(){
+            var deviceWidth = document.documentElement.clientWidth,
+                deviceHeight = document.documentElement.clientHeight,
+                width = deviceWidth>deviceHeight?deviceHeight:deviceWidth;
+            if(width > 750) width = 750;//根据设计图750可调
+            window.remUnit = width / 7.5;
+            document.documentElement.style.fontSize = width / 7.5 + 'px';
+        }
+        res();
+        window.onresize=function(){res();}
+        var browser = {
+            versions: function () {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return { //移动终端浏览器版本信息
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: u.indexOf('Android') > -1 ||  u.indexOf('android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1 //是否iPad
+                };
+            }()
+        }
+
+        function appendJs(src) {
+            var head = document.getElementsByTagName('head')[0],
+                script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = src;
+            head.appendChild(script);
+        }
+
+        if(browser.versions.android){
+            appendJs('js/main.js');
+        }else if(!isDebug && browser.versions.ios){
+            setTimeout( function(){
+                appendJs('js/main.js');  
+            }, 7 * 100 );
+        }
+        else{
+            appendJs('js/main.js');
+        }
+
+        window.iOSJsInjectionCompleted = function(){
+            iosready = true;
+        }
+    </script>
+
+</body>
+
+</html>

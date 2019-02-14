@@ -1,0 +1,64 @@
+{
+    "data": [
+      {
+        "syscode": "002",
+        "sysname": "集团文件",
+        "isneedlogin":true
+      },
+      {
+          "syscode": "001",
+          "sysname": "邮箱",
+          "isneedlogin":true
+      },
+      {
+        "syscode": "003",
+        "sysname": "审批中心",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "027",
+        "sysname": "消息中心",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "023",
+        "sysname": "领导驾驶舱",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "031",
+        "sysname": "公司周报",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "006",
+        "sysname": "报销审批",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "008",
+        "sysname": "出差助手",
+        "isneedlogin":true
+      },
+      {
+         "syscode": "022",
+         "sysname": "休假助手",
+         "isneedlogin":true
+      },
+      {
+        "syscode": "028",
+        "sysname": "会议管理",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "026",
+        "sysname": "兴证知识",
+        "isneedlogin":true
+      },
+      {
+        "syscode": "099",
+        "sysname": "全部",
+        "isneedlogin":true
+      }
+    ]
+}

@@ -1,0 +1,150 @@
+.headBgColor{
+   background: #fafafa;
+}
+.focusHead{
+  background-color:#ddd
+}
+.fixtab{
+    width:100%;
+    overflow: hidden;
+    /*height: 370px;*/
+    position: relative;
+
+}
+
+.fixtab table{
+    position: absolute;
+    top:0;
+    left:0;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.mainTab th,
+.mainTab td{
+    padding:0.2rem 0.1rem;
+    text-align: center;
+    white-space:nowrap;
+    vertical-align:middle;
+
+}
+.headSize{
+    font-size: 0.26rem;
+}
+.wordBreak{
+    white-space:normal !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    max-width: 65px;
+    min-width: 50px;
+}
+.clickable{
+    text-decoration: underline;
+    color: #3492e9;
+}
+/*.fixtab th{
+    padding:10px 15px;
+    text-align: center;
+    white-space: nowrap;
+}*/
+
+.fixtab tr:first-child{
+  /*border-bottom:0px solid #d5e0ec;*/
+}
+
+.fixtab tr{
+  /*border-bottom:1px solid #d5e0ec;*/
+}
+
+.fixtab td{
+    vertical-align:middle;
+    border-right: 1px solid #f1f1f1;
+    font-size: 0.23rem;
+    text-align: center;
+    color: #555;
+    line-height: 140%;
+}
+
+.fixtab td span{
+  display: block;
+  width: 1.4rem;
+  text-align:center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  white-space: initial;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 0.5rem;
+}
+
+.fixrow, .fixcol{
+    position: absolute;
+    top:0;
+    left:0;
+    background:#fff;
+    opacity: 1;
+    z-index: 1;
+}
+.fixtop{
+    position: absolute;
+    top:0;
+    left:0;
+    background:#fff;
+    opacity: 1;
+    z-index: 1;
+    border-left: 1px solid #f1f1f1;
+}
+
+.fixrow{
+    /*border-bottom:1px solid #d5e0ec;*/
+    white-space: nowrap;
+}
+.fixcol{
+    /*padding-top:2px;*/
+}
+
+.rowHead{
+    display: inline-block;
+    text-align: center;
+    font-weight: normal;
+    border-right: 1px solid #f1f1f1;
+    font-size: 0.26rem
+}
+
+.noSortIcon {
+  margin-left: 2px;
+  /*margin-top:7px;*/
+  width: 8px;
+  height: 8px;
+}
+
+.sortIcon {
+  margin-left: 2px;
+  /*margin-top:5px;*/
+  width: 12px;
+  height: 12px;
+}
+
+.colDiv{
+    text-align: center;
+    display: inline-block;
+}
+
+.rowItem{
+    white-space: nowrap;
+    /*border-bottom:1px solid #d5e0ec;*/
+}
+
+.rowItem:first-child{
+    /*border-bottom:0px solid #d5e0ec;*/
+}
+
+.load{
+    display: none;
+    position: absolute;
+    left:0;
+    right:0;
+    text-align: center;
+    line-height: 40px;
+}

@@ -1,0 +1,29 @@
+{
+  "PieConfig":{
+    "seriesName":"资产概况",
+    "dataConf": {"nameField":"name", "valueField":"value", "colorField":"color"}
+  },
+  "BarLineConfig":{
+    "yAxis":[
+      {"name":"X10000", "labelsuffix":"",
+        "nameLocation":"middle","nameGap":45,"axisLineshow":false,"splitLineshow":false},
+      {"name":"X100000000", "labelsuffix":"","multiplier":100,
+        "nameLocation":"middle","nameGap":45,"axisLineshow":false,"splitLineshow":false}
+    ],
+    "xField":"update_dt",
+    "series":[
+      {"name":"新开户数", "type":"bar", "yAxisIndex":0, "valueField":"new_zjzh_num_d", "color":"#3492e9"},
+      {"name":"股基交易份额", "type":"line", "yAxisIndex":1, "valueField":"gjjyl_share_d", "color":"#ff7070"}
+    ]
+  },
+  "BarConfig":{
+    "yAxis":[
+      {"name":"(亿)","nameLocation":"end","nameGap":15,"axisLineshow":true,"splitLineshow":true}
+    ],
+    "xField":"update_dt",
+    "series":[
+      {"name":"体外资产","type":"bar","yAxisIndex":0,"valueField":"tw_zc_20avg", "color":"#3492e9"},
+      {"name":"体内资产","type":"bar","yAxisIndex":0,"valueField":"tn_zc_20avg", "color":"#ff7070"}
+    ]
+  }
+}

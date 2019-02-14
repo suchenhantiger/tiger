@@ -1,0 +1,27 @@
+{
+    "collectfin": [
+      {"showname":"产品名称","colname":"product_name","width":"28%","color":"#333","numcolor":false,"israte":false},
+      {"showname":"净值","colname":"unitnv","width":"18%","color":"#333","numcolor":false,"israte":false},
+      {"showname":"累计净值","colname":"accumulated_unitnv","width":"18%","color":"#333","numcolor":false,"israte":false},
+      {"showname":"日增长率","colname":"sec_growthrate1","width":"18%","color":"#333","numcolor":true,"israte":true},
+      {"showname":"年收益率","colname":"rec1yeargrowthrate","width":"18%","color":"#333","numcolor":true,"israte":true}
+
+    ],
+    "newstock": [
+      {"showname":"申购日期","colname":"c1","width":"18%","color":"#333","numcolor":false},
+      {"showname":"股票名称","colname":"prodname","width":"20%","color":"#333","numcolor":false},
+      {"showname":"申购代码","colname":"c2","width":"17%","color":"#333","numcolor":false},
+      {"showname":"发行价格","colname":"c3","width":"17%","color":"#333","numcolor":false},
+      {"showname":"申购上限(万股)","colname":"c4","width":"15%","color":"#333","numcolor":false},
+      {"showname":"发行市盈率","colname":"c5","width":"13%","color":"#333","numcolor":false}
+    ],
+
+    "hotprod": [
+      {"showname":"产品名称","colname":"prodname","width":"16%","color":"#333","numcolor":false},
+      {"showname":"产品代码","colname":"c1","width":"19%","color":"#333","numcolor":false},
+      {"showname":"产品类型","colname":"c2","width":"17%","color":"#333","numcolor":false},
+      {"showname":"预期收益率","colname":"c3","width":"13%","color":"#333","numcolor":false},
+      {"showname":"存续期","colname":"c4","width":"17%","color":"#333","numcolor":false},
+      {"showname":"到期日期","colname":"c5","width":"14%","color":"#333","numcolor":false}
+    ]
+}

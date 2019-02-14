@@ -1,0 +1,85 @@
+
+.frame{
+
+    /*font-weight: bold;*/
+    color:#555;
+}
+
+.node{
+    line-height: 200%;
+    font-size:1.2em;
+    /*width: 180px;*/
+    /*overflow: hidden;
+    text-overflow: ellipsis;*/
+    white-space: nowrap;
+}
+
+.node.parent .iconleaf{
+      background-repeat: no-repeat;
+      background-size: 18px;
+      background-position: left center;
+      width: 25px;
+      float: left;
+      display: block;
+      height: 25px;
+}
+
+.node.parent.open .iconleaf{
+    background-image:url(./images/common/tree/close.png);
+}
+.node.parent.select{
+    /*background-color:#eee;*/
+}
+.node.parent.select .name{
+    color: #3492e9;
+}
+.node.parent.close .iconleaf{
+    background-image:url(./images/common/tree/open.png);
+}
+.node .iconsel{
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: left center;
+  width: 25px;
+  float: left;
+  display: block;
+  height: 25px;
+  background-image:url(./images/common/tree/g_checkbox.png);
+}
+.node.cb_selected .iconsel{
+  background-image:url(./images/common/tree/g_checkbox_active.png);
+}
+.node.cb_noselected .iconsel{
+  background-image:url(./images/common/tree/g_checkbox.png);
+}
+.node.cb_partselected .iconsel{
+  background-image:url(./images/common/tree/g_checkbox_before.png);
+}
+.node.cb_hideselected .iconsel{
+  display: none;
+}
+
+.node.leaf.select{
+    /*background:#eee;*/
+
+}
+.node.leaf.select .name{
+    color:#3492e9;
+
+}
+.node.leaf .iconsel{
+  margin-left: 25px;
+}
+.node.leaf .name.pl25{padding-left: 25px;}
+.subNode{
+    padding-left:7px;
+}
+
+@media(max-width: 375px){
+
+}
+@media(max-width: 320px){
+  .node{
+      font-size:1.1em;
+  }
+}

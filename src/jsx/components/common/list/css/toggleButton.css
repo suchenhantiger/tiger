@@ -1,0 +1,40 @@
+.box{
+    display:inline-block;
+    height:.52rem;
+    width:.92rem;
+    border-radius: .3rem;
+    background:#d3d3d3;
+    position: relative;
+    transition: background 0.3s ease-out;
+}
+.box.open{
+    background:#2da8e1;
+}
+.box.theme_blue.open{
+    background:#3492e9;
+}
+.box.theme_red.open{
+    background:#ff6060;
+}
+.box.theme_yellow.open{
+    background:#ffC600;
+}
+.box.theme_orange.open{
+    background:#ff6000;
+}
+.box.theme_purple.open{
+    background:#8948c5;
+}
+.button{
+    width:.44rem;
+    height:.44rem;
+    border-radius: .26rem;
+    background:#fff;
+    position:absolute;
+    top:.04rem;
+    left:.06rem;
+    transition: left 0.2s ease-out;
+}
+.box.open .button{
+    left:.42rem;
+}

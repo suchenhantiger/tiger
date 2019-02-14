@@ -1,0 +1,98 @@
+.box{
+    padding:0 10px;
+
+    /*margin-bottom:15px;*/
+}
+.box.left{
+    text-align: left;
+    float:left;
+}
+.box.center{
+    text-align: center;
+}
+.box.right{
+    text-align: right;
+    float:right;
+    line-height: 16px;
+}
+.box .checkbox{
+    /*width: 16px;
+    height: 16px;*/
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    float: left;
+    color: #fff;
+    background: #74aef8;
+    border: solid 1px #0f51b1;
+    border-radius: 4px;
+
+}
+
+
+
+
+
+.box .checkbox.theme1{
+    background: #fff;
+    border: solid 1px #3492e9;
+    border-radius: 4px;
+}
+.box .checkbox.theme1.checked{
+  background: url(./images/common/form/checkon_theme1.png) no-repeat #daedff;
+  background-size: cover;
+}
+
+
+
+
+
+.box .checkbox.theme2{
+    background: #fff;
+    border: solid 1px #0f51b1;
+    border-radius: 4px;
+}
+.box .checkbox.theme2.checked{
+  background: url(./images/common/form/checkon_theme2.png) no-repeat #fff;
+  background-size: cover;
+}
+
+
+
+.box .checkbox.theme1.disable{
+    background: #fff;
+    border: solid 1px #bbb;
+    border-radius: 4px;
+}
+.box .checkbox.theme1.disable.checked{
+     border: solid 1px #bbb;
+     background: url(./images/common/form/checkon_disable.png) no-repeat #f6f6f6  ;
+     background-size: cover;
+}
+
+
+
+.box span{
+
+    color:#fff;
+}
+
+@media(max-width: 376px){
+  .box .checkbox{
+      width: 18px;
+      height: 18px;
+    }
+}
+
+@media (max-width: 361px) {
+  .box .checkbox{
+      width: 18px;
+      height: 18px;
+    }
+}
+@media(max-width: 321px){
+  .box .checkbox{
+      width: 16px;
+      height: 16px;
+    }
+}

@@ -1,0 +1,57 @@
+.frame{
+
+}
+.title{
+    overflow: hidden;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.title.gray{
+    border-bottom: 1px solid #eee;
+}
+.title.red{
+    border-bottom: 1px solid #ff5555;
+}
+.title.none{
+    border-bottom: 0;
+}
+.title span.leftbox {
+    line-height: 22px;
+    padding-bottom: 5px;
+    padding-top: 8px;
+    padding-left: 10px;
+    display: block;
+    float: left;
+    color: #333;
+}
+.title .text{
+    font-size: 15px;
+    font-weight:bold;
+}
+.title i.leftIcon{
+    float: left;
+    display: block;
+    margin-right: 8px;
+    width: 24px;
+    height: 22px;
+}
+.title i.leftIcon.none{
+    display: none;
+}
+.title i.leftIcon.stick {
+    width: 3px;
+    height: 22px;
+    background-color: #ff5555;
+    margin-right: 10px;
+}
+.title i.leftIcon.rank{
+    background: url(./images/common/category/zyicon09.png) no-repeat -4px -5px #fff;
+    background-size: 31px;
+}
+.title i.leftIcon.curves{
+    background: url(./images/common/category/zyicon15.png) no-repeat -4px -5px #fff;
+    background-size: 31px;
+}
+.iconArea{
+    float:right;
+}

@@ -1,0 +1,109 @@
+.box{
+  background-color: #fff;
+  padding: 0 4%;
+  line-height: 440%;
+  width: 92%;
+  overflow: hidden;
+}
+.box .label{
+    float: left;
+    width: 35%;
+    font-size: 1.3em;
+    line-height: 310%;
+    color: #333;
+    display: block;
+
+}
+.box .label.w0{
+    width: 0%;
+}
+.box .label.w25{
+    width: 25%;
+}
+.box .label.w100{
+    width: 100%;
+}
+.box .label i{
+    color: #ff0000;
+    font-size: 1.3em;
+    font-style: normal;
+    vertical-align: middle;
+
+}
+
+.box.borderbottom{
+  border-bottom: 1px solid #f2f2f2;
+}
+.box .formelem input{
+    background-color: #fff;
+    border: none;
+    width: 65%;
+    float: right;
+    font-size: 1.3em;
+    padding: 0px;
+    padding-top: 2.5%;
+    line-height: 180%;
+}
+.box .formelem.w0 input{
+  width: 97.5%;
+}
+.box .formelem.w25 input{
+  width: 75%;
+}
+.box .formelem.w100 input{
+  width: 0%;
+}
+.box .formelem span{
+    background-color: #fff;
+    border: none;
+    width: 65%;
+    float: right;
+    line-height: 180%;
+    font-size: 1.3em;
+    padding-top: 2.5%;
+}
+.box .formelem.w0 span{
+  width: 97.5%;
+}
+.box .formelem.w25 span{
+  width: 75%;
+}
+.box .formelem.w100 span{
+  width: 0%;
+}
+.box .formelem span.disabled{
+      color:#999;
+}
+.box .formelem.left input{
+  text-align:left;
+}
+.box .formelem.right input{
+  text-align:right;
+}
+.box .formelem.left span{
+  text-align:left;
+}
+.box .formelem.right span{
+  text-align:right;
+}
+.box .formelem input::-webkit-input-placeholder{
+    color: #ddd;
+}
+
+
+@media(max-width: 376px){
+  .box .formelem input{font-size: 1.2em;}
+  .box .label{font-size: 1.2em;}
+  .box .formelem span{font-size: 1.2em;}
+}
+@media (max-width:361px) {
+  .box .label{
+    line-height: 310%;
+  }
+
+}
+@media(max-width: 321px){
+  .box .formelem input{font-size: 1.1em;}
+  .box .label{font-size: 1.1em;line-height: 300%;}
+  .box .formelem span{font-size: 1.1em;}
+}

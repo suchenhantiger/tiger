@@ -1,0 +1,42 @@
+.icon{
+    width: 34px;
+    height: 24px;
+    display: block;
+    float: left;
+    padding: 6px 4px;
+    border-left: 1px solid #ddd;
+    background:no-repeat center;
+}
+.open{
+    width:31px;
+    background-image: url(./images/common/category/arrow_up.png);
+}
+.close{
+    width:31px;
+    background-image: url(./images/common/category/arrow_down.png);
+}
+.table{
+    background-image: url(./images/common/category/ico_liebiao.png);
+    background-size: 20px;
+}
+.table.on {
+    background-image: url(./images/common/category/ico_liebiao_on.png);
+}
+.chart{
+    background-image: url(./images/common/category/ico_tb.png);
+    background-size: 20px;
+}
+.chart.on{
+    background-image: url(./images/common/category/ico_tb_on.png);
+}
+.edit{
+    background-size: 20px;
+    background-image: url(./images/common/category/ico_edit.png);
+}
+.edit.on{
+    background-image: url(./images/common/category/ico_ok.png);
+}
+.ok{
+    background-size: 20px;
+    background-image: url(./images/common/category/ico_ok.png);
+}

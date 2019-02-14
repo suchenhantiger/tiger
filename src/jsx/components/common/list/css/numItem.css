@@ -1,0 +1,74 @@
+.li{
+	border-bottom:1px solid #ddd;
+	padding:8px 10px;
+	min-height:32px;
+	line-height:32px;
+}
+.li span{
+	float:left
+}
+.smicon01,.smicon02,.smicon03,.smicon04,.smicon05,.smicon06,.smicon07,.smicon08,.smicon09,.smicon10,.smicon11{
+	float:left;
+	width:32px;
+	height:32px;
+	display:block;
+	margin-right:10px;
+}
+.smicon01{
+	background:url(./images/common/list/smicon01.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon02{
+	background:url(./images/common/list/smicon02.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon03{
+	background:url(./images/common/list/smicon03.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon04{
+	background:url(./images/common/list/smicon04.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon05{
+	background:url(./images/common/list/smicon05.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon06{
+	background:url(./images/common/list/smicon06.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon07{
+	background:url(./images/common/list/smicon07.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon08{
+	background:url(./images/common/list/tbicon01.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon09{
+	background:url(./images/common/list/tbicon02.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon10{
+	background:url(./images/common/list/tbicon03.png) no-repeat;
+	background-size:32px 32px;
+}
+.smicon11{
+	background:url(./images/common/list/tbicon04.png) no-repeat;
+	background-size:32px 32px;
+}
+.big_tip {
+    width: 18px;
+    height: 18px;
+    background-color: #ff5555;
+    border-radius: 50%;
+    display: block;
+    float: right;
+    font-style: normal;
+    color: #fff;
+    text-align: center;
+    line-height: 18px;
+    font-family: arial;
+    margin-top: 6px;
+}

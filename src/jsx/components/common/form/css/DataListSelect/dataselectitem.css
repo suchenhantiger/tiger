@@ -1,0 +1,48 @@
+.item_list{
+  padding: 3% 8%;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #eee;
+  font-size: 1.3em;
+  overflow: hidden;
+}
+.item_list .item{
+  padding-right: 3%;
+  line-height: 200%;
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin-top: 1%;
+
+}
+.item_list .item.radio{
+  background: url(./images/radio.png) no-repeat left;
+  background-size: 20px;
+
+}
+.item_list .item.radio.active{
+  background: url(./images/radio_active.png) no-repeat left;
+  background-size: 20px;
+}
+.item_list .item.checkbox{
+  background: url(./images/checkbox.png) no-repeat left;
+  background-size: 20px;
+}
+.item_list .item.checkbox.active{
+  background: url(./images/checkbox_active.png) no-repeat left;
+  background-size: 20px;
+}
+.item_list span.name{
+  float: left;
+  line-height: 180%;
+  width: 86%;
+}
+
+@media(max-width: 376px){
+
+}
+
+@media(max-width: 321px){
+   .item_list{font-size: 1.2em;}
+   .item_list .item{margin-top: 1.5%;}
+   .item_list span.name{width: 80%;}
+}

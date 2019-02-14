@@ -1,0 +1,41 @@
+.cs_tabs{
+	position:relative;
+	height:36px;
+	line-height:36px;
+	background-color:#fff;
+}
+.tab_list {
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    left: 25px;
+    right: 30px;
+}
+.tab_left_arrow{
+    float:left;
+    width: 12px;
+    height: 18px;
+	margin-left:10px;
+    display: block;
+    margin-top: 9px;
+	cursor:pointer;
+    background: url(./images/common/slidetabs/arrow05.png) no-repeat;
+    background-size: 12px 18px;
+}
+.tab_right_arrow{
+    float:right;
+    width: 12px;
+    height: 18px;
+	margin-right:10px;
+    display: block;
+    margin-top: 9px;
+	cursor:pointer;
+    background: url(./images/common/slidetabs/arrow01.png) no-repeat;
+    background-size: 12px 18px;
+}
+.slideBox{
+	transform:translateX(0);
+}
+.animate{
+	transition: transform 0.2s;
+}

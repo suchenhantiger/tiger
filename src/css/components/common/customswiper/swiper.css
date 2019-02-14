@@ -1,0 +1,19 @@
+.frame{
+    height: 40px;
+    transition: transform 0.3s linear;
+}
+
+.item{
+    display: flex;
+    align-items:center;
+    height: 40px;
+    width:100%;
+}
+.item span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    font-size: 15px;
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+<!--        <meta name="format-detection" content="telephone=no">-->
+<!--        <meta name="msapplication-tap-highlight" content="no">-->
+ <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>Apache Cordova</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+            <div>
+                <a href='#' onclick='getUUID()' >getUUID</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='getVersionNumber()' >getVersion</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='getPhoneModel()' >获取设备型号</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='getSystemPhoneName();' >获取系统型号</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='getSystemPhoneVersion()' >获取系统版本</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='openBrowser()' >openBrowser</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.showGuidePageVC(null,null);' >引导页</a>
+            </div><br>
+            
+            <div>
+            <a href='#' onclick='window.plugins.XYCommonPlugin.openXZSKReaderVC(null,null,"filename");' >兴证司刊查看</a>
+
+            </div><br>
+            <div>
+                <a href='#' onclick=' window.plugins.XYCommonPlugin.xyhUpdateApp(null,null);' >检查更新</a>
+            </div><br>
+            <div>
+                <a href='#' onclick=' window.plugins.XYCommonPlugin.xyhSSOApp(null,null,{"schema":"seeyonmtpix","userid":"drYNezc=","access_token":"SgB1T7N1G7yqFL50Ft2sF7BzSQ91FQEbTL8vS1MbFgSoF1AvGLEoWON2Sg9uS9eqELNxE1IrEq==","querytype":"oa"});' >单点登录</a>
+            </div><br>
+            <div>
+                <a href='#' onclick=' window.plugins.XYCommonPlugin.xyhNotice(null,null,{"oricontent":"/images/pdf-jpg/-3339311023472161426/-3339311023472161426.doc","imgnum":"2","pagenum":"0","file_url":"/renderbill/QueryAttachAction.do?value(filetype)=pdf&value(filearea)=OA&value(fileid)=2797295750806457030&value(fileext)=jpg&filename=2797295750806457030.jpg&ispadpt=1&value(terminal)=2","bul_createdate":"2016-11-11 14:44:12","read_count":"63","id":"9084395927890708451","username":"叶锦平","title":"兴业证券股份有限公司关于启用兴业证券股份有限公司龙岩华莲路证券营业部印章的通知","terminal":"2","mime_type":"image/jpeg","suf_name":"jpg","att_size":"92.6KB","querytype":"single","bul_scope":"兴业证券股份有限公司","depname":"办公室","att_createdate":"2016-11-11 14:43:25","keywords":"","body_type":"OfficeWord","att_flag":"1","support_flag":"1","sign_name":"陈德富","content":"/images/pdf-jpg/-3339311023472161426/-3339311023472161426-0.jpg,/images/pdf-jpg/-3339311023472161426/-3339311023472161426-1.jpg","type_name":"公司公告","filename":"16zh-059(附件).jpg","brief":""},"71e4a605305b4eedf5849614da3eae43.62583.padbeta_001_2013");' >通知公告</a>
+            </div><br>
+            <div>
+                <a href='#' onclick=' window.plugins.XYCommonPlugin.xyhScanCode(null,null,{"channel":"homepage"});' >二维码扫描</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+' >拨打电话</a>
+            </div><br>
+            <div>
+                <a href='#' onclick=' window.plugins.XYCommonPlugin.sendMessage(null,null,13700010001,"你好");' >发送短信</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhNewWindow(null,null,{"url":"http://moa.xyzq.com.cn:9901/pad_pt/renderbill/OpencormailAction.do?value(type)=4&value(tomail)=&value(ccmail)=&jsoncallback=?&access_token=1bc9ef9cc515342211ba88ec32c9c4de.62583.padbeta_001_2013"});' >打开新窗口</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhCloseWindow(null,null,{});' >关闭新窗口</a>
+            </div><br>
+            
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhSetItem(null,null,"123","234");'>存储</a>
+            </div><br>
+            <div>
+            <a href='#' onclick='window.plugins.XYCommonPlugin.xyhGetItem(null,null,"22");' >get</a>
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhSetGlobalTheme(null,null,"#00000”);' >设置主题颜色</a>
+            </div><br>
+           <div>
+                <a href='#' onclick='setUserPhoto();'>设置头像</a>
+            </div><br>
+                <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhOpenPhotoBrowser(null,null,{"imgs":"图片地址","index":"0"});'>图片浏览器</a>
+                
+            </div><br>
+            <div>
+                <a href='#' onclick='window.plugins.XYCommonPlugin.xyhSaveContact(null,null,{联系人json数据});'>导出联系人信息到通讯录</a>
+                
+            </div><br>
+            
+           
+           <script>
+               function setUserPhoto()
+               {
+                   window.plugins.XYCommonPlugin.xyhSetCustomUserPhoto(function(image){
+                                                     alert('image='+image);
+                                                     },
+                                                     function(err){
+                                                     },{"token":"a123"});
+
+
+               }
+               
+               function getUUID()
+               {
+                   var version = window.plugins.uniqueDeviceID.get(function(uuid){
+                                                                   alert('uuid='+uuid);
+                                                                   },
+                                                                   function(err){
+                                                                   });
+               }
+           
+           function getVersionNumber(){
+               
+               // window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+               window.plugins.XYCommonPlugin.getVersionNumber(function(versionNumber){
+                                                           alert('versionNumber='+versionNumber);
+                                                           },null);
+           }
+           function getPhoneModel(){
+               
+               // window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+               window.plugins.XYCommonPlugin.getPhoneModel(function(phoneModel){
+                                                              alert('phoneModel='+phoneModel);
+                                                           },null);
+           }
+           function getSystemPhoneName(){
+               
+               // window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+               window.plugins.XYCommonPlugin.getSystemPhoneName(function(phoneName){
+                                                           alert('phoneName='+phoneName);
+                                                           },null);
+           }
+           function getSystemPhoneVersion(){
+               
+               // window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+               window.plugins.XYCommonPlugin.getSystemPhoneVersion(function(phoneVersion){
+                                                           alert('phoneVersion='+phoneVersion);
+                                                           },null);
+           }
+           
+           
+           
+           function openBrowser(){
+               
+               // window.plugins.XYCommonPlugin.callPhone(null,null, "234" );
+               cordova.InAppBrowser.open('http://mp.weixin.qq.com/s?__biz=MzA5NDMxMzQxMA==&mid=2651561774&idx=1&sn=accdda8536267d7cca77c909e42ad356&chksm=8bafb183bcd838954fdd3d5551de74aafed341444ff9eecb2eb52f57755df17312ad71edcda2&scene=0#wechat_redirect', '_blank', 'location=no,toolbar=yes,toolbarposition=top,closebuttoncaption=关闭');
+               
+           }
+
+               </script>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

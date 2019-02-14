@@ -1,0 +1,35 @@
+a.item{
+    position: relative;
+    display:inline-block;;
+	color:#fff;
+    margin:8px 0;
+}
+a.item span{
+    border: 1px solid #fff;
+    text-align: center;
+    border-radius: 12px;
+    width: 99%;
+    padding: 6px 0;
+    display: block;
+}
+a.item.on span{
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #fff;
+}
+a.item .sm_tip {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #ff5555;
+    border-radius: 50%;
+    display: block;
+    top: 3px;
+    right: 4px;
+}
+a.red.item .sm_tip{
+    background-color: #fff;
+}
+a.item.on .sm_tip{
+    background-color: #ff5555;
+}

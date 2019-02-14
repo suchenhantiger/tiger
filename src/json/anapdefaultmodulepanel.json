@@ -1,0 +1,48 @@
+{
+    "userdefault_data": [
+      {
+        "syscode": "001",
+        "sysname": "日程",
+        "isneedlogin":true,
+        "isnew":0,
+        "isopen":1
+      },
+      {
+        "syscode": "002",
+        "sysname": "工作审批",
+        "isneedlogin":true,
+        "isnew":0,
+        "isopen":1
+      },
+      {
+        "syscode": "003",
+        "sysname": "客户查询",
+        "isneedlogin":true,
+        "isnew":0,
+        "isopen":1
+      }
+    ],
+    "leftdefault_data": [
+      {
+          "syscode": "004",
+          "sysname": "会议室",
+          "isneedlogin":true,
+          "isnew":0,
+          "isopen":0
+      },
+      {
+        "syscode": "005",
+        "sysname": "股票池调整",
+        "isneedlogin":true,
+        "isnew":0,
+        "isopen":1
+      },
+      {
+        "syscode": "006",
+        "sysname": "电话服务",
+        "isneedlogin":true,
+        "isnew":0,
+        "isopen":1
+      }
+    ]
+}

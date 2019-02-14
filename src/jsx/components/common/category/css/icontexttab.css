@@ -1,0 +1,331 @@
+
+
+
+.tabpanel{}
+.tabitem {background-color: #fff;position: relative;  padding: 1% 2% 1% 3%;overflow: hidden;height: 4em;line-height: 4em;}
+.moreline{border-bottom: 1px solid #f2f2f2;}
+.moreline:last-child{
+  /*border-bottom: 0px*/
+}
+.tabitem .icon{width: 42px;height: 42px; float: left;background-size: 42px 42px;background-repeat: no-repeat;margin-top: 2px;  }
+.tabitem .title{float: left;    font-size: 1.3em;
+  margin-left: 3%;  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width: 270px;    }
+.tabitem .news_count{background: #f62408;padding: 1%;border-radius: 30px;text-align: center;color: #fff; font-size: 0.8em;margin-left: 3px;font-family: Arial, Helvetica, sans-serif;line-height: 120%;    min-width: 4%;    display: inline-block;}
+.tabitem  .append_img{width: 50px;height: 50px;float: right; border-radius: 50px;    margin-right: 5px;}
+.tabitem  .append_img.rect{width: 30px;height: 30px;padding-top: 10px;border-radius: 0px; }
+.tabitem  .append_info{float: right;font-size: 1.1em;color:#999;}
+.tabitem  .rightarrow{
+    background: url(./images/arrow01.png) no-repeat;
+    height: 20px;
+    width: 20px;
+    background-size: 70%;
+    float: right;
+    display: inline-block;
+    margin-top: 18px;
+}
+.tabitem  .rightarrow_none{
+  width: 20px;
+  float: right;
+  height: 100%;
+}
+
+.tabitem .icon.mydata{
+      background-image: url(./images/common/category/mydata.png) ;
+
+}
+.tabitem .icon.itservice{
+      background-image: url(./images/common/category/itservice.png) ;
+}
+.tabitem .icon.feedback{
+      background-image: url(./images/common/category/feedback.png)  ;
+}
+.tabitem .icon.accountsave{
+      background-image: url(./images/common/category/accountsave.png)  ;
+}
+.tabitem .icon.recommend{
+      background-image: url(./images/common/category/recommend.png)  ;
+}
+.tabitem .icon.appdownload{
+      background-image: url(./images/common/category/appdownload.png)  ;
+}
+.tabitem .icon.setting{
+      background-image: url(./images/common/category/setting.png) ;
+}
+
+
+.tabitem .icon.themeconfig{
+      background-image: url(./images/common/category/themeconfig.png) ;
+}
+.tabitem .icon.messageconfig{
+      background-image: url(./images/common/category/messageconfig.png) ;
+}
+.tabitem .icon.cheanupconfig{
+      background-image: url(./images/common/category/cheanupconfig.png) ;
+}
+.tabitem .icon.popupconfig{
+      background-image: url(./images/common/category/popupconfig.png) ;
+}
+.tabitem .icon.versionconfig{
+      background-image: url(./images/common/category/versionconfig.png) ;
+}
+.tabitem .icon.aboutconfig{
+      background-image: url(./images/common/category/aboutconfig.png) ;
+}
+
+
+
+
+
+
+
+
+
+.tabitem .icon.frequestion{
+      background-image: url(./images/common/category/frequestion.png)  ;
+}
+.tabitem .icon.helpdoc{
+      background-image: url(./images/common/category/helpdoc.png) ;
+}
+.tabitem .icon.itservice1{
+      background-image: url(./images/common/category/itservice1.png) ;
+}
+.tabitem .icon.akeyreport{
+      background-image: url(./images/common/category/akeyreport.png) ;
+}
+.tabitem .icon.savereport{
+      background-image: url(./images/common/category/savereport.png) ;
+}
+.tabitem .icon.newbie{
+    background-image: url(./images/common/category/newbie.png) ;
+}
+.tabitem .icon.dhticket{
+      background-image: url(./images/common/category/dhticket.png) ;
+}
+.tabitem .icon.xhticket{
+      background-image: url(./images/common/category/xhticket.png) ;
+}
+.tabitem .icon.navBox_001{
+      background-image: url(./images/workbench/navBox_001.png) ;
+}
+.tabitem .icon.reimburse{
+      background-image: url(./images/common/category/reimburse.png) ;
+}
+.tabitem .icon.video{
+      background-image: url(./images/common/category/video.png) ;
+}
+.tabitem .icon.navBox_002{
+      background-image: url(./images/workbench/navBox_002.png) ;
+}
+.tabitem .icon.navBox_003{
+      background-image: url(./images/workbench/navBox_003.png) ;
+}
+.tabitem .icon.navBox_004{
+      background-image: url(./images/workbench/navBox_004.png) ;
+}
+.tabitem .icon.navBox_005{
+      background-image: url(./images/workbench/navBox_005.png) ;
+}
+.tabitem .icon.navBox_006{
+      background-image: url(./images/workbench/navBox_006.png) ;
+}
+.tabitem .icon.navBox_007{
+      background-image: url(./images/workbench/navBox_007.png) ;
+}
+.tabitem .icon.navBox_008{
+      background-image: url(./images/workbench/navBox_008.png) ;
+}
+.tabitem .icon.navBox_009{
+      background-image: url(./images/workbench/navBox_009.png) ;
+}
+.tabitem .icon.navBox_010{
+      background-image: url(./images/workbench/navBox_010.png) ;
+}
+
+.tabitem .icon.navBox_011{
+      background-image: url(./images/workbench/navBox_011.png) ;
+}
+.tabitem .icon.navBox_012{
+      background-image: url(./images/workbench/navBox_012.png) ;
+}
+.tabitem .icon.navBox_013{
+      background-image: url(./images/workbench/navBox_013.png) ;
+}
+.tabitem .icon.navBox_014{
+      background-image: url(./images/workbench/navBox_014.png) ;
+}
+.tabitem .icon.navBox_015{
+      background-image: url(./images/workbench/navBox_015.png) ;
+}
+.tabitem .icon.navBox_016{
+      background-image: url(./images/workbench/navBox_016.png) ;
+}
+.tabitem .icon.navBox_017{
+      background-image: url(./images/workbench/navBox_017.png) ;
+}
+.tabitem .icon.navBox_018{
+      background-image: url(./images/workbench/navBox_018.png) ;
+}
+.tabitem .icon.navBox_019{
+      background-image: url(./images/workbench/navBox_019.png) ;
+}
+.tabitem .icon.navBox_020{
+      background-image: url(./images/workbench/navBox_020.png) ;
+}
+.tabitem .icon.navBox_021{
+      background-image: url(./images/workbench/navBox_021.png) ;
+}
+.tabitem .icon.navBox_022{
+      background-image: url(./images/workbench/navBox_022.png) ;
+}
+.tabitem .icon.navBox_023{
+      background-image: url(./images/workbench/navBox_023.png) ;
+}
+.tabitem .icon.navBox_024{
+      background-image: url(./images/workbench/navBox_024.png) ;
+}
+.tabitem .icon.navBox_025{
+      background-image: url(./images/workbench/navBox_025.png) ;
+}
+.tabitem .icon.navBox_026{
+      background-image: url(./images/workbench/navBox_026.png) ;
+}
+.tabitem .icon.navBox_027{
+      background-image: url(./images/workbench/navBox_027.png) ;
+}
+.tabitem .icon.navBox_028{
+      background-image: url(./images/workbench/navBox_028.png) ;
+}
+.tabitem .icon.navBox_029{
+      background-image: url(./images/workbench/navBox_029.png) ;
+}
+.tabitem .icon.navBox_030{
+      background-image: url(./images/workbench/navBox_030.png) ;
+}
+.tabitem .icon.navBox_031{
+      background-image: url(./images/workbench/navBox_031.png) ;
+}
+.tabitem .icon.navBox_032{
+      background-image: url(./images/workbench/navBox_032.png) ;
+}
+.tabitem .icon.navBox_033{
+      background-image: url(./images/workbench/navBox_033.png) ;
+}
+.tabitem .icon.navBox_034{
+      background-image: url(./images/workbench/navBox_034.png) ;
+}
+.tabitem .icon.navBox_035{
+      background-image: url(./images/workbench/navBox_035.png) ;
+}
+.tabitem .icon.navBox_036{
+      background-image: url(./images/workbench/navBox_036.png) ;
+}
+.tabitem .icon.navBox_037{
+      background-image: url(./images/workbench/navBox_037.png) ;
+}
+.tabitem .icon.navBox_038{
+      background-image: url(./images/workbench/navBox_038.png) ;
+}
+.tabitem .icon.navBox_039{
+      background-image: url(./images/workbench/navBox_039.png) ;
+}
+.tabitem .icon.navBox_040{
+      background-image: url(./images/workbench/navBox_040.png) ;
+}
+.tabitem .icon.navBox_041{
+      background-image: url(./images/workbench/navBox_041.png) ;
+}
+.tabitem .icon.navBox_042{
+      background-image: url(./images/workbench/navBox_042.png) ;
+}
+.tabitem .icon.navBox_043{
+      background-image: url(./images/workbench/navBox_043.png) ;
+}
+.tabitem .icon.navBox_044{
+      background-image: url(./images/workbench/navBox_044.png) ;
+}
+.tabitem .icon.navBox_045{
+      background-image: url(./images/workbench/navBox_045.png);
+}
+.tabitem .icon.navBox_046{
+      background-image: url(./images/workbench/navBox_046.png);
+}
+.tabitem .icon.navBox_047{
+      background-image: url(./images/workbench/navBox_047.png);
+}
+.tabitem .icon.navBox_048{
+      background-image: url(./images/workbench/navBox_048.png);
+}
+.tabitem .icon.navBox_049{
+      background-image: url(./images/workbench/navBox_049.png);
+}
+.tabitem .icon.navBox_050{
+      background-image: url(./images/workbench/navBox_050.png);
+}
+
+.tabitem .icon.travel_oa{
+      background-image: url(./images/common/category/travel_oa.png) ;
+}
+.tabitem .icon.travel_ticket{
+      background-image: url(./images/common/category/travel_ticket.png) ;
+}
+.tabitem .icon.travel_hotel{
+      background-image: url(./images/common/category/travel_hotel.png) ;
+}
+.tabitem .icon.travel_invoice{
+      background-image: url(./images/common/category/travel_invoice.png) ;
+}
+.tabitem .icon.travel_reimburse{
+      background-image: url(./images/common/category/travel_reimburse.png) ;
+}
+
+.tabitem .icon.holiday_help{
+  background-image: url(./images/common/category/holiday_help.png) ;
+}
+
+.tabitem .icon.holiday_rule{
+  background-image: url(./images/common/category/holiday_rule.png) ;
+}
+.tabitem .icon.pwd_change{
+  background-image: url(./images/common/category/pwdchange.png) ;
+}
+.tabitem .icon.gpwd_change{
+  background-image: url(./images/common/category/gpwdchange.png) ;
+}
+.tabitem .icon.login_log{
+  background-image: url(./images/common/category/loginlog.png) ;
+}
+.tabitem .icon.login_errorlog{
+  background-image: url(./images/common/category/loginerrorlog.png) ;
+}
+
+
+
+
+
+@media(max-width: 394px){
+.tabitem .title{max-width: 250px;}
+}
+
+
+@media(max-width: 376px){
+  /*.tabitem .title{font-size:1.3em;max-width: 240px;}*/
+.tabitem .title{font-size:1.3em;max-width: 225px;}
+.tabitem { height: 3.7em;line-height: 3.7em;}
+.tabitem .icon{width: 40px;height: 40px;background-size: 40px 40px;    }
+.tabitem  .rightarrow{margin-top: 15px}
+.tabitem  .append_img{width: 45px;height: 45px;border-radius: 45px;}
+.tabitem  .append_info{font-size: 1em}
+.tabitem  .append_img.rect{width: 26px;height: 26px;padding-top: 8px;}
+}
+@media(max-width: 321px){
+.tabitem .title{font-size:1.2em;max-width: 200px;}
+.tabitem { height: 3.2em;line-height: 3.2em;}
+.tabitem   .icon{width: 36px;height: 36px;background-size: 36px 36px;margin-top: 0px; }
+.tabitem  .rightarrow{margin-top: 12px}
+.tabitem  .append_img{width: 40px;height: 40px;border-radius: 40px; }
+.tabitem  .append_img.rect{width: 22px;height: 22px;padding-top: 8px;}
+.tabitem  .append_info{font-size: 1em}
+}

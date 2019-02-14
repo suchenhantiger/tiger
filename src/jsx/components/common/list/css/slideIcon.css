@@ -1,0 +1,39 @@
+.icon{
+    color:#fff;
+	height:100%;
+	width:66px;
+	text-align:center;
+	display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50% 12px;
+    background-size:24px;
+     line-height: 120px;
+}
+.icon.phone{
+	background-image:url(./images/common/list/phone.png);
+    background-color: #79c6ea;
+}
+.icon.message{
+	background-image:url(./images/common/list/message.png);
+    background-color: #ff8181;
+}
+.icon.complete{
+	background-image:url(./images/common/list/complete.png);
+    background-color: #ffbe7c;
+}
+.icon.delete{
+  background:url(./images/common/list/contact_icon_del.png) no-repeat 50% 20px #ff6262;
+	background-size:24px;
+}
+.icon.top{
+  background:url(./images/common/list/xxzx_icon_zd.png) no-repeat 50% 20px #3492e9;
+	background-size:24px;
+}
+.icon.delete.middel{
+ line-height: 140px;
+  background-position: 50% 28px;
+}
+.icon.delete.centerAlign{
+ line-height: 140px;
+  background-position: 50% 50%;
+}

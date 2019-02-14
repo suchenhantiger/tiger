@@ -1,0 +1,86 @@
+.box{
+  background-color: #fff;
+  padding: 0 4%;
+  line-height: 440%;
+  width: 92%;
+  overflow: hidden;
+}
+.box label{
+  float: left;
+  width: 35%;
+  font-size: 1.3em;
+  line-height: 360%;
+  color: #333;
+  display: block;
+}
+.box label i{
+    color: #ff0000;
+    font-size: 1.3em;
+    font-style: normal;
+    vertical-align: middle;
+}
+.box.borderbottom{
+  border-bottom: 1px solid #f2f2f2;
+}
+.box .formelem{
+  float: right;
+  width: 65%;
+  line-height: 360%;
+}
+.box .formelem ul{
+  float: left;
+  width: 90%;
+  padding: 7% 0 5% 0;
+}
+.box .formelem ul li{
+  float: left;
+  border-radius: 16px;
+  border: solid 1px #dadbde;
+  line-height: 160%;
+  padding: 1% 4%;
+  margin-right: 6px;
+  margin-bottom: 6px;
+
+}
+.box .formelem ul li a{
+    background: url(./images/ico_close_xz.png) top right no-repeat;
+    background-size: 18px;
+    padding-right: 24px;
+    display: block;
+    font-size: 1.2em;
+}
+.box .formelem.disable ul li a{
+    background-size: 0 0;
+    padding-right: 0px;
+    color: #999;
+}
+
+.box .formelem .addpic{
+    background: url(./images/ico_add.png) no-repeat right;
+    width: 26px;
+    text-align: left;
+    height: 26px;
+    background-size: 26px;
+    display: block;
+    margin-top: 15px;
+    position: absolute;
+    right: 10px;
+}
+.box .formelem.disable .addpic{
+  display: none;
+}
+
+
+
+@media(max-width: 376px){
+  .box label{font-size: 1.2em;}
+  .box .formelem .addpic{width: 25px;height: 25px;background-size: 25px;}
+  .box .formelem ul li a{font-size: 1.1em;}
+}
+
+@media(max-width: 321px){
+  .box label{font-size: 1.1em;}
+  .box .formelem .addpic{width: 22px;height: 22px;background-size: 22px;}
+  .box .formelem ul li a{background-size: 18px;padding-right: 24px;font-size: 1em;}
+
+}

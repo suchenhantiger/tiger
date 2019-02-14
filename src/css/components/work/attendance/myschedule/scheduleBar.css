@@ -1,0 +1,38 @@
+.frame{
+    overflow: hidden;
+    position: relative;
+}
+.scrollView{
+  height: 120px;
+  left: 0px;
+  /*position: absolute;*/
+  right: 0px;
+  z-index: 1;
+  background-color: #fff;
+
+}
+
+.scrollsubView{
+ height: 100%;
+ position: absolute;
+ z-index: 1;
+}
+.tabNav{
+  display: inline-block;
+  padding-left: 0;
+  white-space: nowrap;
+  height: 100%;
+
+}
+@media(max-width: 376px){
+  .scrollView{height: 110px;}
+
+}
+@media(max-width: 361px){
+  .scrollView{height: 110px;}
+
+}
+@media(max-width: 321px){
+  .scrollView{height: 100px;}
+
+}

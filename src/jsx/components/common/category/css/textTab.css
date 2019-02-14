@@ -1,0 +1,14 @@
+.text {
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    padding: 0 8px 1px 8px;
+    line-height: 18px;
+    margin-top: 8px;
+}
+.text.on{
+    color: #fff;
+    background-color: #ff7a7a;
+    border: 1px solid #ff7a7a;
+}

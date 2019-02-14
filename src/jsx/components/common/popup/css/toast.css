@@ -1,0 +1,45 @@
+.frame{
+    position: fixed;
+    bottom:15%;
+    left:0;
+    right:0;
+    text-align:center;
+    z-index: 9999;
+}
+.box{
+    display: inline-block;
+    max-width: 300px;
+    margin:0 auto;
+    padding:8px 20px;
+    border-radius: 15px;
+    background:rgba(109,109,109,0.8);
+    box-shadow: 1px 1px 13px;
+}
+.icon{
+    display: inline-block;
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    vertical-align: middle;
+}
+.icon.success{
+    background-image: url('./images/common/toast/icon_suc.png');
+}
+.icon.error{
+    background-image: url('./images/common/toast/icon_error.png');
+}
+.icon.warning{
+    background-image: url('./images/common/toast/icon_warning.png');
+}
+
+.text{
+    display: inline-block;
+    max-width: 255px;
+    color:#fff;
+    font-size:15px;
+    text-align:center;
+    line-height: 20px;
+    vertical-align: middle;
+    margin-left:10px;
+}

@@ -1,0 +1,58 @@
+.ecard_box{
+    background-size: 100%;
+    border-radius: 15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40%;
+    overflow: hidden;
+    background: #fff;
+    width: 80%;
+}
+.ecard_box .pp_mid{}
+
+.ecard_box .pp_mid  .pp_p02{    color: #fff;
+      font-size: 2em;
+      display: block;
+      width: 100%;
+      background: url(./images/common/toast/bg01.png) no-repeat;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      font-weight: bold;
+      background-size: cover;
+      padding: 20% 0 16% 0;
+}
+
+
+
+.ecard_box.bg01 .pp_mid  .pp_p02{    color: #fff;
+    background-image: url(./images/common/toast/bg01.png);
+}
+.ecard_box.bg02 .pp_mid  .pp_p02{    color: #fff;
+    background-image: url(./images/common/toast/bg02.png);
+}
+ 
+.ecard_box .pp_btns2{padding-bottom: 20px;
+    margin-top: 6%;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;}
+
+.ecard_box .pp_btns2 a
+{
+  display: block;
+    line-height: 220%;
+    text-align: center;
+    border: 1px solid #3492e9;
+    border-radius: 40px;
+    color: #3492e9;
+    background-color: #fff;
+    width: 100%;
+    font-size: 1.4em;
+}
+.ecard_box .pp_btns2 a:hover, .ecard_box .pp_btns2 a:focus {
+    border: 1px solid #3492e9;
+    background-color: #3492e9;
+    color: #fff;
+}

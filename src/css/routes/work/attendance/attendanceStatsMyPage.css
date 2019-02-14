@@ -1,0 +1,88 @@
+.floor_gray {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f1f5;
+}
+.dk_month_datebox {
+    height: 0.76rem;
+    padding: 0 4%;
+    line-height: 0.76rem;
+    font-size: 0.24rem;
+}
+.dk_month_datebox .left {
+    color: #999;
+    float: left;
+}
+.dk_month_datebox .right {
+    float: right !important;
+}
+.dk_month_datebox .left a, .dk_month_datebox .right a {
+    margin-top: 0.24rem;
+}
+
+.dk_month_datebox .right .datebox {
+    float: left;
+    margin: 0 0.3rem;
+    font-size: 0.24rem;
+    line-height: 0.76rem;
+}
+.dk_month_datebox .right .datebox input{
+  font-size: 0.28rem;
+    color: #000;
+    line-height: 100%;
+    background: url(./images/arrow_down.png) right no-repeat;
+    background-size: 16px;
+    padding-right: 22px;
+    display: block;
+    border: none;
+    padding-left: 0px;
+    line-height: 0.76rem;
+}
+.dk_month_datebox .right .ico_arrow_right {
+    float: left;
+    width: 0.26rem;
+    height: 0.26rem;
+    background: url(./images/arrow01.png) no-repeat;
+    background-size: 0.26rem;
+    display: block;
+}
+/**********************************************/
+.dk_my_all {
+  background: #fff;
+   padding: 0.3rem 0%;
+   overflow: hidden;
+   margin-bottom: 1px;
+   width: 100%;
+}
+
+.dk_my_all ul {
+    width: 100%;
+    overflow: hidden;
+}
+.dk_my_all ul li {
+    float: left;
+    width: 25%;
+    display: inline;
+    text-align: center;
+    border-right: 1px #f0f1f5 solid;
+    margin-left: -1px;
+}
+.dk_my_all ul li p {
+    font-size: 0.24rem;
+    text-align: center;
+    line-height: 0.28rem;
+}
+.dk_my_all ul li span {
+    font-size: 0.3rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Droid Sans","Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-weight: bold;
+    margin-top: 0.16rem;
+    display: block;
+}
+.dk_my_all ul li .red {
+    color: #ff7373;
+}
+.dk_my_all ul .border_none01 {
+    border-right: none !important;
+}
+/**********************************************/

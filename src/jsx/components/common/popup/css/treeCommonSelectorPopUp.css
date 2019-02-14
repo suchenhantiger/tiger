@@ -1,0 +1,160 @@
+
+.cp_ecard_box {
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff !important;
+    width: 80%;
+    margin-top: 40%;
+}
+.cp_ecard_box.fullview{
+  width: 95%;
+  margin-top: 14%;
+}
+
+.cp_ecard_box .pp_top02 {
+    text-align: left;
+    color: #000;
+    font-size: 1.3em;
+    border-radius: 13px 13px 0 0;
+    padding-left: 40px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-bottom: solid 1px #c3c0c0;
+    line-height: 280%;
+
+}
+.cp_ecard_box .pp_top02.center {
+    text-align: center;
+    color: #000;
+    font-size: 1.4em;
+    border-radius: 13px 13px 0 0;
+    padding-left: 0px;
+    border-bottom: solid 1px #ddd;
+    line-height: 340%;
+
+}
+.cp_ecard_box .pp_top02.theme_blue{
+  background-color: #3492e9;
+  color:#fff;
+}
+.cp_ecard_box .pp_top02.theme_red{
+  background-color: #ff6060;
+  color:#fff;
+}
+.cp_ecard_box .pp_top02.theme_yellow{
+  background-color: #ffc600;
+  color:#fff;
+}
+.cp_ecard_box .pp_top02.theme_orange{
+  background-color: #ff6000;
+  color:#fff;
+}
+.cp_ecard_box .pp_top02.theme_purple{
+  background-color: #8948c5;
+  color:#fff;
+}
+.cp_ecard_box .pp_top02.warn {
+
+    background: url(./images/my_icon_qchc.png) left no-repeat;
+    background-size: 18px;
+    background-position: 20px;
+
+}
+.cp_ecard_box .pp_top02.wbdj {
+
+    background: url(./images/my_icon_wbdj.png) left no-repeat;
+    background-size: 24px;
+    background-position: 20px;
+
+}
+.cp_ecard_box .pp_top02.peopleselect{
+  background: url(./images/choose_bg.png) left no-repeat;
+  background-size: 18px;
+  background-position: 18px;
+}
+.cp_ecard_box .pp_btns {
+   /*padding-bottom: 20px;*/
+   padding: 3% 0;
+   width: 85%;
+   /*margin-top: 20px;*/
+   margin-left: auto;
+   margin-right: auto;
+}
+.cp_ecard_box .pp_btns a {
+    display: inline-block;
+    width: 45%;
+    /*height: 40px;*/
+    line-height: 220%;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1.4em;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel {
+    color: #3492e9;
+    border: 1px solid #3492e9;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel.theme_blue {
+    color: #3492e9;
+    border: 1px solid #3492e9;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel.theme_red {
+    color: #ff6060;
+    border: 1px solid #ff6060;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel.theme_yellow {
+    color: #ffc600;
+    border: 1px solid #ffc600;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel.theme_orange {
+    color: #ff6000;
+    border: 1px solid #ff6000;
+}
+.cp_ecard_box .pp_btns .btn_pp_cancel.theme_purple {
+    color: #8948c5;
+    border: 1px solid #8948c5;
+}
+.cp_ecard_box .btn_pp_ok01 {
+    float: right;
+    color: #fff;
+    border: 1px solid #3492e9 !important;
+    background-color: #3492e9;
+}
+.cp_ecard_box .btn_pp_ok01.theme_blue{
+  background-color: #3492e9;
+    border: 1px solid #3492e9 !important;
+}
+.cp_ecard_box .btn_pp_ok01.theme_red{
+  background-color: #ff6060;
+    border: 1px solid #ff6060 !important;
+}
+.cp_ecard_box .btn_pp_ok01.theme_yellow{
+  background-color: #ffc600;
+    border: 1px solid #ffc600 !important;
+}
+.cp_ecard_box .btn_pp_ok01.theme_orange{
+  background-color: #ff6000;
+    border: 1px solid #ff6000 !important;
+}
+.cp_ecard_box .btn_pp_ok01.theme_purple{
+  background-color: #8948c5;
+    border: 1px solid #8948c5 !important;
+}
+
+
+
+@media(max-width: 375px){
+.cp_ecard_box .pp_btns a {font-size: 1.3em}
+.cp_ecard_box .pp_top02 {
+  font-size:1.2em
+}
+.cp_ecard_box .pp_top02.center {line-height: 300%;}
+}
+@media(max-width: 320px){
+.cp_ecard_box .pp_btns a {font-size: 1.1em;line-height: 220%}
+.cp_ecard_box .pp_top02 {
+  font-size:1.1em
+}
+.cp_ecard_box .pp_top02.center {line-height: 240%;}
+}

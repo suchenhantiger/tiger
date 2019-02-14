@@ -1,0 +1,95 @@
+.scrollView{
+    position: fixed;
+    top: 4.16rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    bottom: 60px;
+  }
+  .dk_my_list {
+      background: #fff;
+      padding: 0.05rem 4%;
+      overflow: hidden;
+      margin-bottom: 1px;
+  }
+  .dk_my_list ul {
+      width: 100%;
+      overflow: hidden;
+  }
+  .dk_my_list ul li {
+      float: left;
+      line-height: 0.42rem;
+      font-size: 0.28rem;
+      display: inline-block;
+      word-wrap: break-word;
+  }
+  .dk_my_zt {
+      text-align: right;
+      line-height: 0.28rem !important;
+      margin-top: 0.07rem;
+  }
+  .dk_my_w72 {
+      width: 66%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  }
+  .dk_my_list ul .dk_my_w24 {
+      width: 28%;
+  }
+  .dk_my_list ul .dk_my_w30 {
+      width: 25%;
+  }
+  .dk_my_list ul .dk_my_w40 {
+      width: 40%;
+  }
+  .dk_my_list ul li span i {
+      font-style: normal;
+  }
+  .dk_my_list ul li span .abnormity{
+    color: red;
+  }
+  .dk_my_list ul li i.dk_mu_ztlist {
+      font-style: normal;
+      font-size: 0.28rem;
+      line-height: 0.34rem;
+  }
+  .shift_status {
+    color: rgb(52, 146, 233);
+    line-height: 0.19rem;
+    font-size: 0.24rem;
+    text-align: center;
+    margin-top: 0.16rem;
+    border: 0.03rem solid;
+    border-radius: 0.04rem;
+    padding: 0.01rem 0.04rem 0.01rem 0.04rem;
+}
+.shift_status_err {
+    color: #f8ab37;
+}
+  .blue {
+      color: #3492e9 !important;
+  }
+  .red {
+      color: #ff7373 !important;
+  }
+  .scrollView{
+    top: 2.1rem;
+  }
+  @media(max-width: 376px){
+    .scrollView{
+      top: 2.1rem;
+    }
+  }
+  @media(max-width: 361px){
+    .scrollView{
+        top: 2.1rem;
+    }
+  }
+  
+  @media(max-width: 321px){
+    .scrollView{
+        top: 2.1rem;
+    }
+  }
+  
