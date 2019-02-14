@@ -28,6 +28,10 @@ class PureComponent extends Component {
         return rem*remUnit+px;
     }
 
+    calculateRem(rem, px){
+        return rem+px/remUnit;
+    }
+
     //发送Ajax请求，并记录请求标记，在元素销毁时清除回调
     requestJSON(url,params,callBack, otherParams){
         var obj = NetWork.requestJSON(url, params || {}, otherParams || {}),

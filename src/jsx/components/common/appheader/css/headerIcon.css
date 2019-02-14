@@ -1,8 +1,8 @@
 .ico{
     display: inline-block;
-    width: 24px;
-    height: 45px;
-    margin-left: 10px;
+    width: .48rem;
+    height: .9rem;
+    margin-left: .2rem;
     background: left center no-repeat;
-    background-size: 24px;
+    background-size: .48rem;
 }

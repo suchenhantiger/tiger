@@ -5,22 +5,8 @@
 
 .fticon .link{
     width: 100%;
-    height: 50px;
+    height: 1rem;
     display: block;
-
-		/*background:no-repeat center;
-		background-size:24px;
-		background-position: top;
-		text-align: center;
-		padding-top: 24px;*/
-}
-/***********节日***********/
-.fticon .holiday{
-		background:no-repeat center;
-		background-size:24px;
-		background-position: top;
-		text-align: center;
-		padding-top: 27px;
 }
 
 .fticon.dark .link.on{
@@ -28,19 +14,19 @@
 }
 
 .fticon .link .tabIcon{
-	width:24px;
-	height:24px;
+	width:.48rem;
+	height:.48rem;
 	margin-left:auto;
 	margin-right:auto;
 	background:no-repeat center;
-	background-size:24px;
+	background-size:.48rem;
 }
 
 .fticon .link span{
 	display:block;
 	width:100%;
 	text-align:center;
-	margin-top:3px;
+	margin-top:.06rem;
 	color:#666;
 }
 .fticon.theme_blue .link.on span{
@@ -56,147 +42,30 @@
 	color: #ff6000;
 }
 
-
-
-.fticon.theme_blue .home .tabIcon{
-	background-image:url("./images/common/bottomtabs/home.png");
+.fticon .documentary .tabIcon{
+	background-image:url("./images/common/bottomtabs/documentary.png")
 }
-.fticon.theme_blue .home.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_blue_home_on.png")
+.fticon .documentary.on .tabIcon{
+	background-image:url("./images/common/bottomtabs/documentary_on.png")
 }
 
-.fticon.theme_blue .addressbook .tabIcon{
-	background-image:url("./images/common/bottomtabs/addressbook.png")
+.fticon .optional .tabIcon{
+	background-image:url("./images/common/bottomtabs/optional.png")
 }
-.fticon.theme_blue .addressbook.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_blue_addressbook_on.png")
-}
-
-.fticon.theme_blue .community .tabIcon{
-	background-image:url("./images/common/bottomtabs/community.png")
-}
-.fticon.theme_blue .community.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_blue_community_on.png")
+.fticon .optional.on .tabIcon{
+	background-image:url("./images/common/bottomtabs/optional_on.png")
 }
 
-.fticon.theme_blue .me .tabIcon{
+.fticon .trade .tabIcon{
+	background-image:url("./images/common/bottomtabs/trade.png")
+}
+.fticon .trade.on .tabIcon{
+	background-image:url("./images/common/bottomtabs/trade_on.png")
+}
+
+.fticon .me .tabIcon{
 	background-image:url("./images/common/bottomtabs/me.png")
 }
-.fticon.theme_blue .me.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_blue_me_on.png")
-}
-
-
-
-.fticon.theme_red .home .tabIcon{
-	background-image:url("./images/common/bottomtabs/home.png");
-}
-.fticon.theme_red .home.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_red_home_on.png")
-}
-
-.fticon.theme_red .addressbook .tabIcon{
-	background-image:url("./images/common/bottomtabs/addressbook.png")
-}
-.fticon.theme_red .addressbook.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_red_addressbook_on.png")
-}
-
-.fticon.theme_red .community .tabIcon{
-	background-image:url("./images/common/bottomtabs/community.png")
-}
-.fticon.theme_red .community.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_red_community_on.png")
-}
-
-.fticon.theme_red .me .tabIcon{
-	background-image:url("./images/common/bottomtabs/me.png")
-}
-.fticon.theme_red .me.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_red_me_on.png")
-}
-
-
-
-.fticon.theme_yellow .home .tabIcon{
-	background-image:url("./images/common/bottomtabs/home.png");
-}
-.fticon.theme_yellow .home.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_yellow_home_on.png")
-}
-
-.fticon.theme_yellow .addressbook .tabIcon{
-	background-image:url("./images/common/bottomtabs/addressbook.png")
-}
-.fticon.theme_yellow .addressbook.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_yellow_addressbook_on.png")
-}
-
-.fticon.theme_yellow .community .tabIcon{
-	background-image:url("./images/common/bottomtabs/community.png")
-}
-.fticon.theme_yellow .community.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_yellow_community_on.png")
-}
-
-.fticon.theme_yellow .me .tabIcon{
-	background-image:url("./images/common/bottomtabs/me.png")
-}
-.fticon.theme_yellow .me.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_yellow_me_on.png")
-}
-.fticon.theme_orange .home .tabIcon{
-	background-image:url("./images/common/bottomtabs/home.png");
-}
-.fticon.theme_orange .home.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_orange_home_on.png")
-}
-
-.fticon.theme_orange .addressbook .tabIcon{
-	background-image:url("./images/common/bottomtabs/addressbook.png")
-}
-.fticon.theme_orange .addressbook.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_orange_addressbook_on.png")
-}
-
-.fticon.theme_orange .community .tabIcon{
-	background-image:url("./images/common/bottomtabs/community.png")
-}
-.fticon.theme_orange .community.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_orange_community_on.png")
-}
-
-.fticon.theme_orange .me .tabIcon{
-	background-image:url("./images/common/bottomtabs/me.png")
-}
-.fticon.theme_orange .me.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_orange_me_on.png")
-}
-
-.fticon.theme_purple .home .tabIcon{
-	background-image:url("./images/common/bottomtabs/home.png");
-}
-.fticon.theme_purple .home.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_purple_home_on.png")
-}
-
-.fticon.theme_purple .addressbook .tabIcon{
-	background-image:url("./images/common/bottomtabs/addressbook.png")
-}
-.fticon.theme_purple .addressbook.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_purple_addressbook_on.png")
-}
-
-.fticon.theme_purple .community .tabIcon{
-	background-image:url("./images/common/bottomtabs/community.png")
-}
-.fticon.theme_purple .community.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_purple_community_on.png")
-}
-
-.fticon.theme_purple .me .tabIcon{
-	background-image:url("./images/common/bottomtabs/me.png")
-}
-.fticon.theme_purple .me.on .tabIcon{
-	background-image:url("./images/common/bottomtabs/theme_purple_me_on.png")
+.fticon .me.on .tabIcon{
+	background-image:url("./images/common/bottomtabs/me_on.png")
 }

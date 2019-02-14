@@ -17,8 +17,8 @@ class Content extends PureComponent {
     renderStyle(){
         var {coverHeader, coverBottom} = this.props;
         return {
-            top:coverHeader?"0":"65px",
-            bottom:coverBottom?"0":"58px"
+            top:coverHeader?"0":this.calculateRem(.9, 0)+"rem",
+            bottom:coverBottom?"0":"1.2rem"
         }
     }
 

@@ -10,7 +10,7 @@ html {
 body {
     color: #333;
     font-family: Microsoft Yahei, tahoma, arial, 宋体;
-    font-size: 12px;
+    font-size: .24rem;
     background-color: #fff;
     height: 100%;
     width: 100%;
@@ -68,7 +68,6 @@ input::-webkit-search-cancel-button {
     padding: 0;
     min-width: 320px;
     margin: 0 auto;
-    background: #f0f1f5;
 }
 
 .viewport-new {
@@ -87,8 +86,8 @@ body.hidden {
 	float: right;
 }
 .g_main{
-  margin-bottom:50px;
-  min-height: 1px;
+  margin-bottom:1rem;
+  min-height: .02rem;
 }
 /*留出了appeader和bottomtab*/
 .g_content{
@@ -168,4 +167,25 @@ body.hidden {
     overflow-x: hidden;
     -webkit-overflow-scrolling : touch;
     background-color: #f0f1f5;
+}
+
+
+
+.c9 {
+	color:#999;
+}
+.c6{
+	color:#666
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.font-arial {
+    font-family: arial;
+}
+.vertical-top {
+    vertical-align: top;
 }
