@@ -44,6 +44,7 @@ class OptionalPage extends PageComponent{
                     </div>
                     <OptionalList/>
                 </Content>
+                {this.props.children}
             </div>
         );
     }

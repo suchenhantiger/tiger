@@ -7,11 +7,15 @@ class OptionalItem extends PureComponent{
         super(props);
     }
 
+    itemClick = ()=>{
+        hashHistory.push("/work/optional/detail");
+    }
+
     //渲染函数
     render(){
 
         return(
-            <li className={styles.item}>
+            <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.currency_name}>
                     <p className={"c3", styles.c3}>欧元美元</p>
                     <p className={this.mergeClassName("c9", "font-arial")}>EURUSD200</p>

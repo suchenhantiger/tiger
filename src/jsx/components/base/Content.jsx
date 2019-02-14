@@ -5,7 +5,7 @@ class Content extends PureComponent {
     //默认属性值
     static defaultProps = {
         scroll:true,
-        coverTop:false,
+        coverHeader:false,
         coverBottom:true
     };
 

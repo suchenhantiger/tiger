@@ -36,8 +36,8 @@ class AppHeader extends PureComponent{
         //打印渲染日志，必写
         systemApi.log("AppHeader render");
 
-        var {showBack,headerName,subTitle,iconLeft,iconRight,animate, isAbs} = this.props,
-            headerCls = this.mergeClassName(styles.header, isAbs?styles.isabs:"", animate?styles.animate:""),
+        var {showBack,headerName,subTitle,iconLeft,iconRight,animate, isAbs, theme} = this.props,
+            headerCls = this.mergeClassName(styles.header, styles[theme], isAbs?styles.isabs:"", animate?styles.animate:""),
             arrowCls = this.mergeClassName(styles.head_arrow);
 
         return(

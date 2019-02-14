@@ -103,7 +103,12 @@
 	color: #FFF;
 	text-align: center;;
 	line-height: .54rem;
-	padding-left: .3rem;
+	padding-left: .45rem;
+}
+.transparent .head_arrow{
+	background-image:url(./images/common/appheader/arrow_left_transparent.png);
+	background-position: center;
+	background-size: .45rem;
 }
 .pattern a{
 	padding: 0 .06rem;

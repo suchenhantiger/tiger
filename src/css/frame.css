@@ -170,7 +170,18 @@ body.hidden {
 }
 
 
-
+.red {
+	color:#ff4433;
+}
+.white{
+	color:#fff
+}
+.green{
+	color:#00bf3f
+}
+.blue{
+	color: #3492e9;
+}
 .c9 {
 	color:#999;
 }
@@ -183,9 +194,45 @@ body.hidden {
 .right {
 	float: right;
 }
-.font-arial {
-    font-family: arial;
+.center{
+	text-align: center;
 }
-.vertical-top {
-    vertical-align: top;
+.font24{
+	font-size: .24rem;
+}
+.font28{
+	font-size: .28rem;
+}
+.font30{
+	font-size: .3rem;
+}
+.font32{
+	font-size: .32rem;
+}
+.font36{
+	font-size: .36rem;
+}
+.font56{
+	font-size: .56rem;
+}
+.font-arial{
+	font-family: arial;
+}
+.vertical-top{
+	vertical-align: top;
+}
+.text-al-right{
+	text-align: right;
+}
+.mg-lr-30{
+	margin: 0 .3rem;
+}
+.overf-hid{
+	overflow: hidden;
+}
+.clear-bth{
+	clear: both;
+}
+.bd-tp{
+	border-top:1px solid #ddd;
 }
