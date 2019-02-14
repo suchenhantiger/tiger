@@ -1,0 +1,66 @@
+﻿@charset "utf-8";
+/* CSS Document */
+@import url('common.css');
+
+.header {
+	height: .88rem;
+	width: 100%;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 99;
+	position: fixed;
+	background: #fff;
+}
+.header-innerbox{
+	width:100%;
+	position: relative;
+}
+.header-innerbox .center{
+	font-size: .36rem;
+	line-height: .88rem;
+	font-weight: bold;
+}
+.header-left-icon{
+	position: absolute;
+	top: 0;
+	left:.3rem;
+}
+.header-center-cont{
+	position: absolute;
+	top: 0;
+	left:.44rem;
+	right:.44rem;
+}
+.header-right-icon{
+	position: absolute;
+	top: 0;
+	right:.3rem;
+}
+.right-icon-text{
+	font-size: .3rem;
+	line-height: .88rem;
+}
+.head-back{
+	width: .44rem;
+	height: .44rem;
+	background: url("../images/head-back-arrow.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .22rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

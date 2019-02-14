@@ -1,0 +1,364 @@
+﻿@charset "utf-8";
+/* CSS Document */
+@import url('common.css');
+
+/*自选列表*/
+.optional-tit{
+	border-bottom:1px solid #ddd;
+	height: .72rem;
+	line-height: .72rem;
+	position: fixed;
+	top: .88rem;
+	z-index: 99;
+	left: 0;
+	right: 0;
+	background: #fff;
+}
+.optional-name{
+	float: left;
+	margin-left: .3rem;
+	font-size:.28rem;
+}
+.optional-price{
+	float: right;
+	margin-right: .3rem;
+}
+.optional-price i{
+	font-style: normal;
+}
+.i-buy,.i-sell{
+	width: .32rem;
+	height: .32rem;
+	border-radius: .06rem;
+	display: block;
+	float: left;
+	line-height: .32rem;
+	color: #fff;
+	text-align: center;
+	margin-top: .2rem;
+	margin-left: .1rem;
+}
+.i-buy{
+	background: #ff4433;
+}
+.i-sell{
+	background: #00bf3f;
+}
+.optional-list{
+	margin-top: .74rem;
+}
+.optional-list li{
+	width: 100%;
+	overflow: hidden;
+	padding-top: .56rem;
+}
+.currency-name{
+	margin-left: .3rem;
+	float: left;
+}
+.currency-name .c3{
+	font-size: .36rem;
+	margin-bottom: .1rem;
+}
+.currency-price{
+	float: right;
+	margin-right: .3rem;
+}
+.price-box{
+	border-radius: .06rem;
+	width:1.68rem;
+	padding-bottom: .07rem;
+	padding-top: .07rem;
+	float: left;
+	margin-left: .1rem;
+	color: #fff;
+}
+.price-box.buy{
+	text-align: center;
+    background: #ff4433;
+}
+.price-box.sell{
+	text-align: center;
+	background: #00bf3f;
+}
+.price-box span.font50{
+	font-size: .5rem;
+}
+
+/*自选详情*/
+.header-style01{
+	height: 2.5rem;
+	background: url("../images/bg-img01.jpg") no-repeat;
+}
+.hd-tabs-white span{
+	color:#c3c3c3;
+	font-weight: 100;
+	margin: 0 .2rem;
+	position: relative;
+}
+.hd-tabs-white span.on{
+	font-weight:bold;
+	color: #fff;
+}
+.hd-tabs-white span.on i{
+	position: absolute;
+	left:50%;
+	margin-left: -.35rem;
+	bottom:-.05rem;
+	width: .72rem;
+	height: .04rem;
+	background: #fff;
+	border-radius: .06rem;
+}
+.optional-detail{
+	margin: 1.2rem .3rem 0 .3rem;
+	height: 1.48rem;
+	background: #fff;
+	border-radius: .1rem;
+	box-shadow: 0 0 .38rem rgba(0,0,0,.1);
+}
+.optional-detail .currency-name{
+	margin-top: .36rem;
+}
+.optional-detail .currency-name .c3{
+	margin-bottom: .15rem;
+}
+.icon-intro{
+	float: left;
+	width: .32rem;
+	height: .32rem;
+	background: #f1f1f1;
+	border-radius: 50%;
+	line-height: .32rem;
+	text-align: center;
+	color: #333;
+	font-family: Arial;
+	margin-top: .4rem;
+	margin-left:.1rem;
+}
+.optional-dt-price{
+	float: right;
+	font-family: Arial;
+	margin-right: .3rem;
+	margin-top:.32rem;
+}
+.optional-dt-price .font56{
+	margin-bottom: .05rem;
+	float: left;
+}
+.qt-chart{
+	margin-top: 2.2rem;
+}
+.chart-time ul{
+	padding-left: .1rem;
+}
+.chart-time li{
+	color: #999;
+	text-align: center;
+	float: left;
+	width:11.11%;
+	font-size: 0.20rem;
+}
+.icon-intro-list{
+	width:.32rem;
+	height: .32rem;
+	background: url("../images/icon-instruction-black.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .1rem;
+}
+.icon-full-screen{
+	width:.32rem;
+	height: .32rem;
+	background: url("../images/icon-full-black.png") no-repeat;
+	background-size: 100%;
+	float: right;
+	margin-top: .1rem;
+}
+.tran-panel{
+	border:1px solid #ddd;
+	border-radius: .1rem;
+	margin-top: .2rem;
+}
+.tran-panel h1{
+	margin-top: -.24rem;
+	background: #fff;
+	padding: .05rem .1rem;
+	font-size: .32rem;
+	font-weight: 100;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1.5rem;
+}
+.tran-icon{
+	margin: .42rem 1.5rem 0 1.5rem;
+	position: relative;
+}
+.icon-minus{
+	width:.32rem;
+	height: .32rem;
+	background: url("../images/icon-minus-black.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .08rem;
+}
+.icon-plus{
+	width:.32rem;
+	height: .32rem;
+	background: url("../images/icon-plus-black.png") no-repeat;
+	background-size: 100%;
+	float: right;
+	margin-top: .08rem;
+}
+.icon-num{
+	left: .4rem;
+	right: .4rem;
+	font-size: .48rem;
+	text-align: center;
+	position: absolute;
+	font-family: Arial;
+}
+.tran-total{
+	clear: both;
+	padding-top: .5rem;
+	padding-bottom: .4rem;
+	text-align: center;
+	color: #999;
+ }
+.tran-total span.total-span{
+	background: #f1f1f1;
+	border-radius: .5rem;
+	padding: .08rem .3rem;
+}
+.tran-tabs{
+	border-top:1px solid #ddd;
+	height: .48rem;
+}
+.tran-tabs li{
+	width:25%;
+	text-align: center;
+	line-height: .48rem;
+	float: left;
+	font-size: .26rem;
+	position: relative;
+	color: #666;
+}
+.tran-tabs li.on{
+	color: #333;
+}
+.tran-tabs li.on i{
+	position: absolute;
+	left:50%;
+	margin-left: -.35rem;
+	bottom:-.02rem;
+	width: .72rem;
+	height: .04rem;
+	background: linear-gradient(to right, #ff7a6e, #ff5242);
+	border-radius: .06rem;
+}
+.bottom-btn-fixed{
+	padding: .2rem 0;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.btn-buy-bottom,.btn-sell-bottom{
+	width: 3.3rem;
+	height: .88rem;
+	border-radius: .1rem;
+	line-height: .88rem;
+	font-size: .36rem;
+	text-align: center;
+	color: #fff;
+	float: left;
+}
+.btn-buy-bottom{
+	 margin-left: .3rem;
+	 background: #ff4433;
+	 box-shadow: 0 0 0.24rem rgba(255,68,51,.3);
+ }
+.btn-sell-bottom{
+	margin-left: .3rem;
+	background: #00bf3f;
+	box-shadow: 0 0 0.24rem rgba(0,191,63,.3);
+}
+.strategy{
+	border-radius: .1rem;
+	border:1px solid #ddd;
+	margin:.2rem 0 .3rem .3rem;
+	float: left;
+	width: 6.25rem;
+	padding: .1rem .3rem .3rem .3rem;
+}
+.strategy li h1{
+	margin-top: .2rem;
+	font-weight: 100;
+	line-height: .42rem;
+	float: left;
+}
+.strategy li h1 i{
+	margin-top: .05rem;
+	margin-right: .15rem;
+	float: left;
+	width: .32rem;
+	height: .32rem;
+	background: url("../images/icon-choose.png") no-repeat;
+	background-size: 100%;
+}
+.strategy li.on{
+	border-bottom:1px solid #ddd;
+	padding-bottom: .3rem;
+}
+.strategy li.on h1 i{
+	background: url("../images/icon-choose-on.png") no-repeat;
+	background-size: 100%;
+}
+.strategy li h1 span{
+	float: left;
+}
+.strategy li.on h1{
+	margin-bottom: .1rem;
+	color: #c5a187;
+	background: #f8f1ec;
+	border-radius:0 .2rem 0 .2rem;
+	height: .42rem;
+	line-height: .42rem;
+	padding: 0 .4rem;
+	margin-left: -.46rem;
+}
+.strategy li p{
+	color: #999;
+	clear: both;
+	line-height: .36rem;
+	padding-top: .1rem;
+}
+.strategy li h1 span.font28{
+	margin-right: .1rem;
+}
+.text-disclaimer{
+	margin-top: .2rem;
+	color: #c5a187;
+	font-size: .26rem;
+	float: left;
+}
+.text-from{
+	float: right;
+	color: #999;
+	margin-top: .2rem;
+}
+.table-01 td{
+	line-height: .36rem;
+	padding: .1rem 0;
+}
+
+
+
+
+
+
+
+
+
+
