@@ -1,4 +1,4 @@
-module.exports = function optionalReducer(state,action){
+module.exports = function documentaryReducer(state,action){
     var {type} = action;
     state = state || {
 

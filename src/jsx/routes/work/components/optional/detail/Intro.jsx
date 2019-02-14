@@ -1,3 +1,5 @@
+import Disclaimer from './Disclaimer';
+
 import styles from './css/intro.less';
 
 class Intro extends PureComponent{
@@ -6,7 +8,8 @@ class Intro extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
-            index:0
+            index:0,
+            showDisclaimer:false
         }
     }
 
@@ -14,10 +17,18 @@ class Intro extends PureComponent{
         this.setState({index});
     }
 
+    openDisclaimer = ()=>{
+        this.setState({showDisclaimer:true});
+    }
+
+    closeDisclaimer = ()=>{
+        this.setState({showDisclaimer:false});
+    }
+
     //渲染函数
     render(){
 
-        var {index} = this.state,
+        var {index, showDisclaimer} = this.state,
             {onClose} = this.props;
 
         return(
@@ -65,10 +76,13 @@ class Intro extends PureComponent{
                         </ul>
                     </div>
                     <div className={this.mergeClassName("bd_tp", "clear-bth", "mg-lr-30")}>
-                        <div className={styles.text_disclaimer}>免责申明</div>
+                        <div className={styles.text_disclaimer} onClick={this.openDisclaimer}>免责申明</div>
                         <div className={styles.text_from}>数据来源：TC 11 Feb 19 | 18:05:30</div>
                     </div>
                 </div>
+                {showDisclaimer?(
+                    <Disclaimer onClose={this.closeDisclaimer} onSure={this.closeDisclaimer}/>
+                ):null}
           </div>
         );
     }

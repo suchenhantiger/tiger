@@ -8,11 +8,9 @@ class TabItem extends PureComponent{
         super(props);
     }
 
-    //判断是否有状态或属性变化，如果没有不重绘
+    //判断是否有状态变化，如果没有不重绘
     shouldComponentUpdate(nextProps, nextState){
-        return (nextProps.basetheme!==this.props.basetheme)
-        ||(nextProps.iconClass!==this.props.iconClass)||(nextProps.hash!==this.props.hash)
-        ||(nextProps.text!==this.props.text);
+        return true;
     }
 
     render(){

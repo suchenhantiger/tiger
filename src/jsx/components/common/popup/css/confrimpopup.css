@@ -1,135 +1,55 @@
-
-.cp_ecard_box {
-    border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    background: #fff !important;
-    width: 80%;
-    margin-top: 40%;
+.pop_inner{
+	width: 6rem;
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	border-radius: .3rem;
+	margin-left: auto;
+	margin-right: auto;
+	background: #fff;
 }
-/*添加代理弹出框*/
-.addagent_box {
-  margin-top: 25%;
+.pup_content{
+	padding: .6rem .5rem .4rem .5rem;
 }
-/***************/
-.cp_ecard_box.fullview{
-  width: 95%;
-  margin-top: 10%;
+.icon_pup_close {
+    width: .24rem;
+    height: .24rem;
+    background: url(./images/common/popup/icon-close-01.png) no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: .3rem;
+    top: .3rem;
 }
-
-.cp_ecard_box .pp_top02 {
-    text-align: left;
-    color: #000;
-    font-size: 1.4em;
-    border-radius: 8px 8px 0 0;
-    padding-left: 50px;
-    border-bottom: solid 1px #ddd;
-    line-height: 280%;
-
+.pup_bot{
+	height: .88rem;
+	line-height: .88rem;
+	font-size: .32rem;
+	position: relative;
+	border-top:1px solid #ddd;
 }
-.cp_ecard_box .pp_top02.center {
-    text-align: center;
-    color: #000;
-    font-size: 1.4em;
-    border-radius: 8px 8px 0 0;
-    padding-left: 0px;
-    border-bottom: solid 1px #ddd;
-    line-height: 280%;
-
-}
-.cp_ecard_box .pp_top02.theme_blue{
-  background-color: #3492e9;
-  color:#fff;
-}
-.cp_ecard_box .pp_top02.theme_red{
-  background-color: #ff6060;
-  color:#fff;
-}
-.cp_ecard_box .pp_top02.theme_yellow{
-  background-color: #ffc600;
-  color:#fff;
-}
-.cp_ecard_box .pp_top02.theme_orange{
-  background-color: #ff6000;
-  color:#fff;
-}
-.cp_ecard_box .pp_top02.theme_purple{
-  background-color: #8948c5;
-  color:#fff;
-}
-.cp_ecard_box .pp_top02.warn {
-
-    background: url(./images/my_icon_qchc.png) left no-repeat;
-    background-size: 24px;
-    background-position: 20px;
-
-}
-.cp_ecard_box .pp_top02.wbdj {
-
-    background: url(./images/my_icon_wbdj.png) left no-repeat;
-    background-size: 24px;
-    background-position: 20px;
-
-}
-.cp_ecard_box .pp_top02.peopleselect{
-  background: url(./images/choose_bg.png) left no-repeat;
-  background-size: 18px;
-  background-position: 18px;
-}
-.cp_ecard_box .pp_btns {
-   padding-bottom: 20px;
-   width: 85%;
-   padding-top: 20px;
-   margin-left: auto;
-   margin-right: auto;
-}
-.cp_ecard_box .pp_btns a {
-    display: inline-block;
-    width: 46%;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1.4em;
-}
-.cp_ecard_box .btn_pp_ok01 {
-    float: right;
-    color: #fff;
-    border: 1px solid #3492e9 !important;
-    background-color: #3492e9;
-}
-.cp_ecard_box .btn_pp_ok01.theme_blue{
-  background-color: #3492e9;
-    border: 1px solid #3492e9 !important;
-}
-.cp_ecard_box .btn_pp_ok01.theme_red{
-  background-color: #ff6060;
-    border: 1px solid #ff6060 !important;
-}
-.cp_ecard_box .btn_pp_ok01.theme_yellow{
-  background-color: #ffc600;
-    border: 1px solid #ffc600 !important;
-}
-.cp_ecard_box .btn_pp_ok01.theme_orange{
-  background-color: #ff6000;
-    border: 1px solid #ff6000 !important;
-}
-.cp_ecard_box .btn_pp_ok01.theme_purple{
-  background-color: #8948c5;
-    border: 1px solid #8948c5 !important;
+.btn_pup_center{
+	text-align: center;
 }
 
-
-
-@media(max-width: 376px){
-.cp_ecard_box .pp_btns a {font-size: 1.3em;height: 32px;line-height: 32px;}
-.cp_ecard_box .pp_top02{font-size: 1.3em;}
-.cp_ecard_box .pp_top02.center {line-height: 300%;}
+.btn_pup_cancel,.btn_pup_confirm{
+	width: 50%;
+	float: left;
+	text-align: center;
 }
-@media(max-width: 321px){
-.cp_ecard_box .pp_btns{padding-bottom: 10px;}
-.cp_ecard_box .pp_btns a {font-size: 1.2em;height: 30px;line-height: 30px;}
-.cp_ecard_box .pp_top02{font-size: 1.2em;}
-.cp_ecard_box .pp_top02.center {line-height: 240%;font-size: 1.3em;}
+.btn_pup_cancel{
+	color: #666;
+}
+.line_01{
+	background: #ddd;
+	width: 1px;
+	height: .32rem;
+	position: absolute;
+	left: 50%;
+	margin-left: -.05px;
+	top: 50%;
+	margin-top: -.16rem;
 }

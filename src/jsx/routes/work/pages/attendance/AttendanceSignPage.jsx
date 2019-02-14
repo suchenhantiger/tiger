@@ -6,13 +6,13 @@ import { loginInfo,signInAndOut,
 import { showMessage,showLoading } from '../../../../store/actions.jsx';
 /*引入组件*/
 import AppHeader from '../../../../components/common/appheader/AppHeader.jsx';
-import AlertPopUp from '../../../../components/common/popup/AlertPopUp.jsx'
-import ConfirmPopUp from '../../../../components/common/popup/ConfirmPopUp.jsx'
+import Alert from '../../../../components/common/popup/Alert.jsx'
+import Confirm from '../../../../components/common/popup/Confirm.jsx'
 import UserPhoto from '../../../../components/common/user/UserPhoto';
 import IScrollView from '../../../../components/common/iscroll/IScrollView.jsx'
 class AttendanceSignPage extends PageComponent {
     static defaultProps={
-        
+
     }
 
     constructor(props) {
@@ -32,7 +32,7 @@ class AttendanceSignPage extends PageComponent {
     componentWillMount(){
     }
     componentWillReceiveProps(nextProps){
-        
+
     }
     componentDidUpdate(){
 
@@ -95,7 +95,7 @@ class AttendanceSignPage extends PageComponent {
     onSureError=()=>{
       this.setState({errorFlag:false});
       this.props.getLocationInfo(this,this.getLocationInfoCallBack,this.getLocationInfoCallBack);
-  
+
     }
 
     //下班打卡成功回调
@@ -151,7 +151,7 @@ class AttendanceSignPage extends PageComponent {
      onSureSignOutSucc=()=>{
       //隐藏下班打卡成功弹出框
       this.setState({signOutSuccFlag:false});
- 
+
       this.props.loginInfo(this,()=>{
         this.props.getLocationInfo(this,this.getLocationInfoCallBack,this.getLocationInfoCallBack);
       });
@@ -160,7 +160,7 @@ class AttendanceSignPage extends PageComponent {
 
      //获取当前定位信息
      locationInfo=()=>{
-    
+
               var { coords } = this.props;
               var { is_inrange } = coords;
               var { locatedFlag } = this.state;
@@ -188,7 +188,7 @@ class AttendanceSignPage extends PageComponent {
                     <span className={styles.dk_enter + " " + styles.dk_position}>定位中...</span>
                   </div>);
               }
-        
+
       }
 
           //重新定位
@@ -196,7 +196,7 @@ class AttendanceSignPage extends PageComponent {
       this.setState({locatedFlag:false});
       //判断当前位置是否进入到打卡范围
       this.props.getLocationInfo(this,this.getLocationInfoCallBack,this.getLocationInfoCallBack);
-      
+
 
     }
 
@@ -219,12 +219,12 @@ class AttendanceSignPage extends PageComponent {
         var date = new Date();
         if(timestamp) date = new Date(timestamp);
         else date = new Date();
-       
+
         var seperator1 = ".";
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var strDate = date.getDate();
-        
+
         if (month >= 1 && month <= 9) {
             month = "0" + month;
         }
@@ -291,7 +291,7 @@ class AttendanceSignPage extends PageComponent {
                   <span className={status==1?styles.shift_status:styles.shift_status+" "+styles.shift_status_err} >{statusStr}</span>
                   <span className={styles.dk_slogn} style={{ "marginLeft": "0.2rem"}} >{clockTimeStr}</span>
             </div>
-            
+
           </div>
         );
     });
@@ -312,14 +312,14 @@ class AttendanceSignPage extends PageComponent {
         var { is_inrange } = coords;
         //获取当日日期
         //var currentdate = this.getNowFormatDate();
-        
+
         // var date = new Date(stdTime);
         // var h = date.getHours();
         // h = h < 10 ? ('0' + h) : h;
         // var minute = date.getMinutes();
         // var second = date.getSeconds();
-        // minute = minute < 10 ? ('0' + minute) : minute;  
-        // second = second < 10 ? ('0' + second) : second; 
+        // minute = minute < 10 ? ('0' + minute) : minute;
+        // second = second < 10 ? ('0' + second) : second;
         // var in_time = h+':'+minute+':'+second;
 
 
@@ -377,9 +377,9 @@ class AttendanceSignPage extends PageComponent {
                       </div>
                 </div>
                 </IScrollView>
-   
+
                 {signInFlag?
-                  <AlertPopUp hidetitle={true} suretxt={ "打起精神 迎接挑战"} onSure={this.onSureSignIn}>
+                  <Alert hidetitle={true} suretxt={ "打起精神 迎接挑战"} onSure={this.onSureSignIn}>
                     <div className={styles.pp_mid01} >
                       <div className={styles.dk_voice_box} >
                           {signAudioPlayFlag=="true"?
@@ -393,10 +393,10 @@ class AttendanceSignPage extends PageComponent {
                       {/* <span className={styles.dk_tc_color}><i>{info_detail}</i></span> */}
                       <span className={styles.dk_bg_ok}></span>
                     </div>
-                  </AlertPopUp>:null
+                  </Alert>:null
                 }
                 {signOutSuccFlag?
-                  <AlertPopUp hidetitle={true} suretxt={"下班打卡成功"} onSure={this.onSureSignOutSucc}>
+                  <Alert hidetitle={true} suretxt={"下班打卡成功"} onSure={this.onSureSignOutSucc}>
                     <div className={styles.pp_mid01}>
                       <div className={styles.dk_voice_box}>
                           {signAudioPlayFlag=="true"?
@@ -410,21 +410,21 @@ class AttendanceSignPage extends PageComponent {
                       {/* <span className={styles.dk_tc_color}><i>{info_detail}</i></span> */}
                       <span className={styles.dk_bg_ok}></span>
                     </div>
-                  </AlertPopUp>:null
+                  </Alert>:null
                 }
                 {/***************************/}
                 {/*下班打卡确认弹出框*/}
                 {signOutFlag?
-                  <ConfirmPopUp title="温馨提示" titlealign="center" titletheme="y" onSure={this.onSureSignOut} onCancel={this.onCancelSignOut} canceltxt="不打卡">
+                  <Confirm title="温馨提示" titlealign="center" titletheme="y" onSure={this.onSureSignOut} onCancel={this.onCancelSignOut} canceltxt="不打卡">
                     <div className={styles.pp_mid02}>
                        {/*<p>下班卡每天只能打一次，</p>*/}
                        <p>您确定打下班卡吗？</p>
                     </div>
-                  </ConfirmPopUp>:null
+                  </Confirm>:null
                 }
-               
+
                 {errorFlag?
-                  <AlertPopUp hidetitle={true} suretxt="知道了" onSure={this.onSureError} btnBackColor='red'>
+                  <Alert hidetitle={true} suretxt="知道了" onSure={this.onSureError} btnBackColor='red'>
                     <div className={styles.pp_mid01}>
                         <div className={styles.dk_voice_box}>
                             {signAudioPlayFlag=="true"?
@@ -438,7 +438,7 @@ class AttendanceSignPage extends PageComponent {
                        	<span className={styles.dk_lose_ok}></span>
                         <span className={styles.dk_lose_tips+" "+styles.dk_lose_red} dangerouslySetInnerHTML={{__html:this.renderHtml(signError)}}></span>
                     </div>
-                  </AlertPopUp>:null
+                  </Alert>:null
                 }
             </div>
             {this.props.children}
@@ -469,6 +469,3 @@ function injectAction(){
 }
 
 module.exports = connect(injectProps, injectAction())(AttendanceSignPage);
-
-
-
