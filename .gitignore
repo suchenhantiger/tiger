@@ -1,3 +1,6 @@
 /common/lib.js
 /manifest.json
 /node_modules/*
+/build/*
+/asset/*
+*.DS_Store
