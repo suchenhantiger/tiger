@@ -37,9 +37,10 @@
 	top: 0;
 	right:.3rem;
 }
-.right-icon-text{
+.right-icon-text,.left-icon-text{
 	font-size: .3rem;
 	line-height: .88rem;
+	color: #666;
 }
 .head-back{
 	width: .44rem;

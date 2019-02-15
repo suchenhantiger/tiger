@@ -52,6 +52,12 @@
 	overflow: hidden;
 	padding-top: .56rem;
 }
+.op-sort-li{
+	border-bottom: 1px solid #ddd;
+	padding: .3rem 0 .3rem 0 !important;
+	margin: 0 .3rem 0 .3rem;
+	width: auto !important;
+}
 .currency-name{
 	margin-left: .3rem;
 	float: left;
@@ -83,6 +89,24 @@
 }
 .price-box span.font50{
 	font-size: .5rem;
+}
+.list-left-icon{
+	float: left;
+	width: .44rem;
+	height: .44rem;
+	margin-top: .1rem;
+}
+.list-left-icon .icon-delete-red{
+	width: .44rem;
+	height: .44rem;
+}
+.list-right-icon{
+	float: right;
+	margin-top: .1rem;
+}
+.list-right-icon .icon-sort{
+	width: .44rem;
+	height: .44rem;
 }
 
 /*自选详情*/
@@ -351,6 +375,86 @@
 .table-01 td{
 	line-height: .36rem;
 	padding: .1rem 0;
+}
+.full-cont{
+	padding: 0 !important;
+}
+.full-cont .qt-chart{
+	margin-top: 0;
+	clear: both;
+}
+.full-cont .currency-name{
+	margin-top: .2rem;
+}
+.full-cont .currency-name .c3{
+	font-size: .32rem;
+}
+.full-cont .optional-dt-price{
+	margin-top: .2rem;
+}
+.full-cont .optional-dt-price .font56{
+	font-size: .36rem;
+}
+.full-cont .chart-time{
+	margin-right: .54rem;
+}
+.icon-select{
+	width: .2rem;
+	height: .2rem;
+	background: url("../images/arrow-select-black.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-left: .1rem;
+	margin-top: .32rem;
+}
+.hq-other{
+	padding: .2rem .3rem;
+	font-size: .24rem;
+}
+.icon-full-close{
+	width: .32rem;
+	height: .32rem;
+	background: url("../images/icon-close-01.png") no-repeat;
+	background-size: 100%;
+	float: right;
+	margin-left: .1rem;
+	margin-top: .32rem;
+	margin-right: .3rem;
+}
+.qt-chart .icon-reset{
+	width: .24rem;
+	height: .24rem;
+	float: right;
+	margin-right: .3rem;
+}
+.chart-rt{
+	position: absolute;
+	top: .2rem;
+	right: .1rem;
+	width: .8rem;
+}
+.chart-rt li{
+	border-bottom: 1px solid #eee;
+	width: .8rem;
+	text-align: center;
+	height: .8rem;
+	line-height: .8rem;
+	background: #f1f1f1;
+}
+.chart-box.left{
+	margin-left: .1rem;
+	margin-right: 1rem;
+	height: 5.15rem;
+	border: 1px solid #ddd;
+	margin-top: .2rem;
+}
+
+.btn-quick{
+	width: .8rem;
+	text-align: center;
+	padding: .2rem 0;
+	background: #ff4433;
+	color: #fff;
 }
 
 
