@@ -14,10 +14,17 @@ class OptionalItem extends PureComponent{
     //渲染函数
     render(){
 
+        var {editable} = this.props;
+
         return(
             <li className={styles.item} onClick={this.itemClick}>
+                {editable?(
+                    <div className={styles.list_left_icon}>
+                        <div className={styles.icon_delete_red}></div>
+                    </div>
+                ):null}
                 <div className={styles.currency_name}>
-                    <p className={"c3", styles.c3}>欧元美元</p>
+                    <p className={this.mergeClassName("c3", styles.c3)}>欧元美元</p>
                     <p className={this.mergeClassName("c9", "font-arial")}>EURUSD200</p>
                 </div>
                 <div className={styles.currency_price}>
