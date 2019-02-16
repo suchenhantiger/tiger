@@ -28,8 +28,12 @@ class LoginPage extends PageComponent {
         this.setState({index});
     }
 
+    agreementClick = ()=>{
+        hashHistory.push("/login/agreement");
+    }
+
     render() {
-        systemApi.log("MePage render");
+        systemApi.log("LoginPage render");
 
         var { index } = this.state;
 
@@ -50,7 +54,7 @@ class LoginPage extends PageComponent {
 
                     <div className={styles.login_bt_text}>
                         <p className={"c9"}>提交注册代表您已阅读并同意</p>
-                        <p className={"blue"}><span>客户协议/</span><span>风险披露声明/</span><span>隐私政策及其他法律声明</span></p>
+                        <p className={"blue"} onClick={this.agreementClick}><span>客户协议/</span><span>风险披露声明/</span><span>隐私政策及其他法律声明</span></p>
                     </div>
                 </Content>
                 {this.props.children}

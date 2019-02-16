@@ -2,12 +2,12 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView'
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
-import ForgetForm from '../../components/login/ForgetForm';
+import ModifyForm from '../../components/login/ModifyForm';
 
 import styles from './css/loginPage.less';
 
 /********我的主页*********/
-class ForgetPwdPage extends PageComponent {
+class ModifyPwdPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
@@ -29,9 +29,9 @@ class ForgetPwdPage extends PageComponent {
                 <AppHeader showBack={false} iconRight={this.renderIcons()} />
                 <Content>
                     <ul className={styles.login_tab}>
-                        <li className={styles.on}>找回密码</li>
+                        <li className={styles.on}>修改密码</li>
                     </ul>
-                    <ForgetForm/>
+                    <ModifyForm/>
                 </Content>
             </FullScreenView>
         );
@@ -40,4 +40,4 @@ class ForgetPwdPage extends PageComponent {
 }
 
 
-module.exports = ForgetPwdPage;
+module.exports = ModifyPwdPage;
