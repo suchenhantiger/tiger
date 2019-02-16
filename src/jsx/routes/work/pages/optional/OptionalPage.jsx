@@ -2,6 +2,7 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import HeaderText from '../../../../components/common/appheader/HeaderText';
 
 import OptionalList from '../../components/optional/OptionalList';
+import OptionalEditList from '../../components/optional/OptionalEditList';
 
 import styles from './css/optionalPage.less';
 
@@ -22,7 +23,11 @@ class OptionalPage extends PageComponent{
     }
 
     editClick = ()=>{
-        this.setState({editable:true})
+        this.setState({editable:true});
+    }
+
+    submitClick = ()=>{
+        this.setState({editable:false});
     }
 
     renderIcons(){
@@ -32,8 +37,9 @@ class OptionalPage extends PageComponent{
     }
 
     renderLeftIcons(){
+        var {editable} = this.state;
         return [
-            <HeaderText text="编辑" onClick={this.editClick}/>
+            !editable?<HeaderText text="编辑" onClick={this.editClick}/>:<HeaderText text="完成" onClick={this.submitClick}/>
         ]
     }
 
@@ -54,7 +60,11 @@ class OptionalPage extends PageComponent{
                             <i className={styles.i_sell}>卖</i>
                         </div>
                     </div>
-                    <OptionalList editable={editable}/>
+                    {!editable?(
+                        <OptionalList/>
+                    ):(
+                        <OptionalEditList/>
+                    )}
                 </Content>
                 {this.props.children}
             </div>

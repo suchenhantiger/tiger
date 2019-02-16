@@ -1,14 +1,12 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
-//获取客户列表
-export function getOptionalList(params, isAppend, cb, component, updateList){
+//获取自选列表
+export function getOptionalList(component, params, updateList, cb){
     return function(dispatch, state){
-        var {pagesize} = params;
         component.requestJSON("clientview/brokerclient/list",params).done((data)=>{
-            var {rows} = data,
-                hasMore = rows.length==pagesize;
-            updateList(isAppend, rows);
-            cb && cb(null, hasMore);
+            var {rows} = data;
+            updateList(rows);
+            cb && cb(null, false);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
             cb && cb();

@@ -14,14 +14,11 @@ class OptionalList extends CursorList{
 
     //获取数据
     getData(beginindex,isAppend,cb,props){
-        this.props.getOptionalList({
-            beginindex,
-            pagesize:20
-        }, isAppend, cb, this, this.update);
+        this.props.getOptionalList(this, {}, this.update, cb);
     }
 
     //更新数据
-    update = (isAppend, data) => {
+    update = (data) => {
         var list = data;
         if(isAppend){
             list = this.state.data.concat(data);
