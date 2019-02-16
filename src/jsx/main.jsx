@@ -13,6 +13,9 @@ ReactDOM.render(
         <Router history={hashHistory}>
             <Route path="/" component={require('react-router!./routes/base/pages/BasePage')}>
                 <IndexRedirect to="work"/>
+                <Route path="login" getComponent={require('./routes/work/config/login/login')(store)}>
+                    <Route path="forget" getComponent={require('./routes/work/config/login/forget')(store)}></Route>
+                </Route>
                 <Route path="/work" getComponent={require('./routes/work/work')(store)}>
                     <IndexRedirect to="optional"/>
                     <Route path="home" getComponent={require('./routes/work/config/home/welcome')(store)}></Route>
