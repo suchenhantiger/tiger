@@ -50,6 +50,35 @@
 	float: left;
 	margin-top: .22rem;
 }
+.head-back-black{
+	width: .44rem;
+	height: .44rem;
+	background: url("../images/head-back-arrow-black.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .22rem;
+}
+.right-country{
+	background: #f8f8f8;
+	border-radius: .5rem;
+	height: .48rem;
+	line-height: .48rem;
+	padding: 0 .2rem;
+	margin-top: .2rem;
+}
+.right-country span{
+	float: left;
+}
+.right-country i{
+	width: .20rem;
+	height: .20rem;
+	float: left;
+	background: url("../images/arrow-right-black.png") no-repeat;
+	background-size:100%;
+	display: block;
+	margin-top: .14rem;
+	margin-left: .05rem;
+}
 
 
 

@@ -4,6 +4,7 @@
 @import url('header.css');
 @import url('footer.css');
 @import url('variable.css');
+@import url('login.css');
 
 html{
 	height:100%
@@ -47,10 +48,10 @@ h1, h2, h3, h4, h5, h6 {
 	color:#00bf3f
 }
 .blue{
-	color: #3492e9;
+	color: #647dce;
 }
 .coffee{
-	color: #c5a187;
+	color: #647dce;
 }
 .c9 {
 	color:#999;
@@ -72,6 +73,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .font28{
 	font-size: .28rem;
+}
+.font26{
+	font-size: .26rem;
 }
 .font30{
 	font-size: .3rem;
@@ -112,6 +116,39 @@ h1, h2, h3, h4, h5, h6 {
 .mg-tp-10{
 	margin-top: .1rem;
 }
+.mg-tp-0{
+	margin-top: 0;
+}
+.mg-tp-30{
+	margin-top: .3rem;
+}
+.mg-tp-42{
+	margin-top: .42rem;
+}
+.mg-tb-42{
+	margin: .42rem 0;
+}
+.mg-tb-56{
+	margin: .56rem 0;
+}
+.mg-lt-0{
+	margin-left: 0;
+}
+.mg-rt-0{
+	margin-right: 0;
+}
+.pd-tp-0{
+	padding-top: 0;
+}
+.pd-bt-20{
+	padding-bottom: .2rem;
+}
+.pd-bt-88{
+	padding-bottom: .88rem;
+}
+.line-ht-48{
+	line-height: .48rem;
+}
 .overf-hid{
 	overflow: hidden;
 }
@@ -119,10 +156,10 @@ h1, h2, h3, h4, h5, h6 {
 	clear: both;
 }
 .bd-tp{
-	border-top:1px solid #ddd;
+	border-top:1px solid #ededed;
 }
 .bd-bt{
-	border-bottom:1px solid #ddd;
+	border-bottom:1px solid #ededed;
 }
 .position-rl{
 	position: relative;
@@ -152,6 +189,9 @@ h1, h2, h3, h4, h5, h6 {
 
 textarea,input,button{
 	font-family:Microsoft Yahei;
+}
+input::placeholder{
+	color: #999;
 }
 
 
@@ -191,6 +231,12 @@ textarea,input,button{
 	margin-right: auto;
 	margin-top: .2rem;
 }
+.bot-arrow-down.right{
+	margin-right:0;
+	margin-top:0;
+	float: right;
+	margin-left: .1rem;
+}
 .pup-box{
 	background: url("../images/bg-black-30.png") repeat;
 	position: fixed;
@@ -223,7 +269,7 @@ textarea,input,button{
 	line-height: .88rem;
 	font-size: .32rem;
 	position: relative;
-	border-top:1px solid #ddd;
+	border-top:1px solid #ededed;
 }
 .btn-pup-cancel,.btn-pup-confirm{
 	width: 50%;
@@ -243,8 +289,17 @@ textarea,input,button{
 	top: 50%;
 	margin-top: -.16rem;
 }
+.line-02{
+	background: #ddd;
+	width: 1px;
+	float: left;
+	height: .42rem;
+	margin-top: .23rem;
+	margin-left: .15rem;
+	margin-right: .3rem;
+}
 .line-full{
-	border-top:1px solid #ddd;
+	border-top:1px solid #ededed;
 }
 .btn-pup-center{
 	text-align: center;
@@ -260,7 +315,92 @@ textarea,input,button{
 }
 
 
+/*搜索*/
+.search-inner{
+	padding-left: .5rem;
+	border:1px solid #ddd;
+	border-radius: .5rem;
+	height: .72rem;
+	line-height: .72rem;
+	margin: 0 .3rem;
+	position: relative;
+}
+.search-inner input{
+	height: .72rem;
+	line-height: .72rem;
+	padding: 0;
+	margin: 0;
+	border:none;
+	background:none;
+	font-size: .28rem;
+	float: left;
+}
+.search-delete{
+	width: .36rem;
+	height: .36rem;
+	display: block;
+	position: absolute;
+	right: .3rem;
+	top: 50%;
+	margin-top: -.18rem;
+	background: url("../images/icon-delete-black.png") no-repeat;
+	background-size: 100%;
+}
 
+.bg-gray-th{
+	background: #f8f8f8;
+	height: .44rem;
+	line-height: .44rem;
+	color: #999;
+	padding: 0 .3rem;
+}
+.list-table td{
+	padding: .24rem 0;
+	border-bottom: 1px solid #ededed;
+}
+.detail-box{
+	padding: .3rem 0;
+}
+.detail-box h2{
+	margin-bottom: .2rem;
+	font-size: .3rem;
+}
+.detail-box p{
+	line-height: .36rem;
+	margin-bottom: .1rem;
+}
+
+/*tabs*/
+.com-tabs{
+	border-bottom: 1px solid #ededed;
+	padding-bottom: .42rem;
+	margin-top: .42rem;
+	overflow: hidden;
+}
+.com-tabs ul{
+	margin: 0 .3rem;
+}
+.com-tabs li{
+	position: relative;
+	width: 25%;
+	color: #999;
+	font-size: .3rem;
+	float: left;
+	text-align: center;
+}
+.com-tabs li.on i{
+	position: absolute;
+	left: 50%;
+	margin-left: -.3rem;
+	bottom: -.1rem;
+	width: .6rem;
+	height: .04rem;
+	background: #647dce;
+	border-radius: .06rem;
+}
+.com-tabs li.on{
+	color: #333;
+}
 
 
 

@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header header-style01">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                        <div class="left-icon-box">
+                            <div class="head-back"></div>
+                        </div>
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center hd-tabs-white">
+                           <span>简单<i></i></span>
+                           <span class="on">高级<i></i></span>
+                       </div>
+                  </div>
+                  <div class="header-right-icon">
+                        <div class="right-icon-text"></div>
+                  </div>
+              </div>
+              <div class="optional-detail">
+                  <div class="currency-name">
+                      <p class="c3">欧元美元</p>
+                      <p class="c9 font-arial">EURUSD200</p>
+                  </div>
+                  <div class="icon-intro">?</div>
+                  <div class="optional-dt-price">
+                      <div class="font56 red">1.34568</div>
+                      <div class="font24 red text-al-right">
+                          <span>1.13%</span>/
+                          <span>1.34567</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+                <div class="qt-chart">
+                    <div class="chart-time">
+                        <ul>
+                            <li>1分钟</li>
+                            <li>5分钟</li>
+                            <li>15分钟</li>
+                            <li>30分钟</li>
+                            <li>1小时</li>
+                            <li>4小时</li>
+                            <li>日</li>
+                            <li>周</li>
+                            <li>月</li>
+                        </ul>
+                    </div>
+                    <div class="chart-box">
+                        <img src="./images/img01.png" alt="" width="100%"/>
+                    </div>
+                </div>
+              <div class="floor mg-lr-30 overf-hid">
+                  <div class="icon-full-screen"></div>
+              </div>
+              <div class="floor mg-lr-30 pd-bt-88">
+                  <div class="center-tab">
+                      <ul>
+                          <li class="on">市场交易</li>
+                          <li>挂单交易</li>
+                      </ul>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="floor mg-tb-56">
+                      <div class="hq-label">交易类型</div>
+                      <div class="btn-buy-bottom btn-buy-sm on">
+                          <span>买</span>
+                          <span class="font-arial">1.34564</span>
+                      </div>
+                      <div class="btn-sell-bottom btn-sell-sm">
+                          <span>卖</span>
+                          <span class="font-arial">1.34564</span>
+                      </div>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="tran-panel-list">
+                      <div class="tran-panel mg-tp-42">
+                          <h1>成交价格</h1>
+                          <div class="tran-icon">
+                              <div class="icon-minus"></div>
+                              <div class="icon-num">110.805</div>
+                              <div class="icon-plus"></div>
+                          </div>
+                          <div class="tran-total">
+                                <span class="total-span">
+                                    <span>价格（≤</span><span>110.787</span><span>或≥</span><span>110.890</span><span>）</span>
+                                </span>
+                          </div>
+                      </div>
+                      <div class="tran-panel mg-tp-42">
+                          <h1>交易手数</h1>
+                          <div class="tran-icon">
+                              <div class="icon-minus"></div>
+                              <div class="icon-num">1.02</div>
+                              <div class="icon-plus"></div>
+                          </div>
+                          <div class="tran-total">
+                                <span class="total-span">
+                                    <span>合计：</span>
+                                    <span>$510.00</span>&nbsp;&nbsp;
+                                    <span>可用保证金：</span>
+                                    <span>$0.00</span>
+                                </span>
+                          </div>
+                      </div>
+                      <div class="tran-panel mg-tp-42">
+                          <h1>止损价格</h1>
+                          <div class="tran-icon">
+                              <div class="icon-minus"></div>
+                              <div class="icon-num font32 c9 line-ht-48">未设置</div>
+                              <div class="icon-plus"></div>
+                          </div>
+                          <div class="tran-total">
+                                <span class="total-span">
+                                    <span>价格≤</span><span>110.787</span>&nbsp;&nbsp;<span>预计亏损：</span><span>$--</span>
+                                </span>
+                          </div>
+                      </div>
+                      <div class="tran-panel mg-tp-42">
+                          <h1>止盈价格</h1>
+                          <div class="tran-icon">
+                              <div class="icon-minus"></div>
+                              <div class="icon-num font32 c9 line-ht-48">未设置</div>
+                              <div class="icon-plus"></div>
+                          </div>
+                          <div class="tran-total">
+                                <span class="total-span">
+                                    <span>价格≥</span><span>110.787</span>&nbsp;&nbsp;<span>预计盈利：</span><span>$--</span>
+                                </span>
+                          </div>
+                      </div>
+              </div>
+                  <div class="floor">
+                      <div class="font32 left">截止时间</div>
+                      <div class="right">
+                          <span class="c9 font26 left">2019-02-13 13:57</span>
+                          <i class="bot-arrow-down right"></i>
+                      </div>
+                  </div>
+              <div class="bottom-btn-fixed">
+                   <div class="login-btn mg-lr-30"><button>确认挂单</button></div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+</body>
+</html>

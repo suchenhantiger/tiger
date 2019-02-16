@@ -1,0 +1,109 @@
+﻿@charset "utf-8";
+/* CSS Document */
+@import url('common.css');
+
+.login-tab{
+	margin: .72rem .5rem 0 .5rem;
+}
+.login-tab li{
+	color: #999;
+	float: left;
+	font-size: .48rem;
+	margin-right: .3rem;
+	padding-right: .3rem;
+	border-right: 1px solid #ededed;
+}
+.login-tab li.on{
+	color: #333;
+}
+.login-tab li:last-child{
+	border-right: none;
+}
+.login-int{
+	color: #999;
+	margin: .3rem .5em 0 .5rem;
+}
+.login-form{
+	border-radius: .1rem;
+	margin: .72rem .5rem 0 .5rem;
+	padding: .72rem .5rem .72rem .5rem;
+	background: #fff;
+	box-shadow: 0 0 0.84rem rgba(0,0,0,.1);
+}
+.login-item{
+	font-size: .32rem;
+	height: .88rem;
+	line-height: .88rem;
+	border-radius: .5rem;
+	background: #f8f8f8;
+	padding:0 0 0 .42rem;
+	margin-bottom: .3rem;
+	position: relative;
+}
+.arrow-select{
+	width: .16rem;
+	height: .16rem;
+	background: url("../images/arrow-select-black.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .36rem;
+	margin-left: .1rem;
+}
+.area-code{
+	float: left;
+}
+.login-item input{
+	height: .88rem;
+	padding: 0;
+	line-height: .88rem;
+	border:none;
+	background: none;
+	float: left;
+	font-size: .32rem;
+}
+.login-item input::placeholder{
+	color: #999;
+}
+.text-code{
+	position: absolute;
+	right: .42rem;
+}
+.login-btn{
+	margin-top: .42rem;
+}
+.login-btn button{
+	height: .88rem;
+	line-height: .88rem;
+	border-radius: .5rem;
+	background: #647dce;
+	color: #fff;
+	width: 100%;
+	font-size: .36rem;
+	border:none;
+	box-shadow: 0 0 0.2rem rgba(26,46,107,.2);
+}
+.login-bt-text{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: .3rem;
+}
+.login-bt-text p{
+	line-height: .36rem;
+	text-align: center;
+	margin-bottom: .1rem;
+}
+.pro-forget{
+	float: right;
+	margin-bottom: .42rem;
+}
+
+
+
+
+
+
+
+
+
+

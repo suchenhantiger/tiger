@@ -4,7 +4,7 @@
 
 /*自选列表*/
 .optional-tit{
-	border-bottom:1px solid #ddd;
+	border-bottom:1px solid #ededed;
 	height: .72rem;
 	line-height: .72rem;
 	position: fixed;
@@ -53,8 +53,8 @@
 	padding-top: .56rem;
 }
 .op-sort-li{
-	border-bottom: 1px solid #ddd;
-	padding: .3rem 0 .3rem 0 !important;
+	border-bottom: 1px solid #ededed;
+	padding: .24rem 0 .24rem 0 !important;
 	margin: 0 .3rem 0 .3rem;
 	width: auto !important;
 }
@@ -199,8 +199,12 @@
 	float: right;
 	margin-top: .1rem;
 }
+.tran-panel-list{
+	margin-top: .64rem;
+	padding-bottom: .3rem;
+}
 .tran-panel{
-	border:1px solid #ddd;
+	border:1px solid #ededed;
 	border-radius: .1rem;
 	margin-top: .2rem;
 }
@@ -216,7 +220,7 @@
 	width: 1.5rem;
 }
 .tran-icon{
-	margin: .42rem 1.5rem 0 1.5rem;
+	margin: .3rem 1.5rem 0 1.5rem;
 	position: relative;
 }
 .icon-minus{
@@ -245,18 +249,18 @@
 }
 .tran-total{
 	clear: both;
-	padding-top: .5rem;
+	padding-top: .3rem;
 	padding-bottom: .4rem;
 	text-align: center;
 	color: #999;
  }
 .tran-total span.total-span{
-	background: #f1f1f1;
+	background: #f8f8f8;
 	border-radius: .5rem;
 	padding: .08rem .3rem;
 }
 .tran-tabs{
-	border-top:1px solid #ddd;
+	border-top:1px solid #ededed;
 	height: .48rem;
 }
 .tran-tabs li{
@@ -287,6 +291,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
+	background: #fff;
 }
 .btn-buy-bottom,.btn-sell-bottom{
 	width: 3.3rem;
@@ -308,9 +313,32 @@
 	background: #00bf3f;
 	box-shadow: 0 0 0.24rem rgba(0,191,63,.3);
 }
+.btn-buy-sm,.btn-sell-sm{
+	width: 2rem;
+	line-height: .72rem;
+	height: .72rem;
+	font-size: .3rem;
+	background: #fff;
+	border:1px solid #ededed;
+	box-shadow: none;
+	color: #999;
+	margin-left: .42rem;
+}
+.btn-buy-sm.on{
+	background: #ff4433;
+	color: #fff;
+	border:1px solid #ff4433;
+	box-shadow: 0 0 0.24rem rgba(255,68,51,.3);
+}
+.btn-sell-sm.on{
+	background: #00bf3f;
+	color: #fff;
+	border:1px solid #00bf3f;
+	box-shadow: 0 0 0.24rem rgba(0,191,63,.3);
+}
 .strategy{
 	border-radius: .1rem;
-	border:1px solid #ddd;
+	border:1px solid #ededed;
 	margin:.2rem 0 .3rem .3rem;
 	float: left;
 	width: 6.25rem;
@@ -332,7 +360,7 @@
 	background-size: 100%;
 }
 .strategy li.on{
-	border-bottom:1px solid #ddd;
+	border-bottom:1px solid #ededed;
 	padding-bottom: .3rem;
 }
 .strategy li.on h1 i{
@@ -344,8 +372,8 @@
 }
 .strategy li.on h1{
 	margin-bottom: .1rem;
-	color: #c5a187;
-	background: #f8f1ec;
+	color: #647dce;
+	background: #f6f8fd;
 	border-radius:0 .2rem 0 .2rem;
 	height: .42rem;
 	line-height: .42rem;
@@ -363,7 +391,7 @@
 }
 .text-disclaimer{
 	margin-top: .2rem;
-	color: #c5a187;
+	color: #647dce;
 	font-size: .26rem;
 	float: left;
 }
@@ -445,7 +473,7 @@
 	margin-left: .1rem;
 	margin-right: 1rem;
 	height: 5.15rem;
-	border: 1px solid #ddd;
+	border: 1px solid #ededed;
 	margin-top: .2rem;
 }
 
@@ -456,6 +484,56 @@
 	background: #ff4433;
 	color: #fff;
 }
+.center-tab{
+	position: relative;
+}
+.center-tab ul{
+	text-align: center;
+}
+.center-tab li{
+	background: #fff;
+	color: #999;
+	display: inline;
+	font-size: .36rem;
+	padding:0 .3rem;
+	border-right: 1px solid #ededed;
+}
+.center-tab li.on{
+	color: #333;
+}
+.center-tab li:last-child{
+	border-right: none;
+}
+.hq-label{
+	float: left;
+	margin-left: .3rem;
+	line-height: .72rem;
+	font-size: .32rem;
+}
+.choose-dl dd{
+	float: left;
+	margin: .05rem .5rem 0 .5rem;
+}
+.choose-dl dd i{
+	width: .42rem;
+	height:.42rem;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	background: url("../images/icon-choose.png") no-repeat;
+	background-size: 100%;
+}
+.choose-dl dd.on i{
+	background: url("../images/icon-choose-on.png") no-repeat;
+	background-size: 100%;
+}
+.choose-tit-dl dd{
+	margin: 0 .4rem 0 .4rem;
+}
+.choose-dl dd.mg-rt-0{
+	margin-right: 0 !important;
+}
+
 
 
 

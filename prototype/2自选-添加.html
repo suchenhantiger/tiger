@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div>
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center">添加交易品种</div>
+                  </div>
+                  <div class="header-right-icon">
+                        <div class="right-icon-text"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <div class="search-box">
+                  <div class="search-inner">
+                      <input placeholder="搜索"/>
+                      <i class="search-delete"></i>
+                  </div>
+              </div>
+              <div class="com-tabs">
+                  <ul>
+                      <li class="on"><span>外汇</span><i></i></li>
+                      <li><span>贵金属</span><i></i></li>
+                      <li><span>能源</span><i></i></li>
+                      <li><span>差价合约</span><i></i></li>
+                  </ul>
+              </div>
+              <!--外汇/贵金属-->
+              <div class="optional-list mg-tp-0" style="display: none">
+                  <ul>
+                      <li class="op-sort-li">
+                          <div class="list-right-icon">
+                              <dl class="choose-dl choose-tit-dl">
+                                  <dd class="c9">杠杆：</dd>
+                                  <dd class="on c6">50倍</dd>
+                                  <dd class="c6">100倍</dd>
+                                  <dd class="c6">200倍</dd>
+                              </dl>
+                          </div>
+                      </li>
+                  </ul>
+                  <ul>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="on"><i></i></dd>
+                                  <dd><i></i></dd>
+                                  <dd><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="on"><i></i></dd>
+                                  <dd><i></i></dd>
+                                  <dd><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="on"><i></i></dd>
+                                  <dd><i></i></dd>
+                                  <dd><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <!--能源/差价合约-->
+              <div class="optional-list mg-tp-0">
+                  <ul>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="mg-rt-0 on"><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="mg-rt-0"><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                      <li class="op-sort-li">
+                          <div class="currency-name mg-lt-0">
+                              <p class="c3">欧元美元</p>
+                              <p class="c9 font-arial">EURUSD200</p>
+                          </div>
+                          <div class="list-right-icon">
+                              <dl class="choose-dl">
+                                  <dd class="mg-rt-0"><i></i></dd>
+                              </dl>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+        </div>
+    </div>
+</body>
+</html>
