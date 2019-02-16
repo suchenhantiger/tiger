@@ -35,7 +35,8 @@ class OptionalList extends CursorList{
     }
 
     renderList(){
-        var {data} = this.state;
+        var {data} = this.state,
+            {editable} = this.props;
         return [1,1,1,1,1,1,1,1].map(item=>{
             return <OptionalItem/>
         })

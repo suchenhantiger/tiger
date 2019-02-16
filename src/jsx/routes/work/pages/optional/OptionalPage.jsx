@@ -11,7 +11,7 @@ class OptionalPage extends PageComponent{
     constructor(props,context) {
         super(props,context);
         this.state = {
-
+            editable:false
         }
     }
       //获取页面名称
@@ -21,18 +21,30 @@ class OptionalPage extends PageComponent{
 
     }
 
+    editClick = ()=>{
+        this.setState({editable:true})
+    }
+
     renderIcons(){
         return [
             <HeaderText text="添加" onClick={this.addClick}/>
         ]
     }
 
+    renderLeftIcons(){
+        return [
+            <HeaderText text="编辑" onClick={this.editClick}/>
+        ]
+    }
+
     render(){
         systemApi.log("OptionalPage render");
 
+        var {editable} = this.state;
+
         return (
             <div>
-                <AppHeader headerName="自选" showBack={false} iconRight={this.renderIcons()}/>
+                <AppHeader headerName="自选" showBack={false} iconLeft={this.renderLeftIcons()} iconRight={this.renderIcons()}/>
                 <Content coverBottom={false}>
                     <div className={styles.optional_tit}>
                         <div className={this.mergeClassName(styles.optional_name, "c6")}>交易品种</div>
@@ -42,7 +54,7 @@ class OptionalPage extends PageComponent{
                             <i className={styles.i_sell}>卖</i>
                         </div>
                     </div>
-                    <OptionalList/>
+                    <OptionalList editable={editable}/>
                 </Content>
                 {this.props.children}
             </div>
