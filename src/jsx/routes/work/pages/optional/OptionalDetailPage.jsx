@@ -3,6 +3,7 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
 import SimpleDetail from '../../components/optional/detail/SimpleDetail';
+import ComplexDetail from '../../components/optional/detail/ComplexDetail';
 
 import styles from './css/optionalDetailPage.less';
 
@@ -61,6 +62,7 @@ class OptionalDetailPage extends PageComponent{
                     <div className={styles.kchat}></div>
                     <LazyLoad index={index}>
                         <SimpleDetail/>
+                        <ComplexDetail/>
                     </LazyLoad>
                 </Content>
             </FullScreenView>
