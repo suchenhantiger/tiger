@@ -19,7 +19,7 @@ class OptionalPage extends PageComponent{
     getPageName(){ return "自选主页"; }
 
     addClick = ()=>{
-
+        hashHistory.push("/work/optional/add");
     }
 
     editClick = ()=>{

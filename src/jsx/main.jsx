@@ -17,6 +17,7 @@ ReactDOM.render(
                     <IndexRedirect to="optional"/>
                     <Route path="home" getComponent={require('./routes/work/config/home/welcome')(store)}></Route>
                     <Route path="optional" getComponent={require('./routes/work/config/optional/optional')(store)}>
+                        <Route path="add" getComponent={require('./routes/work/config/optional/add')(store)}></Route>
                         <Route path="detail" getComponent={require('./routes/work/config/optional/optionaldetail')(store)}></Route>
                     </Route>
                     <Route path="documentary" getComponent={require('./routes/work/config/documentary/documentary')(store)}></Route>

@@ -97,8 +97,9 @@
 	margin-top:.18rem;
 	display:inline-block;
 	height:.64rem;
-	background:url(./images/common/appheader/arrow_left.png) no-repeat;
-	background-size: .36rem;
+	background:url(./images/common/appheader/head-back-arrow-black.png) no-repeat;
+	background-size: .45rem;
+	background-position: center;
 	font-size: .24rem;
 	color: #FFF;
 	text-align: center;;
@@ -107,8 +108,6 @@
 }
 .transparent .head_arrow{
 	background-image:url(./images/common/appheader/arrow_left_transparent.png);
-	background-position: center;
-	background-size: .45rem;
 }
 .pattern a{
 	padding: 0 .06rem;

@@ -56,8 +56,8 @@ h1, h2, h3, h4, h5, h6 {
 textarea, input, select{
 	font-family:Microsoft Yahei, tahoma, arial, 宋体;
 }
-input::-webkit-input-placeholder {
-    color:    #93c5f3;
+input::placeholder{
+	color: #999;
 }
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button {
