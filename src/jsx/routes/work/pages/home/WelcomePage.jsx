@@ -8,7 +8,8 @@ import { Button,DatePickerView } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
 import ReactEcharts from 'echarts-for-react';
 import { TypeChooser } from "react-stockcharts/lib/helper";
-import Chart from './Chart';
+import Chart from '../../components/optional/detail/Chart';
+
 import { getData } from "./util"
 
 var upColor = '#ec0000';
@@ -323,7 +324,7 @@ this.data0 = this.splitData([
                         </div>
                         <div className={styles.welcome_detail}>
                    
-                       <Chart type={"svg"} data={getData()} />
+                       <Chart type={"hybrid"} data={getData()} />
                
 
                         {/* <ReactEcharts 

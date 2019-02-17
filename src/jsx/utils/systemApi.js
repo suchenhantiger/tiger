@@ -14,7 +14,7 @@ var g_deviceMessage = {
 var KEY = {
 	APPINTRO:"appintro", //引导页变量
 	BASETHEME:"basetheme",//主题皮肤
-    USERID:"notesid",
+    USERID:"userid",
     USERNAME: "username"
 
 };
@@ -122,7 +122,8 @@ var systemApi = {
 systemApi.initDeviceMessage();
 systemApi.overrideES6JS();
 if(TestEnvironment){
- 	systemApi.setValue("rootUrl","");
+	//http://192.168.103.112:8080/jeeplus/mcapp/optionalstock/getOptionalStock
+ 	systemApi.setValue("rootUrl","http://192.168.103.112:8080/jeeplus/mcapp/");
 }
 else{
 	systemApi.setValue("rootUrl","");

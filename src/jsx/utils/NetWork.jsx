@@ -37,16 +37,17 @@ function requestSuccess(ver, deferred, iskick, data){
     if (ajaxQueue[ver]) {
         delete ajaxQueue[ver];
 
-        var succeed = data.succeed,	    //判断成功失败
+        var success = data.success,	    //判断成功失败
             body = data.data;	      //相应数据内容
 
-        if(succeed == true){				//请求成功
+        if(success == true){	//请求成功
             deferred.resolve(body);
         }
         else if(body.status == "-10099" && body.info_detail == "未登录或会话已过期" ){	//session超时
+
             hashHistory.replace("/login");
         }
-        else{									//请求失败
+        else{//请求失败
             deferred.reject(body);
         }
 
@@ -136,10 +137,11 @@ module.exports = {
             var sendParams = {};
             for (var key in params) {
                 var isVauleof=params[key][1],
-                    tKey = isVauleof==0?key:"value("+key+")",
+                 //   tKey = isVauleof==0?key:"value("+key+")",
                     value = params[key][0];
 
-                sendParams[tKey] = value;
+              //  sendParams[tKey] = value;
+              sendParams[key] = value;
                 if(key == "kick")  iskick = value;
             }
             //生产环境用原生发
@@ -159,11 +161,9 @@ module.exports = {
 
             //遍历参数生成参数串
             for (var key in params) {
-                var isVauleof=params[key][1],
-                    tKey = isVauleof==0?key:"value("+key+")",
-                    value = params[key][0];
-                paramStr.push(tKey+"="+value);
 
+                paramStr.push(key+"="+params[key]);
+                //console.log(key+"="+params[key]);
                 if(key == "kick")  iskick = value;
             }
             //添加签名sign

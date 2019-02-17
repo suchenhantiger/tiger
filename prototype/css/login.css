@@ -11,7 +11,7 @@
 	font-size: .48rem;
 	margin-right: .3rem;
 	padding-right: .3rem;
-	border-right: 1px solid #ededed;
+	border-right: 1px solid #ddd;
 }
 .login-tab li.on{
 	color: #333;

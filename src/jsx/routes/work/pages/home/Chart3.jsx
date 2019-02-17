@@ -42,7 +42,7 @@ const macdAppearance = {
 	},
 };
 //kdj rsi
-class CandleStickChartPanToLoadMore extends React.Component {
+class K_Chart extends React.Component {
 	constructor(props) {
 		super(props);
 		const { data: inputData } = props;
@@ -366,17 +366,17 @@ const xExtents = [start2, end2];
 
 */
 
-CandleStickChartPanToLoadMore.propTypes = {
+K_Chart.propTypes = {
 	data: PropTypes.array.isRequired,
 	width: PropTypes.number.isRequired,
 	ratio: PropTypes.number.isRequired,
 	type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
 };
 
-CandleStickChartPanToLoadMore.defaultProps = {
+K_Chart.defaultProps = {
 	type: "svg",
 };
 
-CandleStickChartPanToLoadMore = fitWidth(CandleStickChartPanToLoadMore);
+K_Chart = fitWidth(K_Chart);
 
-export default CandleStickChartPanToLoadMore;
+export default K_Chart;

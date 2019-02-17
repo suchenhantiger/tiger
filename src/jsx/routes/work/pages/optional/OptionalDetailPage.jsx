@@ -1,9 +1,8 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
-
+import K_Chart from '../../components/optional/detail/K_Chart';
 import SimpleDetail from '../../components/optional/detail/SimpleDetail';
-
 import styles from './css/optionalDetailPage.less';
 
 /********自选-简单*********/
@@ -43,6 +42,7 @@ class OptionalDetailPage extends PageComponent{
                 <Content coverHeader={true}>
                     <div className={styles.header}>
                         <div className={styles.blank}></div>
+                        <div className={styles.whiteline}></div>
                         <div className={styles.optional_detail}>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName("c3", styles.c3)}>欧元美元</p>
@@ -57,8 +57,11 @@ class OptionalDetailPage extends PageComponent{
                                 </div>
                             </div>
                         </div>
+               
                     </div>
-                    <div className={styles.kchat}></div>
+                    <div className={styles.kchat}>
+                        <K_Chart />
+                    </div>
                     <LazyLoad index={index}>
                         <SimpleDetail/>
                     </LazyLoad>

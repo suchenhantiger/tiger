@@ -20,6 +20,7 @@
 
 export function getData() {
 	var data = [
+		
 		{
 		"date": "2010-01-03T16:00:00.000Z",
 		"open": 25.436282332605284,
