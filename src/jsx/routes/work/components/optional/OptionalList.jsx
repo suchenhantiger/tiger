@@ -20,9 +20,9 @@ class OptionalList extends CursorList{
     //更新数据
     update = (data) => {
         var list = data;
-        if(isAppend){
-            list = this.state.data.concat(data);
-        }
+        // if(isAppend){
+        //     list = this.state.data.concat(data);
+        // }
         this.nextIndex = list.length + 1;
         this.setState({data:list});
     };

@@ -1,26 +1,14 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
 //获取客户列表
-export function getOptionalList(params, isAppend, cb, component, updateList){
+export function getOptionalList(component, params,updateList, cb){
     return function(dispatch, state){
-    //     if(true){
-    //         var hasMore=false;
-    //     // updateList(isAppend, rows);
-    //          cb && cb(null, hasMore);
-    //          return;
-    //     }
-    //     var {rows} = data,
-    //     hasMore = rows.length==pagesize;
-    // updateList(isAppend, rows);
-    // cb && cb(null, hasMore);
         var {pagesize} = params;
-        // params.userid=111111;
-        // systemApi.setValue("userid",111111);
         component.requestJSON("optionalstock/getOptionalStock",params).done((data)=>{
             console.log(data);
             var rows = data,
                 hasMore = rows.length==pagesize;
-            updateList(isAppend, rows);
+            updateList(false, rows);
             cb && cb(null, hasMore);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
