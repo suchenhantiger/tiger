@@ -3,9 +3,12 @@ import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../..
 //获取客户列表
 export function getOptionalList(component, params,updateList, cb){
     return function(dispatch, state){
+        updateList(false, []);
+        cb && cb(null, false);
+        return;
         var {pagesize} = params;
         component.requestJSON("optionalstock/getOptionalStock",params).done((data)=>{
-            console.log(data);
+            // console.log(data);
             var rows = data,
                 hasMore = rows.length==pagesize;
             updateList(false, rows);
@@ -8362,7 +8365,7 @@ var data2=
 //获取客户列表
 export function getKList(params,cb ){
     return function(dispatch, state){
-        var {page,pagesize=200,curr}=params;
+        var {page,pagesize=150,curr}=params;
         var newlist =[];
         if(curr==data2.length){
             return;
@@ -8386,7 +8389,6 @@ export function getKList(params,cb ){
             newlist[i].split= "";
             newlist[i].dividend= "";
             }
-       
         cb && cb(newlist);
     }
 }
