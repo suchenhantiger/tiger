@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center"></div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <!--实名认证-->
+              <div class="login-box">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">实名认证</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">证件类型：大陆居民身份证<br>请确保证件边框完整、大小适中、字迹清晰、亮度均衡、证件信息与填写信息一致、证件未过期、已满18周岁</div>
+                  <div class="floor mg-lr-50 mg-tp-30">
+                      <div class="upload-box">
+                          <span>点击上传证件正面</span>
+                      </div>
+                      <div class="upload-box">
+                          <span>点击上传证件反面</span>
+                      </div>
+                  </div>
+                  <div class="login-int">
+                      只支持PNG、JPG格式图片，图片大小不可超过2MB。<br>
+                      拍摄示例
+                  </div>
+                  <div class="floor mg-lr-30 mg-tp-30 pd-bt-88">
+                      <ul class="cf-example">
+                          <li>
+                              <div class="cf-img01"></div>
+                              <i class="icon-correct"></i>
+                              <p>标准</p>
+                          </li>
+                          <li>
+                              <div class="cf-img02"></div>
+                              <i class="icon-error"></i>
+                              <p>图像过小</p>
+                          </li>
+                          <li>
+                              <div class="cf-img03"></div>
+                              <i class="icon-error"></i>
+                              <p>图像模糊</p>
+                          </li>
+                          <li>
+                              <div class="cf-img04"></div>
+                              <i class="icon-error"></i>
+                              <p>照片反光</p>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="bottom-btn-fixed">
+                      <div class="login-btn mg-lr-30"><button>提交审核</button></div>
+                  </div>
+              </div>
+              <!--已开通-->
+              <div class="login-box" style="display: none">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">恭喜您已开通体验金账户</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">体验金账户体验期限为30天，过期后账户资金将被清除，建 议尽快升级到真实账户。</div>
+                  <div class="login-int">请注意：体验金账户资金及盈利不可体现。 升级为真实账户只需完成以下操作：<br>1.完整填写您的个人信息并通过审核；<br>2.充值激活账户。</div>
+                  <div class="bottom-btn-fixed">
+                      <div class="login-btn mg-lr-30"><button>完 成</button></div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+</body>
+</html>

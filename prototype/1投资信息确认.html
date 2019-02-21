@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center"></div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <!--投资信息确认-->
+              <div class="login-box">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">投资信息确认</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">由于受最高监管的约束，需要您提供相关信息，我们只询问
+                      与开户相关的问题。您的资料始终保密，绝不公开。</div>
+                  <div class="login-form mg-tp-42">
+                      <div class="qs_box">
+                          <div class="qs_tit">1.您的投资目标（可多选）</div>
+                          <ul class="qs_list">
+                              <li class="on">资本增长</li>
+                              <li>交易利润</li>
+                              <li>对冲</li>
+                          </ul>
+                      </div>
+                      <div class="qs_box">
+                          <div class="qs_tit">2.对于每年在此的投资，哪个风险/获利情景最符合您的期望</div>
+                          <ul class="qs_list">
+                              <li>高风险，高收益</li>
+                              <li>中风险，中收益</li>
+                              <li>低风险，低收益</li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="scroll_list">
+                      <ul>
+                          <li class="on"><span></span></li>
+                          <li><span></span></li>
+                          <li><span></span></li>
+                      </ul>
+                  </div>
+                  <div class="bottom-btn-fixed">
+                      <div class="login-btn mg-lr-30"><button>下一步</button></div>
+                  </div>
+              </div>
+          </div>
+            <!--确认弹窗 start-->
+            <div class="pup-box" style="display: none">
+                <div class="pop-inner">
+                    <div class="pup-content">
+                        <p class="font30 mg-bt-30">个人资料未完成，建议继续完善</p>
+                    </div>
+                    <div class="pup-bot">
+                        <div class="btn-pup-cancel">中途放弃</div>
+                        <div class="line-01"></div>
+                        <div class="btn-pup-confirm">继续完善</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

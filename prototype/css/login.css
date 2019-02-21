@@ -11,7 +11,7 @@
 	font-size: .48rem;
 	margin-right: .3rem;
 	padding-right: .3rem;
-	border-right: 1px solid #ddd;
+	border-right: 1px solid #ededed;
 }
 .login-tab li.on{
 	color: #333;
@@ -20,13 +20,14 @@
 	border-right: none;
 }
 .login-int{
+	line-height: .36rem;
 	color: #999;
-	margin: .3rem .5em 0 .5rem;
+	margin: .3rem .5rem 0 .5rem;
 }
 .login-form{
 	border-radius: .1rem;
 	margin: .72rem .5rem 0 .5rem;
-	padding: .72rem .5rem .72rem .5rem;
+	padding: .56rem .5rem .56rem .5rem;
 	background: #fff;
 	box-shadow: 0 0 0.84rem rgba(0,0,0,.1);
 }

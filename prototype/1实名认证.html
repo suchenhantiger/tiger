@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center"></div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <!--实名认证-->
+              <div class="login-box">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">实名认证</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">因监管要求，请您根据提供相关信息。请确认是您本人，审核通过后不可修改。</div>
+                  <div class="form-tabs">
+                      <ul>
+                          <li class="on"><span>男</span></li>
+                          <li><span>女</span></li>
+                      </ul>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="login-form mg-tp-42">
+                      <div class="login-item">
+                          <input placeholder="姓名">
+                      </div>
+                      <div class="login-item">
+                          <input placeholder="证件类型">
+                      </div>
+                      <div class="login-item">
+                          <input placeholder="请输入证件号码">
+                      </div>
+                      <div class="login-item">
+                          <input placeholder="请选择出生日期">
+                      </div>
+                  </div>
+                  <div class="bottom-btn-fixed">
+                      <div class="login-btn mg-lr-30"><button>下一步</button></div>
+                  </div>
+              </div>
+              <!--已开通-->
+              <div class="login-box" style="display: none">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">恭喜您已开通体验金账户</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">体验金账户体验期限为30天，过期后账户资金将被清除，建 议尽快升级到真实账户。</div>
+                  <div class="login-int">请注意：体验金账户资金及盈利不可体现。 升级为真实账户只需完成以下操作：<br>1.完整填写您的个人信息并通过审核；<br>2.充值激活账户。</div>
+                  <div class="bottom-btn-fixed">
+                      <div class="login-btn mg-lr-30"><button>完 成</button></div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+</body>
+</html>
