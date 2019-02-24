@@ -152,6 +152,9 @@ h1, h2, h3, h4, h5, h6 {
 .pd-bt-88{
 	padding-bottom: .88rem;
 }
+.pd-tp-40{
+	padding-top: 4rem !important;
+}
 .line-ht-48{
 	line-height: .48rem;
 }
@@ -453,7 +456,13 @@ input::placeholder{
 	background:#647dce;
 }
 
-
+.height_auto{
+	height: auto;
+}
+.ht_gray{
+	height: .2rem;
+	background: #f1f1f1;
+}
 
 
 

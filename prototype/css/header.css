@@ -79,6 +79,23 @@
 	margin-top: .14rem;
 	margin-left: .05rem;
 }
+.head_reset{
+	width: .44rem;
+	height: .44rem;
+	background: url("../images/icon-reset-white.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .22rem;
+	margin-right: .3rem;
+}
+.head_message{
+	width: .44rem;
+	height: .44rem;
+	background: url("../images/icon-massage.png") no-repeat;
+	background-size: 100%;
+	float: left;
+	margin-top: .22rem;
+}
 
 
 
