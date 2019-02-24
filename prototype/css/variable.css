@@ -68,6 +68,7 @@
 }
 .currency-price{
 	float: right;
+	position:relative;
 	margin-right: .3rem;
 }
 .price-box{
@@ -89,6 +90,16 @@
 }
 .price-box span.font50{
 	font-size: .5rem;
+}
+.disabled .price-box.buy,.disabled .price-box.sell{
+	background: #b6b6b6;
+}
+.mk_close{
+	color: #999;
+	position: absolute;
+	right: 0;
+	top: -.32rem;
+	font-style: normal;
 }
 .list-left-icon{
 	float: left;
@@ -589,6 +600,52 @@
 	font-size: .32rem;
 	color: #999;
 }
+.bank_box{
+	height: 2.8rem;
+	line-height: 2.8rem;
+	border-radius: .2rem;
+}
+.bank_list{
+	margin-top: .3rem;
+}
+.bank_list li{
+	color: #fff;
+	height:2rem;
+	padding: 0 .3rem;
+	border-radius: .1rem;
+	position: relative;
+	margin-bottom: .2rem;
+	box-shadow: 0 0 .15rem rgba(173,174,181,.5);
+}
+.bank_list li p{
+	margin-bottom: .15rem;
+}
+.bk_zg{
+	background: linear-gradient(to right, #262626,#636363);
+}
+.bk_zh{
+	background: linear-gradient(to right, #3b6ccd,#4d79da);
+}
+.bk_zx{
+	background: linear-gradient(to right, #ff6257,#ff9057);
+}
+.icon_zh{
+	width: .88rem;
+	height: .88rem;
+	position: absolute;
+	right: .3rem;
+	margin-top: -.44rem;
+	top: 50%;
+	display: block;
+	background: url("../images/icon-zh.png") no-repeat;
+	background-size: 100%;
+}
+.bank_name{
+	color: #fff;
+	margin-bottom: .2rem;
+	font-size: .36rem;
+	padding-top: .4rem;
+}
 .cf-example{
 	padding-bottom: .8rem;
 }
@@ -730,6 +787,90 @@
 	background: #ff4433;
 	border-radius: 50%;
 	display: block;
+}
+.hd_tabs_black span{
+	color:#c3c3c3;
+	font-weight: 100;
+	margin: 0 .1rem;
+	position: relative;
+}
+.hd_tabs_black span.on{
+	font-weight:bold;
+	color:#333;
+}
+.hd_tabs_black span.on i{
+	position: absolute;
+	left:50%;
+	margin-left: -.35rem;
+	bottom:-.05rem;
+	width: .72rem;
+	height: .04rem;
+	background: #333;
+	border-radius: .06rem;
+}
+.sc_tabs span{
+	font-size: .26rem;
+	margin: 0 .3rem;
+}
+
+.radius_box{
+	margin:.3rem;
+	padding: .3rem .2rem;
+	background: #fff;
+	border-radius: .1rem;
+	overflow: hidden;
+	border:1px solid #fff;
+	box-shadow: 0 0 .38rem rgba(0,0,0,.1);
+}
+.radius_box.on{
+	border:1px solid #647dce;
+}
+.radius_tit{
+	font-size: .28rem;
+	padding-bottom: .2rem;
+	border-bottom:1px solid #eee;
+}
+.account_cs ul{
+	padding-top: .1rem;
+}
+.account_cs li{
+	margin-bottom: .1rem;
+	overflow: hidden;
+	padding-left: .5rem;
+}
+.account_cs li{
+	background: url(../images/icon-choose.png) no-repeat top .2rem left;
+	background-size: .32rem;
+}
+.account_cs li.on{
+	background: url(../images/icon-choose-on.png) no-repeat top .2rem left;
+	background-size: .32rem;
+}
+.text_list{
+	margin: .3rem;
+}
+.text_list li{
+	border-bottom:1px solid #eee;
+	height: .72rem;
+	line-height: .72rem;
+}
+.text_arrow{
+	margin: 0 .3rem;
+}
+.text_arrow li{
+	padding: .3rem 0;
+	overflow: hidden;
+	background:url("../images/arrow-down-black.png") no-repeat top .3rem right;
+	background-size: .26rem;
+	border-bottom:1px solid #eee;
+}
+.text_arrow li.on{
+	background:url("../images/arrow-up-black.png") no-repeat  top .3rem right;
+	background-size: .26rem;
+}
+.text_a_p img{
+	max-width: 100%;
+	margin-top: .1rem;
 }
 
 

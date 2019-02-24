@@ -10,6 +10,7 @@ var webSocket = {
                 this.onOpen && this.onOpen(evt);
             };
             this.webSocketIns.onmessage = (evt)=>{
+                console.log("onmessage");
                 this.onMessage && this.onMessage(evt.data);
             };
             this.webSocketIns.onclose = (evt)=>{
@@ -28,7 +29,6 @@ var webSocket = {
         this.webSocketIns.close();
     },
     send:function(reqStr){
-        
         if(this.webSocketIns!=null &&this.webSocketIns.readyState==1){
             this.webSocketIns.send(reqStr);
             console.log(reqStr);

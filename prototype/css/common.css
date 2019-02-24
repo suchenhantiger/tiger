@@ -95,11 +95,20 @@ h1, h2, h3, h4, h5, h6 {
 .font-arial{
 	font-family: arial;
 }
+.font_bold{
+	font-weight: bold;
+}
+.font_100{
+	font-weight:100;
+}
 .vertical-top{
 	vertical-align: top;
 }
 .text-al-right{
 	text-align: right;
+}
+.text-al-center{
+	text-align: center;
 }
 .mg-lr-30{
 	margin: 0 .3rem;
@@ -125,6 +134,9 @@ h1, h2, h3, h4, h5, h6 {
 .mg-tp-0{
 	margin-top: 0;
 }
+.mg-tp-20{
+	margin-top: .2rem;
+}
 .mg-tp-30{
 	margin-top: .3rem;
 }
@@ -133,6 +145,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 .mg-tb-42{
 	margin: .42rem 0;
+}
+.mg-tb-20{
+	margin: .2rem 0;
+}
+.mg-bt-20{
+	margin-bottom: .2rem;
+}
+.mg-bt-30{
+	margin-bottom: .3rem;
+}
+.mg-bt-40{
+	margin-bottom: .4rem;
 }
 .mg-tb-56{
 	margin: .56rem 0;
@@ -143,8 +167,14 @@ h1, h2, h3, h4, h5, h6 {
 .mg-rt-0{
 	margin-right: 0;
 }
+.mg-lt-140{
+	margin-left: 1.4rem;
+}
 .pd-tp-0{
 	padding-top: 0;
+}
+.pd-tp-10{
+	padding-top: .1rem;
 }
 .pd-bt-20{
 	padding-bottom: .2rem;
@@ -157,6 +187,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .line-ht-48{
 	line-height: .48rem;
+}
+.line-ht-36{
+	line-height: .36rem;
 }
 .overf-hid{
 	overflow: hidden;
@@ -329,6 +362,15 @@ input::placeholder{
 	right: .3rem;
 	top:.3rem;
 }
+.pop_tit{
+	line-height: .36rem;
+	border-bottom:1px solid #eee;
+	padding: .3rem;
+}
+.bottom-pop .account_cs li{
+	padding-bottom: .3rem;
+	border-bottom:1px solid #eee;
+}
 
 
 /*搜索*/
@@ -433,6 +475,12 @@ input::placeholder{
 	position: absolute;
 	right: 0;
 	top: .3rem;
+}
+.form_label{
+	min-width: 1.4rem;
+	display: block;
+	float: left;
+	font-size: .26rem;
 }
 /*scroll_list*/
 .scroll_list{

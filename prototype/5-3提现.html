@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                      <div class="center hd_tabs_black">
+                          <span>充值<i></i></span>
+                          <span class="on">提现<i></i></span>
+                          <span>凭证记录<i></i></span>
+                      </div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <div class="mg-lr-30 mg-tp-42">
+                  <div class="form_input mg-bt-40">
+                      <p>
+                          <span class="form_label">提现账户</span>
+                          <span class="blue font28">交易账户</span>&nbsp;
+                          <span class="c9">(自主交易)</span>
+                      </p>
+                      <p class="mg-lt-140 mg-tp-10">
+                          <span class="c9">当前交易账户余额：¥0.00</span>
+                      </p>
+                  </div>
+                  <div class="form_input mg-bt-40">
+                      <p><span class="form_label">提现金额</span></p>
+                      <input type="text" placeholder="$">
+                  </div>
+                  <div class="form_input mg-bt-40">
+                      <span class="red">开通真实账户后未入金，无法提现></span>
+                  </div>
+                  <div class="form_input mg-bt-40">
+                      <p><span class="form_label">提现到</span></p>
+                      <div class="clear"></div>
+                      <div class="account_cs mg-tp-20">
+                          <ul>
+                              <li class="on">
+                                  <p class="mg-tb-20"><span>银行账户</span></p>
+                              </li>
+                              <li>
+                                  <p class="mg-tb-20"><span>钱包</span></p>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+              </div>
+              <div class="bottom-btn-fixed">
+                  <div class="login-btn mg-lr-30"><button>下一步</button></div>
+              </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

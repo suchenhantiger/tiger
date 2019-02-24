@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                      <div class="center">
+                      </div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <div class="login-box">
+                  <ul class="login-tab mg-tp-42">
+                      <li class="on">添加银行账户</li>
+                  </ul>
+                  <div class="clear"></div>
+                  <div class="login-int">请绑定认证用户本人的银行账户，当前支持信用卡提现，请绑定储蓄卡。</div>
+                  <div class="mg-tp-42 mg-lr-50">
+                      <div class="form_input mg-bt-30">
+                          <p><span class="form_label c9">持卡人</span></p>
+                          <input type="text" placeholder="LEIMS">
+                      </div>
+                      <div class="form_input mg-bt-30">
+                          <p><span class="form_label c9">银行国家</span></p>
+                          <input type="text" placeholder="中国">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请填写银行卡">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请选择您的银行名称">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请选择您的开户省">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请选择您的开户市">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请填写支行名称">
+                      </div>
+                      <div class="form_input mg-bt-20">
+                          <input type="text" placeholder="请填写银行预留手机号">
+                      </div>
+                      <div class="bottom-btn-fixed">
+                          <div class="login-btn mg-lr-30"><button>提 交</button></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

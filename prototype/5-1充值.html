@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div><!--返回按钮-->
+                  </div>
+                  <div class="header-center-cont">
+                      <div class="center hd_tabs_black">
+                          <span class="on">充值<i></i></span>
+                          <span>提现<i></i></span>
+                          <span>凭证记录<i></i></span>
+                      </div>
+                  </div>
+                  <div class="header-right-icon">
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <div class="mg-lr-30 mg-tp-42">
+                  <div class="form_input mg-bt-40">
+                      <p>
+                          <span class="form_label">充值到</span>
+                          <span class="blue font28">交易账户</span>&nbsp;
+                          <span class="c9">(自主交易)</span>
+                      </p>
+                  </div>
+                  <div class="form_input mg-bt-40">
+                      <p>
+                          <span class="form_label">支付方式</span>
+                          <span class="blue font28">请选择</span>
+                      </p>
+                  </div>
+                  <div class="form_input mg-bt-40"><!--选择后-->
+                      <p>
+                          <span class="form_label">支付方式</span>
+                          <span class="blue font28 mg-bt-10">电子汇账</span>
+                          <span class="c9">(通常需要3-5哥工作日到账)</span>
+                      </p>
+                  </div>
+                  <div class="form_input mg-bt-40">
+                      <p><span class="form_label">充值金额</span></p>
+                      <input type="text" placeholder="$">
+                  </div>
+                  <div class="form_input mg-bt-40"><!--选择电汇账户-->
+                      <span class="blue">点击查看汇款详情></span>
+                  </div>
+                  <div class="form_input mg-bt-40"><!--选择电汇账户-->
+                      <div class="upload-box">
+                          <span>点击上传电汇凭证</span>
+                      </div>
+                  </div>
+                  <div class="form_input mg-bt-40"><!--选择电汇账户-->
+                      <div class="font_bold mg-bt-20">电汇费用</div>
+                      <div class="c9 line-ht-36">
+                          <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
+                      </div>
+                  </div>
+                  <div class="form_input mg-bt-40"><!--选择电汇账户-->
+                      <div class="font_bold mg-bt-20">反洗钱政策</div>
+                      <div class="c9 line-ht-36">
+                          <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="bottom-btn-fixed">
+                  <div class="login-btn mg-lr-30"><button>确认充值</button></div>
+              </div>
+          </div>
+          <!--支付方式 start-->
+          <div class="pup-box">
+              <div class="bottom-pop">
+                <div class="pop_tit">
+                    <span class="font36">支付方式</span>
+                    <span class="right blue">取消</span>
+                </div>
+              <div class="account_cs mg-lr-30">
+                  <ul>
+                      <li class="on">
+                          <p class="font30 mg-tb-20"><span>电汇账户</span></p>
+                          <p class="c9">电汇通常需要3-5哥工作日到账</p>
+                      </li>
+                      <li>
+                          <p class="font30 mg-tb-20"><span>钱包</span></p>
+                      </li>
+                      <li>
+                          <p class="font30 mg-tb-20"><span>银行转账-2</span></p>
+                          <p class="c9">单笔100-10000美金，不支持工商银行</p>
+                      </li>
+                      <li>
+                          <p class="font30 mg-tb-20"><span>银行转账</span></p>
+                          <p class="c9">周一到周五：9AM-2PM</p>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>
