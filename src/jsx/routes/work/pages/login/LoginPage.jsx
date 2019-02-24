@@ -20,8 +20,12 @@ class LoginPage extends PageComponent {
 
     renderIcons() {
         return [
-            <div className={styles.right_country}><span>中国</span><i></i></div>
+            <div className={styles.right_country} onClick={this.areaClick}><span>中国</span><i></i></div>
         ]
+    }
+
+    areaClick = ()=>{
+        hashHistory.push("/login/area");
     }
 
     tabClick = (index)=>()=>{

@@ -22,7 +22,7 @@ class ForgetPwdPage extends PageComponent {
     }
 
     render() {
-        systemApi.log("MePage render");
+        systemApi.log("ForgetPwdPage render");
 
         return (
             <FullScreenView>

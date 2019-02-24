@@ -1,6 +1,5 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView'
-import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
 import ModifyForm from '../../components/login/ModifyForm';
 
@@ -22,7 +21,7 @@ class ModifyPwdPage extends PageComponent {
     }
 
     render() {
-        systemApi.log("MePage render");
+        systemApi.log("ModifyPwdPage render");
 
         return (
             <FullScreenView>

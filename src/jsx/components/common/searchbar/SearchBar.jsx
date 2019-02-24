@@ -28,18 +28,25 @@ class SearchBar extends PureComponent {
         }
     }
 
+    clear = ()=>{
+        var {onSearch} = this.props;
+        this.setState({value:""});
+        onSearch && onSearch("");
+    }
+
     //渲染函数
     render() {
         //打印渲染日志，必写
         systemApi.log("SearchBar render");
 
-        var { placeholder} = this.props;
+        var {placeholder} = this.props,
+            {value} = this.state;
 
         return (
             <div className={styles.search_box}>
                 <div className={styles.search_inner}>
-                    <input placeholder={placeholder} onChange={this.inputChange} onKeyDown={this.keydown} />
-                    <i className={styles.search_delete}></i>
+                    <input placeholder={placeholder} value={value} onChange={this.inputChange} onKeyDown={this.keydown} />
+                    {value!=""?<i className={styles.search_delete} onClick={this.clear}></i>:null}
                 </div>
             </div>
         );

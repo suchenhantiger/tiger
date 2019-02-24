@@ -16,6 +16,7 @@ ReactDOM.render(
                 <Route path="login" getComponent={require('./routes/work/config/login/login')(store)}>
                     <Route path="forget" getComponent={require('./routes/work/config/login/forget')(store)}></Route>
                     <Route path="agreement" getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
+                    <Route path="area" getComponent={require('./routes/work/config/login/area')(store)}></Route>
                 </Route>
                 <Route path="/work" getComponent={require('./routes/work/work')(store)}>
                     <IndexRedirect to="optional"/>
