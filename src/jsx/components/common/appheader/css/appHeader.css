@@ -53,6 +53,9 @@
 	white-space: nowrap;
 	margin: 0 auto;
 }
+.transparent .center{
+	color:#fff;
+}
 .center input::-webkit-input-placeholder{
    color: #fff;
 }

@@ -10,7 +10,7 @@ class HeaderIcon extends PureComponent{
         systemApi.log("HeaderIcon render");
 
         var {iconCls,onClick,theme} = this.props,
-            icoCls = this.mergeClassName(styles.ico, styles[iconCls], styles[theme]);
+            icoCls = this.mergeClassName(styles.ico, iconCls, styles[theme]);
  
         return (
             <a className={icoCls} onClick={onClick}>
