@@ -49,11 +49,12 @@ class LoginPage extends PageComponent {
                         <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>快捷登录</li>
                         <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>密码登录</li>
                     </ul>
-                    <div className={styles.login_int}>未注册的邮箱，登录时将自动注册</div>
+                    <div className={styles.login_int}>未注册的用户，登录时将自动注册</div>
 
                     <LazyLoad index={index}>
-                        <LoginForm/>
-                        <MsgLogin/>
+                        <MsgLogin/> 
+                        <LoginForm/> 
+                      
                     </LazyLoad>
 
                     <div className={styles.login_bt_text}>

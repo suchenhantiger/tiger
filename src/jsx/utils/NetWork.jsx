@@ -48,7 +48,7 @@ function requestSuccess(ver, deferred, iskick, data){
             hashHistory.replace("/login");
         }
         else{//请求失败
-            deferred.reject(body);
+            deferred.reject({message:data.msg});
         }
 
     }
@@ -59,7 +59,6 @@ function requestError(ver, deferred, data){
     if (ajaxQueue[ver]) {
         delete ajaxQueue[ver];
         systemApi.log("接口访问失败");
-
         var info="连接失败",
             info_detail="亲，有点小意外，请您稍后再试！";
 
