@@ -1,12 +1,17 @@
 import PaySelect from './PaySelect';
+import PayDest from './PayDest';
 import styles from './css/rechargeForm.less';
 
 const PAY_MAP = [
-    {id:"0",text:"电汇账户",desc:"电汇通常需要3-5哥工作日到账"},
+    {id:"0",text:"电汇账户",desc:"电汇通常需要3-5个工作日到账"},
     {id:"1",text:"钱包",desc:""},
     {id:"2",text:"银行转账-2",desc:"单笔100-10000美金，不支持工商银行"},
     {id:"3",text:"银行转账",desc:"周一到周五：9AM-2PM"}
 ];
+
+const DEST_MAP = [
+    {id:"0", text:"交易账号", desc:"自主交易"}
+]
 
 class ReChargeForm extends PureComponent {
 
@@ -15,7 +20,9 @@ class ReChargeForm extends PureComponent {
         super(props);
         this.state = {
             payType:"-1",
+            destType:"-1",
             showPaySelect:false,
+            showDestSelect:false,
             amount:""
         }
     }
@@ -32,8 +39,36 @@ class ReChargeForm extends PureComponent {
         this.setState({showPaySelect:false});
     }
 
-    rechargeSubmit = ()=>{
+    openPayDest = ()=>{
+        this.setState({showDestSelect:true})
+    }
 
+    selectDest = (destType)=>{
+        this.setState({destType, showDestSelect:false});
+    }
+
+    closePayDest = ()=>{
+        this.setState({showDestSelect:false});
+    }
+
+    getPayItem(payType){
+        for(var i=0;i<PAY_MAP.length;i++){
+            var {id} = PAY_MAP[i];
+            if(payType == id) return PAY_MAP[i];
+        }
+        return {};
+    }
+
+    getDestItem(destType){
+        for(var i=0;i<DEST_MAP.length;i++){
+            var {id} = DEST_MAP[i];
+            if(destType == id) return DEST_MAP[i];
+        }
+        return {};
+    }
+
+    rechargeSubmit = ()=>{
+        
     }
 
     inputChange = (e)=>{
@@ -41,11 +76,14 @@ class ReChargeForm extends PureComponent {
         this.setState({amount:value});
     }
 
+    
+
     //渲染函数
     render() {
 
-        var {showPaySelect, payType, amount} = this.state,
-            {text, desc} = PAY_MAP[payType]||{};
+        var {showDestSelect, showPaySelect, payType, amount, destType} = this.state,
+            {text:payText, desc:payDesc} = this.getPayItem(payType)||{},
+            {text:destText, desc:destDesc} = this.getDestItem(destType)||{};
 
         return (
             <div>
@@ -53,15 +91,15 @@ class ReChargeForm extends PureComponent {
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p>
                             <span className={styles.form_label}>充值到</span>
-                            <span className={this.mergeClassName("blue", "font28")}>交易账户</span>&nbsp;
-                        <span className={"c9"}>(自主交易)</span>
+                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPayDest}>{destText||"请选择"}</span>&nbsp;
+                            {destDesc?<span className={"c9"}>({destDesc})</span>:null}
                         </p>
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p>
                             <span className={styles.form_label}>支付方式</span>
-                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPaySelect}>{text||"请选择"}</span>
-                            {desc?<span className={this.mergeClassName("c9", "mg-tp-10")}>(通常需要3-5哥工作日到账)</span>:null}
+                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPaySelect}>{payText||"请选择"}</span>
+                            {payDesc?<span className={this.mergeClassName("c9", "mg-tp-10")}>({payDesc})</span>:null}
                         </p>
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
@@ -95,6 +133,7 @@ class ReChargeForm extends PureComponent {
                     </div>
                 </div>
                 {showPaySelect?<PaySelect payInfo={PAY_MAP} payType={payType} onSelect={this.selectPay} onClose={this.closePaySelect}/>:null}
+                {showDestSelect?<PayDest destInfo={DEST_MAP} destType={destType} onSelect={this.selectDest} onClose={this.closePayDest} />:null}
             </div>
         );
     }

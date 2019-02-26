@@ -323,3 +323,6 @@ body.hidden {
 .font_bold{
 	font-weight: bold;
 }
+.text-al-center {
+    text-align: center;
+}
