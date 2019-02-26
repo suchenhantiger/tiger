@@ -314,3 +314,12 @@ body.hidden {
 .pd-tp-40{
 	padding-top: 4rem !important;
 }
+.line-ht-48{
+	line-height: .48rem;
+}
+.line-ht-36{
+	line-height: .36rem;
+}
+.font_bold{
+	font-weight: bold;
+}

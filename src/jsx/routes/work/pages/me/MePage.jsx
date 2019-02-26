@@ -54,6 +54,10 @@ class MePage extends PageComponent {
         )
     }
 
+    rechargeClick = ()=>{
+        hashHistory.push("/work/me/recharge");
+    }
+
     render() {
         systemApi.log("MePage render");
 
@@ -89,7 +93,7 @@ class MePage extends PageComponent {
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.account_icons}>
-                            {this.renderFuncItem("充值", "./images/me/icon-recharge.png")}
+                            {this.renderFuncItem("充值", "./images/me/icon-recharge.png", this.rechargeClick)}
                             {this.renderFuncItem("提现", "./images/me/icon-recharge.png")}
                             {this.renderFuncItem("银行卡", "./images/me/icon-recharge.png")}
                             {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")}
