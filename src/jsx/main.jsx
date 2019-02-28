@@ -25,7 +25,9 @@ ReactDOM.render(
                     </Route>
                     <Route path="documentary" getComponent={require('./routes/work/config/documentary/documentary')(store)}></Route>
                     <Route path="trade" getComponent={require('./routes/work/config/trade/trade')(store)}></Route>
-                    <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}></Route>
+                    <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
+                        <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>
+                    </Route>
 
                 </Route>
             </Route>
