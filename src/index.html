@@ -26,6 +26,7 @@
 
 <body class="outerwrap">
     <div id="main" class="viewport-new"></div>
+    <script src="js/cordova/cordova.js"></script>
     <script src="js/lib.js"></script>
     <script src="js/vendor.js"></script>
     <script>
@@ -59,19 +60,11 @@
             head.appendChild(script);
         }
 
-        if (browser.versions.android) {
-            appendJs('js/main.js');
-        } else if (!isDebug && browser.versions.ios) {
-            setTimeout(function () {
-                appendJs('js/main.js');
-            }, 7 * 100);
+        if(!isDebug){
+            document.addEventListener('deviceready', function() { appendJs('js/main.js'); }, false);
         }
-        else {
+        else{
             appendJs('js/main.js');
-        }
-
-        window.iOSJsInjectionCompleted = function () {
-            iosready = true;
         }
     </script>
 
