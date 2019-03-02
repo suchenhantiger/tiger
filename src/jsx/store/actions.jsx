@@ -26,6 +26,34 @@ export function hideLoading(){
         dispatch({type:HIDE_LOADING});
     }
 }
+export function initOptionalList(){
+    return function(dispatch){
+        var optionalList_local = systemApi.getValue("optional_list") || "[]";
+        optionalList_local = JSON.parse(optionalList_local);
+        dispatch({type:"INIT_OPTIONAL_LIST",data:optionalList_local });
+    }
+}
+
+export function updateOptionalList(optList){
+    return function(dispatch){
+               
+        var dataStr = JSON.stringify(optList);
+        // console.log(dataStr);
+        systemApi.setValue("optional_list",dataStr);
+        // console.log(systemApi.getValue("optional_list"));
+        dispatch({type:"INIT_OPTIONAL_LIST",data:optList });
+    }
+}
+
+export function initProductList(callback){
+    return function(dispatch){
+        var productList_local = systemApi.getValue("product_list") || "[]";
+        productList_local = JSON.parse(productList_local);
+        dispatch({type:"INIT_PRODUCT_LIST",data:productList_local });
+
+        callback && callback();
+    }
+}
 
 /*
     @param type

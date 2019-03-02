@@ -266,6 +266,13 @@ module.exports = [
     "clobbers": [
       "cordova.plugins.screenorientation"
     ]
+  },{
+    "id": "cordova-plugin-http.CordovaHttpPlugin",
+    "file": "../plugins/cordova-plugin-http/www/cordovaHTTP.js",
+    "pluginId": "cordova-plugin-http",
+    "clobbers": [
+      "CordovaHttpPlugin"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -279,7 +286,8 @@ module.exports.metadata =
   "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-uniquedeviceid": "1.3.2",
   "es6-promise-plugin": "4.2.2",
-  "cordova-plugin-screen-orientation": "3.0.1"
+  "cordova-plugin-screen-orientation": "3.0.1",
+  "cordova-plugin-http": "1.2.0"
 };
 // BOTTOM OF METADATA
 });

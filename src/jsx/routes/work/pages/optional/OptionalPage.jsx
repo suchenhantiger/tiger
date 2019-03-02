@@ -14,16 +14,22 @@ class OptionalPage extends PageComponent{
         this.state = {
             editable:false
         }
+        
+    }
+
+    componentDidMount(){
+      
     }
       //获取页面名称
     getPageName(){ return "自选主页"; }
 
     addClick = ()=>{
         hashHistory.push("/work/optional/add");
+        
     }
 
     editClick = ()=>{
-        this.setState({editable:true});
+       this.setState({editable:true});
     }
 
     submitClick = ()=>{

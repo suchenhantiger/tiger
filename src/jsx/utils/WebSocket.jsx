@@ -29,6 +29,7 @@ var webSocket = {
         this.webSocketIns.close();
     },
     send:function(reqStr){
+        //return;
         if(this.webSocketIns!=null &&this.webSocketIns.readyState==1){
             this.webSocketIns.send(reqStr);
             console.log(reqStr);

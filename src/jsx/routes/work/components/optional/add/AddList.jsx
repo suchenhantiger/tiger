@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import AddItem from './AddItem';
-
+import {updateOptionalList} from '../../../../../store/actions';
 import styles from './css/addList.less';
 
 class AddList extends PureComponent{
@@ -9,40 +9,49 @@ class AddList extends PureComponent{
     //构造函数
     constructor(props) {
         super(props);
-        this.state = {
-            list:[1,2,3,4,5,6],
-            selected:[]
-        };
+        this._selected=[];
     }
 
     toggleClick = (id)=>{
-        var {selected} = this.state,
-            index = selected.indexOf(id);
-        if(index!=-1){
-            selected.splice(index,1);
+        var index = this._selected.indexOf(id);
+        var {data,optList} =this.props;
+        if(index!=-1){//删除
+           // selected.splice(index,1);
+            var indexLoc = optList.indexOf(data[id].prodCode);
+            if(indexLoc>-1)
+                optList.splice(indexLoc,1);
         }
-        else{
-            selected.push(id);
+        else{//添加
+            // selected.push(id);
+            var indexLoc = optList.indexOf(data[id].prodCode);
+            if(indexLoc ==-1)
+                optList.push(data[id].prodCode);
         }
-        this.setState({selected:selected.slice()});
+
+        this.props.updateOptionalList(optList);
     }
 
-    renderList(list){
-        var {selected} = this.state;
+    renderList(){
+        var {data,optList} =this.props;
+        this._selected=[];
+        for(var i=0;i<data.length;i++){
+            var indexLoc = optList.indexOf(data[i].prodCode);
+            if(indexLoc>-1)
+                this._selected.push(i);
+        }
 
-        return list.map(item=>{
-            return <AddItem id={item} selected={selected.indexOf(item)!=-1} onToggleClick={this.toggleClick}/>
+        return data.map((item,index)=>{
+            return <AddItem item={item} id={index} selected={this._selected.indexOf(index)!=-1} onToggleClick={this.toggleClick}/>
         })
     }
 
     //渲染函数
     render(){
 
-        var {list} = this.state;
-
+        var {type} = this.props;        
         return (
             <ul className={styles.optional_list}>
-                {this.renderList(list)}
+                {this.renderList()}
             </ul>
         );
     }
@@ -50,7 +59,7 @@ class AddList extends PureComponent{
 }
 
 function injectAction(){
-    return {};
+    return {updateOptionalList};
 }
 
-module.exports = connect(null,injectAction())(AddList);
+module.exports = connect(null,injectAction(updateOptionalList))(AddList);

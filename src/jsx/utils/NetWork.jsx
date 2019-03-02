@@ -15,21 +15,29 @@ function sort(params) {
 }
 
 //生成签名字符串
-function genSignStr(params, jsoncallback) {
+function genSignStr(params, needToken) {
     var paramList,
-        list = [],
-        confuseStr = "xzehome_20161018";
+        list = [];
 
     //在参数中添加回调参数
-    params["jsoncallback"] = jsoncallback;
     paramList = sort(params);
 
     for (var i = 0; i < paramList.length; i++) {
         var item = paramList[i];
-        list.push(item + "=" + params[item]);
+        if(null!=params[item])
+            list.push(item + "=" + params[item]);
     }
 
-    return md5(list.join("&") + confuseStr).toUpperCase();
+    if(needToken){
+        list.push("token=" + systemApi.getValue("tigertoken"));
+    }else{
+        list.push("token=65928a6dfca54365a0353a2b1aad4f47");
+    }
+
+    console.log(list);
+    console.log(list.join("&"));
+    return md5(list.join("&"));
+    // return md5(list.join("&")).toUpperCase();
 }
 
 //请求成功回调
@@ -39,14 +47,14 @@ function requestSuccess(ver, deferred, iskick, data){
 
         var success = data.success,	    //判断成功失败
             body = data.data;	      //相应数据内容
-
+// console.log(data);
         if(success == true){	//请求成功
             deferred.resolve(body);
         }
-        else if(body.status == "-10099" && body.info_detail == "未登录或会话已过期" ){	//session超时
+        // else if(body. == "-10099" && body.info_detail == "未登录或会话已过期" ){	//session超时
 
-            hashHistory.replace("/login");
-        }
+        //     hashHistory.replace("/login");
+        // }
         else{//请求失败
             deferred.reject({message:data.msg});
         }
@@ -113,6 +121,8 @@ module.exports = {
     */
     requestJSON: function(url, params, otherParams) {
         otherParams = otherParams || {};
+
+        params.agentId=100001;
         //拼装参数数组
         var iskick=0,
             paramStr = [],
@@ -126,9 +136,9 @@ module.exports = {
 
         needToken = needToken==undefined?true:needToken;
 
-        if(!params.access_token && needToken){
-            params.access_token = [systemApi.getValue("access_token"),0]
-        }
+        // if(!params.access_token && needToken){
+        //     params.access_token = [systemApi.getValue("access_token"),0]
+        // }
 
         var deferred = $.Deferred();
         //针对后端sign校验，将cache设置为true，并自己添加一个随机数
@@ -156,7 +166,7 @@ module.exports = {
         else{
             //测试环境用jsonp
             //参数中添加防缓存参数
-            params["_"] = "" + timeStamp + ver;
+          
 
             //遍历参数生成参数串
             for (var key in params) {
@@ -166,7 +176,8 @@ module.exports = {
                 if(key == "kick")  iskick = value;
             }
             //添加签名sign
-            paramStr.push("sign=" + genSignStr(params, jsoncallback));
+            paramStr.push("sign=" + genSignStr(params,needToken));
+            params["_"] = "" + timeStamp + ver;
 
             //拼装请求url
             var sendUrl = systemApi.getValue("rootUrl") + url + "?" + paramStr.join("&");

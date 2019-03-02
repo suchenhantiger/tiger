@@ -1,3 +1,5 @@
+import {connect} from 'react-redux';
+import {updateProduct} from '../../actions/optional/optionalAction';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import SearchBar from '../../../../components/common/searchbar/SearchBar';
@@ -21,6 +23,11 @@ class AddPage extends PageComponent {
     //获取页面名称
     getPageName() { return "自选-添加"; }
 
+    componentDidMount(){
+        //先读本地缓存，再发起请求从服务端更新
+        this.props.updateProduct(this);
+    }
+
     searchChange = (search)=>{
 
     }
@@ -33,7 +40,7 @@ class AddPage extends PageComponent {
         systemApi.log("AddPage render");
 
         var { index } = this.state;
-
+        var {ProductList={},OptionalList=[]} =this.props;
         return (
             <FullScreenView>
                 <AppHeader headerName="添加交易品种" />
@@ -45,12 +52,15 @@ class AddPage extends PageComponent {
                         <UlineTab text="能源"/>
                         <UlineTab text="差价合约"/>
                     </SubTabs>
+                    {ProductList["1"] || ProductList["2"] || ProductList["3"] ||ProductList["4"] ?
                     <LazyLoad index={index}>
-                        <AddList type=""/>
-                        <AddList type=""/>
-                        <AddList type=""/>
-                        <AddList type=""/>
+                        <AddList type="1" optList={OptionalList} data={ProductList["1"]?ProductList["1"]:[]}/>
+                        <AddList type="2" optList={OptionalList} data={ProductList["2"]?ProductList["2"]:[]}/>
+                        <AddList type="3" optList={OptionalList} data={ProductList["3"]?ProductList["3"]:[]}/>
+                        <AddList type="4" optList={OptionalList} data={ProductList["4"]?ProductList["4"]:[]}/>
                     </LazyLoad>
+                    :null
+                    }
                 </Content>
                 {this.props.children}
             </FullScreenView>
@@ -58,6 +68,12 @@ class AddPage extends PageComponent {
     }
 
 }
+function injectProps(state){
+    var {ProductList,OptionalList} = state.base || {};
+    return {ProductList,OptionalList};
+}
+function injectAction(){
+    return {updateProduct};
+}
+module.exports = connect(injectProps,injectAction())(AddPage);
 
-
-module.exports = AddPage;

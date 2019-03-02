@@ -45,11 +45,8 @@ const macdAppearance = {
 class CandleStickChartPanToLoadMore extends React.Component {
 	constructor(props) {
 		super(props);
-		const { data: inputData ,level} = props;
-		if(level>6)
-			this._level =2;
-		else
-			this._level =1;
+		const { data: inputData } = props;
+
 		const ema26 = ema()
 			.id(0)
 			.options({ windowSize: 26 })
@@ -79,10 +76,10 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		const dataToCalculate = inputData;
 		const calculatedData = ema26(ema12(macdCalculator(dataToCalculate)));
 	
-		const indexCalculator = discontinuousTimeScaleProviderBuilder().initialLevel(this._level).indexCalculator();
+		const indexCalculator = discontinuousTimeScaleProviderBuilder().indexCalculator();
 		const { index } = indexCalculator(calculatedData.slice(this._maxWindowSize));
         /* SERVER - END */
-		const xScaleProvider = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		const xScaleProvider = discontinuousTimeScaleProviderBuilder()
             .withIndex(index);
 			// console.log(index);
 		const { data: linearData, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData.slice(this._maxWindowSize));
@@ -90,7 +87,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
         const end = xAccessor(linearData[Math.max(0, linearData.length - 50)]);
 		   const xExtents = [start, end];
 
-		//console.log(linearData);
+		console.log(linearData);
 		this.state = {
 			ema26,
 			ema12,
@@ -127,21 +124,45 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		var dataToCalculate = tmpDataArr;
 		const calculatedData = ema26(ema12(macdCalculator(dataToCalculate)));
 
-		const indexCalculator = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		const indexCalculator = discontinuousTimeScaleProviderBuilder()
 		.initialIndex(prevData[0].idx.index)
 		.indexCalculator();
 		var allData= prevData.concat(calculatedData.slice(-1));
 		 const { index } = indexCalculator(allData);
-// console.log(index);
-		const xScaleProvider = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+console.log(index);
+		const xScaleProvider = discontinuousTimeScaleProviderBuilder()
 		.initialIndex(prevData[0].idx.index)
 			.withIndex(index);
 		const { data: linearData, xScale, xAccessor, displayXAccessor } = xScaleProvider(allData);
-		// console.log(linearData);
+		console.log(linearData);
 		this.setState({
 			data: linearData,
 			xScale, xAccessor, displayXAccessor 
 		});
+
+		//old---------------
+		// const { data: prevData, ema26, ema12, macdCalculator } = this.state;
+		// //update all
+		// //var under0 = prevData.slice(0,1-newData.length);
+		// console.log(newData);
+		// var dataToCalculate = this._upper0.slice(0);
+		// this._under0 = prevData.slice(0,this._upper0.length);
+		// //dataToCalculate.unshift(newData);//添加一个无用的数据
+		// dataToCalculate.push(newData);
+		// const calculatedData = ema26(ema12(macdCalculator(dataToCalculate)));
+		// const indexCalculator = discontinuousTimeScaleProviderBuilder().indexCalculator();
+		//  const { index } = indexCalculator(calculatedData);
+		// // /* SERVER - END */
+		// const xScaleProvider = discontinuousTimeScaleProviderBuilder()
+		// 	.withIndex(index);
+		// const { data: linearData, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
+		// //console.log(linearData.pop());
+		// this._upper0.push(linearData.pop());
+		// var newAll = this._under0.slice(0).concat(this._upper0);
+		// this.setState({
+		// 	data: newAll,
+		// 	xScale, xAccessor, displayXAccessor 
+		// });
 	
 	}
 
@@ -150,12 +171,12 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		const { data: prevData, ema26, ema12, macdCalculator } = this.state;
 		const dataToCalculate = newdata.slice(0,-prevData.length);
 		const calculatedData = ema26(ema12(macdCalculator(dataToCalculate)));
-		const indexCalculator = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		const indexCalculator = discontinuousTimeScaleProviderBuilder()
 			.initialIndex(prevData[0].idx.index-calculatedData.length+this._maxWindowSize)
 			.indexCalculator();
 		const { index } = indexCalculator(calculatedData.slice(this._maxWindowSize).concat(prevData));
 		// console.log(index);
-		const xScaleProvider = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		const xScaleProvider = discontinuousTimeScaleProviderBuilder()
 			.initialIndex(prevData[0].idx.index-calculatedData.length+this._maxWindowSize)
 			.withIndex(index);
 		const { data: linearData, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData.slice(this._maxWindowSize).concat(prevData));		
@@ -220,8 +241,8 @@ class CandleStickChartPanToLoadMore extends React.Component {
 			<ChartCanvas 
                     ratio={ratio} 
                     width={width} 
-                    height={fullscreen?255:210}
-					margin={{ left: 5, right: 45, top: 5, bottom: 10 }} type={"hybrid"}
+                    height={210}
+					margin={{ left: 5, right: 45, top: 5, bottom: 20 }} type={"hybrid"}
 					seriesName="MSFT"
                     data={data}
                     xExtents={xExtents}
@@ -263,31 +284,8 @@ class CandleStickChartPanToLoadMore extends React.Component {
 						strokeDasharray="Solid"
 						displayFormat={format(".2f")}
 					/> */}
+
 				</Chart>
-				{fullscreen?<Chart id={2} height={60}
-						yExtents={macdCalculator.accessor()}
-						origin={(w, h) => {console.log(w);console.log(h);return [0, h-60]}} padding={{ top: 5, bottom: 5 }} >
-					<YAxis axisAt="right" ozoomEnabled={false} rient="right" ticks={2} />
-
-					{/* <MouseCoordinateX
-						at="bottom"
-						orient="bottom"
-						displayFormat={timeFormat("%Y-%m-%d")} /> */}
-					{/* <MouseCoordinateY
-						at="right"
-						orient="right"
-						displayFormat={format(".2f")} /> */}
-
-					<MACDSeries yAccessor={d => d.macd}
-					
-						{...macdAppearance} widthRatio={0.99}/>
-					{/* <MACDTooltip
-						origin={[-38, 15]}
-						yAccessor={d => d.macd}
-						options={macdCalculator.options()}
-						appearance={macdAppearance}
-						/> */}
-				</Chart>:null}
 
 			</ChartCanvas>
             </div>

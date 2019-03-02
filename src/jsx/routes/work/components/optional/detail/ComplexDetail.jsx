@@ -11,7 +11,9 @@ class ComplexDetail extends PureComponent{
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
             showOpenSucc:false,
-            showBuyDialog:false
+            showBuyDialog:false,
+            trantype:true,
+            tranDire:true,
         }
     }
 
@@ -68,18 +70,56 @@ class ComplexDetail extends PureComponent{
     tradeCancel = ()=>{
         this.setState({showBuyDialog:false});
     }
-
+    chooseTranDir=(type)=>()=>{
+        this.setState({tranDire:type});
+    }
+    chooseTranType=(type)=>()=>{
+        this.setState({trantype:type});
+    }
     //渲染函数
     render(){
 
-        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
+        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect,trantype,tranDire} = this.state;
 
         return(
             <div>
-                <div className={this.mergeClassName("mg-lr-30", "overf-hid")}>
-                    <div className={styles.icon_full_screen} onClick={this.openSucc}></div>
-                </div>
                 <div className="mg-lr-30">
+                    <div className={styles.centerTab}>
+                        <ul>
+                            <li className={trantype?styles.on:""} onClick={this.chooseTranType(true)}>市场交易</li>
+                            <li className={trantype?"":styles.on}onClick={this.chooseTranType(false)} >挂单交易</li>
+                        </ul>
+                    </div>
+                    <div style={{clear:"both"}}></div>
+                    <div className={styles.tran_type}>
+                      <div className={styles.hq_label}>交易类型</div>
+                      <div className={styles.btn_buy_bottom +" "+styles.btn_buy_sm+" "+(tranDire?styles.on:"")} onClick={this.chooseTranDir(true)}>
+                          <span>买</span>
+                          <span className={styles.font_arial}>1.34564</span>
+                      </div>
+                      <div className={styles.btn_sell_bottom +" "+styles.btn_sell_sm+" "+(tranDire?"":styles.on)} onClick={this.chooseTranDir(false)}>
+                          <span>卖</span>
+                          <span className={styles.font_arial}>1.34564</span>
+                      </div>
+                  </div>
+
+
+                    <div className={styles.tran_panel}>
+                        <h1>成交价格</h1>
+                        <div className={styles.tran_icon}>
+                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
+                            <div className={styles.icon_num}>{num}</div>
+                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                        </div>
+                        <div className={styles.tran_total}>
+                            <span className={styles.total_span}>
+                                <span>合计：</span>
+                                <span>$510.00</span>&nbsp;&nbsp;
+                                <span>可用保证金：</span>
+                                <span>$0.00</span>
+                            </span>
+                        </div>
+                    </div>
                     <div className={styles.tran_panel}>
                         <h1>交易手数</h1>
                         <div className={styles.tran_icon}>
@@ -95,26 +135,49 @@ class ComplexDetail extends PureComponent{
                                 <span>$0.00</span>
                             </span>
                         </div>
-                        <div className={styles.tran_tabs}>
-                            <ul>
-                                <li className={index==0?styles.on:""} onClick={this.countClick(0)}><span>0.01手</span><i></i></li>
-                                <li className={index==1?styles.on:""} onClick={this.countClick(1)}><span>0.1手</span><i></i></li>
-                                <li className={index==2?styles.on:""} onClick={this.countClick(2)}><span>0.5手</span><i></i></li>
-                                <li className={index==3?styles.on:""} onClick={this.countClick(3)}><span>1手</span><i></i></li>
-                            </ul>
+                    </div>
+                    <div className={styles.tran_panel}>
+                        <h1>止损价格</h1>
+                        <div className={styles.tran_icon}>
+                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
+                            <div className={styles.icon_num}>{num}</div>
+                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
                         </div>
+                        <div className={styles.tran_total}>
+                            <span className={styles.total_span}>
+                                <span>合计：</span>
+                                <span>$510.00</span>&nbsp;&nbsp;
+                                <span>可用保证金：</span>
+                                <span>$0.00</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div className={styles.tran_panel}>
+                        <h1>止盈价格</h1>
+                        <div className={styles.tran_icon}>
+                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
+                            <div className={styles.icon_num}>{num}</div>
+                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                        </div>
+                        <div className={styles.tran_total}>
+                            <span className={styles.total_span}>
+                                <span>合计：</span>
+                                <span>$510.00</span>&nbsp;&nbsp;
+                                <span>可用保证金：</span>
+                                <span>$0.00</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div style={{height:"1.5rem"}}>
                     </div>
                 </div>
                 <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.btn_buy_bottom} onClick={this.buyClick}>
-                        <span>买</span>
-                        <span className={"font-arial"}>1.34564</span>
-                    </div>
-                    <div className={styles.btn_sell_bottom} onClick={this.sellClick}>
-                        <span>卖</span>
-                        <span className={"font-arial"}>1.34564</span>
+                    <div className={styles.mybtn_buy_bottom} onClick={this.buyClick}>
+                        <div className={styles.confirm} >确认挂单</div>
                     </div>
                 </div>
+
+                 
             </div>
         );
     }

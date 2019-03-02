@@ -1,12 +1,13 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView'
+import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
-import ModifyForm from '../../components/login/ModifyForm';
+import ImproveForm from '../../components/login/ImproveForm';
 
-import styles from './css/loginPage.less';
+import styles from './css/improvePage.less';
 
 /********我的主页*********/
-class ModifyPwdPage extends PageComponent {
+class ImprovePage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
@@ -21,16 +22,16 @@ class ModifyPwdPage extends PageComponent {
     }
 
     render() {
-        systemApi.log("ModifyPwdPage render");
+        systemApi.log("ForgetPwdPage render");
 
         return (
             <FullScreenView>
-                <AppHeader showBack={true} backHash="/work" iconRight={this.renderIcons()} />
+                <AppHeader showBack={false} iconRight={this.renderIcons()} />
                 <Content>
                     <ul className={styles.login_tab}>
-                        <li className={styles.on}>修改密码</li>
+                        <li className={styles.on}>完善信息</li>
                     </ul>
-                    <ModifyForm/>
+                    <ImproveForm/>
                 </Content>
             </FullScreenView>
         );
@@ -39,4 +40,4 @@ class ModifyPwdPage extends PageComponent {
 }
 
 
-module.exports = ModifyPwdPage;
+module.exports = ImprovePage;

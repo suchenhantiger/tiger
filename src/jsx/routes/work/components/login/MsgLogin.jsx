@@ -14,6 +14,7 @@ class MsgLogin extends PureComponent {
             canSend:false,
             showBtn:true
         }
+        this._interval;
     }
 
     phoneChange = (e)=>{
@@ -48,13 +49,19 @@ class MsgLogin extends PureComponent {
         
     }
 
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        clearInterval(this._interval);
+
+    }
+
     getMessage=()=>{
         if(this.state.canSend)
         this.props.getMessagePwd(this,this.state.phone,(msg)=>{
             this.setState({showBtn:false});
             var start = new Date().getTime();
             var {restTime} = this.state;
-            var i = setInterval(()=>{
+            this._interval = setInterval(()=>{
                 var curTime = new Date().getTime(),
                     restTime = Math.round(60-(curTime-start)/1000);
                 if(restTime>0)
@@ -64,9 +71,9 @@ class MsgLogin extends PureComponent {
                 else{
                     this.setState({
                         showBtn:true,
-                        restTime:countdownTime
+                        restTime:60
                     });
-                    clearInterval(i);
+                    clearInterval(this._interval);
                 }
 
             },300);

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {showMessage} from '../../../store/actions';
+import {showMessage,initOptionalList,initProductList} from '../../../store/actions';
 
 import Toast from '../../../components/common/popup/Toast';
 import Loading from '../../../components/common/loading/Loading';
@@ -12,8 +12,14 @@ class BasePage extends PureComponent{
 
     constructor(props,context) {
         super(props,context);
-    }
 
+    }
+    componentDidMount(){
+        this.props.initProductList(()=>{
+            this.props.initOptionalList();
+        });
+      
+    }
     render(){
         systemApi.log("BasePage render");
         var {loading,messageshow,message,msgType} = this.props;
@@ -34,7 +40,7 @@ function injectProps(state){
 }
 
 function injectAction(){
-    return{showMessage};
+    return{showMessage,initOptionalList,initProductList};
 }
 
 module.exports = connect(injectProps,injectAction())(BasePage);

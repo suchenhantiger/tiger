@@ -80,10 +80,7 @@ class SimpleDetail extends PureComponent{
 
         return(
             <div>
-                <div className={this.mergeClassName("mg-lr-30", "overf-hid")}>
-                    <div className={styles.icon_intro_list} onClick={this.introClick}></div>
-                    <div className={styles.icon_full_screen} onClick={this.openSucc}></div>
-                </div>
+
                 <div className="mg-lr-30">
                     <div className={styles.tran_panel}>
                         <h1>交易手数</h1>

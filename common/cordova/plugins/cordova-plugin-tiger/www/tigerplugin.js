@@ -1,191 +1,191 @@
-cordova.define("cordova-plugin-xycommonplugin.common", function(require, exports, module) {
+cordova.define("cordova-plugin-tiger.common", function(require, exports, module) {
 
                var exec = require('cordova/exec');
 
                module.exports = {
 
                copyToBoard: function(success, failure, copyStr) {
-               cordova.exec(success, failure, "XYCommonPlugin", "copyToBoard", [copyStr]);
+               cordova.exec(success, failure, "TigerPlugin", "copyToBoard", [copyStr]);
              },getLocation: function(timeout,success, failure) {
-               cordova.exec(success, failure, "XYCommonPlugin", "getLocation",[timeout]);
+               cordova.exec(success, failure, "TigerPlugin", "getLocation",[timeout]);
                },
                androidBack: function(success, failure){
-               cordova.exec(success, failure, "XYCommonPlugin", "androidBack", []);
+               cordova.exec(success, failure, "TigerPlugin", "androidBack", []);
                 },
                 enterMeeting:function(success, fail, meeting_path,meeting_path_ios) {
-                cordova.exec(success, fail, "XYCommonPlugin", "enterMeeting", [meeting_path,meeting_path_ios]);
+                cordova.exec(success, fail, "TigerPlugin", "enterMeeting", [meeting_path,meeting_path_ios]);
                 },
                 uploadBonree:function(success, fail) {
-                  cordova.exec(success, fail, "XYCommonPlugin", "uploadBonree", []);
+                  cordova.exec(success, fail, "TigerPlugin", "uploadBonree", []);
                   },
                setAndroidKeyboardResponseOpen: function(isOpen) {
-                cordova.exec(null, null, "XYCommonPlugin", "setAndroidKeyboardResponseOpen", [isOpen]);
+                cordova.exec(null, null, "TigerPlugin", "setAndroidKeyboardResponseOpen", [isOpen]);
                 },
                callPhone: function(success, failure, number) {
-               cordova.exec(success, failure, "XYCommonPlugin", "callPhone", [number]);
+               cordova.exec(success, failure, "TigerPlugin", "callPhone", [number]);
                },
                sendMessage: function(success, failure, phoneNumber,textMessage) {
-               cordova.exec(success, failure, "XYCommonPlugin", "sendMessage", [phoneNumber,textMessage]);
+               cordova.exec(success, failure, "TigerPlugin", "sendMessage", [phoneNumber,textMessage]);
                },
                getVersionNumber: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "getVersionNumber", []);
+               cordova.exec(success, fail, "TigerPlugin", "getVersionNumber", []);
                },
                getPhoneModel: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "getPhoneModel", []);
+               cordova.exec(success, fail, "TigerPlugin", "getPhoneModel", []);
                },
                getSystemPhoneName: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "getSystemPhoneName", []);
+               cordova.exec(success, fail, "TigerPlugin", "getSystemPhoneName", []);
                },
                getSystemPhoneVersion: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "getSystemPhoneVersion", []);
+               cordova.exec(success, fail, "TigerPlugin", "getSystemPhoneVersion", []);
                },
                showGuidePageVC: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "showGuidePageVC", []);
+               cordova.exec(success, fail, "TigerPlugin", "showGuidePageVC", []);
                },
                openReaderVC: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyOpenReaderVC", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyOpenReaderVC", [paras]);
                },
                xyhUpdateApp: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhUpdateApp", []);
+               cordova.exec(success, fail, "TigerPlugin", "xyhUpdateApp", []);
                },
                xyhSSOApp: function(success, fail,paras,token) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhSSOApp", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhSSOApp", [paras]);
                },
                callMiniApp: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "callMiniApp", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "callMiniApp", [paras]);
                },
                xyhNotice: function(success, fail,paras,token) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhNotice", [paras,token]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhNotice", [paras,token]);
                },
                xyhScanCode: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhScanCode", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhScanCode", [paras]);
                },
                xyhNewWindow: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhNewWindow", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhNewWindow", [paras]);
                },
                xyhCloseWindow: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhCloseWindow", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhCloseWindow", [paras]);
                },
                xyhGetTmpdata: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhGetTmpdata", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhGetTmpdata", [paras]);
                },
                xyhCleanTmpdata: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhCleanTmpdata", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhCleanTmpdata", [paras]);
                },
                xyhDeviceinfo: function(success, fail) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhDeviceinfo", []);
+               cordova.exec(success, fail, "TigerPlugin", "xyhDeviceinfo", []);
                },
                xyhInAppBrowser: function(success, fail,src, watermark, userid, username) {
                  cordova.InAppBrowser.open(src, '_blank', 'location=no,toolbar=yes,toolbarposition=top,closebuttoncaption=关闭,watermark='+watermark+",userid="+userid+",username="+username);
                },
                xyhCommitBBSImg: function(success, fail,paras) {
-          		 cordova.exec(success, fail, "XYCommonPlugin", "xyhCommitBBSImg", [paras]);
+          		 cordova.exec(success, fail, "TigerPlugin", "xyhCommitBBSImg", [paras]);
                },
                xyhUploadImages: function(success, fail, paras){
-                   cordova.exec(success, fail, "XYCommonPlugin", "xyhUploadImages", [paras]);
+                   cordova.exec(success, fail, "TigerPlugin", "xyhUploadImages", [paras]);
                },
                xyhGetItem: function(success, fail,name) {
-                cordova.exec(success, fail, "XYCommonPlugin", "xyhGetItem", [name]);
+                cordova.exec(success, fail, "TigerPlugin", "xyhGetItem", [name]);
                },
                xyhSetItem: function(success, fail,name,value) {
-                cordova.exec(success, fail, "XYCommonPlugin", "xyhSetItem", [name,value]);
+                cordova.exec(success, fail, "TigerPlugin", "xyhSetItem", [name,value]);
                },
                xyhRemoveItem: function(success, fail,name) {
-                cordova.exec(success, fail, "XYCommonPlugin", "xyhRemoveItem", [name]);
+                cordova.exec(success, fail, "TigerPlugin", "xyhRemoveItem", [name]);
                },
                fileDownload: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyFileDownload", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyFileDownload", [paras]);
                },
                fileDownloadCancel: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyFileDownloadCancel", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyFileDownloadCancel", [paras]);
                },
                getFileListStates: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyGetFileListStates", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyGetFileListStates", [paras]);
                },
               xyhSetGlobalTheme: function(success, fail,paras) {
-                 cordova.exec(success, fail, "XYCommonPlugin", "xyhSetGlobalTheme", [paras]);
+                 cordova.exec(success, fail, "TigerPlugin", "xyhSetGlobalTheme", [paras]);
                },
                xyhOaTraveIssue: function(success, fail,paras) {
-                cordova.exec(success, fail, "XYCommonPlugin", "xyhOaTraveIssue", [paras]);
+                cordova.exec(success, fail, "TigerPlugin", "xyhOaTraveIssue", [paras]);
                },
                xyhSetCustomUserPhoto: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhSetCustomUserPhoto", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhSetCustomUserPhoto", [paras]);
                },
                xyhCommitHrAttatchment: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhCommitHrAttatchment", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhCommitHrAttatchment", [paras]);
                },
                xyhOpenPhotoBrowser: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhOpenPhotoBrowser", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhOpenPhotoBrowser", [paras]);
                },
                xyhSaveContact: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhSaveContact", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhSaveContact", [paras]);
                },
                xyhSetTempTheme: function(success, fail,paras) {
-                    cordova.exec(success, fail, "XYCommonPlugin", "xyhSetTempTheme", [paras]);
+                    cordova.exec(success, fail, "TigerPlugin", "xyhSetTempTheme", [paras]);
                },
                xyhClearTempTheme: function(success, fail,paras) {
-                cordova.exec(success, fail, "XYCommonPlugin", "xyhClearTempTheme", []);
+                cordova.exec(success, fail, "TigerPlugin", "xyhClearTempTheme", []);
                },
                xyhStartXGPush: function(success, fail,paras, token) {
-                   cordova.exec(success, fail, "XYCommonPlugin", "xyhStartXGPush", [paras, token]);
+                   cordova.exec(success, fail, "TigerPlugin", "xyhStartXGPush", [paras, token]);
                  },
   			   attachFileDownload: function(success, fail,filename,fileurl,watermark,userid,username) { //filename需包含后缀，如：xxx.doc
-                   cordova.exec(success, fail, "XYCommonPlugin", "attachFileDownload", [filename,fileurl,watermark,userid,username]);
+                   cordova.exec(success, fail, "TigerPlugin", "attachFileDownload", [filename,fileurl,watermark,userid,username]);
                  },
                  //  params {pageName:xxx}
                trackPageBegin:function(params)
                {
-                  cordova.exec(null, null, "XYCommonPlugin", "trackPageBegin", [params]);
+                  cordova.exec(null, null, "TigerPlugin", "trackPageBegin", [params]);
                },
 
                //  params {pageName:xxx}
                trackPageEnd:function(params)
                {
-                  cordova.exec(null, null, "XYCommonPlugin", "trackPageEnd", [params]);
+                  cordova.exec(null, null, "TigerPlugin", "trackPageEnd", [params]);
                },
 
                //  params {eventId:xxx,eventLabel:xxx,parameters:{}}
                trackEvent:function(params)
                {
-                  cordova.exec(null, null, "XYCommonPlugin", "trackEvent", [params]);
+                  cordova.exec(null, null, "TigerPlugin", "trackEvent", [params]);
                },
 
                //  params {key:xxx,value:xxx}
                setGlobalKV:function(params)
                {
-                  cordova.exec(null, null, "XYCommonPlugin", "setGlobalKV", [params]);
+                  cordova.exec(null, null, "TigerPlugin", "setGlobalKV", [params]);
                },
 
                xyhSaveImageDataToLibrary: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhSaveImageDataToLibrary", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhSaveImageDataToLibrary", [paras]);
                },
 
                xyhOpenApp: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhOpenApp", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhOpenApp", [paras]);
                },
                xyhHasAppInstalled: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhHasAppInstalled", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhHasAppInstalled", [paras]);
                },
                xyhOpenCustomBrowser: function(success, fail,paras, watermark, userid, username) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhOpenCustomBrowser", [paras, watermark, userid, username]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhOpenCustomBrowser", [paras, watermark, userid, username]);
                },
                xyhOpenInternalBrowser: function(success, fail,paras, watermark, userid, username) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhOpenInternalBrowser", [paras, watermark, userid, username]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhOpenInternalBrowser", [paras, watermark, userid, username]);
                },
                xyhGetNetworkStatus: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhGetNetworkStatus", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhGetNetworkStatus", [paras]);
                },
  						   xyhGetFloderUrl: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhGetFloderUrl", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhGetFloderUrl", [paras]);
                },
  							 xyhSetScreenState: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "xyhSetScreenState", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "xyhSetScreenState", [paras]);
                },
                xyhPunchCard: function(success, fail,paras) {
-                   cordova.exec(success, fail, "XYCommonPlugin", "xyhPunchCard", [paras]);
+                   cordova.exec(success, fail, "TigerPlugin", "xyhPunchCard", [paras]);
                },
                waterMark: function(success, fail,paras) {
-               cordova.exec(success, fail, "XYCommonPlugin", "waterMark", [paras]);
+               cordova.exec(success, fail, "TigerPlugin", "waterMark", [paras]);
                }
                };
                });
