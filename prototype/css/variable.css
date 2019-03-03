@@ -703,6 +703,11 @@
 	background: url("../images/bg-img02.png") no-repeat;
 	background-size: 100%;
 }
+.header_style04{
+	height: 4.8rem;
+	background: url("../images/bg-img04.png") no-repeat;
+	background-size: 100%;
+}
 .head_portrait{
 	margin-top: .3rem;
 	margin-left: .3rem;
@@ -888,7 +893,20 @@
 	background: url("../images/icon-kaiguan-on.png") no-repeat;
 	background-size: 100%;
 }
-
+.account_manage{
+	margin-top: 1.5rem;
+}
+.account_list{
+	border:none;
+	color: #fff;
+}
+.account_list li{
+	box-sizing:border-box;
+	border-right:1px solid #4b79d7;
+}
+.account_list li:last-child{
+	border-right:none;
+}
 /*交易*/
 .header_style03{
 	height: 2.5rem;

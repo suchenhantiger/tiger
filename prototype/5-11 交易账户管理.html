@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header header_style04">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                        <div class="left-icon-box">
+                            <div class="head-back"></div>
+                        </div>
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center hd-tabs-white">
+                           <span class="on">交易账户管理<i></i></span>
+                       </div>
+                  </div>
+                  <div class="header-right-icon">
+                        <div class="right-icon-text">
+
+                        </div>
+                  </div>
+              </div>
+              <div class="account_manage">
+                  <div class="white">
+                      <p class="text-al-center font48">&1000.00</p>
+                      <p class="text-al-center mg-tp-10">账户总额</p>
+                  </div>
+                  <div class="account_dt account_list">
+                      <ul>
+                          <li>
+                              <p class="font32">1999</p>
+                              <p class="mg-tp-10">交易手数</p>
+                          </li>
+                          <li>
+                              <p class="font32">$688.00</p>
+                              <p class="mg-tp-10">总收益</p>
+                          </li>
+                          <li>
+                              <p class="font32">1.00%</p>
+                              <p class="mg-tp-10">总收益率</p>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="optional-detail height_auto">
+                  <div class="pd-tp-20 mg-lr-30">体验金账号</div>
+                  <div class="account_dt mg-tp-20">
+                      <ul>
+                          <li>
+                              <p class="font32">$1888.00</p>
+                              <p class="c9 mg-tp-10">浮动盈亏</p>
+                          </li>
+                          <li>
+                              <p class="font32">$688.00</p>
+                              <p class="c9 mg-tp-10">账户净值</p>
+                          </li>
+                          <li>
+                              <p class="font32">1.00%</p>
+                              <p class="c9 mg-tp-10">保证金比例</p>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="bottom-btn-fixed">
+                  <div class="login-btn mg-lr-30"><button>升级到真实账户</button></div>
+              </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

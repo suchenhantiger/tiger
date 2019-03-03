@@ -152,8 +152,8 @@ h1, h2, h3, h4, h5, h6 {
 .mg-tb-42{
 	margin: .42rem 0;
 }
-.mg-tb-20{
-	margin: .2rem 0;
+.mg-tb-10{
+	margin: .1rem 0;
 }
 .mg-bt-20{
 	margin-bottom: .2rem;
@@ -181,6 +181,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .pd-tp-10{
 	padding-top: .1rem;
+}
+.pd-tp-20{
+	padding-top: .2rem;
 }
 .pd-bt-20{
 	padding-bottom: .2rem;
