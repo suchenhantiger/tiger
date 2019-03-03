@@ -89,6 +89,9 @@ h1, h2, h3, h4, h5, h6 {
 .font36{
 	font-size: .36rem;
 }
+.font48{
+	font-size: .48rem !important;
+}
 .font56{
 	font-size: .56rem;
 }
@@ -109,6 +112,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .text-al-center{
 	text-align: center;
+}
+.mg-lr-20{
+	margin: 0 .2rem;
 }
 .mg-lr-30{
 	margin: 0 .3rem;
@@ -184,6 +190,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .pd-tp-40{
 	padding-top: 4rem !important;
+}
+.pd-tp-58{
+	padding-top: 5.8rem !important;
 }
 .line-ht-48{
 	line-height: .48rem;

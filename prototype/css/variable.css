@@ -127,14 +127,16 @@
 	background-size: 100%;
 }
 .hd-tabs-white span{
-	color:#c3c3c3;
+	color: #fff;
 	font-weight: 100;
 	margin: 0 .2rem;
 	position: relative;
+	opacity: .6;
 }
 .hd-tabs-white span.on{
 	font-weight:bold;
 	color: #fff;
+	opacity: 1;
 }
 .hd-tabs-white span.on i{
 	position: absolute;
@@ -871,6 +873,46 @@
 .text_a_p img{
 	max-width: 100%;
 	margin-top: .1rem;
+}
+.text-list3 li{
+	background: none;
+}
+.icon_switch{
+	width: .72rem;
+	height: .36rem;
+	display: block;
+	background: url("../images/icon-kaiguan.png") no-repeat;
+	background-size: 100%;
+}
+.icon_switch.on{
+	background: url("../images/icon-kaiguan-on.png") no-repeat;
+	background-size: 100%;
+}
+
+/*交易*/
+.header_style03{
+	height: 2.5rem;
+	background: url("../images/bg-img03.jpg") no-repeat;
+	background-size: 100%;
+}
+.text_list2{
+	margin: .3rem;
+}
+.text_list2 li{
+	padding: .2rem 0;
+	overflow: hidden;
+	border-bottom:1px solid #eee;
+	line-height: .32rem;
+}
+.account_dt2{
+	padding: .3rem 0 .2rem 0;
+}
+.account_dt2 li{
+	margin-bottom: .3rem;
+	width: 50%;
+}
+.account_dt2 li p{
+	text-align: left;
 }
 
 
