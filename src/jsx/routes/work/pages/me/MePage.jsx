@@ -67,6 +67,10 @@ class MePage extends PageComponent {
         )
     }
 
+    manageAcc=()=>{
+        hashHistory.push("/work/me/certification");
+    }
+
     renderListItem(text, icon, isRed, onClick) {
         return (
             <li onClick={onClick}>
@@ -122,10 +126,16 @@ class MePage extends PageComponent {
         systemApi.log("MePage render");
         var accountLength = 0;
         var {showConfirm,infoEquity={}}=this.state;
-        console.log(infoEquity);
-        var {accountArr}=this.props;
+        
+        var {accountArr=[]}=this.props;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
-
+        console.log(accountArr);
+        var accName = "--"
+        if(accountArr[0]!=null && accountArr[0].mt4AccType==0){
+            accName ="体验金账户";
+        }else if(accountArr[0]!=null && accountArr[0].mt4AccType==1){
+            accName ="真实账户";
+        }
         return (
             <div>
                 <AppHeader headerName="我的" theme="transparent" iconRight={this.renderIcons()} />
@@ -138,13 +148,13 @@ class MePage extends PageComponent {
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
                                 <p>
-                                    <span className={this.mergeClassName("blue", "left")}>体验金账号</span>
+                                    <span className={this.mergeClassName("blue", "left")}>{accName}</span>
                                     <span className={this.mergeClassName("c9", "left")}>(自主交易)</span>
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
                             </div>
                             <div className={"right"}>
-                                <div className={styles.icon_account}>账号管理</div>
+                                <div className={styles.icon_account} onClick={this.manageAcc} >账号管理</div>
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>

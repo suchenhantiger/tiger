@@ -60,7 +60,7 @@ class ForgetForm extends PureComponent {
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else
-            this.props.changePasswordByCode(this,pwd,validCode,()=>{
+            this.props.changePasswordByCode(this,phone,pwd,validCode,()=>{
                 hashHistory.goBack();
 
             });
@@ -75,7 +75,7 @@ class ForgetForm extends PureComponent {
 
     getMessage=()=>{
         if(this.state.canSend)
-        this.props.getMessagePwd(this,this.state.phone,(msg)=>{
+        this.props.getMessagePwd(this,this.state.phone,1,(msg)=>{
             this.setState({showBtn:false});
             var start = new Date().getTime();
             var {restTime} = this.state;

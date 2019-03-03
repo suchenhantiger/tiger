@@ -1,6 +1,6 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView'
-import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
+// import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
 import ForgetForm from '../../components/login/ForgetForm';
 

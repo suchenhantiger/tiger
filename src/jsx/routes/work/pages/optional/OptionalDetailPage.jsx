@@ -41,10 +41,15 @@ class OptionalDetailPage extends PageComponent{
     }
     
     fullScreenToggle =()=>{
-        this.setState({fullscreen:true});
+
+        this.setState({fullscreen:true},()=>{
+            window.screen.orientation.lock('landscape');
+        });
     }
     closeFullScreen =()=>{
-        this.setState({fullscreen:false});
+        this.setState({fullscreen:false},()=>{
+            window.screen.orientation.lock('portrait');
+        });
     }
 
     renderHeader(){

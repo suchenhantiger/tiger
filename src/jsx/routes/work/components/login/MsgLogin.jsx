@@ -57,7 +57,7 @@ class MsgLogin extends PureComponent {
 
     getMessage=()=>{
         if(this.state.canSend)
-        this.props.getMessagePwd(this,this.state.phone,(msg)=>{
+        this.props.getMessagePwd(this,this.state.phone,0,(msg)=>{
             this.setState({showBtn:false});
             var start = new Date().getTime();
             var {restTime} = this.state;

@@ -57,10 +57,10 @@ export function changePassword(component, newpassword,cb){
     }
 }
 
-export function changePasswordByCode(component, newpassword,validCode,cb){
+export function changePasswordByCode(component, phone,newpassword,validCode,cb){
     return function(dispatch, state){
         newpassword = md5(newpassword);
-        component.requestJSON("loginregister/changePasswordOrStatus",{updateType:0,securityCode:validCode,newpassword}).done((data)=>{
+        component.requestJSON("loginregister/findPassword",{phone,updateType:0,securityCode:validCode,newpassword}).done((data)=>{
 
             cb && cb();
         }).fail((data)=>{
@@ -70,10 +70,10 @@ export function changePasswordByCode(component, newpassword,validCode,cb){
     }
 }
 //websocket 异常时采用轮训方式而使用的接口
-export function getMessagePwd(component, phone,cb){
+export function getMessagePwd(component, phone,type,cb){
     return function(dispatch, state){
         var time =  (new Date()).getTime();
-        component.requestJSON("loginregister/sendCode",{phone,time},null,{needToken:false}).done((data)=>{
+        component.requestJSON("loginregister/sendCode",{phone,time,type},null,{needToken:false}).done((data)=>{
             console.log(data);
             cb && cb();
         }).fail((data)=>{

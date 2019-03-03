@@ -77,16 +77,22 @@ class K_chart extends PureComponent{
     }
 
     updatePrice=(data)=>{
-        console.log(data);
+        // console.log(data);
         var {updatePrice}=this.props;
         if(data.length>0){
             var {ask,bid,recentBars}=data[0];
             updatePrice && updatePrice({ask,bid});
             if(recentBars.length>0)
             var newone = recentBars[0];
+            //判断是否要更新
+             var oldone = this._kdata[this._kdata.length-1];
+             if(oldone.opentime == newone.opentime ){
+                 return;//这里逻辑还需要优化
+             }
+             console.log(oldone);
+             console.log(newone);
             newone.date= new Date(newone.opentime*1000);
-            console.log(this._kdata[this._kdata.length-1]);
-            console.log(newone);
+           
             this._kdata.push(newone);
             this.refs.chart.getWrappedInstance().updateOne(newone);
            // this.setState({});
