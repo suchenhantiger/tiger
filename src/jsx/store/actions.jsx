@@ -54,6 +54,17 @@ export function initProductList(callback){
         callback && callback();
     }
 }
+export function initAccountList(callback){
+    return function(dispatch){
+        var account_list = systemApi.getValue("account_list") || "[]";
+        account_list = JSON.parse(account_list);
+        console.log(account_list);
+        dispatch({type:"UPDATE_ACCOUNT_List",data:account_list });
+
+        callback && callback();
+    }
+}
+
 
 /*
     @param type

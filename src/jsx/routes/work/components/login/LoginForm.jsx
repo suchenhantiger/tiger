@@ -49,7 +49,7 @@ class LoginForm extends PureComponent {
         }
         this.setState({errMsg:""})
         
-        this.props.login(this,{phone,password:validCode},2,()=>{
+        this.props.login(this,{phone,password:md5(validCode)},2,()=>{
         });
 
     }

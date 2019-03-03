@@ -26,7 +26,7 @@ class ForgetPwdPage extends PageComponent {
 
         return (
             <FullScreenView>
-                <AppHeader showBack={false} iconRight={this.renderIcons()} />
+                <AppHeader showBack={true} iconRight={this.renderIcons()} />
                 <Content>
                     <ul className={styles.login_tab}>
                         <li className={styles.on}>找回密码</li>

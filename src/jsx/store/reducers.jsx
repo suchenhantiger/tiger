@@ -18,6 +18,7 @@ function baseReducer(state,action){
         ProductList:{},
         OptionalList:[],
         OptionalListData:[],
+        accountArr:[]
 
     };
 
@@ -36,7 +37,6 @@ function baseReducer(state,action){
         return Object.assign({}, state, {messageshow:false});
     }else if(type == "INIT_OPTIONAL_LIST"){
         var {ProductList}=state;
-        console.log("INIT_OPTIONAL_LIST");
         var tmpOptionalList= action.data.slice();
         if(ProductList["1"]!=null || ProductList["2"]!=null || ProductList["3"]!=null || ProductList["4"]!=null){
             var optionalListData =[];
@@ -123,6 +123,10 @@ function baseReducer(state,action){
         if(updateflag)
         return Object.assign({}, state, {
             OptionalListData:OptionalListData.slice()
+        });
+    }else if(type == "UPDATE_ACCOUNT_List"){
+        return Object.assign({}, state, {
+            accountArr:action.data.slice()
         });
     }
 

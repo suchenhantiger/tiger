@@ -1,5 +1,6 @@
 import styles from './css/loginForm.less';
-
+import {connect} from 'react-redux';
+import {saveAccMt4,getEmailPwd} from '../../actions/login/loginAction';
 class ImproveForm extends PureComponent {
 
     //构造函数
@@ -11,12 +12,18 @@ class ImproveForm extends PureComponent {
             emailCode: "",
             country: "",
             city: "",
-            address: ""
+            address: "",
+            errMsg:"",
+            restTime:60,
+            showBtn:true
         }
+
+        this._interval;
     }
 
     nicknameChange = (e) => {
         var { value } = e.target;
+        console.log(value);
         this.setState({ nickname: value });
     }
 
@@ -41,14 +48,67 @@ class ImproveForm extends PureComponent {
     }
 
     submit =()=>{
-        var {nickname="",
-        email="",
-        emailCode="",
-        country="",
-        city= "",
-        address= ""} =this.props;
+        var {
+            nickname="",
+            email="",
+            emailCode="",
+            country="",
+            city= "",
+            address= ""
+        } =this.state;
+
+        if(nickname.length==0){
+            this.setState({errMsg:"请输入昵称"});
+        }else if( email.length==0){
+            this.setState({errMsg:"请输入邮箱"});
+        }else if( emailCode.length==0){
+            this.setState({errMsg:"请输入邮箱验证码"});
+        }else{
+            this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
+
+            });
+
+        }
     }
 
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        clearInterval(this._interval);
+
+    }
+
+    getMessage=()=>{
+        var {email}=this.state;
+        if(email.length>0)
+        this.props.getEmailPwd(this,this.state.email,(msg)=>{
+            this.setState({showBtn:false});
+            var start = new Date().getTime();
+            var {restTime} = this.state;
+            this._interval = setInterval(()=>{
+                var curTime = new Date().getTime(),
+                    restTime = Math.round(60-(curTime-start)/1000);
+                if(restTime>0)
+                    this.setState({
+                        restTime
+                    });
+                else{
+                    this.setState({
+                        showBtn:true,
+                        restTime:60
+                    });
+                    clearInterval(this._interval);
+                }
+
+            },300);
+        }, this,(msg)=>{
+            this.setState({
+              messageInfo:msg
+            })
+        });
+
+
+
+    }
 
 
 
@@ -59,7 +119,7 @@ class ImproveForm extends PureComponent {
     //渲染函数
     render() {
 
-        var { nickname="",
+        var { nickname="",errMsg,restTime,showBtn,
         email="",
         emailCode="",
         country="",
@@ -81,7 +141,9 @@ class ImproveForm extends PureComponent {
 
                 <div className={styles.login_item}>
                     <input placeholder="验证邮箱" value={emailCode} onChange={this.emailCodeChange} />
-                    <div className={styles.text_code}>获取验证码</div>
+                    {showBtn?<div className={styles.text_code} style={email.length>0?{color:"#333"}:{color:"#aaa"}} onClick={this.getMessage}>获取验证码</div>
+                    :<div className={styles.text_code} >{restTime}</div>}
+       
                 </div>
                 <div className={styles.login_item}>
                     <span className={styles.area_code}>+86</span>
@@ -89,20 +151,31 @@ class ImproveForm extends PureComponent {
                     <div className={styles.line_02}></div>
                     <input  value={phone}  disabled="disabled"/>
                 </div>
-                <div className={styles.login_item}>
+                {/* <div className={styles.login_item}>
                           <input type="text" value={country} onChange={this.countryChange} placeholder="请输入您的国家" />
-                </div>
+                </div> */}
                 <div className={styles.form_input}>
                           <input type="text" value={address} onChange={this.addressChange} placeholder="请输入您的地址"/>
                 </div>
-
+                {errMsg.length?(
+                    <div style={{marginTop:"0.1rem"}}>
+                        <div className={this.mergeClassName(styles.pro_error, "red")} >{errMsg}</div>
+                    </div>
+                ):null}
                 <div className={styles.login_bt_text} onClick={this.submit}>
-                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.nextClick}>下一步</button></div>
+                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.nextClick}>保存</button></div>
                 </div>
             </div>
         );
     }
 
 }
+function injectProps(state){
+    return {};
+}
+function injectAction(){
+    return {saveAccMt4,getEmailPwd};
+}
 
-module.exports = ImproveForm;
+module.exports = connect(null,injectAction())(ImproveForm);
+
