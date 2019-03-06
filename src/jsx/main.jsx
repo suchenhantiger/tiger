@@ -31,7 +31,8 @@ ReactDOM.render(
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
                         <Route path="certification" getComponent={require('./routes/work/config/login/certification')(store)}></Route>
-                        
+                        <Route path="checking" getComponent={require('./routes/work/config/me/checking')(store)}></Route>
+
                     </Route>
 
                 </Route>
