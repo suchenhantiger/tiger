@@ -31,7 +31,7 @@ class CertificationPage extends PageComponent {
         var {trueInfo}=this.state;
         console.log(trueInfo);
         this.props.saveRealAccMt4(this,trueInfo,()=>{
-
+            hashHistory.goBack();
         });
 
 

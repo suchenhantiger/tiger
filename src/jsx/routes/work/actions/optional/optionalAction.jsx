@@ -86,6 +86,8 @@ export function getHistoryKList(component,params,cb ){
     }
 }
 
+
+
 ///deal/openOrder
 //开仓
 export function openOrder(component,params,cb ){

@@ -40,10 +40,10 @@ class UploadIDCardForm extends PureComponent {
 
         if(frontPic.length==0){
             this.props.showMessage("error","请上传身份证正面照");
-            this.setState({errMsg:"请上传身份证正面照"});
+            //this.setState({errMsg:"请上传身份证正面照"});
         }else if( backPic.length==0){
             this.props.showMessage("error","请上传身份证背面照");
-            this.setState({errMsg:"请上传身份证背面照"});
+            //this.setState({errMsg:"请上传身份证背面照"});
         }else{
             submit && submit();
         }
