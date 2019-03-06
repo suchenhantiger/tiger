@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<title></title>
+<script>
+	function res(){
+                var deviceWidth = document.documentElement.clientWidth;
+                if(deviceWidth > 750) deviceWidth = 750;//根据设计图750可调
+                document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+            }
+            res();
+            window.onresize=function(){res();}
+</script>
+</head>
+<body class="outerwrap">
+    <div class="viewport-new ">
+        <div class="outerbox">
+
+          <!--header start-->
+          <div class="header">
+              <div class="header-innerbox">
+                  <div class="header-left-icon">
+                      <div class="head-back-black"></div>
+                  </div>
+                  <div class="header-center-cont">
+                       <div class="center">修改止盈止损</div>
+                  </div>
+                  <div class="header-right-icon">
+                        <div class="right-icon-text"></div>
+                  </div>
+              </div>
+          </div>
+
+          <!--content start-->
+          <div class="content">
+              <div class="account_dt3">
+                  <ul>
+                      <li>
+                          <p class="font36">$1888.00</p>
+                          <p class="c9 mg-tp-10">开仓价格</p>
+                      </li>
+                      <li>
+                          <p class="font36">$688.00</p>
+                          <p class="c9 mg-tp-10">现在价格</p>
+                      </li>
+                  </ul>
+              </div>
+              <div class="clear"></div>
+              <div class="floor mg-lr-30 mg-tp-30">
+                  <div class="tran-panel">
+                      <h1>止损价格</h1>
+                      <div class="tran-icon">
+                          <div class="icon-minus"></div>
+                          <div class="icon-num">1.02</div>
+                          <div class="icon-plus"></div>
+                      </div>
+                      <div class="tran-total">
+                        <span class="total-span">
+                            <span>价格≤</span>
+                            <span>1.00046</span>&nbsp;&nbsp;
+                            <span>预计亏损：</span>
+                            <span>$0.00</span>
+                        </span>
+                      </div>
+                  </div>
+                  <div class="tran-panel">
+                      <h1>止盈价格</h1>
+                      <div class="tran-icon">
+                          <div class="icon-minus"></div>
+                          <div class="icon-num">1.02</div>
+                          <div class="icon-plus"></div>
+                      </div>
+                      <div class="tran-total">
+                        <span class="total-span">
+                            <span>价格≥</span>
+                            <span>1.00046</span>&nbsp;&nbsp;
+                            <span>预计盈利：</span>
+                            <span>$0.00</span>
+                        </span>
+                      </div>
+                  </div>
+              </div>
+              <div class="mg-lr-30 mg-tp-30">
+                  <p class="font28">注意事项</p>
+                  <p class="c9 mg-tp-10">修改止盈、止损价格，参考范围已现在的价格为准</p>
+              </div>
+          </div>
+            <div class="bottom-btn-fixed">
+                <div class="login-btn mg-lr-30"><button>确认修改</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

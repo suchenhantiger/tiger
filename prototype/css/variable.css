@@ -697,6 +697,20 @@
 	background: url("../images/icon-delete-red.png") no-repeat;
 	background-size: 100%;
 }
+.floating{
+	margin-top: .3rem;
+}
+.floating table td{
+	width: 50%;
+	border:1px solid #eee;
+	padding: .2rem 0;
+}
+.fl_label{
+	padding-left: .3rem;
+	color: #999;
+	width: 1.2rem;
+	display: inline-block;
+}
 /*我的*/
 .header_style02{
 	height: 2.5rem;
@@ -931,6 +945,17 @@
 }
 .account_dt2 li p{
 	text-align: left;
+}
+.account_dt3{
+	margin-top: .3rem;
+}
+.account_dt3 li{
+	margin-bottom: .3rem;
+	width: 50%;
+	float: left;
+}
+.account_dt3 li p{
+	text-align: center;
 }
 
 
