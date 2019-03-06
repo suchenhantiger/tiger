@@ -1,6 +1,6 @@
 import styles from './css/certificationForm.less';
 import {connect} from 'react-redux';
-import {saveAccMt4,getEmailPwd} from '../../actions/login/loginAction';
+import {getEmailPwd} from '../../actions/login/loginAction';
 import { DatePicker } from 'antd-mobile';
 
 Date.prototype.Format = function(fmt)   
@@ -154,7 +154,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {saveAccMt4,getEmailPwd};
+    return {getEmailPwd};
 }
 
 module.exports = connect(null,injectAction())(CertificationForm);

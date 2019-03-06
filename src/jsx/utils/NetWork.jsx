@@ -64,6 +64,7 @@ function requestSuccess(ver, deferred, iskick, data){
 }
 
 function requestError(ver, deferred, data){
+    
     if (ajaxQueue[ver]) {
         delete ajaxQueue[ver];
         systemApi.log("接口访问失败");
@@ -78,7 +79,7 @@ function requestError(ver, deferred, data){
         }
         deferred.reject({
             info:info,
-            info_detail:info_detail
+            message:info_detail
         });
     }
 }

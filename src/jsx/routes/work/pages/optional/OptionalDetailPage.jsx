@@ -78,8 +78,8 @@ class OptionalDetailPage extends PageComponent{
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
                     {fullscreen?null:
-                    <LazyLoad index={index}>
-                        <SimpleDetail/>
+                    <LazyLoad index={index} >
+                        <SimpleDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
                         <ComplexDetail />
                     </LazyLoad>}
                 </Content>

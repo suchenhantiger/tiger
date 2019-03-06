@@ -4,6 +4,7 @@ import Confrim from '../../../../components/common/popup/Confirm';
 
 import {connect} from 'react-redux';
 import {getMt4Message} from '../../actions/me/meAction';
+import {updateUserInfo} from '../../actions/login/loginAction';
 import styles from './css/mePage.less';
 
 /********我的主页*********/
@@ -26,14 +27,22 @@ class MePage extends PageComponent {
     }
 
     componentDidMount(){
-        var {accountArr=[]}=this.props;
+        // var {accountArr=[]}=this.props;
 
-        var accountObj = accountArr[0];
-        if(accountObj){
-            this.props.getMt4Message(this,{queryType:2,mt4Id:accountArr[0].mt4Id},(infoEquity)=>{
-                this.setState({infoEquity});
-                        });
-        }
+        this.props.updateUserInfo(this,(data)=>{
+            var { mt4Accs }=data;
+            if(mt4Accs.length>0){
+                var accountObj = mt4Accs[0];
+                if(accountObj){
+                    this.props.getMt4Message(this,{queryType:2,mt4Id:accountObj.mt4Id},(infoEquity)=>{
+                        this.setState({infoEquity});
+                    });
+                }
+            }
+
+        });
+
+     
         
         
     }
@@ -202,7 +211,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {getMt4Message};
+    return {getMt4Message,updateUserInfo};
 }
 
 module.exports = connect(injectProps,injectAction())(MePage);

@@ -49,10 +49,40 @@ class MsgLogin extends PureComponent {
         
     }
 
+    componentDidMount(){
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.addEventListener("resize", this.onResize);
+    }
+
     componentWillUnmount(){
+        
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.removeEventListener("resize", this.onResize);
         super.componentWillUnmount();
         clearInterval(this._interval);
+    }
 
+    //界面尺寸变化回调
+    onResize = ()=>{
+        var   {setFocusState}=this.props;
+        this.refs.login_btn.scrollIntoViewIfNeeded(true);
+        var {activeElement} = document,
+            {tagName} = activeElement,
+            {availHeight} = screen,
+            {innerHeight} = window;
+
+        if(availHeight-innerHeight > 100)
+            setFocusState(true);
+        else
+            setFocusState(false);
+
+        if(tagName=="INPUT" || tagName=="TEXTAREA") {
+           window.setTimeout(function() {
+               activeElement.scrollIntoViewIfNeeded(true);
+           },0);
+        }
     }
 
     getMessage=()=>{
@@ -113,7 +143,7 @@ class MsgLogin extends PureComponent {
                     </div>
                 ):null}
                 
-                <div className={styles.login_btn}><button onClick={this.loginClick}>登 录</button></div>
+                <div ref="login_btn" className={styles.login_btn}><button onClick={this.loginClick}>登 录</button></div>
             </div>
         );
     }

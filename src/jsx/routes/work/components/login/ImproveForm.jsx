@@ -1,6 +1,6 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
-import {saveAccMt4,getEmailPwd} from '../../actions/login/loginAction';
+import {saveAccMt4,getEmailPwd,updateUserInfo} from '../../actions/login/loginAction';
 class ImproveForm extends PureComponent {
 
     //构造函数
@@ -65,7 +65,7 @@ class ImproveForm extends PureComponent {
             this.setState({errMsg:"请输入邮箱验证码"});
         }else{
             this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
-
+                this.props.updateUserInfo();
             });
 
         }
@@ -174,7 +174,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {saveAccMt4,getEmailPwd};
+    return {saveAccMt4,getEmailPwd,updateUserInfo};
 }
 
 module.exports = connect(null,injectAction())(ImproveForm);

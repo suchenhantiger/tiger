@@ -12,7 +12,8 @@ export function getRealKline(component, cb){
     return function(dispatch, state){
 
         cb && cb();
-        component.requestJSON("optionalstock/getProduct",{}).done((data)=>{
+        var clientId=systemApi.getValue("clientId");
+        component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
             // console.log(data);
             if(data["1"] || data["2"] || data["3"] ||data["4"]){
                 dispatch({type:"INIT_PRODUCT_LIST",data});
@@ -28,7 +29,9 @@ export function updateProduct(component, cb){
     return function(dispatch, state){
 
         cb && cb();
-        component.requestJSON("optionalstock/getProduct",{}).done((data)=>{
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
             // console.log(data);
             if(data["1"] || data["2"] || data["3"] ||data["4"]){
                 dispatch({type:"INIT_PRODUCT_LIST",data});
@@ -65,6 +68,8 @@ export function getOptionalList(component, params,updateList, cb){
 export function getHistoryKList(component,params,cb ){
     return function(dispatch, state){
         var {pageSize} = params;
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
         component.requestJSON("optionalstock/historyMarket",params).done((data)=>{
             var {list} = data;
             for(var i=0;i<list.length;i++){
@@ -74,6 +79,45 @@ export function getHistoryKList(component,params,cb ){
             // console.log(list);
             cb && cb(list,hasmore);
         }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    
+    }
+}
+
+///deal/openOrder
+//开仓
+export function openOrder(component,params,cb ){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("deal/openOrder",params).done((data)=>{
+            dispatch(hideLoading());
+
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    
+    }
+}
+
+
+//平仓
+///deal/flatOrder
+export function flatOrder(component,params,cb ){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("deal/flatOrder",params).done((data)=>{
+            dispatch(hideLoading());
+
+        }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             cb && cb();
         });

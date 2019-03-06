@@ -1,7 +1,8 @@
 import Intro from './Intro';
 import OpenSucc from './OpenSucc';
 import BuyDialog from './BuyDialog';
-
+import {connect} from 'react-redux';
+import {openOrder,flatOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
 
 class SimpleDetail extends PureComponent{
@@ -132,4 +133,11 @@ class SimpleDetail extends PureComponent{
 
 }
 
-module.exports = SimpleDetail;
+function injectProps(state){
+    return {};
+}
+function injectAction(){
+    return {openOrder,flatOrder};
+}
+
+module.exports = connect(null,injectAction())(SimpleDetail);
