@@ -3,6 +3,8 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
 import ReChargeForm from '../../components/me/recharge/ReChargeForm';
+import Withdrawal from '../../components/me/recharge/Withdrawal';
+import Records from '../../components/me/recharge/Records';
 
 import styles from './css/reChargePage.less';
 
@@ -43,6 +45,8 @@ class ReChargePage extends PageComponent {
                 <Content coverBottom={false}>
                     <LazyLoad index={index}>
                         <ReChargeForm/>
+                        <Withdrawal/>
+                        <Records/>
                     </LazyLoad>
                 </Content>
                 {this.props.children}
