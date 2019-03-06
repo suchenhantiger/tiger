@@ -14,6 +14,7 @@ class MePage extends PageComponent {
         super(props, context);
         this.state={
             showConfirm:false,
+            showReal:false,
             infoEquity:{}
         }
 
@@ -77,7 +78,7 @@ class MePage extends PageComponent {
     }
 
     manageAcc=()=>{
-        hashHistory.push("/work/me/certification");
+        hashHistory.push("/work/me/manageacc");
     }
 
     renderListItem(text, icon, isRed, onClick) {
@@ -97,7 +98,18 @@ class MePage extends PageComponent {
         this.setState({showConfirm:true});
     }
 
+    addRealAccount=()=>{
+        hashHistory.push("/work/me/certification");
+        //this.setState({showReal:true});
+    }
+
+    closeRealConfirm =()=>{
+        this.setState({showReal:false});
+    }
+
+
     gotoImprove=()=>{
+        this.setState({showConfirm:false});
         hashHistory.push("/work/me/improve");
     }
 
@@ -105,36 +117,11 @@ class MePage extends PageComponent {
         this.setState({showConfirm:false});
     }
 
-    // success
-    // msg
-    // data
-    
-    // infoBalance
-    // mt4Id
-    // balance
-    // totalQty
-    // ratioPL
-    // totalPL
-    
-    // infoEquity
-    // mt4Id
-    // equity
-    // freeMargin
-    // usedMargin
-    // ratioMargin
-    // floatPL
-    
-    // floatTrade
-    // ticket
-    // marketPrice
-    // marketTime
-    // netProfit
-    
 
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
-        var {showConfirm,infoEquity={}}=this.state;
+        var {showConfirm,showReal,infoEquity={}}=this.state;
         
         var {accountArr=[]}=this.props;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
@@ -145,6 +132,9 @@ class MePage extends PageComponent {
         }else if(accountArr[0]!=null && accountArr[0].mt4AccType==1){
             accName ="真实账户";
         }
+
+        let emailIsActive = systemApi.getValue("emailIsActive");
+        let isReal = systemApi.getValue("isReal"); 
         return (
             <div>
                 <AppHeader headerName="我的" theme="transparent" iconRight={this.renderIcons()} />
@@ -175,6 +165,7 @@ class MePage extends PageComponent {
                             </ul>:
                                 <div style={{textAlign:"center"}} onClick={this.addAccount}>+添加账号</div>
                                 }
+                                {emailIsActive<=2 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>升级到真实账号</div>:null}
                             </div>
                         </div>
                     </div>
@@ -199,6 +190,8 @@ class MePage extends PageComponent {
                     </div>
                 </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
+{showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="完善资料后可开通体验账号" />:null}
+                
                 {this.props.children}
             </div>
         );

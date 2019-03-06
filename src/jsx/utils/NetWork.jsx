@@ -24,8 +24,11 @@ function genSignStr(params, needToken) {
 
     for (var i = 0; i < paramList.length; i++) {
         var item = paramList[i];
-        if(null!=params[item])
+        if(null!=params[item]){
+            if(item=="file") continue;
             list.push(item + "=" + params[item]);
+        }
+            
     }
 
     if(needToken){

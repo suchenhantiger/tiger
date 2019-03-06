@@ -27,7 +27,7 @@ export function upLoadImage(component, file,type,cb){
         file = encodeURIComponent(file);
         console.log(file);
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("users/uploadIdCardOrHead",{clientId,file,type}).done((data)=>{
+        component.requestJSON("users/uploadIdCardOrHead",{clientId,type}).done((data)=>{
             console.log(data);
          cb && cb();
         }).fail((data)=>{

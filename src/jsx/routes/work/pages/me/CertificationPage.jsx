@@ -52,11 +52,34 @@ class CertificationPage extends PageComponent {
         systemApi.log("CertificationPage render");
         var {femail,currPage} =this.state;
 
+        let isReal = systemApi.getValue("isReal"); 
+
         return (
             <FullScreenView>
                 <AppHeader showBack={true}  onBackClick={this.backClick} />
                 <Content>
+                    {isReal==2?
                     <div className={styles.box}>
+                        <ul className={styles.login_tab}>
+                            <li >认证信息已提交</li>
+                        </ul>
+                        {/* <div class="clear"></div> */}
+                        <div className={styles.login_int} style={{fontSize:"0.2rem",color:"#333"}}>正在审核中</div>
+                        <div className={styles.login_int}>
+                            审核时间<br/>
+                            工作日10:00-18:00，将在30分钟左右完成审核<br/>
+                            工作日18:00以后，将在21:00、23:00统一审核；23:00后认证的将在次日审核<br/>
+                            非工作日时间：将在10:00、16:00、22:00统一审核；22:00
+                            后认证的将在次日审核<br/>
+                            请留意查询牛奶的审核状态
+                        </div>
+                        {/* <div className={styles.bottom_btn_fixed}>
+                            <div className={styles.login_btn}><button>确 定</button></div>
+                        </div> */}
+                    </div>
+                        
+                    
+                    :<div className={styles.box}>
                         <ul className={styles.login_tab}>
                             <li >实名认证</li>
                         </ul>
@@ -69,12 +92,14 @@ class CertificationPage extends PageComponent {
                         
                         </div>
                     </div>
+                    }
 
-                   
+                    {isReal==2?null:
                     <LazyLoad index={currPage}>
                         <CertificationForm next={this.next}/>
                         <UploadIDCardForm submit={this.submit} />
                     </LazyLoad>
+                    }
                     
                  </Content>
             </FullScreenView>
