@@ -206,6 +206,9 @@ body.hidden {
 .font28{
 	font-size: .28rem;
 }
+.font26{
+	font-size: .26rem;
+}
 .font30{
 	font-size: .3rem;
 }
@@ -214,6 +217,9 @@ body.hidden {
 }
 .font36{
 	font-size: .36rem;
+}
+.font48{
+	font-size: .48rem !important;
 }
 .font56{
 	font-size: .56rem;
