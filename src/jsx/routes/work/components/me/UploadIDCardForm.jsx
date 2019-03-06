@@ -1,6 +1,8 @@
 import styles from './css/certificationForm.less';
 import {connect} from 'react-redux';
 import {upLoadImage} from '../../actions/me/meAction';
+import {showMessage, ERROR, SUCCESS} from '../../../../store/actions';
+
 
 
 
@@ -37,8 +39,10 @@ class UploadIDCardForm extends PureComponent {
         }=this.state;
 
         if(frontPic.length==0){
+            this.props.showMessage("error","请上传身份证正面照");
             this.setState({errMsg:"请上传身份证正面照"});
         }else if( backPic.length==0){
+            this.props.showMessage("error","请上传身份证背面照");
             this.setState({errMsg:"请上传身份证背面照"});
         }else{
             submit && submit();
@@ -135,7 +139,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {upLoadImage};
+    return {upLoadImage,showMessage};
 }
 
 module.exports = connect(null,injectAction())(UploadIDCardForm);

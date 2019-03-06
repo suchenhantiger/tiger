@@ -33,7 +33,7 @@ function convertImgToBase64(url, callback, outputFormat){
 var Client = {
       
     getPicture: function(success,fail) {
-       if(isDebug) return;
+       if(isDebug){success&& success("aaaaaaaa"); return;}
         navigator.camera.getPicture(
             (imageData)=> {
                 console.log("data:image/jpeg;base64," +imageData);

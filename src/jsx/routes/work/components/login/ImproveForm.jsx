@@ -66,6 +66,7 @@ class ImproveForm extends PureComponent {
         }else{
             this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
                 this.props.updateUserInfo();
+                hashHistory.goBack();
             });
 
         }

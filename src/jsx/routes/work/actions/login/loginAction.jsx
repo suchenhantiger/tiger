@@ -30,7 +30,7 @@ export function updateUserInfo(component,cb){
             var { avatarUrl,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
-                nickname,tel,telActive,mt4Accs=[],
+                nickname,tel,telActive,mt4Accs=[]
                 } = data;
                 systemApi.setValue("avatarUrl",avatarUrl);
                 systemApi.setValue("email",email);
@@ -41,9 +41,9 @@ export function updateUserInfo(component,cb){
                 systemApi.setValue("isReal",isReal);
                 systemApi.setValue("nickname",nickname);
                 systemApi.setValue("tel",tel);
-                systemApi.setValue("telActive",telActive);
+                systemApi.setValue("telActive",telActive);                
                 systemApi.setValue("account_list",JSON.stringify(mt4Accs))
-                dispatch({type:"UPDATE_ACCOUNT_List",data:account_list });
+                dispatch({type:"UPDATE_ACCOUNT_List",data:mt4Accs });
             cb && cb(data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
@@ -154,7 +154,7 @@ export function login(component, params,logintype,cb){
             var { avatarUrl,clientId,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
-                nickname,tel,telActive,
+                nickname,tel,telActive,syntoken,
                 token,mt4Accs=[],
                 expireTime} = data;
                 // console.log(token);
@@ -167,6 +167,8 @@ export function login(component, params,logintype,cb){
                 systemApi.setValue("emailIsActive",emailIsActive);
                 systemApi.setValue("freeze",freeze);
                 systemApi.setValue("isFinger",isFinger);
+                systemApi.setValue("syntoken",syntoken);
+                
                 systemApi.setValue("isPushMsg",isPushMsg);
                 systemApi.setValue("isReal",isReal);
                 systemApi.setValue("nickname",nickname);
