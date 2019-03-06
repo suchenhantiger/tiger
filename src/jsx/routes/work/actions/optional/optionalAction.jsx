@@ -97,6 +97,7 @@ export function openOrder(component,params,cb ){
         params.clientId =clientId;
         component.requestJSON("deal/openOrder",params).done((data)=>{
             dispatch(hideLoading());
+            dispatch(showMessage(SUCCESS, "下单成功"));
 
         }).fail((data)=>{
             dispatch(hideLoading());
@@ -117,7 +118,7 @@ export function flatOrder(component,params,cb ){
         params.clientId =clientId;
         component.requestJSON("deal/flatOrder",params).done((data)=>{
             dispatch(hideLoading());
-
+            dispatch(showMessage(SUCCESS, "下单成功"));
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));

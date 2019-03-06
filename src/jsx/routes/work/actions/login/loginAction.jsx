@@ -157,10 +157,7 @@ export function login(component, params,logintype,cb){
                 nickname,tel,telActive,syntoken,
                 token,mt4Accs=[],
                 expireTime} = data;
-                // console.log(token);
-        // console.log(key);
                 token = Decrypt(token,key,"20190315mcappaes");
-                // console.log("real："+token);
                 systemApi.setValue("avatarUrl",avatarUrl);
                 systemApi.setValue("clientId",clientId);
                 systemApi.setValue("email",email);

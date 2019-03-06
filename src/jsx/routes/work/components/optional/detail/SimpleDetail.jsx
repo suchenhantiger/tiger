@@ -12,7 +12,7 @@ class SimpleDetail extends PureComponent{
         super(props);
         this.state = {
             index:0,
-            num:1.02,
+            num:0.01,
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
             showOpenSucc:false,
@@ -21,7 +21,13 @@ class SimpleDetail extends PureComponent{
     }
 
     countClick = (index)=>()=>{
-        this.setState({index});
+        this.setState({num:(+num).toFixed(2)});
+        var num = 0.01;
+        if(index==1)num = 0.1;
+        else if(index==2)num = 0.5;
+        else if(index==3)num = 1;
+
+        this.setState({num,index});
     }
 
     introClick = ()=>{
@@ -68,6 +74,11 @@ class SimpleDetail extends PureComponent{
 
     tradeSubmit = (isChoose)=>{
         this.setState({showBuyDialog:false});
+        var {prodCode}=this.props;
+        var {num} =this.state;
+        this.props.openOrder(this,{num},()=>{
+            
+        });
     }
 
     tradeCancel = ()=>{
