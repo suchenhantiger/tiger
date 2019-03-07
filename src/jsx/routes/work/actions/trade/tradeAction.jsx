@@ -53,3 +53,21 @@ export function getHistoryList(component, params, update){
         });
     }
 }
+
+
+
+//获取详情列表
+export function getNewsList(params, isAppend, cb, component, updateList){
+    var {pageSize} = params;
+    return function(dispatch, state){
+        component.requestJSON("firstpage/newslist",params).done((data)=>{
+            var {list} = data,
+                hasMore = list.length==pageSize;
+            updateList && updateList(isAppend, list);
+            cb && cb(null, hasMore);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    }
+}
