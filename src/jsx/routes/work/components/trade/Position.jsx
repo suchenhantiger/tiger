@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {getPositionInfo} from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
+import PositionList from "./PositionList";
 
 import styles from './css/position.less';
 
@@ -81,6 +82,7 @@ class Position extends PureComponent {
                         <span className={subIndex==2?styles.on:""} onClick={this.tabClick(2)}>挂单交易<i></i></span>
                     </div>
                     <LazyLoad index={subIndex}>
+
 
                     </LazyLoad>
                 </div>
