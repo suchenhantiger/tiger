@@ -37,7 +37,8 @@ class OptionalDetailPage extends PageComponent{
     }
 
     updatePrice=(price)=>{
-        this.setState({price});
+
+         this.setState({price});
     }
     
     fullScreenToggle =()=>{
@@ -74,13 +75,13 @@ class OptionalDetailPage extends PageComponent{
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
                         <K_Chart updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={this._prodCode}/>
                     </div>
-                    {fullscreen?null:<div className={this.mergeClassName("mg-lr-30", "overf-hid")}>
+                    {fullscreen?null:<div style={{margin:"0.3rem", overflow: "hidden"}}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
                     {fullscreen?null:
                     <LazyLoad index={index} >
                         <SimpleDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
-                        <ComplexDetail />
+                        <ComplexDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
                     </LazyLoad>}
                 </Content>
             </FullScreenView>

@@ -63,7 +63,6 @@ export function saveAccMt4(component, params,cb){
             // account_list.push({mt4Id,mt4AccType});
             // systemApi.setValue("account_list",JSON.stringify(account_list))
             // dispatch({type:"UPDATE_ACCOUNT_List",data:account_list });
-            hashHistory.goBack();
             cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
@@ -118,7 +117,7 @@ export function getEmailPwd(component, email,cb){
     return function(dispatch, state){
         var time =  (new Date()).getTime();
         component.requestJSON("loginregister/sendCode",{email,time},null,{needToken:false}).done((data)=>{
-            console.log(data.code);
+            console.log(data);
             cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

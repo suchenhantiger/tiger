@@ -2,7 +2,7 @@ import Intro from './Intro';
 import OpenSucc from './OpenSucc';
 import BuyDialog from './BuyDialog';
 import {connect} from 'react-redux';
-import {openOrder,flatOrder} from '../../../actions/optional/optionalAction';
+import {openOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
 
 class SimpleDetail extends PureComponent{
@@ -72,11 +72,14 @@ class SimpleDetail extends PureComponent{
         this.setState({tradeDirect:1, showBuyDialog:true});
     }
 
-    tradeSubmit = (isChoose)=>{
+    tradeSubmit = (direction,isChoose)=>{
         this.setState({showBuyDialog:false});
-        var {prodCode}=this.props;
+        var {prodCode,price,accountArr}=this.props;
+        var {mt4Id} = accountArr[0];
         var {num} =this.state;
-        this.props.openOrder(this,{num},()=>{
+        var {ask,bid,ctm} = price;
+        var tradePrice = direction==0?ask :bid;
+        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},()=>{
             
         });
     }
@@ -89,7 +92,8 @@ class SimpleDetail extends PureComponent{
     render(){
 
         var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
-
+        var {price} =this.props;
+        var {ask="--",bid="--"}=price;
         return(
             <div>
 
@@ -122,11 +126,11 @@ class SimpleDetail extends PureComponent{
                 <div className={styles.bottom_btn_fixed}>
                     <div className={styles.btn_buy_bottom} onClick={this.buyClick}>
                         <span>买</span>
-                        <span className={"font-arial"}>1.34564</span>
+                        <span className={"font-arial"}>{ask}</span>
                     </div>
                     <div className={styles.btn_sell_bottom} onClick={this.sellClick}>
                         <span>卖</span>
-                        <span className={"font-arial"}>1.34564</span>
+                        <span className={"font-arial"}>{bid}</span>
                     </div>
                 </div>
                 {showIntro?(
@@ -145,10 +149,11 @@ class SimpleDetail extends PureComponent{
 }
 
 function injectProps(state){
-    return {};
+    var {accountArr} =state.base ||{};
+    return {accountArr};
 }
 function injectAction(){
-    return {openOrder,flatOrder};
+    return {openOrder};
 }
 
-module.exports = connect(null,injectAction())(SimpleDetail);
+module.exports = connect(injectProps,injectAction())(SimpleDetail);

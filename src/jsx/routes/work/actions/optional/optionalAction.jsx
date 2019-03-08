@@ -30,7 +30,6 @@ export function updateProduct(component, cb){
 
         cb && cb();
         var clientId=systemApi.getValue("clientId");
-        params.clientId =clientId;
         component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
             // console.log(data);
             if(data["1"] || data["2"] || data["3"] ||data["4"]){

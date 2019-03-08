@@ -65,8 +65,10 @@ class ImproveForm extends PureComponent {
             this.setState({errMsg:"请输入邮箱验证码"});
         }else{
             this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
-                this.props.updateUserInfo();
-                hashHistory.goBack();
+                this.props.updateUserInfo(this,()=>{
+                    hashHistory.goBack();
+                });
+       
             });
 
         }

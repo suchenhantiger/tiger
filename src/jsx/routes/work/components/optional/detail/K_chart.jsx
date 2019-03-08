@@ -80,21 +80,31 @@ class K_chart extends PureComponent{
         // console.log(data);
         var {updatePrice}=this.props;
         if(data.length>0){
-            var {ask,bid,recentBars}=data[0];
-            updatePrice && updatePrice({ask,bid});
-            if(recentBars.length>0)
+            var {ask,bid,recentBars,ctm}=data[0];
+            updatePrice && updatePrice({ask,bid,ctm});
+            if(recentBars.length==0)
+                return;
             var newone = recentBars[0];
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
              if(oldone.opentime == newone.opentime ){
-                 return;//这里逻辑还需要优化
+                 return;
+                 console.log("sch");
+                console.log(oldone);
+                console.log(newone);
+               newone.date= new Date(newone.opentime*1000);
+               this._kdata[this._kdata.length-1] = newone;
+               this.refs.chart.getWrappedInstance().updateOne(newone);
+             }else{
+                // console.log(oldone);
+                // console.log(newone);
+               newone.date= new Date(newone.opentime*1000);
+              
+               this._kdata.push(newone);
+               this.refs.chart.getWrappedInstance().addOne(newone);
+
              }
-             console.log(oldone);
-             console.log(newone);
-            newone.date= new Date(newone.opentime*1000);
-           
-            this._kdata.push(newone);
-            this.refs.chart.getWrappedInstance().updateOne(newone);
+             
            // this.setState({});
         }
 
@@ -110,7 +120,7 @@ class K_chart extends PureComponent{
         WebSocketUtil.onMessage=(data)=>{
             //    console.log("---onmessage");
             data = JSON.parse(data);
-            // console.log(data);
+            //  console.log(data);
             this.updatePrice(data);
 
         };
@@ -162,6 +172,7 @@ class K_chart extends PureComponent{
 
     //渲染函数
     render(){
+        systemApi.log("k_chart render");
 
         var {timeL,showKchart} = this.state;
         var {fullscreen} = this.props;

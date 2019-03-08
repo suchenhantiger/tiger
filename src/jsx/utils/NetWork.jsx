@@ -49,15 +49,16 @@ function requestSuccess(ver, deferred, iskick, data){
         delete ajaxQueue[ver];
 
         var success = data.success,	    //判断成功失败
-            body = data.data;	      //相应数据内容
+            body = data.data,	      //相应数据内容
+            code = data.code;          //返回码
 // console.log(data);
         if(success == true){	//请求成功
             deferred.resolve(body);
         }
-        // else if(body. == "-10099" && body.info_detail == "未登录或会话已过期" ){	//session超时
+        else if(code == 401 ||code ==400 ){	//session超时
 
-        //     hashHistory.replace("/login");
-        // }
+            hashHistory.replace("/login");
+        }
         else{//请求失败
             deferred.reject({message:data.msg});
         }
@@ -91,6 +92,8 @@ function requestError(ver, deferred, data){
 function nativeRequestSuccess(ver, deferred, iskick){
     return function(response){
         var data = JSON.parse(response.data);
+        console.log("sch native post");
+        console.log(response);
         requestSuccess(ver, deferred, iskick, data);
     }
 }
@@ -126,7 +129,8 @@ module.exports = {
     requestJSON: function(url, params, otherParams) {
         otherParams = otherParams || {};
 
-        params.agentId=100001;
+        params.agentId=100001;//代理商id 固定
+
         //拼装参数数组
         var iskick=0,
             paramStr = [],
@@ -140,28 +144,23 @@ module.exports = {
 
         needToken = needToken==undefined?true:needToken;
 
-        // if(!params.access_token && needToken){
-        //     params.access_token = [systemApi.getValue("access_token"),0]
-        // }
-
         var deferred = $.Deferred();
         //针对后端sign校验，将cache设置为true，并自己添加一个随机数
-        if (false) {
+        if (postNative) {
             var sendParams = {};
-            for (var key in params) {
-                var isVauleof=params[key][1],
-                 //   tKey = isVauleof==0?key:"value("+key+")",
-                    value = params[key][0];
-
-              //  sendParams[tKey] = value;
-              sendParams[key] = value;
-                if(key == "kick")  iskick = value;
-            }
+            // for (var key in params) {
+            //     var isVauleof=params[key],
+            //         value = params[key][0];
+            //         sendParams[key] = value;
+            //    // if(key == "kick")  iskick = value;
+            // }
             //生产环境用原生发
+            //获取签名
+            params.sign = genSignStr(params,needToken);
             var sendUrl = systemApi.getValue("rootUrl") + url;
-            cordovaHTTP.get(
+            cordovaHTTP.post(
                 sendUrl,
-                sendParams,
+                params,
                 { Authorization: "OAuth2: token" },
                 nativeRequestSuccess(ver, deferred, iskick),
                 nativeRequestError(ver, deferred)
@@ -170,7 +169,6 @@ module.exports = {
         else{
             //测试环境用jsonp
             //参数中添加防缓存参数
-          
 
             //遍历参数生成参数串
             for (var key in params) {

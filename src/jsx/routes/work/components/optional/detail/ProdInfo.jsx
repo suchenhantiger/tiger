@@ -26,7 +26,7 @@ class ProdInfo extends PureComponent{
                             </div>
                             <div className={styles.icon_intro}>?</div>
                             <div className={styles.optional_dt_price}>
-                                <div className={this.mergeClassName("font56", "red", styles.font56)}>{ask}</div>
+                                <div className={this.mergeClassName("font56", "red", styles.font56)}>{bid}</div>
                                 <div className={this.mergeClassName("font24", "red", "text-al-right")}>
                                     <span>1.13%</span>/
                                     <span>1.34567</span>

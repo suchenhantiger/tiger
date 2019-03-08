@@ -10,5 +10,5 @@
 }
 
 .scroll{
-    -webkit-overflow-scrolling : touch;
+    /* -webkit-overflow-scrolling : touch; */
 }

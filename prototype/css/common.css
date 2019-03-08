@@ -179,7 +179,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-left: 1.4rem;
 }
 .pd-tp-0{
-	padding-top: 0;
+	padding-top: 0 ;
 }
 .pd-tp-10{
 	padding-top: .1rem;
@@ -196,8 +196,17 @@ h1, h2, h3, h4, h5, h6 {
 .pd-tp-40{
 	padding-top: 4rem !important;
 }
+.pd-tp-50{
+	padding-top: 5rem !important;
+}
 .pd-tp-58{
 	padding-top: 5.8rem !important;
+}
+.pd-rt-20{
+	padding-right: .2rem;
+}
+.pd-rt-30{
+	padding-right: .3rem;
 }
 .line-ht-48{
 	line-height: .48rem;
@@ -710,6 +719,21 @@ input::placeholder{
 	border:none;
 	float: left;
 	box-shadow: 0 0 0.2rem rgba(26,46,107,.2);
+}
+/*占位*/
+.placeholder_box{
+	margin: 0 .3rem;
+}
+.placeholder_box p{
+	text-align: center;
+}
+.pl_img{
+	margin-bottom: .3rem;
+}
+.pl_img img{
+	width: 2.2rem;
+	height: 2.2rem;
+	margin: 0 auto;
 }
 
 

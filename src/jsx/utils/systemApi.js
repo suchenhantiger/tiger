@@ -125,8 +125,8 @@ if(TestEnvironment){
 	//http://192.168.103.112:8080/jeeplus/mcapp/optionalstock/getOptionalStock
 	//http://192.168.103.108:8080/jeeplus/mcapp/optionalstock/getOptionalStock
 	//47.101.164.147
-	var rootIP = "47.101.164.147";
-	systemApi.setValue("rootUrl","http://"+rootIP+":8089/jeeplus/mcapp/");
+	var rootIP = "192.168.103.112";
+	systemApi.setValue("rootUrl","http://"+rootIP+":8080/jeeplus/mcapp/");
 	systemApi.setValue("websocketUrl","ws://"+rootIP+":8086"); 
 }
 else{

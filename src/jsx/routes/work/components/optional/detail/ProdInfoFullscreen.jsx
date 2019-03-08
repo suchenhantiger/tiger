@@ -15,7 +15,8 @@ class ProdInfo extends PureComponent{
     //渲染函数
     render(){
 
-        var {} = this.props;
+        var {price} = this.props;
+        var {bid="--"} = price;
 
         return(
             <div className={styles.floor}>
@@ -26,7 +27,7 @@ class ProdInfo extends PureComponent{
                   <div className={styles.icon_select}></div>
                   <div className={styles.icon_full_close} onClick={this.onclose}></div>
                   <div className={styles.optional_dt_price}>
-                      <div className={styles.font56+" "+ styles.red}>1.34568</div>
+                      <div className={styles.font56+" "+ styles.red}>{bid}</div>
                       <div className={styles.font24 +" "+styles.red+" "+ styles.text_al_right}>
                           <span>1.13%</span>/
                           <span>1.34567</span>

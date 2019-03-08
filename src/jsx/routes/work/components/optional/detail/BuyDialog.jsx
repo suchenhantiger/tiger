@@ -18,9 +18,9 @@ class BuyDialog extends PureComponent{
     }
 
     onSure = ()=>{
-        var {onSure} = this.props,
+        var {onSure,direction} = this.props,
             {choose} = this.state;
-        onSure && onSure(choose);
+        onSure && onSure(direction,choose);
     }
 
     //渲染函数

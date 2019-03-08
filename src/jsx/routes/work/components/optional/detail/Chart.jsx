@@ -108,6 +108,50 @@ class CandleStickChartPanToLoadMore extends React.Component {
 
 	updateOne=(newData)=>{
 		const { data: prevData, ema26, ema12, macdCalculator } = this.state;
+		//const lastone = prevData[prevData.length-1];
+		if(prevData.length<this._maxWindowSize) return;
+		prevData[prevData.length-1] =newData;
+		var tmpDataArr = [],widowsArr=prevData.slice(-this._maxWindowSize);	
+		for(var i=0;i<widowsArr.length;i++){
+			var tmpOne = {};
+			tmpOne.opentime = widowsArr[i].opentime;
+			tmpOne.date = new Date(widowsArr[i].opentime*1000);
+			tmpOne.open = widowsArr[i].open ;
+			tmpOne.high = widowsArr[i].high;
+			tmpOne.low = widowsArr[i].low;
+			tmpOne.close = widowsArr[i].close;
+			tmpOne.volume =widowsArr[i].volume;
+			tmpDataArr.push(tmpOne);
+		}
+		console.log(newData);
+		console.log(tmpDataArr);
+
+		tmpDataArr.push(newData);
+		var dataToCalculate = tmpDataArr;
+		const calculatedData = ema26(ema12(macdCalculator(dataToCalculate)));
+
+		const indexCalculator = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		.initialIndex(prevData[0].idx.index)
+		.indexCalculator();
+	//	var allData= prevData.concat(calculatedData.slice(-1));
+		prevData[prevData.length-1]=calculatedData.slice(-1);
+		var allData= prevData.slice(0);
+		 const { index } = indexCalculator(allData);
+// console.log(index);
+		const xScaleProvider = discontinuousTimeScaleProviderBuilder().initialLevel(this._level)
+		.initialIndex(prevData[0].idx.index)
+			.withIndex(index);
+		const { data: linearData, xScale, xAccessor, displayXAccessor } = xScaleProvider(allData);
+		// console.log(linearData);
+		this.setState({
+			data: linearData,
+			xScale, xAccessor, displayXAccessor 
+		});
+	
+	}
+
+	addOne=(newData)=>{
+		const { data: prevData, ema26, ema12, macdCalculator } = this.state;
 		const lastone = prevData[prevData.length-1];
 		if(prevData.length<this._maxWindowSize) return;
 		var tmpDataArr = [],widowsArr=prevData.slice(-this._maxWindowSize);	
@@ -144,6 +188,8 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		});
 	
 	}
+
+
 
 	handleDownloadMore(start, end,newdata) {
 		if (Math.ceil(start) === end) return;
