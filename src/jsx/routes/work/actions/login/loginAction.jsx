@@ -41,10 +41,28 @@ export function updateUserInfo(component,cb){
                 systemApi.setValue("isReal",isReal);
                 systemApi.setValue("nickname",nickname);
                 systemApi.setValue("tel",tel);
-                systemApi.setValue("telActive",telActive);                
-                systemApi.setValue("account_list",JSON.stringify(mt4Accs))
-                dispatch({type:"UPDATE_ACCOUNT_List",data:mt4Accs });
-            cb && cb(data);
+                systemApi.setValue("telActive",telActive);
+                if(mt4Accs && mt4Accs.length>0){
+                    var currAcc = systemApi.getValue("mt4Id");
+                    var isChange = true;
+                    for(var item in mt4Accs){
+                        if(currAcc == mt4Accs[item].mt4Id){//不需要更新
+                            isChange=false;
+                            break;
+                        }
+                    }
+                    if(isChange)
+                    {
+                        systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
+                        systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
+                    }
+                }else{
+                    //没有账号
+                    systemApi.removeValue("mt4Id");
+                    systemApi.removeValue("mt4AccType");
+                }                
+
+            cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
             
@@ -149,7 +167,7 @@ export function login(component, params,logintype,cb){
         // console.log('加密后数据:%o',params.token);
 
         component.requestJSON("loginregister/login",params,null,{needToken:false}).done((data)=>{
-            
+            dispatch(hideLoading());
             var { avatarUrl,clientId,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
@@ -164,7 +182,6 @@ export function login(component, params,logintype,cb){
                 systemApi.setValue("freeze",freeze);
                 systemApi.setValue("isFinger",isFinger);
                 systemApi.setValue("syntoken",syntoken);
-                
                 systemApi.setValue("isPushMsg",isPushMsg);
                 systemApi.setValue("isReal",isReal);
                 systemApi.setValue("nickname",nickname);
@@ -172,18 +189,36 @@ export function login(component, params,logintype,cb){
                 systemApi.setValue("telActive",telActive);
                 systemApi.setValue("tigertoken",token);
                 systemApi.setValue("expireTime",expireTime);
-                systemApi.setValue("account_list",JSON.stringify(mt4Accs))
-                dispatch({type:"UPDATE_ACCOUNT_List",data:mt4Accs });
-                
-                dispatch(hideLoading());
+                if(mt4Accs && mt4Accs.length>0){
+                    var currAcc = systemApi.getValue("mt4Id");
+                    var isChange = true;
+                    for(var item in mt4Accs){
+                        if(currAcc == mt4Accs[item].mt4Id){//不需要更新
+                            isChange=false;
+                            break;
+                        }
+                    }
+                    if(isChange)
+                    {
+                        systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
+                        systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
+                    }
+
+                }else{
+                    //没有账号
+                    systemApi.removeValue("mt4Id");
+                    systemApi.removeValue("mt4AccType");
+
+                }              
+              
                 if(freeze==0){
                     dispatch(showMessage(ERROR, "账号已冻结，请联系客服"));
                 }else if(freeze==1){
                     hashHistory.push("/login/setpwd");
                 }else if(freeze==9){
-                    hashHistory.push("/work");
+                    hashHistory.replace("/work");
                 }else{
-                    hashHistory.push("/work");
+                    hashHistory.replace("/work");
                 }
                 
             cb && cb();

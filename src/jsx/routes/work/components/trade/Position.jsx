@@ -20,8 +20,13 @@ class Position extends PureComponent {
 
     componentDidMount(){
         //持仓详情
-        var {accountArr}=this.props;
-        var {mt4Id} = accountArr[0];
+        var mt4Id = systemApi.getValue("mt4Id");
+        if(mt4Id ==null || mt4Id.length==0 ){
+            //没有账号或者账号异常
+ 
+             return;
+        }
+
         this.props.getPositionInfo(this, {mt4Id,queryType:2}, true,(mt4Info)=>{
             
             this.setState({mt4Info});
@@ -173,4 +178,4 @@ function injectAction(){
     return {getPositionInfo, getPositionAllOrder,flatOrder,updateOrder}
 }
 
-module.exports = connect(injectProps, injectAction())(Position);
+module.exports = connect(null, injectAction())(Position);

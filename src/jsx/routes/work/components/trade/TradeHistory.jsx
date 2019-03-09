@@ -18,8 +18,12 @@ class TradeHistory extends PureComponent {
     componentDidMount(){
         //持仓详情
               //持仓详情
-              var {accountArr}=this.props;
-              var {mt4Id} = accountArr[0];
+        var mt4Id = systemApi.getValue("mt4Id");
+        if(mt4Id ==null || mt4Id.length==0 ){
+            //没有账号或者账号异常
+
+            return;
+        }
         this.props.getHistoryInfo(this, {mt4Id,queryType:1}, (infoBalance)=>{
             this.setState({infoBalance});
         });

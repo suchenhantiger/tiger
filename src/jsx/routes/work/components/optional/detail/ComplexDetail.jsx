@@ -155,9 +155,14 @@ class ComplexDetail extends PureComponent{
 
     buyClick = ()=>{
        // this.setState({showBuyDialog:true});
-      
-        var {prodCode,price,accountArr}=this.props;
-        var {mt4Id} = accountArr[0];
+       var mt4Id = systemApi.getValue("mt4Id");
+       if(mt4Id ==null || mt4Id.length==0 ){
+           //没有账号或者账号异常
+
+            return;
+       }
+        var {prodCode,price}=this.props;
+        
         var {num,trantype,tranDire} =this.state;
         var {ask,bid,ctm} = price;
         var tradePrice = ask-0.01 ;
@@ -345,4 +350,4 @@ function injectAction(){
     return {openOrder};
 }
 
-module.exports = connect(injectProps,injectAction())(ComplexDetail);
+module.exports = connect(null,injectAction())(ComplexDetail);

@@ -28,18 +28,14 @@ class MePage extends PageComponent {
     }
 
     componentDidMount(){
-        // var {accountArr=[]}=this.props;
-
-        this.props.updateUserInfo(this,(data)=>{
-            var { mt4Accs }=data;
-            if(mt4Accs.length>0){
-                var accountObj = mt4Accs[0];
-                if(accountObj){
-                    this.props.getMt4Message(this,{queryType:2,mt4Id:accountObj.mt4Id},(infoEquity)=>{
-                        this.setState({infoEquity});
-                    });
-                }
+        this.props.updateUserInfo(this,()=>{
+            var mt4Id = systemApi.getValue("mt4Id");
+            if(mt4Id && mt4Id.length>0){
+                this.props.getMt4Message(this,{queryType:2,mt4Id},(infoEquity)=>{
+                    this.setState({infoEquity});
+                });
             }
+            
 
         });
 
@@ -122,19 +118,22 @@ class MePage extends PageComponent {
         systemApi.log("MePage render");
         var accountLength = 0;
         var {showConfirm,showReal,infoEquity={}}=this.state;
-        
-        var {accountArr=[]}=this.props;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
-        console.log(accountArr);
-        var accName = "--"
-        if(accountArr[0]!=null && accountArr[0].mt4AccType==0){
-            accName ="体验金账户";
-        }else if(accountArr[0]!=null && accountArr[0].mt4AccType==1){
-            accName ="真实账户";
-        }
-
+        let mt4Id = systemApi.getValue("mt4Id");
+        let mt4AccType = systemApi.getValue("mt4AccType");
         let emailIsActive = systemApi.getValue("emailIsActive");
         let isReal = systemApi.getValue("isReal"); 
+        var accName = "--"
+        if(mt4Id ==null || mt4Id.length==0 ){
+            //没有账号或者账号异常
+
+        }else if(mt4AccType =="0"){
+            accName ="体验金账户";
+        }else if(mt4AccType=="1"){
+            accName ="交易账户";
+        }
+
+
         return (
             <div>
                 <AppHeader headerName="我的" theme="transparent" iconRight={this.renderIcons()} />
@@ -148,7 +147,7 @@ class MePage extends PageComponent {
                                 <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
                                 <p>
                                     <span className={this.mergeClassName("blue", "left")}>{accName}</span>
-                                    <span className={this.mergeClassName("c9", "left")}>(自主交易)</span>
+                                    <span className={this.mergeClassName("c9", "left")}>({mt4Id?mt4Id:"--"})</span>
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
                             </div>
@@ -157,7 +156,7 @@ class MePage extends PageComponent {
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
-                                {accountArr[0]?
+                                {(mt4Id !=null && mt4Id.length)?
                                 <ul>
                                 {this.renderItem("浮动盈亏", "$"+floatPL)}
                                 {this.renderItem("账户净值", "$"+equity)}
@@ -199,12 +198,8 @@ class MePage extends PageComponent {
 
 }
 
-function injectProps(state){
-    var {accountArr} = state.base || {};
-    return {accountArr};
-}
 function injectAction(){
     return {getMt4Message,updateUserInfo};
 }
 
-module.exports = connect(injectProps,injectAction())(MePage);
+module.exports = connect(null,injectAction())(MePage);
