@@ -77,11 +77,10 @@ class K_chart extends PureComponent{
     }
 
     updatePrice=(data)=>{
-        // console.log(data);
         var {updatePrice}=this.props;
         if(data.length>0){
-            var {ask,bid,recentBars,ctm}=data[0];
-            updatePrice && updatePrice({ask,bid,ctm});
+            var {ask,bid,recentBars,ctm,isClose}=data[0];
+            updatePrice && updatePrice({ask,bid,ctm,isClose});
             if(recentBars.length==0)
                 return;
             var newone = recentBars[0];

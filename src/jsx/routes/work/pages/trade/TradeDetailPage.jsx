@@ -1,26 +1,23 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
-import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import K_Chart from '../../components/optional/detail/K_Chart';
-import SimpleDetail from '../../components/optional/detail/SimpleDetail';
-import ProdInfo from '../../components/optional/detail/ProdInfo';
-import ProdInfoFullscreen from '../../components/optional/detail/ProdInfoFullscreen';
-import ComplexDetail from '../../components/optional/detail/ComplexDetail';
-import styles from './css/optionalDetailPage.less';
+import FlateDetail from '../../components/trade/detail/FlateDetail';
+import styles from './css/tradeDetailPage.less';
 import {connect} from 'react-redux';
 import {getRealKline} from '../../actions/optional/optionalAction';
 /********自选-简单*********/
-class OptionalDetailPage extends PageComponent{
+class TradeDetailPage extends PageComponent{
 
     constructor(props,context) {
         super(props,context);
-        var {prodName,prodCode,ask="--",bid="--",status=true} = this.props.location.query; 
-        this._prodName = prodName;
+        var {prodInfo} = this.props.location.query;
+        prodInfo = JSON.parse(prodInfo);
+        var {prodCode,prodName} = prodInfo;
         this._prodCode = prodCode;
+        this._prodName = prodName;
         this.state = {
             index:0,
             fullscreen:false,
-            price:{}
             
         }
     }
@@ -37,7 +34,7 @@ class OptionalDetailPage extends PageComponent{
     }
 
     updatePrice=(price)=>{
-        console.log(price);
+
          this.setState({price});
     }
     
@@ -69,20 +66,16 @@ class OptionalDetailPage extends PageComponent{
         var {index,fullscreen,price} = this.state;
         return (
             <FullScreenView>
-                {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="transparent"/>}
-                <Content coverHeader={true}>
-                    {fullscreen?<ProdInfoFullscreen price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
+                {fullscreen?null:<AppHeader headerName={this._prodName+" "+this._prodCode} theme="white"/>}
+                <Content >
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
                         <K_Chart updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={this._prodCode}/>
                     </div>
                     {fullscreen?null:<div style={{margin:"0.3rem", overflow: "hidden"}}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
-                    {fullscreen?null:
-                    <LazyLoad index={index} >
-                        <SimpleDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
-                        <ComplexDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
-                    </LazyLoad>}
+                    <FlateDetail />
+
                 </Content>
             </FullScreenView>
         );
@@ -97,4 +90,4 @@ function injectAction(){
     return {getRealKline};
 }
 
-module.exports = connect(null,injectAction())(OptionalDetailPage);
+module.exports = connect(null,injectAction())(TradeDetailPage);

@@ -4,6 +4,7 @@ li.item{
 	padding-top: .56rem;
     background-color: #fff;
 }
+
 .currency_name{
 	margin-left: .3rem;
 	float: left;
@@ -15,6 +16,7 @@ li.item{
 .currency_price{
 	float: right;
 	margin-right: .3rem;
+	position: relative;
 }
 .price_box{
 	border-radius: .06rem;
@@ -28,6 +30,8 @@ li.item{
 .text{
     margin:0 .06rem;
 }
+
+
 .price_box.buy{
 	text-align: center;
     background: #ff4433;
@@ -36,6 +40,16 @@ li.item{
 	text-align: center;
 	background: #00bf3f;
 }
+.price_box.close{
+	background: #b6b6b6;
+}
 .price_box span.font50{
 	font-size: .5rem;
+}
+.mk_close{
+	color: #999;
+    position: absolute;
+    right: 0;
+    top: -.32rem;
+    font-style: normal;
 }

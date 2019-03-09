@@ -1,26 +1,8 @@
 import styles from './css/complexDetail.less';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
-import { DatePicker } from 'antd-mobile';
 
-Date.prototype.Format = function(fmt)   
-{ //author: meizz   
-  var o = {   
-    "M+" : this.getMonth()+1,                 //月份   
-    "d+" : this.getDate(),                    //日   
-    "h+" : this.getHours(),                   //小时   
-    "m+" : this.getMinutes(),                 //分   
-    "s+" : this.getSeconds(),                 //秒   
-    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
-    "S"  : this.getMilliseconds()             //毫秒   
-  };   
-  if(/(y+)/.test(fmt))   
-    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
-  for(var k in o)   
-    if(new RegExp("("+ k +")").test(fmt))   
-  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-  return fmt;   
-}
+import DatePicker from './DatePicker';
 
 
 class ComplexDetail extends PureComponent{
@@ -29,9 +11,10 @@ class ComplexDetail extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
-            index:0,
-            num:1.02,
-            tradeDirect:0, //0-买 1-卖
+            num:0.01,
+            actualPrice:null,
+            stopPrice:null,
+            profitPrice:null,
             showIntro:false,
             showOpenSucc:false,
             showBuyDialog:false,
@@ -39,17 +22,9 @@ class ComplexDetail extends PureComponent{
             trantype:true,
             tranDire:true,
         }
-        var {price={}} =props;
-        var {ctm}= price;
-        this._minDate = new Date(ctm*1000);
-        this._deadline = new Date(ctm*1000);
-        console.log(this._minDate);
-        console.log("sch"+this._deadline);
+    
     }
 
-    countClick = (index)=>()=>{
-        this.setState({index});
-    }
 
     introClick = ()=>{
         this.setState({showIntro:true});
@@ -71,58 +46,162 @@ class ComplexDetail extends PureComponent{
 
     }
 
-    plusClick = ()=>{
-        var {index, num} = this.state,
-            diffs = [0.01, 0.1, 0.5, 1],
-            num = (+num)+diffs[index];
-        this.setState({num:(+num).toFixed(2)});
-    }
+    plusClick =(type) =>  ()=>{
+        var {price}=this.props;
+        var {ask,bid} = price;
+        var {tranDire} =this.state;
+        var refPrice  = tranDire?ask:bid;
+        var step=0.01;
 
-    minusClick = ()=>{
-        var {index, num} = this.state,
-            diffs = [0.01, 0.1, 0.5, 1],
-            num = num-diffs[index];
-        this.setState({num:num>0?(+num).toFixed(2):"0.00"});
+
+        switch(type){
+            case 1:
+                var {actualPrice} = this.state;
+                if(actualPrice){
+                    actualPrice+=step;
+                    this.setState({actualPrice});
+                }else{
+                    actualPrice = refPrice+step;
+                    this.setState({actualPrice});
+                }
+                break;
+            case 2:
+                var {num} = this.state;
+                if(num){
+                    num+=0.01;
+                    this.setState({num});
+                }else{
+                    num = 0.01;
+                    this.setState({num});
+                }
+                break;
+            case 3:
+                var {stopPrice} = this.state;
+                if(stopPrice){
+                    stopPrice+=step;
+                    this.setState({stopPrice});
+                }else{
+                    stopPrice = refPrice+step;
+                    this.setState({stopPrice});
+                }
+                break;
+            case 4:
+                var {profitPrice} = this.state;
+                if(profitPrice){
+                    profitPrice+=step;
+                    this.setState({profitPrice});
+                }else{
+                    profitPrice = refPrice+step;
+                    this.setState({profitPrice});
+                }
+                break;
+
+        }
+       
+    }
+//浮点计算要特别注意
+    minusClick=(type) => ()=>{
+        var {price}=this.props;
+        var {ask,bid} = price;
+        var {tranDire} =this.state;
+        var refPrice  = tranDire?ask:bid;
+        var step=0.01;
+
+
+        switch(type){
+            case 1:
+                var {actualPrice} = this.state;
+                if(actualPrice){
+                    actualPrice-=step;
+                    this.setState({actualPrice:actualPrice>0?actualPrice:0});
+                }else{
+                    actualPrice = refPrice-step;
+                    this.setState({actualPrice:actualPrice>0?actualPrice:0});
+                }
+                break;
+            case 2:
+                var {num} = this.state;
+                if(num){
+                    num-=0.01;
+                    this.setState({num:num>0?num:0});
+                }else{
+                    num = 0.01;
+                    this.setState({num:num>0?num:0});
+                }
+                break;
+            case 3:
+                var {stopPrice} = this.state;
+                if(stopPrice){
+                    stopPrice-=step;
+                    this.setState({ stopPrice:stopPrice>0?stopPrice:0});
+                }else{
+                    stopPrice = refPrice-step;
+                    this.setState({stopPrice:stopPrice>0?stopPrice:0});
+                }
+                break;
+            case 4:
+                var {profitPrice} = this.state;
+                if(profitPrice){
+                    profitPrice-=step;
+                    this.setState({ profitPrice:profitPrice>0?profitPrice:0});
+                }else{
+                    profitPrice = refPrice-step;
+                    this.setState({ profitPrice:profitPrice>0?profitPrice:0});
+                }
+                break;
+
+        }
     }
 
     buyClick = ()=>{
-        this.setState({tradeDirect:0, showBuyDialog:true});
-
-
+       // this.setState({showBuyDialog:true});
+      
         var {prodCode,price,accountArr}=this.props;
         var {mt4Id} = accountArr[0];
-        var {num} =this.state;
+        var {num,trantype,tranDire} =this.state;
         var {ask,bid,ctm} = price;
-        var tradePrice = ask-1 ;
-
-
-
-        this.props.openOrder(this,{
-            tradePrice,
-            tradeTime:ctm,
-            buySell:0,
-            tradeTime:ctm,
-            expireTime:1552059173,
-            prodCode,
-            openType:1,
-            totalQty:0.1,
-            mt4Id},()=>{
+        var tradePrice = ask-0.01 ;
+        var expireTime = null;
+        if(trantype==false)
+            var expireTime =  this.refs.timePicker.getTimeStamp();
             
-        });
+        if(expireTime){
+            expireTime=parseInt(expireTime/1000);
+            this.props.openOrder(this,{
+                tradePrice,
+                tradeTime:ctm,
+                buySell:tranDire?0:1,
+                tradeTime:ctm,
+                expireTime,
+                prodCode,
+                openType:trantype?0:1,
+                totalQty:0.1,
+                mt4Id},()=>{
+                
+            });
+        }else{
+            this.props.openOrder(this,{
+                tradePrice,
+                tradeTime:ctm,
+                buySell:tranDire?0:1,
+                tradeTime:ctm,
+                prodCode,
+                openType:trantype?0:1,
+                totalQty:0.1,
+                mt4Id},()=>{
+                
+            });
+        }
+            
 
-    }
+       
 
-    sellClick = ()=>{
-        this.setState({tradeDirect:1, showBuyDialog:true});
     }
 
     tradeSubmit = (isChoose)=>{
         this.setState({showBuyDialog:false});
     }
-    onChangeDate=(data)=>{
-        //console.log(data);
-        this.setState({ deadline:data })
-    }
+
 
     tradeCancel = ()=>{
         this.setState({showBuyDialog:false});
@@ -131,29 +210,26 @@ class ComplexDetail extends PureComponent{
         this.setState({tranDire:type});
     }
     chooseTranType=(type)=>()=>{
-        this.setState({trantype:type});
+        this.setState({trantype:type,stopPrice:null,profitPrice:null,});
     }
     //渲染函数
     render(){
         systemApi.log("ComplexDetail render");
-        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect,trantype,tranDire,selectdate} = this.state;
+        var {showIntro, showOpenSucc, num, actualPrice, showBuyDialog,
+             trantype,tranDire,
+             actualPrice,
+             stopPrice,
+             profitPrice
+            } = this.state;
 
         var {price} =this.props;
-        var {ask="--",bid="--"}=price;
-        var {deadline}=this.state;
-        if(deadline==null ){
-            var selectdate="";
-        }else
-            var selectdate = deadline.Format('yyyy-MM-dd hh:mm');
-
-        console.log(selectdate);
-
+        var {ask="--",bid="--",ctm,isClose=false}=price;
         return(
             <div>
                 <div className="mg-lr-30">
                     <div className={styles.centerTab}>
                         <ul>
-                            <li className={trantype?styles.on:""} onClick={this.chooseTranType(true)}>市场交易</li>
+                            <li className={trantype?styles.on:""} onClick={this.chooseTranType(true)}>市价交易</li>
                             <li className={trantype?"":styles.on}onClick={this.chooseTranType(false)} >挂单交易</li>
                         </ul>
                     </div>
@@ -174,9 +250,9 @@ class ComplexDetail extends PureComponent{
                         <div className={styles.tran_panel}>
                         <h1>成交价格</h1>
                         <div className={styles.tran_icon}>
-                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
-                            <div className={styles.icon_num}>{num}</div>
-                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                            <div className={styles.icon_minus} onClick={this.minusClick(1)}></div>
+                            <div className={styles.icon_num}>{actualPrice?actualPrice:"未设置"} </div>
+                            <div className={styles.icon_plus} onClick={this.plusClick(1)}></div>
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
@@ -193,9 +269,9 @@ class ComplexDetail extends PureComponent{
                     <div className={styles.tran_panel}>
                         <h1>交易手数</h1>
                         <div className={styles.tran_icon}>
-                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
+                            <div className={styles.icon_minus} onClick={this.minusClick(2)}></div>
                             <div className={styles.icon_num}>{num}</div>
-                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                            <div className={styles.icon_plus} onClick={this.plusClick(2)}></div>
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
@@ -209,58 +285,49 @@ class ComplexDetail extends PureComponent{
                     <div className={styles.tran_panel}>
                         <h1>止损价格</h1>
                         <div className={styles.tran_icon}>
-                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
-                            <div className={styles.icon_num}>{num}</div>
-                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                            <div className={styles.icon_minus} onClick={this.minusClick(3)}></div>
+                            <div className={styles.icon_num}>{stopPrice?stopPrice:"未设置"}</div>
+                            <div className={styles.icon_plus} onClick={this.plusClick(3)}></div>
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>合计：</span>
-                                <span>$510.00</span>&nbsp;&nbsp;
-                                <span>可用保证金：</span>
-                                <span>$0.00</span>
+                                <span>价格&lt;=</span>
+                                <span>预计亏损--</span>
                             </span>
                         </div>
                     </div>
                     <div className={styles.tran_panel}>
                         <h1>止盈价格</h1>
                         <div className={styles.tran_icon}>
-                            <div className={styles.icon_minus} onClick={this.minusClick}></div>
-                            <div className={styles.icon_num}>{num}</div>
-                            <div className={styles.icon_plus} onClick={this.plusClick}></div>
+                            <div className={styles.icon_minus} onClick={this.minusClick(4)}></div>
+                            <div className={styles.icon_num}>{profitPrice?profitPrice:"未设置"}</div>
+                            <div className={styles.icon_plus} onClick={this.plusClick(4)}></div>
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>合计：</span>
-                                <span>$510.00</span>&nbsp;&nbsp;
-                                <span>可用保证金：</span>
-                                <span>$0.00</span>
+                                <span>价格&#60;=</span>
+                                <span>预计盈利--</span>
                             </span>
                         </div>
                     </div>
-
+                    {trantype?
+                    null:
                     <div className={styles.tran_panel}>
                         <h1>截止时间</h1>
                         <div className={styles.tran_time}>
-                            <DatePicker
-                            value={this._deadline}
-                            onChange={this.onChangeDate}
-                            minDate={this._minDate}
-                            mode="datetime">
-                   
-                              <div >{selectdate.length>0?selectdate:"未设置"}</div>
-                            </DatePicker>
+                            <DatePicker ref="timePicker" minTime={ctm} />  
+                        
                         </div>
                     </div>
-
-
+                    }
+                    
                     <div style={{height:"1.5rem"}}>
                     </div>
                 </div>
 
                 <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.mybtn_buy_bottom} onClick={this.buyClick}>
-                        <div className={styles.confirm} >{trantype?"确认交易":"确认挂单"}</div>
+                    <div className={styles.mybtn_buy_bottom}  onClick={this.buyClick}>
+                        <div className={styles.confirm} style={isClose?{backgroundColor:"#b6b6b6"}:null}>{trantype?"确认交易":"确认挂单"}</div>
                     </div>
                 </div>
 
@@ -278,4 +345,4 @@ function injectAction(){
     return {openOrder};
 }
 
-module.exports = connect(null,injectAction())(ComplexDetail);
+module.exports = connect(injectProps,injectAction())(ComplexDetail);

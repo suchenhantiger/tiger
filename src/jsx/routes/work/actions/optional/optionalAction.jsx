@@ -108,22 +108,5 @@ export function openOrder(component,params,cb ){
 }
 
 
-//平仓
-///deal/flatOrder
-export function flatOrder(component,params,cb ){
-    return function(dispatch, state){
-        dispatch(showLoading());
-        var clientId=systemApi.getValue("clientId");
-        params.clientId =clientId;
-        component.requestJSON("deal/flatOrder",params).done((data)=>{
-            dispatch(hideLoading());
-            dispatch(showMessage(SUCCESS, "下单成功"));
-        }).fail((data)=>{
-            dispatch(hideLoading());
-            dispatch(showMessage(ERROR, data.message));
-            cb && cb();
-        });
-    
-    }
-}
+
 

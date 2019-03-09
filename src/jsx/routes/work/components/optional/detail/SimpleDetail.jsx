@@ -93,7 +93,7 @@ class SimpleDetail extends PureComponent{
 
         var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
         var {price} =this.props;
-        var {ask="--",bid="--"}=price;
+        var {ask="--",bid="--",isClose=false}=price;
         return(
             <div>
 
@@ -124,11 +124,11 @@ class SimpleDetail extends PureComponent{
                     </div>
                 </div>
                 <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.btn_buy_bottom} onClick={this.buyClick}>
+                    <div className={styles.btn_buy_bottom} style={isClose?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.buyClick}>
                         <span>买</span>
                         <span className={"font-arial"}>{ask}</span>
                     </div>
-                    <div className={styles.btn_sell_bottom} onClick={this.sellClick}>
+                    <div className={styles.btn_sell_bottom} style={isClose?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.sellClick}>
                         <span>卖</span>
                         <span className={"font-arial"}>{bid}</span>
                     </div>

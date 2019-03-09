@@ -9,19 +9,18 @@ class OptionalItem extends PureComponent{
 
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
-        var {name,code,ask,bid,status}= this.props;
+        var {name,code,ask,bid,isClose}= this.props;
         hashHistory.push({
             pathname: "/work/optional/detail",
-            query: {prodName:name,prodCode:code,ask,bid,status}
+            query: {prodName:name,prodCode:code,ask,bid,isClose}
         });
     }
 
     //渲染函数
     render(){
 
-        var {editable,name,code,ask,bid,status,type} = this.props;
+        var {editable,name,code,ask,bid,isClose,type} = this.props;
         var ask1,ask2,ask3,bid1,bid2,bid3;
-
         if(ask==null|| bid ==null || ask.length==0|| bid.length==0){
             ask2 ="--";
             bid2 ="--"
@@ -56,12 +55,13 @@ class OptionalItem extends PureComponent{
                     <p className={this.mergeClassName("c9", "font-arial")}>{code}</p>
                 </div>
                 <div className={styles.currency_price}>
-                    <div className={this.mergeClassName(styles.price_box, styles.buy, "font-arial")}>
+                    {isClose?<i className={styles.mk_close}>闭市</i>:null}
+                    <div className={this.mergeClassName(styles.price_box, styles.buy,isClose?styles.close:null, "font-arial")}>
                     {ask1?<span>{ask1}</span>:null}
                     {ask2?<span className={this.mergeClassName(styles.font50, styles.text)}>{ask2}</span>:null}
                     {ask3?<span className={"vertical-top"}>{ask3}</span>:null}
                     </div>
-                    <div className={this.mergeClassName(styles.price_box, styles.sell, "font-arial")}>
+                    <div className={this.mergeClassName(styles.price_box,isClose?styles.close:null, styles.sell, "font-arial")}>
                     {bid1?<span>{bid1}</span>:null}
                         {bid2?<span className={this.mergeClassName(styles.font50, styles.text)}>{bid2}</span>:null}
                         {bid3? <span className={"vertical-top"}>1</span>:null}

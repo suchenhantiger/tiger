@@ -117,7 +117,7 @@ function baseReducer(state,action){
                 var tmp = newPrice[i];
                 OptionalListData[index].ask = tmp.ask;
                 OptionalListData[index].bid = tmp.bid;
-                OptionalListData[index].status = tmp.status;
+                OptionalListData[index].isClose = tmp.isClose;
             }
         }
         if(updateflag)

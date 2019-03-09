@@ -1,9 +1,9 @@
-import PositionItem1 from './PositionItem1';
+import HangItem from './HangItem';
 import styles from './css/positionList.less'
 import IScrollView from '../../../../components/common/iscroll/IScrollView.jsx'
 
 
-class PositionAllList extends PureComponent{
+class HangList extends PureComponent{
 
     //构造函数
     constructor(props) {
@@ -29,7 +29,7 @@ class PositionAllList extends PureComponent{
          //   console.log("sch renderlist");
         return data.map(item=>{
             // console.log(item);
-            return <PositionItem1 data = {item} onChoose={this.onItemclick}/>
+            return <HangItem data = {item} onChoose={this.onItemclick}/>
         })
     }
     render(){
@@ -55,4 +55,4 @@ class PositionAllList extends PureComponent{
 
 }
 
-module.exports = PositionAllList ;
+module.exports = HangList ;

@@ -46,7 +46,7 @@ class OptionalList extends PureComponent{
          //   console.log("sch optList ws new data");
 
             data = JSON.parse(data);
-            // console.log(data);
+            console.log(data);
             this.props.updatePrice(data);
         };
         WebSocketUtil.onError=(evt)=>{
@@ -89,8 +89,7 @@ class OptionalList extends PureComponent{
         var  {editable,OptionalListData,ProductList} = this.props;
          //   console.log("sch renderlist");
         return OptionalListData.map(item=>{
-            // console.log(item);
-            return <OptionalItem  name={item.prodName}  type ={item.categoryId} code={item.prodCode} ask={item.ask} bid={item.bid} status={item.status}/>
+            return <OptionalItem  name={item.prodName} isClose={item.isClose} type ={item.categoryId} code={item.prodCode} ask={item.ask} bid={item.bid} />
         })
     }
     render(){

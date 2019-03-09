@@ -16,7 +16,7 @@ class ProdInfo extends PureComponent{
     render(){
 
         var {price} = this.props;
-        var {bid="--"} = price;
+        var {bid="--",updowndiff="--",updownratio="--"} = price;
 
         return(
             <div className={styles.floor}>
@@ -29,8 +29,8 @@ class ProdInfo extends PureComponent{
                   <div className={styles.optional_dt_price}>
                       <div className={styles.font56+" "+ styles.red}>{bid}</div>
                       <div className={styles.font24 +" "+styles.red+" "+ styles.text_al_right}>
-                          <span>1.13%</span>/
-                          <span>1.34567</span>
+                          <span>{updownratio}%</span>/
+                          <span>{updowndiff}</span>
                       </div>
                   </div>
                   <div style={{clear:"both"}}></div>

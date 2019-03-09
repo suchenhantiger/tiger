@@ -13,7 +13,7 @@ class ProdInfo extends PureComponent{
     render(){
 
         var {prodName,prodCode,price={}} = this.props;
-        var {ask="--",bid="--"}  = price;
+        var {ask="--",bid="--",updowndiff="--",updownratio="--"}  = price;
 
         return(
             <div className={styles.header}>
@@ -28,8 +28,8 @@ class ProdInfo extends PureComponent{
                             <div className={styles.optional_dt_price}>
                                 <div className={this.mergeClassName("font56", "red", styles.font56)}>{bid}</div>
                                 <div className={this.mergeClassName("font24", "red", "text-al-right")}>
-                                    <span>1.13%</span>/
-                                    <span>1.34567</span>
+                                    <span>{updownratio}%</span>/
+                                    <span>{updowndiff}</span>
                                 </div>
                             </div>
                         </div>

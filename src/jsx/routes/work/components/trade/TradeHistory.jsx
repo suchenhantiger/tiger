@@ -9,21 +9,30 @@ class TradeHistory extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            
+            infoBalance:{}
         }
     }
 
     componentDidMount(){
         //持仓详情
-        this.props.getHistoryInfo(this, {}, this.update);
+              //持仓详情
+              var {accountArr}=this.props;
+              var {mt4Id} = accountArr[0];
+        this.props.getHistoryInfo(this, {mt4Id,queryType:1}, (infoBalance)=>{
+            this.setState({infoBalance});
+        });
     }
 
-    update = (data)=>{
-        this.setState({});
-    }
+
 
     //渲染函数
     render() {
+
+        var {infoBalance}=this.state;
+        var {balance="--",
+            ratioPL=0,
+            totalPL=0,
+            totalQty= 0} = infoBalance;
 
         return (
             <div>
@@ -35,7 +44,7 @@ class TradeHistory extends PureComponent {
                             <span className={this.mergeClassName("c9", "left")}>(自主交易)</span>
                             <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                         </p>
-                        <p className={this.mergeClassName("c3", "font48", "mg-tp-42", styles.c3)}>¥0.00</p>
+                        <p className={this.mergeClassName("c3", "font48", "mg-tp-42", styles.c3)}>${balance}</p>
                     </div>
                     <div className={"right"}>
                         <div className={styles.icon_account}>切换</div>
@@ -48,15 +57,15 @@ class TradeHistory extends PureComponent {
                     <div className={styles.account_dt}>
                         <ul>
                             <li>
-                                <p className={"font32"}>$1888.00</p>
+                                <p className={"font32"}>${totalPL}</p>
                                 <p className={this.mergeClassName("c9", "mg-tp-10")}>总收益</p>
                             </li>
                             <li>
-                                <p className={"font32"}>o.05</p>
+                                <p className={"font32"}>{totalQty}</p>
                                 <p className={this.mergeClassName("c9", "mg-tp-10")}>交易手数</p>
                             </li>
                             <li>
-                                <p className={"font32"}>1.00%</p>
+                                <p className={"font32"}>{ratioPL}%</p>
                                 <p className={this.mergeClassName("c9", "mg-tp-10")}>收益率</p>
                             </li>
                         </ul>
@@ -68,9 +77,12 @@ class TradeHistory extends PureComponent {
 
 }
 
-
+function injectProps(state){
+    var {accountArr } = state.base || {};
+    return {accountArr};
+}
 function injectAction(){
     return {getHistoryInfo}
 }
 
-module.exports = connect(null, injectAction())(TradeHistory);
+module.exports = connect(injectProps, injectAction())(TradeHistory);

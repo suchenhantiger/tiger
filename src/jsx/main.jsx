@@ -27,7 +27,11 @@ ReactDOM.render(
                         <Route path="detail" getComponent={require('./routes/work/config/optional/optionaldetail')(store)}></Route>
                     </Route>
                     <Route path="documentary" getComponent={require('./routes/work/config/documentary/documentary')(store)}></Route>
-                    <Route path="trade" getComponent={require('./routes/work/config/trade/trade')(store)}></Route>
+                    <Route path="trade" getComponent={require('./routes/work/config/trade/trade')(store)}>
+                        <Route path="flatdetail" getComponent={require('./routes/work/config/trade/flatdetail')(store)}></Route>
+                        <Route path="hangdetail" getComponent={require('./routes/work/config/trade/hangdetail')(store)}></Route>
+                        
+                    </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>
                         <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
