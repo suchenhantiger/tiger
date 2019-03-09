@@ -3,6 +3,7 @@ import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 
 import Position from '../../components/trade/Position';
 import TradeHistory from '../../components/trade/TradeHistory';
+import TradeFee from '../../components/trade/TradeFee';
 
 import styles from './css/tradePage.less';
 
@@ -46,6 +47,7 @@ class TradePage extends PageComponent {
                     <LazyLoad index={index}>
                         <Position/>
                         <TradeHistory/>
+                        <TradeFee/>
                     </LazyLoad>
                 </Content>
                 {this.props.children}

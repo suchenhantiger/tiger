@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
-import {getHistoryInfo,} from "../../actions/trade/tradeAction";
+import {getTradeFeeInfo} from "../../actions/trade/tradeAction";
 
-import HistoryList from './HistoryList';
+import styles from './css/tradeFee.less';
 
-import styles from './css/tradeHistory.less';
-
-class TradeHistory extends PureComponent {
+class TradeFee extends PureComponent {
 
     //构造函数
     constructor(props) {
@@ -17,7 +15,7 @@ class TradeHistory extends PureComponent {
 
     componentDidMount(){
         //持仓详情
-        this.props.getHistoryInfo(this, {}, this.update);
+        this.props.getTradeFeeInfo(this, {}, this.update);
     }
 
     update = (data)=>{
@@ -64,7 +62,11 @@ class TradeHistory extends PureComponent {
                         </ul>
                     </div>
                 </div>
-                <HistoryList/>
+                <div className={styles.placeholder_box}>
+                    <p className={styles.pl_img}><img src="./images/trade/img_placeholder01.png"/> </p>
+                    <p className={this.mergeClassName("mg-bt-30", "c9")}>跟单账号、高手账号的佣金结算将在这里展示</p>
+                    <p></p><div className={styles.copy_btn}><button>逛逛高手榜</button></div><p></p>
+                </div>
             </div>
         );
     }
@@ -73,7 +75,7 @@ class TradeHistory extends PureComponent {
 
 
 function injectAction(){
-    return {getHistoryInfo}
+    return {getTradeFeeInfo}
 }
 
-module.exports = connect(null, injectAction())(TradeHistory);
+module.exports = connect(null, injectAction())(TradeFee);
