@@ -63,16 +63,16 @@ class Position extends PureComponent {
 
 
 
-        console.log();
-        var {orderId,
-            marketPrice,
-            mt4Id,
-            marketTime
-            } =data;
-        this.props.flatOrder(this,{tradeType:0,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
+        // console.log();
+        // var {orderId,
+        //     marketPrice,
+        //     mt4Id,
+        //     marketTime
+        //     } =data;
+        // this.props.flatOrder(this,{tradeType:0,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
             
-        });
-        return;
+        // });
+        // return;
 
         hashHistory.push({
             pathname: "/work/trade/flatdetail",

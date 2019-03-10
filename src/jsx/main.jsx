@@ -30,7 +30,9 @@ ReactDOM.render(
                         <Route path="detail" getComponent={require('./routes/work/config/documentary/detail')(store)}></Route>
                     </Route>
                     <Route path="trade" getComponent={require('./routes/work/config/trade/trade')(store)}>
-                        <Route path="flatdetail" getComponent={require('./routes/work/config/trade/flatdetail')(store)}></Route>
+                        <Route path="flatdetail" getComponent={require('./routes/work/config/trade/flatdetail')(store)}>
+                            <Route path="stopprofit" getComponent={require('./routes/work/config/trade/stopprofit')(store)}></Route>
+                        </Route>
                         <Route path="hangdetail" getComponent={require('./routes/work/config/trade/hangdetail')(store)}></Route>
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
