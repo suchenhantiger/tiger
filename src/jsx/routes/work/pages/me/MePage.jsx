@@ -140,6 +140,10 @@ class MePage extends PageComponent {
         });
     }
 
+    bankClick = ()=>{
+        hashHistory.push("/work/me/bank");
+    }
+
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
@@ -198,7 +202,7 @@ class MePage extends PageComponent {
                         <ul className={styles.account_icons}>
                             {this.renderFuncItem("充值", "./images/me/icon-recharge.png", this.rechargeClick)}
                             {this.renderFuncItem("提现", "./images/me/icon-recharge.png")}
-                            {this.renderFuncItem("银行卡", "./images/me/icon-recharge.png")}
+                            {this.renderFuncItem("银行卡", "./images/me/icon-recharge.png", this.bankClick)}
                             {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")}
                         </ul>
                     </div>

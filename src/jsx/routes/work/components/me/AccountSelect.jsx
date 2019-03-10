@@ -33,10 +33,11 @@ class AccountSelect extends PureComponent {
 
     renderAccounts() {
         var { index, accountList } = this.state;
+        var curMt4Id = systemApi.getValue("mt4Id")
         return accountList.map((item, i) => {
             var {mt4AccType, mt4Id} = item;
             return (
-                <div className={this.mergeClassName(styles.radius_box)} onClick={this.itemClick(mt4AccType, mt4Id)}>
+                <div className={this.mergeClassName(styles.radius_box, curMt4Id==mt4Id?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id)}>
                     <ul>
                         <li>
                             <p className={"mg-bt-10"}>

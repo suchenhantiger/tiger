@@ -75,6 +75,14 @@ class TradeHistory extends PureComponent {
         )
     }
 
+    getNextPage = ()=>{
+        var {subIndex} = this.state,
+            {historyList} = this.refs;
+        if(subIndex == 0){
+            historyList && historyList.getWrappedInstance().getNextPage();
+        }
+    }
+
     //渲染函数
     render() {
 
@@ -87,7 +95,7 @@ class TradeHistory extends PureComponent {
         return (
             <div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} upFresh={this.reloadData} probeType={3}
+                    canUpFresh={true} canDownFresh={true} upFresh={this.reloadData} downFresh={this.getNextPage} probeType={3}
                     onScroll={this.scroll} onScrollEnd={this.scroll} ref="iscroll">
 
                     <div>
@@ -128,7 +136,7 @@ class TradeHistory extends PureComponent {
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
-                                <HistoryList />
+                                <HistoryList ref="historyList"/>
                                 <HistoryList />
                             </LazyLoad>
                         </div>

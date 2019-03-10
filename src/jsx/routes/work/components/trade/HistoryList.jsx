@@ -3,19 +3,50 @@ import { getHistoryList } from '../../actions/trade/tradeAction';
 
 import styles from './css/historyList.less'
 
+const pageSize = 20;
+
 class HistoryList extends PureComponent {
 
     //构造函数
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            nextPage:1
         }
+    }
+
+    componentDidMount(){
+        this.getData(1, false);
+    }
+
+    getData(pageNo, isAppend){
+        var mt4Id = systemApi.getValue("mt4Id"),
+            clientId = systemApi.getValue("clientId");
+        this.props.getHistoryList(this, {
+            pageNo, mt4Id, clientId, pageSize
+        }, isAppend, this.update);
+    }
+
+    update = (isAppend, list)=>{
+        var {data, nextPage} = this.state;
+        if(isAppend){
+            data = data.concat(list);
+        }
+        else {
+            data = list;
+        }
+        this.setState({data:data.slice(), nextPage:nextPage+1});
+    }
+
+    getNextPage(){
+        var {nextPage} = this.state;
+        this.getData(nextPage, true);
     }
 
     renderList() {
         var { data } = this.state;
-        return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) => {
+        return data.map((item) => {
             return (
                 <li className={styles.item}>
                     <div className={"left"}>
