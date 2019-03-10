@@ -148,7 +148,7 @@ class Position extends PureComponent {
         return (
             <div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} upFresh={this.reloadData}
+                    canUpFresh={true} upFresh={this.reloadData} probeType={3}
                     onScroll={this.scroll} onScrollEnd={this.scroll} ref="iscroll">
 
                     <div>
