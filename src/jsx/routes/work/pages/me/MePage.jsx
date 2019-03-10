@@ -24,7 +24,7 @@ class MePage extends PageComponent {
     getPageName() { return "我的主页"; }
 
     settingClick = () => {
-
+        hashHistory.push("/work/me/setting");
     }
 
     componentDidMount(){
