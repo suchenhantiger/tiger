@@ -1,6 +1,5 @@
 import HangItem from './HangItem';
 import styles from './css/positionList.less'
-import IScrollView from '../../../../components/common/iscroll/IScrollView.jsx'
 
 
 class HangList extends PureComponent{
@@ -8,12 +7,6 @@ class HangList extends PureComponent{
     //构造函数
     constructor(props) {
         super(props);
-    }
-    componentWillMount(){
-    }
-
-    componentDidMount(){
-       
     }
 
     getScrollStyle=()=>{
@@ -33,21 +26,10 @@ class HangList extends PureComponent{
         })
     }
     render(){
-       
         return (
-
-                <IScrollView
-                  className={this.getScrollStyle()}
-                  canUpFresh={true}
-                  upFresh={this.iscollUpfresh}
-                  ref="scroll"
-                >
-                <ul>
+            <ul className={styles.list}>
                 {this.renderList()}
-                </ul>
-                </IScrollView>
-   
-                
+            </ul>
         );
     }
 

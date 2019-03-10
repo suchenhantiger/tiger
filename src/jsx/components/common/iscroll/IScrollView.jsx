@@ -73,7 +73,8 @@ class IScrollView extends PureComponent{
 
         this.wrapper.on("scroll",function(){
 
-            var {frame,main} = that.refs,
+            var {onScroll} = that.props,
+                {frame,main} = that.refs,
                 {showLoading} = that.state;
 
             if(!frame || !main || showLoading) return;
@@ -110,6 +111,7 @@ class IScrollView extends PureComponent{
                     showDownText:false
                 });
             }
+            onScroll && onScroll(this.x, this.y);
         });
 
         this.wrapper.on("scrollEnd",function(){
