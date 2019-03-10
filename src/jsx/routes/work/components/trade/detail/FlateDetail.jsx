@@ -65,24 +65,6 @@ class FlateDetail extends PureComponent{
         this.setState({tradeDirect:1, showBuyDialog:true});
     }
 
-    tradeSubmit = (direction,isChoose)=>{
-        this.setState({showBuyDialog:false});
-        var mt4Id = systemApi.getValue("mt4Id");
-        if(mt4Id ==null || mt4Id.length==0 ){
-            //没有账号或者账号异常
- 
-             return;
-        }
-
-        var {prodCode,price}=this.props;
-        var {num} =this.state;
-        var {ask,bid,ctm} = price;
-        var tradePrice = direction==0?ask :bid;
-        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},()=>{
-            
-        });
-    }
-
     tradeCancel = ()=>{
         this.setState({showBuyDialog:false});
     }
