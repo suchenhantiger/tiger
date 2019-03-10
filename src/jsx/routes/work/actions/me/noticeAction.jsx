@@ -1,6 +1,6 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
-//获取持仓挂单交易
+//获取系统消息列表
 export function getSysNoticeList(component, params, update){
     return function(dispatch, state){
         var {pageSize} = params;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getSysNoticeList } from '../../../actions/me/noticeAction';
+import { getSysNoticeList } from '../../../actions/me/meAction';
 
 import styles from './css/sysNoticeList.less'
 
