@@ -45,7 +45,7 @@ class MePage extends PageComponent {
     }
 
     msgClick = () => {
-
+        hashHistory.push("/work/me/notice");
     }
 
     renderIcons() {
