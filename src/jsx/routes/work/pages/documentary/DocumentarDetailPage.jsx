@@ -1,5 +1,7 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
+import SubTabs from '../../../../components/common/subtabs/SubTabs';
+import FlatTab from '../../../../components/common/subtabs/FlatTab';
 
 import styles from './css/documentarDetailPage.less';
 
@@ -8,12 +10,17 @@ class DocumentaryDetailPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            index:0
+        }
     }
     //获取页面名称
     getPageName() { return "跟单详情"; }
 
     render() {
         systemApi.log("DocumentaryDetailPage render");
+
+        var {index} = this.state;
 
         return (
             <FullScreenView>
@@ -47,6 +54,11 @@ class DocumentaryDetailPage extends PageComponent {
                             </ul>
                         </div>
                     </div>
+                    <SubTabs index={index} onTabChange={this.tabChange}>
+                        <FlatTab text="数据统计"/>
+                        <FlatTab text="当前交易"/>
+                        <FlatTab text="历史交易"/>
+                    </SubTabs>
                 </Content>
                 {this.props.children}
             </FullScreenView>
