@@ -3,40 +3,19 @@ import { getHistoryList } from '../../actions/trade/tradeAction';
 
 import styles from './css/historyList.less'
 
-class HistoryList extends CursorList {
+class HistoryList extends PureComponent {
 
     //构造函数
     constructor(props) {
         super(props);
-    }
-
-    //获取数据
-    getData(beginIndex, isAppend, cb, props) {
-        // this.props.getHistoryList({
-        //     beginIndex,
-        //     pageSize: 20,
-        //     isHot: 0
-        // }, isAppend, cb, this, this.update);
-        cb();
-    }
-
-    //更新数据
-    update = (isAppend, data) => {
-        var list = data;
-        if (isAppend) {
-            list = this.state.data.concat(data);
+        this.state = {
+            data: []
         }
-        this.nextIndex = list.length + 1;
-        this.setState({ data: list });
-    };
-
-    getScrollStyle() {
-        return styles.frame;
     }
 
     renderList() {
         var { data } = this.state;
-        return [1, 1, 1, 1, 1, 1].map((item) => {
+        return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) => {
             return (
                 <li className={styles.item}>
                     <div className={"left"}>
@@ -49,6 +28,14 @@ class HistoryList extends CursorList {
                 </li>
             )
         });
+    }
+
+    render() {
+        return (
+            <ul className={styles.list}>
+                {this.renderList()}
+            </ul>
+        );
     }
 }
 

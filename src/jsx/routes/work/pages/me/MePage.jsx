@@ -24,7 +24,7 @@ class MePage extends PageComponent {
     getPageName() { return "我的主页"; }
 
     settingClick = () => {
-
+        hashHistory.push("/work/me/setting");
     }
 
     componentDidMount(){
@@ -45,7 +45,7 @@ class MePage extends PageComponent {
     }
 
     msgClick = () => {
-
+        hashHistory.push("/work/me/notice");
     }
 
     renderIcons() {
@@ -114,6 +114,10 @@ class MePage extends PageComponent {
     }
 
 
+    dailyReportClick = ()=>{
+        hashHistory.push("/work/me/dailyreport");
+    }
+
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
@@ -181,7 +185,7 @@ class MePage extends PageComponent {
                         <ul>
                             {this.renderListItem("我的钱包", "./images/me/icon-list01.png", true)}
                             {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false)}
-                            {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false)}
+                            {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.dailyReportClick)}
                             {this.renderListItem("财经日历", "./images/me/icon-list04.png", false)}
                             {this.renderListItem("帮助中心", "./images/me/icon-list05.png", false)}
                             {this.renderListItem("联系客服", "./images/me/icon-list06.png", false)}

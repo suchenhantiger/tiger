@@ -16,6 +16,7 @@ class Position extends PureComponent {
             allList: {},
             fixTabs: false
         }
+        this.shouldFresh = false;
     }
 
     componentDidMount() {
@@ -40,7 +41,7 @@ class Position extends PureComponent {
 
     }
 
-    
+
     componentWillUnmount(){
         super.componentWillUnmount();
         clearInterval(this._interval);
@@ -60,10 +61,19 @@ class Position extends PureComponent {
 
         },10000);
     }
+    componentWillUpdate(nextProps, nextState){
+        var {fixTabs} = nextState;
+        if(this.state.fixTabs == fixTabs){
+            this.shouldFresh = true;
+        }
+    }
 
     componentDidUpdate() {
         var { iscroll } = this.refs;
-        iscroll && iscroll.refresh()
+        if(this.shouldFresh){
+            iscroll && iscroll.refresh()
+        }
+        this.shouldFresh = false;
     }
 
 
@@ -108,8 +118,7 @@ class Position extends PureComponent {
 
     scroll = (x, y) => {
         var yRem = this.calculateRem(0, y);
-        console.log(yRem < -4.5);
-        this.setState({ fixTabs: yRem < -4.5 });
+        this.setState({ fixTabs: yRem < -4.6 });
     }
 
     renderTabs() {
@@ -138,8 +147,8 @@ class Position extends PureComponent {
         return (
             <div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} upFresh={this.reloadData}
-                    onScroll={this.scroll} ref="iscroll">
+                    canUpFresh={true} upFresh={this.reloadData} probeType={3}
+                    onScroll={this.scroll} onScrollEnd={this.scroll} ref="iscroll">
 
                     <div>
                         <div className={styles.optional_detail}>

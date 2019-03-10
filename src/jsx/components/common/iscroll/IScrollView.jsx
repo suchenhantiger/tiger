@@ -14,7 +14,8 @@ class IScrollView extends PureComponent{
         downLoadingText:"",
         canUpFresh:false,
         canDownFresh:false,
-        isShowLoading:true
+        isShowLoading:true,
+        probeType:2
     };
 
     constructor(props,context){
@@ -54,7 +55,8 @@ class IScrollView extends PureComponent{
 
     componentDidMount(){
         var that = this,
-            {main} = this.refs;
+            {main} = this.refs,
+            {probeType} = this.props;
 
         //修复Android机子滚送问题
         main.addEventListener('touchmove', this.preDft, false);
@@ -64,7 +66,7 @@ class IScrollView extends PureComponent{
 
         this.wrapper = new  IScroll(this.refs.main,{
             useTransition: false, /* 此属性不知用意，本人从true改为false */
-			probeType: 2,
+			probeType: probeType,
             scrollbars:true,
             click:true,
             tap:"clickModel",
@@ -114,8 +116,14 @@ class IScrollView extends PureComponent{
             onScroll && onScroll(this.x, this.y);
         });
 
+        this.wrapper.on("scrollCancel", function(){
+            var {onScrollCancel} = that.props;
+            onScrollCancel && onScrollCancel();
+        });
+
         this.wrapper.on("scrollEnd",function(){
-            var {frame,main} = that.refs,
+            var {onScrollEnd} = that.props,
+                {frame,main} = that.refs,
                 {showLoading} = that.state;
 
             if(!frame || !main || showLoading) return;
@@ -145,6 +153,7 @@ class IScrollView extends PureComponent{
                 showDownText:false
               });
             }
+            onScrollEnd && onScrollEnd(this.x, this.y);
         });
 
     }
