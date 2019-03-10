@@ -74,6 +74,8 @@ class SimpleDetail extends PureComponent{
 
     tradeSubmit = (direction,isChoose)=>{
         var mt4Id = systemApi.getValue("mt4Id");
+
+        console.log(mt4Id);
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
  

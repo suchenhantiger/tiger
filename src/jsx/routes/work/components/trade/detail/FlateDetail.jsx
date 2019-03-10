@@ -1,7 +1,7 @@
-import FlateDialog from './FlateDialog';
+
 import BuyDialog from './BuyDialog';
 import {connect} from 'react-redux';
-import {openOrder} from '../../../actions/optional/optionalAction';
+import {openOrder} from '../../../actions/trade/tradeAction';
 import styles from './css/flatDetail.less';
 
 class FlateDetail extends PureComponent{
@@ -14,7 +14,7 @@ class FlateDetail extends PureComponent{
             num:0.01,
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
-            showOpenSucc:false,
+
             showBuyDialog:false
         }
     }
@@ -37,13 +37,7 @@ class FlateDetail extends PureComponent{
         this.setState({showIntro:false});
     }
 
-    openSucc = ()=>{
-        this.setState({showOpenSucc:true});
-    }
 
-    closeOpenSucc = ()=>{
-        this.setState({showOpenSucc:false});
-    }
 
     tradeDetail = ()=>{
 
@@ -96,7 +90,33 @@ class FlateDetail extends PureComponent{
     //渲染函数
     render(){
 
-        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
+        var {showOpenSucc} = this.state;
+
+        var {infoEquity}=this.props;
+
+        var { equity = "--",
+        floatPL = "--",
+        freeMargin = "--",
+        ratioMargin = "--",
+        usedMargin = "--" } = infoEquity;
+
+        var {
+            buySell, clientId,
+            commission,hangType,marketPrice="--",
+            marketTime,mt4Id,netProfit,openPrice="--",
+            openTime,orderId,
+            prodCode,prodName,profitPrice,stopPrice,
+            swaps,ticket,tradeNo,followerId="--",tradedQty
+        } = this.props.data;
+        if(openTime && openTime>0){
+            var tmpdate = new Date();
+            tmpdate.setTime(openTime * 1000);
+            openTime = tmpdate.getFullYear()+"-" +
+            (tmpdate.getMonth()+1)+"-"+tmpdate.getDay()+" "+
+            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+        }else {
+            openTime="--";
+        }
 
         return(
             <div>
@@ -107,22 +127,22 @@ class FlateDetail extends PureComponent{
                           <p className={styles.c9 +" "+styles.mg_tp_10}>(包含手续费、库存费)</p>
                       </div>
                       <div className={styles.right}>
-                          <p className={styles.font32 +" "+styles.green}>_$49.9</p>
+                          <p className={styles.font32 +" "+styles.green}>${netProfit}</p>
                       </div>
                   </div>
                   <div className={styles.clear}></div>
                   <div className={styles.account_dt +" "+styles.bd_none +" "+styles.mg_tp_0}>
                       <ul>
                           <li>
-                              <p className={styles.font32}>$1888.00</p>
+                              <p className={styles.font32}>${netProfit}</p>
                               <p className={styles.c9 +" "+styles.mg_tp_10}>浮动盈亏</p>
                           </li>
                           <li>
-                              <p className={styles.font32}>$688.00</p>
+                              <p className={styles.font32}>${equity}</p>
                               <p className={styles.c9 +" "+styles.mg_tp_10}>账户净值</p>
                           </li>
                           <li>
-                              <p className={styles.font32}>1.00%</p>
+                              <p className={styles.font32}>{ratioMargin}%</p>
                               <p className={styles.c9 +" "+styles.mg_tp_10}>保证金比例</p>
                           </li>
                       </ul>
@@ -132,68 +152,65 @@ class FlateDetail extends PureComponent{
                       <tr>
                           <td>
                               <span className={styles.fl_label}>订单号</span>
-                              <span >2000002</span>
+                              <span >{orderId}</span>
                           </td>
                           <td>
                               <span className={styles.fl_label}>跟随高手</span>
-                              <span >--</span>
+                              <span >{followerId}</span>
                           </td>
                       </tr>
                       <tr>
                           <td>
                               <span className={styles.fl_label}>开仓价格</span>
-                              <span >$100.00</span>
+                              <span >${openPrice}</span>
                           </td>
                           <td>
                               <span className={styles.fl_label}>现在价格</span>
-                              <span >$100.00</span>
+                              <span >${marketPrice}</span>
                           </td>
                       </tr>
                       <tr>
                           <td>
                               <span className={styles.fl_label}>交易手数</span>
-                              <span >0.01</span>
+                              <span >{tradedQty}</span>
                           </td>
                           <td>
                               <span className={styles.fl_label}>交易金额</span>
-                              <span >$100.00</span>
+                              <span >{false?"--":"--"}</span>
                           </td>
                       </tr>
                       <tr>
                           <td>
                               <span className={styles.fl_label}>止损价格</span>
-                              <span >$100.00</span>
+                              <span >{(stopPrice!=null && stopPrice!=0)?("$"+stopPrice):"未设置"}</span> 
                           </td>
                           <td>
                               <span className={styles.fl_label}>止盈价格</span>
-                              <span className={styles.red}>未设置</span>
+                              <span >{(profitPrice!=null && profitPrice!=0)?("$"+profitPrice):"未设置"}</span>
                           </td>
                       </tr>
                       <tr>
-                          <td colspan={2}>
+                          <td colSpan="2">
                               <span className={styles.fl_label}>开仓时间</span>
-                              <span >2019-03-03 12：11：22</span>
+                              <span >{openTime}</span>
                           </td>
                       </tr>
                       </tbody>
                   </table>
               </div>
 
-                {showOpenSucc?(
-                    <FlateDialog onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
-                ):null}
             </div>
         );
     }
 
 }
 
-function injectProps(state){
-    var {accountArr} =state.base ||{};
-    return {accountArr};
+function injectProps(state) {
+    var { infoEquity } = state.trade || {};
+    return { infoEquity };
 }
 function injectAction(){
     return {openOrder};
 }
 
-module.exports = connect(null,injectAction())(FlateDetail);
+module.exports = connect(injectProps,injectAction())(FlateDetail);

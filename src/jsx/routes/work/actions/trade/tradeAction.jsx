@@ -1,17 +1,20 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
 //获取持仓信息
-export function getPositionInfo(component,params,loading, update){
+export function getPositionInfo(component,params,loading, update,fail){
     return function(dispatch, state){
         if(loading) dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
         component.requestJSON("users/getMt4Message",params).done((data)=>{
             if(loading) dispatch(hideLoading());
-            var {infoEquity} = data;
-            update && update(infoEquity);
+            // var {infoEquity} = data;
+           // update && update(data);
+           update && update();
+           dispatch({type:"QUERY_POSITION_DATA",data});
         }).fail((data)=>{
             if(loading) dispatch(hideLoading());
+            fail && fail();
             dispatch(showMessage(ERROR, data.message));
         });
     }

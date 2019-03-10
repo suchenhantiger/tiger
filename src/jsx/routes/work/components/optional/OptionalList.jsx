@@ -25,12 +25,11 @@ class OptionalList extends PureComponent{
     }
     sendWS=(curProps)=>{
         var {OptionalList=[]}=curProps;
-
           //进入自选股开始推送，离开时关闭推送
           var reqStr = JSON.stringify(
             {"funCode":"301001",
             "prodCode":OptionalList.join(','),
-            "clientId":"",
+            "clientId":systemApi.getValue("clientId"),
             "agentId":"",
             "sign":""});
         WebSocketUtil.onOpen=()=>{
@@ -69,14 +68,14 @@ class OptionalList extends PureComponent{
         var {OptionalList:newoptl} = nextProps;
         if(newoptl.length!=this._optLength){
             this._optLength =newoptl.length;
-            console.log("sch componentWillReceiveProps");//解决 初始化数据信息的异步问题
+            //console.log("sch componentWillReceiveProps");//解决 初始化数据信息的异步问题
             this.sendWS(nextProps);
         }
        // 
      }
     // componentDidUpdate(){
 
-    // }fr
+    // }
     iscollUpfresh=()=>{
 
          this.sendWS(this.props);

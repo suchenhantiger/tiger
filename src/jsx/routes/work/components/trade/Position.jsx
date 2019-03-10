@@ -14,7 +14,6 @@ class Position extends PureComponent {
         this.state = {
             subIndex: 0,
             allList: {},
-            mt4Info: {},
             fixTabs: false
         }
     }
@@ -28,13 +27,38 @@ class Position extends PureComponent {
             return;
         }
 
-        this.props.getPositionInfo(this, { mt4Id, queryType: 2 }, true, (mt4Info) => {
-            this.setState({ mt4Info });
+        this.props.getPositionInfo(this, { mt4Id, queryType: 2 }, true, (mt4_list) => {
+
+            this.beginPolling();
             this.props.getPositionAllOrder(this, { mt4Id }, (data) => {
                 this.setState({ allList: data });
             });
+        },()=>{
+            //失败回调，也需要轮巡
+            this.beginPolling();
         });
 
+    }
+
+    
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        clearInterval(this._interval);
+    }
+
+    beginPolling = ()=>{
+
+        this._interval = setInterval(()=>{
+                        //持仓详情
+            var mt4Id = systemApi.getValue("mt4Id");
+            if (mt4Id == null || mt4Id.length == 0) {
+                //没有账号或者账号异常
+                return;
+            }
+            this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1}, false);
+
+
+        },10000);
     }
 
     componentDidUpdate() {
@@ -48,31 +72,6 @@ class Position extends PureComponent {
     }
 
     clickOrder = (data) => {
-
-
-        // var {orderId,
-        //     marketPrice,
-        //     mt4Id,
-        //     marketTime
-        //     } =data;
-        // this.props.updateOrder(this,{openType:0,mt4Id,orderId,stopPrice:"119.881"},()=>{
-
-        // });
-        // return;
-
-
-
-
-        // console.log();
-        // var {orderId,
-        //     marketPrice,
-        //     mt4Id,
-        //     marketTime
-        //     } =data;
-        // this.props.flatOrder(this,{tradeType:0,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
-
-        // });
-        // return;
 
         hashHistory.push({
             pathname: "/work/trade/flatdetail",
@@ -127,13 +126,14 @@ class Position extends PureComponent {
     //渲染函数
     render() {
 
-        var { subIndex, allList, mt4Info, fixTabs } = this.state;
+        var { subIndex, allList, fixTabs } = this.state;
+        var {infoEquity} =this.props;
         var { hanglist = [], couplist = [], orderlist = [] } = allList;
         var { equity = "--",
             floatPL = "--",
             freeMargin = "--",
             ratioMargin = "--",
-            usedMargin = "--" } = mt4Info;
+            usedMargin = "--" } = infoEquity;
 
         return (
             <div>
@@ -201,11 +201,11 @@ class Position extends PureComponent {
 
 }
 function injectProps(state) {
-    var { accountArr } = state.base || {};
-    return { accountArr };
+    var { infoEquity } = state.trade || {};
+    return { infoEquity };
 }
 function injectAction() {
     return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder }
 }
 
-module.exports = connect(null, injectAction())(Position);
+module.exports = connect(injectProps, injectAction())(Position);
