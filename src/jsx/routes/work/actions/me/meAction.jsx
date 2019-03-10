@@ -72,3 +72,16 @@ export function getDailyReportList(component, params, update){
         }
     }
 }
+
+export function getAccounts(component, params, update){
+    return function(dispatch, state){
+        return function(dispatch, state){
+            component.requestJSON("firstpage/newslist",params).done((data)=>{
+                update && update(data);
+            }).fail((data)=>{
+                dispatch(showMessage(ERROR, data.message));
+                cb && cb();
+            });
+        }
+    }
+}

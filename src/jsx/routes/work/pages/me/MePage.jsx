@@ -2,6 +2,8 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import HeaderIcon from '../../../../components/common/appheader/HeaderIcon';
 import Confrim from '../../../../components/common/popup/Confirm';
 
+import AccountSelect from '../../components/me/AccountSelect';
+
 import {connect} from 'react-redux';
 import {getMt4Message} from '../../actions/me/meAction';
 import {updateUserInfo} from '../../actions/login/loginAction';
@@ -15,6 +17,7 @@ class MePage extends PageComponent {
         this.state={
             showConfirm:false,
             showReal:false,
+            showAccount:false,
             infoEquity:{}
         }
 
@@ -118,10 +121,18 @@ class MePage extends PageComponent {
         hashHistory.push("/work/me/dailyreport");
     }
 
+    showAccount = ()=>{
+        this.setState({showAccount:true});
+    }
+
+    closeAccount = ()=>{
+        this.setState({showAccount:false});
+    }
+
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
-        var {showConfirm,showReal,infoEquity={}}=this.state;
+        var {showConfirm,showReal,showAccount,infoEquity={}}=this.state;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
         let mt4Id = systemApi.getValue("mt4Id");
         let mt4AccType = systemApi.getValue("mt4AccType");
@@ -150,7 +161,7 @@ class MePage extends PageComponent {
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
                                 <p>
-                                    <span className={this.mergeClassName("blue", "left")}>{accName}</span>
+                                    <span className={this.mergeClassName("blue", "left")} onClick={this.showAccount}>{accName}</span>
                                     <span className={this.mergeClassName("c9", "left")}>({mt4Id?mt4Id:"--"})</span>
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
@@ -194,7 +205,7 @@ class MePage extends PageComponent {
                 </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
 {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="完善资料后可开通体验账号" />:null}
-                
+                {showAccount?<AccountSelect onClose={this.closeAccount}/>:null}
                 {this.props.children}
             </div>
         );
