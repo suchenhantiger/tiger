@@ -4,8 +4,9 @@ import K_Chart from '../../components/optional/detail/K_Chart';
 import FlateDetail from '../../components/trade/detail/FlateDetail';
 import styles from './css/tradeDetailPage.less';
 import { connect } from 'react-redux';
-import { flatOrder } from '../../actions/trade/tradeAction';
+import { flatOrder,updateOrder } from '../../actions/trade/tradeAction';
 import FlateDialog from './../../components/trade/detail/FlateDialog';
+import StopProfitPage from './StopProfitPage'
 /********自选-简单*********/
 class TradeDetailPage extends PageComponent {
 
@@ -17,6 +18,7 @@ class TradeDetailPage extends PageComponent {
             index: 0,
             fullscreen: false,
             showOpenSucc:false,
+            editProfit:false
 
         }
     }
@@ -55,27 +57,14 @@ class TradeDetailPage extends PageComponent {
 
     flatClick=()=>{
 
-
-        // var {orderId,
-        //     marketPrice,
-        //     mt4Id,
-        //     marketTime
-        //     } =data;
-        // this.props.updateOrder(this,{openType:0,mt4Id,orderId,stopPrice:"119.881"},()=>{
-
-        // });
-        // return;
-
         var {orderId,
             marketPrice,
             mt4Id,
             marketTime
             } =this._prodInfo ;
-
-
-
         this.props.flatOrder(this,{tradeType:0,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
-            this.setState({showOpenSucc:true});
+            //this.setState({showOpenSucc:true});
+            hashHistory.goBack();
         });
 
     }
@@ -91,18 +80,46 @@ class TradeDetailPage extends PageComponent {
     }
 
     stopClick = ()=>{
-        hashHistory.push({
-            pathname:"/work/trade/flatdetail/stopprofit",
-            query:{}
-        })
+
+        this.setState({editProfit:true});
+        // hashHistory.push({
+        //     pathname:"/work/trade/flatdetail/stopprofit",
+        //     query:{}
+        // })
+    }
+
+    closeEdit=()=>{
+        this.setState({editProfit:false});
+    } 
+    commitEdit=(stopPrice,profitPrice)=>{
+
+        
+
+        var {orderId,
+            mt4Id
+            } =this._prodInfo;
+        var  params={};
+        params.orderId= orderId;
+        params.mt4Id=mt4Id;
+        params.openType=0;
+        if(profitPrice) params.profitPrice =profitPrice;
+        if(stopPrice) params.stopPrice =stopPrice;
+        this.props.updateOrder(this,params,()=>{
+           // this.setState({editProfit:false});
+            hashHistory.goBack();
+
+        });
+        // return;
+
+
     }
 
     render() {
         systemApi.log("OptionalDetailPage render");
 
-        var { index, fullscreen, price ,showOpenSucc} = this.state;
+        var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
         var {prodName,prodCode,buySell} =this._prodInfo;
-        console.log(this._prodInfo);
+        // console.log(this._prodInfo);
         return (
             <FullScreenView>
                 {fullscreen ? null : <AppHeader headerName={(buySell==0?"买 ":"卖 ")+prodName + " " + prodCode} theme="white" />}
@@ -123,6 +140,12 @@ class TradeDetailPage extends PageComponent {
                 {showOpenSucc?(
                     <FlateDialog onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
                 ):null}
+
+                {editProfit?(
+                    <StopProfitPage prodInfo={this._prodInfo} onClose={this.closeEdit} onSure={this.commitEdit}/>
+                ):null}
+
+
                 {this.props.children}
             </FullScreenView>
         );
@@ -134,7 +157,7 @@ function injectProps(state) {
     return { OptionalListData, ProductList };
 }
 function injectAction() {
-    return { flatOrder};
+    return { flatOrder,updateOrder};
 }
 
 module.exports = connect(null, injectAction())(TradeDetailPage);
