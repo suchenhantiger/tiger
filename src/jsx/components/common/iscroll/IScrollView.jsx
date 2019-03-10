@@ -114,8 +114,16 @@ class IScrollView extends PureComponent{
             onScroll && onScroll(this.x, this.y);
         });
 
+        this.wrapper.on("scrollCancel", function(){
+            var {onScrollCancel} = that.props;
+            console.log("scrollCancel")
+            console.log(this.x, this.y);
+            onScrollCancel && onScrollCancel();
+        });
+
         this.wrapper.on("scrollEnd",function(){
-            var {frame,main} = that.refs,
+            var {onScrollEnd} = that.props,
+                {frame,main} = that.refs,
                 {showLoading} = that.state;
 
             if(!frame || !main || showLoading) return;
@@ -145,6 +153,9 @@ class IScrollView extends PureComponent{
                 showDownText:false
               });
             }
+            console.log("end")
+            console.log(this.x, this.y);
+            onScrollEnd && onScrollEnd();
         });
 
     }
