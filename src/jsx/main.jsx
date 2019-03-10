@@ -44,6 +44,7 @@ ReactDOM.render(
                         <Route path="notice" getComponent={require('./routes/work/config/me/notice')(store)}></Route>
                         <Route path="dailyreport" getComponent={require('./routes/work/config/me/dailyreport')(store)}></Route>
                         <Route path="manageacc" getComponent={require('./routes/work/config/me/manageacc')(store)}></Route>
+                        <Route path="bank" getComponent={require('./routes/work/config/me/bank')(store)}></Route>
                     </Route>
 
                 </Route>
