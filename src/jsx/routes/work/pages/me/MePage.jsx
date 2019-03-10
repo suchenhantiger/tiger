@@ -30,6 +30,8 @@ class MePage extends PageComponent {
         hashHistory.push("/work/me/setting");
     }
 
+
+
     componentDidMount(){
         this.props.updateUserInfo(this,()=>{
             var mt4Id = systemApi.getValue("mt4Id");
@@ -129,6 +131,15 @@ class MePage extends PageComponent {
         this.setState({showAccount:false});
     }
 
+    selectAccount = (mt4AccType, mt4Id)=>{
+        systemApi.setValue("mt4AccType", mt4AccType);
+        systemApi.setValue("mt4Id", mt4Id);
+        this.setState({showAccount:false});
+        this.props.getMt4Message(this,{queryType:2,mt4Id},(infoEquity)=>{
+            this.setState({infoEquity});
+        });
+    }
+
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
@@ -205,7 +216,7 @@ class MePage extends PageComponent {
                 </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
 {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="完善资料后可开通体验账号" />:null}
-                {showAccount?<AccountSelect onClose={this.closeAccount}/>:null}
+                {showAccount?<AccountSelect onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
                 {this.props.children}
             </div>
         );

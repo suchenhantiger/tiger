@@ -3,13 +3,17 @@ import { getAccounts } from '../../actions/me/meAction';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import styles from './css/accountSelect.less';
 
+const ACCOUNT_MAP = {
+    "0":"体验账号",
+    "1":"交易账号"
+}
+
 class AccountSelect extends PureComponent {
 
     //构造函数
     constructor(props) {
         super(props);
         this.state = {
-            index: -1,
             accountList: []
         }
     }
@@ -18,26 +22,28 @@ class AccountSelect extends PureComponent {
         this.props.getAccounts(this, this.update)
     }
 
-    update = () => {
-
+    update = (accountList) => {
+        this.setState({accountList});
     }
 
-    itemClick = (index) => () => {
-        this.setState({ index });
+    itemClick = (mt4AccType, mt4Id) => () => {
+        var {onSelect} = this.props;
+        onSelect && onSelect(mt4AccType, mt4Id)
     }
 
     renderAccounts() {
-        var { index } = this.state;
-        return [1, 1, 1, 1, 1].map((item, i) => {
+        var { index, accountList } = this.state;
+        return accountList.map((item, i) => {
+            var {mt4AccType, mt4Id} = item;
             return (
-                <div className={this.mergeClassName(styles.radius_box, index == i ? styles.on : "")} onClick={this.itemClick(i)}>
+                <div className={this.mergeClassName(styles.radius_box)} onClick={this.itemClick(mt4AccType, mt4Id)}>
                     <ul>
                         <li>
                             <p className={"mg-bt-10"}>
-                                <span className={"font30"}>交易账号</span>
-                                <span className={"c9"}>（自主交易）</span>
+                                <span className={"font30"}>{ACCOUNT_MAP[mt4AccType]}</span>
+                                <span className={"c9"}>（mt4Id:{mt4Id}）</span>
                             </p>
-                            <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p>
+                            {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
                         </li>
                     </ul>
                 </div>
