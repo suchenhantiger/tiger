@@ -44,11 +44,18 @@ class BenefitList extends CursorList {
         )
     }
 
+    itemClick = ()=>{
+        hashHistory.push({
+            pathname:"/work/documentary/detail",
+            query:{}
+        })
+    }
+
     renderList() {
         var { data } = this.state;
         return [1, 1, 1, 1, 1, 1].map((item) => {
             return (
-                <tr className={styles.item}>
+                <tr className={styles.item} onClick={this.itemClick}>
                     <td>
                         <div className={styles.gs_pic}><img src="./images/documentary/img03.png" alt="" /></div>
                         <p className={styles.gs_name}>重仓起起起起起起起起起起程科</p>
