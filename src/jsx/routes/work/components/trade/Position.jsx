@@ -120,7 +120,7 @@ class Position extends PureComponent {
 
     scroll = (x, y) => {
         var yRem = this.calculateRem(0, y);
-        this.setState({ fixTabs: yRem < -4.5 });
+        this.setState({ fixTabs: yRem < -4.6 });
     }
 
     renderTabs() {

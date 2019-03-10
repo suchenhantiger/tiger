@@ -116,8 +116,6 @@ class IScrollView extends PureComponent{
 
         this.wrapper.on("scrollCancel", function(){
             var {onScrollCancel} = that.props;
-            console.log("scrollCancel")
-            console.log(this.x, this.y);
             onScrollCancel && onScrollCancel();
         });
 
@@ -153,9 +151,7 @@ class IScrollView extends PureComponent{
                 showDownText:false
               });
             }
-            console.log("end")
-            console.log(this.x, this.y);
-            onScrollEnd && onScrollEnd();
+            onScrollEnd && onScrollEnd(this.x, this.y);
         });
 
     }
