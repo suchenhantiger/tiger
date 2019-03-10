@@ -37,7 +37,7 @@ class OptionalDetailPage extends PageComponent{
     }
 
     updatePrice=(price)=>{
-        console.log(price);
+        // console.log(price);
          this.setState({price});
     }
     

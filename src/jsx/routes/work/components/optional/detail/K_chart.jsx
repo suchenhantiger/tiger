@@ -81,30 +81,32 @@ class K_chart extends PureComponent{
         if(data.length>0){
             var {ask,bid,recentBars,ctm,isClose}=data[0];
             updatePrice && updatePrice({ask,bid,ctm,isClose});
-            if(recentBars.length==0)
+            if(recentBars==null && recentBars.length==0)
                 return;
             var newone = recentBars[0];
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
              if(oldone.opentime == newone.opentime ){
-                 return;
-                 console.log("sch");
-                console.log(oldone);
-                console.log(newone);
-               newone.date= new Date(newone.opentime*1000);
-               this._kdata[this._kdata.length-1] = newone;
-               this.refs.chart.getWrappedInstance().updateOne(newone);
+
+                if(oldone.open != newone.open || 
+                    oldone.close != newone.close || 
+                    oldone.low != newone.low || 
+                    oldone.high != newone.high || 
+                    oldone.vol != newone.vol ){
+                        //有一个不同就需要更新
+                        newone.date= new Date(newone.opentime*1000);
+                        this._kdata[this._kdata.length-1] = newone;
+                        this.refs.chart.getWrappedInstance().updateOne(newone);
+                }
+
              }else{
                 // console.log(oldone);
                 // console.log(newone);
                newone.date= new Date(newone.opentime*1000);
-              
                this._kdata.push(newone);
                this.refs.chart.getWrappedInstance().addOne(newone);
 
-             }
-             
-           // this.setState({});
+             }             
         }
 
     }
