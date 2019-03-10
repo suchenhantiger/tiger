@@ -190,3 +190,5 @@ function injectAction(){
 }
 
 module.exports = connect(null, injectAction())(StopProfitPage);
+
+

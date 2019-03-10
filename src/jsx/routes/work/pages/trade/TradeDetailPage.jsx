@@ -55,14 +55,14 @@ class TradeDetailPage extends PageComponent {
         });
     }
 
-    flatClick=()=>{
+    flatClick=(tradeType)=>()=>{
 
         var {orderId,
             marketPrice,
             mt4Id,
             marketTime
             } =this._prodInfo ;
-        this.props.flatOrder(this,{tradeType:0,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
+        this.props.flatOrder(this,{tradeType,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
             //this.setState({showOpenSucc:true});
             hashHistory.goBack();
         });
@@ -118,8 +118,11 @@ class TradeDetailPage extends PageComponent {
         systemApi.log("OptionalDetailPage render");
 
         var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
-        var {prodName,prodCode,buySell} =this._prodInfo;
-        // console.log(this._prodInfo);
+        var {prodName,prodCode,buySell,hangType,marketPrice} =this._prodInfo;
+        //hangType需要进一步判断
+        var detailType = true;
+        if(hangType == 2 ||hangType == 3  ||hangType == 4 ||hangType == 5 ) detailType=false;
+
         return (
             <FullScreenView>
                 {fullscreen ? null : <AppHeader headerName={(buySell==0?"买 ":"卖 ")+prodName + " " + prodCode} theme="white" />}
@@ -132,8 +135,15 @@ class TradeDetailPage extends PageComponent {
                     </div>}
                     <FlateDetail data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
-                        <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>
-                        <div className={styles.bt_btn_50}><button  onClick={this.flatClick} >平仓</button></div>
+                    {detailType?
+                        <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>:
+                        <div className={styles.bt_btn_50}> <span className={styles.nowprice} > 现价:{marketPrice}</span></div>
+                    }
+                       
+                       {detailType?
+                       <div className={styles.bt_btn_50}><button  onClick={this.flatClick(0)} >平仓</button></div>:
+                       <div className={styles.bt_btn_50}><button  onClick={this.flatClick(1)} >删除</button></div>
+                    } 
                     </div>
                 </Content>
 
@@ -163,3 +173,12 @@ function injectAction() {
 module.exports = connect(null, injectAction())(TradeDetailPage);
 
 
+// var { orderId,
+//     marketPrice,
+//     mt4Id,
+//     marketTime
+// } = data;
+// this.props.flatOrder(this, { tradeType: 1, mt4Id, orderId, tradeTime: marketTime, tradePrice: marketPrice }, () => {
+
+// });
+// return;

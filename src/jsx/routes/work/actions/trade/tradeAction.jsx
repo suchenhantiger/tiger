@@ -111,11 +111,16 @@ export function getHistoryList(params, isAppend, cb, component, updateList){
 export function flatOrder(component,params,cb ){
     return function(dispatch, state){
         dispatch(showLoading());
+        var {tradeType} =params; 
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
         component.requestJSON("deal/flatOrder",params).done((data)=>{
             dispatch(hideLoading());
-            dispatch(showMessage(SUCCESS, "平仓成功"));
+            if(tradeType==0)
+                dispatch(showMessage(SUCCESS, "平仓成功"));
+            else 
+                dispatch(showMessage(SUCCESS, "删除成功"));
+                cb && cb();
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));

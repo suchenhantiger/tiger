@@ -163,43 +163,29 @@ class ComplexDetail extends PureComponent{
        }
         var {prodCode,price}=this.props;
         
-        var {num,trantype,tranDire} =this.state;
+        var {num,trantype,tranDire,stopPrice,profitPrice,actualPrice} =this.state;
         var {ask,bid,ctm} = price;
-        var tradePrice = ask-0.01 ;
+        var tradePrice = actualPrice;
         var expireTime = null;
         if(trantype==false)
-            var expireTime =  this.refs.timePicker.getTimeStamp();
-            
-        if(expireTime){
-            expireTime=parseInt(expireTime/1000);
-            this.props.openOrder(this,{
-                tradePrice,
-                tradeTime:ctm,
-                buySell:tranDire?0:1,
-                tradeTime:ctm,
-                expireTime,
-                prodCode,
-                openType:trantype?0:1,
-                totalQty:0.1,
-                mt4Id},()=>{
-                
-            });
-        }else{
-            this.props.openOrder(this,{
-                tradePrice,
-                tradeTime:ctm,
-                buySell:tranDire?0:1,
-                tradeTime:ctm,
-                prodCode,
-                openType:trantype?0:1,
-                totalQty:0.1,
-                mt4Id},()=>{
-                
-            });
-        }
-            
+            expireTime =  this.refs.timePicker.getTimeStamp();
+        
+        var params={};
 
-       
+        if(stopPrice) params.stopPrice = stopPrice;
+        if(profitPrice) params.profitPrice = profitPrice;
+        if(expireTime) params.expireTime = parseInt(expireTime/1000);
+
+        params.tradePrice=tradePrice;
+        params.tradeTime=ctm;
+        params.buySell=(tranDire?0:1);
+        params.prodCode=prodCode;
+        params.totalQty=num;
+        params.mt4Id=mt4Id;
+        params.openType=(trantype?0:1)
+        this.props.openOrder(this,params,()=>{
+            // hashHistory.goBack();
+        }); 
 
     }
 

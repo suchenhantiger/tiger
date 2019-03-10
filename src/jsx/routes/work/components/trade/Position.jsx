@@ -91,15 +91,7 @@ class Position extends PureComponent {
     }
 
     clickHang = (data) => {
-        var { orderId,
-            marketPrice,
-            mt4Id,
-            marketTime
-        } = data;
-        this.props.flatOrder(this, { tradeType: 1, mt4Id, orderId, tradeTime: marketTime, tradePrice: marketPrice }, () => {
-
-        });
-        return;
+ 
 
         hashHistory.push({
             pathname: "/work/trade/flatdetail",
