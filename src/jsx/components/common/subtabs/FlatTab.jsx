@@ -16,7 +16,7 @@ class FlatTab extends PureComponent{
         var {text,index,selected,total,theme} = this.props,
             itemCls = styles.item + " " + styles[theme] + " " + (index==selected?styles.on:""),
             tabStyle = {
-                width:80/(total)+"%"
+                width:90/(total)+"%"
             };
 
         return(

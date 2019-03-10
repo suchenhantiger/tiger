@@ -306,10 +306,13 @@ body.hidden {
 	margin-left: 1.4rem;
 }
 .pd-tp-0{
-	padding-top: 0;
+	padding-top: 0 ;
 }
 .pd-tp-10{
 	padding-top: .1rem;
+}
+.pd-tp-20{
+	padding-top: .2rem;
 }
 .pd-bt-20{
 	padding-bottom: .2rem;
@@ -319,6 +322,18 @@ body.hidden {
 }
 .pd-tp-40{
 	padding-top: 4rem !important;
+}
+.pd-tp-50{
+	padding-top: 5rem !important;
+}
+.pd-tp-58{
+	padding-top: 5.8rem !important;
+}
+.pd-rt-20{
+	padding-right: .2rem;
+}
+.pd-rt-30{
+	padding-right: .3rem;
 }
 .line-ht-48{
 	line-height: .48rem;

@@ -1,5 +1,8 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
+import ClassifyFrame from '../../components/documentary/ClassifyFrame';
+import MultipleFrame from '../../components/documentary/MultipleFrame';
+
 
 import styles from './css/documentaryPage.less';
 
@@ -32,12 +35,15 @@ class DocumentaryPage extends PageComponent{
     render(){
         systemApi.log("DocumentaryPage render");
 
+        var {index} = this.state;
+
         return (
             <div>
                 <AppHeader headerName={this.renderHeader()} showBack={false}/>
                 <Content coverBottom={false}>
-                    <LazyLoad>
-                        
+                    <LazyLoad index={index}>
+                        <ClassifyFrame/>
+                        <MultipleFrame/>
                     </LazyLoad>
                 </Content>
                 {this.props.children}
