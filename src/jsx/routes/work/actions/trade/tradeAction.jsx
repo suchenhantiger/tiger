@@ -92,7 +92,7 @@ export function getHistoryInfo(component, params, update){
 }
 
 //获取详情列表
-export function getHistoryList(component, params, isAppend, updateList){
+export function getHistoryList(component, params, isAppend, updateList,cb){
     var {pageSize} = params;
     return function(dispatch, state){
         component.requestJSON("users/queryTradeList",params).done((data)=>{

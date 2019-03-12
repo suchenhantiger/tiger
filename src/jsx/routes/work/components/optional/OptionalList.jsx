@@ -84,11 +84,30 @@ class OptionalList extends PureComponent{
     getScrollStyle=()=>{
         return styles.frame;
     }
+
+    // digits: 3
+    // isClose: false
+    // maxVolume: 50
+    // minVolume: 0.01
+    // minstDec: 5
+    // prodCode: "CHFJPY"
+    // prodName: "瑞日"
+    // prodSize: 100000
+    // volumeStep: 0.01
     renderList(){
         var  {editable,OptionalListData,ProductList} = this.props;
          //   console.log("sch renderlist");
+
         return OptionalListData.map(item=>{
-            return <OptionalItem  name={item.prodName} isClose={item.isClose} type ={item.categoryId} code={item.prodCode} ask={item.ask} bid={item.bid} />
+            return <OptionalItem  
+            name={item.prodName} isClose={item.isClose} 
+            type ={item.categoryId} code={item.prodCode} 
+            ask={item.ask} bid={item.bid} 
+            digits={item.digits} maxVolume={item.maxVolume} 
+            minVolume={item.minVolume} minstDec={item.minstDec} 
+            volumeStep={item.volumeStep} prodSize={item.prodSize}  
+            
+            />
         })
     }
     render(){

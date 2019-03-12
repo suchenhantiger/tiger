@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import styles from './css/K_chart.less';
 import TimeChoose from './TimeChoose';
 import Chart from './Chart';
+import KSet from './KSet';
 import {getHistoryKList} from '../../../actions/optional/optionalAction';
 class K_chart extends PureComponent{
 
@@ -79,9 +80,10 @@ class K_chart extends PureComponent{
     updatePrice=(data)=>{
         var {updatePrice}=this.props;
         if(data.length>0){
-            var {ask,bid,recentBars,ctm,isClose}=data[0];
-            updatePrice && updatePrice({ask,bid,ctm,isClose});
-            if(recentBars==null && recentBars.length==0)
+            var {recentBars}=data[0];
+            updatePrice && updatePrice(data[0]);
+            console.log();
+            if(recentBars==null || recentBars.length==0)
                 return;
             var newone = recentBars[0];
             //判断是否要更新
@@ -113,7 +115,7 @@ class K_chart extends PureComponent{
 
     getOneK=()=>{
         var {prodCode} = this.props;
-        var reqStr = JSON.stringify({"funCode":"301001","prodCode":prodCode,"period":this._period,"clientId":"","agentId":"","sign":""});
+        var reqStr = JSON.stringify({"funCode":"301001","prodCode":prodCode,"period":this._period,"clientId":systemApi.getValue("clientId"),"agentId":100001,"sign":""});
         //重置回调函数
         WebSocketUtil.onClose=()=>{
             console.log("WebSocketClosed!");
@@ -121,7 +123,7 @@ class K_chart extends PureComponent{
         WebSocketUtil.onMessage=(data)=>{
             //    console.log("---onmessage");
             data = JSON.parse(data);
-            //  console.log(data);
+              console.log(data);
             this.updatePrice(data);
 
         };
@@ -176,33 +178,18 @@ class K_chart extends PureComponent{
         systemApi.log("k_chart render");
 
         var {timeL,showKchart} = this.state;
-        var {fullscreen} = this.props;
+        var {fullscreen,digits} = this.props;
         var kdlist = this._kdata.slice(0);
         return(
             <div style={{position:"relative",height:"100%"}}>
-          <div className={styles.k_frame} style={fullscreen?{marginRight:"0.9rem"}:{width:"100%"}}>
-                <TimeChoose fullscreen={ fullscreen}timeL={timeL} onChoose={this.chooseTime}/>
-                <div style={{
-                     height:"94%",
-            
-                }}>
-                    {showKchart?<Chart level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore}/>:null}
+                <div className={styles.k_frame} style={fullscreen?{marginRight:"0.9rem"}:{width:"100%"}}>
+                        <TimeChoose fullscreen={ fullscreen}timeL={timeL} onChoose={this.chooseTime}/>
+                        <div style={{height:"94%",}}>
+                            {showKchart?<Chart digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore}/>:null}
+                        </div>
+                        {fullscreen? <KSet /> :null}           
+                    
                 </div>
-                {fullscreen?
-                <div className={styles.chart_rt} >
-                    <div className={styles.icon_reset}></div>
-                    <ul>
-                        <li>MA</li>
-                        <li>BOLL</li>
-                        <li>MACD</li>
-                        <li>PSI</li>
-                        <li>KDJ</li>
-                    </ul>
-                    <div className={styles.btn_quick}>快速<br></br>下单</div>
-                </div> 
-                :null}           
-              
-          </div>
           </div>
         );
     }

@@ -45,7 +45,9 @@ const macdAppearance = {
 class CandleStickChartPanToLoadMore extends React.Component {
 	constructor(props) {
 		super(props);
-		const { data: inputData ,level} = props;
+		const { data: inputData ,level,digits} = props;
+		this._digits =digits;
+
 		if(level>6)
 			this._level =2;
 		else

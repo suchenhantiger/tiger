@@ -28,6 +28,21 @@ class SettingPage extends PageComponent {
 
     exitClick = ()=>{
         //点击退出登录
+        systemApi.removeValue("tigertoken");
+        systemApi.removeValue("avatarUrl");
+        systemApi.removeValue("email");
+        systemApi.removeValue("emailIsActive");
+        systemApi.removeValue("isFinger");
+        systemApi.removeValue("isPushMsg");
+        systemApi.removeValue("isReal");
+        systemApi.removeValue("nickname");
+        systemApi.removeValue("tel");
+        systemApi.removeValue("telActive");
+        systemApi.removeValue("mt4Id");
+        systemApi.removeValue("mt4AccType");
+        hashHistory.replace("/login");
+
+
     }
 
     render() {

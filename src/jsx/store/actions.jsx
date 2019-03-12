@@ -36,11 +36,8 @@ export function initOptionalList(){
 
 export function updateOptionalList(optList){
     return function(dispatch){
-               
         var dataStr = JSON.stringify(optList);
-        // console.log(dataStr);
         systemApi.setValue("optional_list",dataStr);
-        // console.log(systemApi.getValue("optional_list"));
         dispatch({type:"INIT_OPTIONAL_LIST",data:optList });
     }
 }

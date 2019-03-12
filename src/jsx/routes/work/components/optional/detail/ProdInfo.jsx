@@ -14,7 +14,6 @@ class ProdInfo extends PureComponent{
 
         var {prodName,prodCode,price={}} = this.props;
         var {ask="--",bid="--",updowndiff="--",updownratio="--"}  = price;
-
         return(
             <div className={styles.header}>
                         <div className={styles.blank}></div>

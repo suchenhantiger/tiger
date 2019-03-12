@@ -165,10 +165,13 @@ class ComplexDetail extends PureComponent{
         
         var {num,trantype,tranDire,stopPrice,profitPrice,actualPrice} =this.state;
         var {ask,bid,ctm} = price;
-        var tradePrice = actualPrice;
+        var tradePrice = tranDire?ask:bid;
         var expireTime = null;
-        if(trantype==false)
+        if(trantype==false){
             expireTime =  this.refs.timePicker.getTimeStamp();
+            tradePrice = actualPrice;
+        }
+            
         
         var params={};
 

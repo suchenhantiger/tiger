@@ -18,6 +18,7 @@ class SimpleDetail extends PureComponent{
             showOpenSucc:false,
             showBuyDialog:false
         }
+       
     }
 
     countClick = (index)=>()=>{
@@ -104,6 +105,7 @@ class SimpleDetail extends PureComponent{
         var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
         var {price} =this.props;
         var {ask="--",bid="--",isClose=false}=price;
+        console.log(price);
         return(
             <div>
 

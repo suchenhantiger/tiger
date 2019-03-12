@@ -44,11 +44,14 @@ class TradePage extends PageComponent {
                 <AppHeader headerName={this.renderHeader()} showBack={false} />
                 <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
-                    <LazyLoad index={index}>
+                    {/* <LazyLoad index={index}>
                         <Position/>
-                        <TradeHistory/>
-                        <TradeFee/>
-                    </LazyLoad>
+                       <TradeHistory/>
+                        <TradeFee/> 
+                    </LazyLoad> */}
+                    {index==0? <Position/>:null}
+                    {index==1? <TradeHistory/>:null}
+
                 </Content>
                 {this.props.children}
             </div>

@@ -186,15 +186,15 @@ class MePage extends PageComponent {
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
-                                {(mt4Id !=null && mt4Id.length)?
+                                {(emailIsActive==1 && mt4Id !=null && mt4Id.length)?
                                 <ul>
                                 {this.renderItem("浮动盈亏", "$"+floatPL)}
                                 {this.renderItem("账户净值", "$"+equity)}
                                 {this.renderItem("保证金比例", ratioMargin+"%")}
                             </ul>:
-                                <div style={{textAlign:"center"}} onClick={this.addAccount}>+添加账号</div>
+                                <div style={{textAlign:"center",color: "blue"}} onClick={this.addAccount}>+添加账号</div>
                                 }
-                                {emailIsActive<=2 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>升级到真实账号</div>:null}
+                                {emailIsActive==1 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>升级到真实账号</div>:null}
                             </div>
                         </div>
                     </div>

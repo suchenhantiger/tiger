@@ -39,6 +39,7 @@ function baseReducer(state,action){
         var {ProductList}=state;
         var tmpOptionalList= action.data.slice();
         if(ProductList["1"]!=null || ProductList["2"]!=null || ProductList["3"]!=null || ProductList["4"]!=null){
+
             var optionalListData =[];
             for(var i=0;i<tmpOptionalList.length;i++){
                 var breakFlag=false;
@@ -64,8 +65,8 @@ function baseReducer(state,action){
                 if(breakFlag) continue;
                 if(ProductList["3"]!=null){
                     for(var j=0;j<ProductList["3"].length;j++){
-                        if(tmpOptionalList[i]==ProductList["2"][j].prodCode){
-                            optionalListData.push(ProductList["2"][j]);
+                        if(tmpOptionalList[i]==ProductList["3"][j].prodCode){
+                            optionalListData.push(ProductList["3"][j]);
                             breakFlag=true;
                             break;
                         }
@@ -75,8 +76,8 @@ function baseReducer(state,action){
                 if(breakFlag) continue;
                 if(ProductList["4"]!=null){
                     for(var j=0;j<ProductList["4"].length;j++){
-                        if(tmpOptionalList[i]==ProductList["2"][j].prodCode){
-                            optionalListData.push(ProductList["2"][j]);
+                        if(tmpOptionalList[i]==ProductList["4"][j].prodCode){
+                            optionalListData.push(ProductList["4"][j]);
                             breakFlag=true;
                             break;
                         }

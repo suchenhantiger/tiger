@@ -148,19 +148,18 @@ module.exports = {
         //针对后端sign校验，将cache设置为true，并自己添加一个随机数
         if (postNative) {
             var sendParams = {};
-            // for (var key in params) {
-            //     var isVauleof=params[key],
-            //         value = params[key][0];
-            //         sendParams[key] = value;
-            //    // if(key == "kick")  iskick = value;
-            // }
+            for (var key in params) {
+                if(null==params[key]) continue;
+                sendParams[key] = params[key];
+                if(key == "kick")  iskick = params[key];
+            }
             //生产环境用原生发
             //获取签名
-            params.sign = genSignStr(params,needToken);
+            sendParams.sign = genSignStr(sendParams,needToken);
             var sendUrl = systemApi.getValue("rootUrl") + url;
             cordovaHTTP.post(
                 sendUrl,
-                params,
+                sendParams,
                 { Authorization: "OAuth2: token" },
                 nativeRequestSuccess(ver, deferred, iskick),
                 nativeRequestError(ver, deferred)
@@ -172,7 +171,7 @@ module.exports = {
 
             //遍历参数生成参数串
             for (var key in params) {
-
+                if(params[key]==null) continue;
                 paramStr.push(key+"="+params[key]);
                 //console.log(key+"="+params[key]);
                 if(key == "kick")  iskick = value;

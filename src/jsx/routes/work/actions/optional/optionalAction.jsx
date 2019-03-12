@@ -11,18 +11,18 @@ export function updatePrice(newPrice){
 export function getRealKline(component, cb){
     return function(dispatch, state){
 
-        cb && cb();
-        var clientId=systemApi.getValue("clientId");
-        component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
-            // console.log(data);
-            if(data["1"] || data["2"] || data["3"] ||data["4"]){
-                dispatch({type:"INIT_PRODUCT_LIST",data});
-                systemApi.setValue("product_list",JSON.stringify(data));
-            }
-        }).fail((data)=>{
-            //dispatch(showMessage(ERROR, data.message));
-            //cb && cb();
-        });
+        // cb && cb();
+        // var clientId=systemApi.getValue("clientId");
+        // component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
+        //     // console.log(data);
+        //     if(data["1"] || data["2"] || data["3"] ||data["4"]){
+        //         dispatch({type:"INIT_PRODUCT_LIST",data});
+        //         systemApi.setValue("product_list",JSON.stringify(data));
+        //     }
+        // }).fail((data)=>{
+        //     //dispatch(showMessage(ERROR, data.message));
+        //     //cb && cb();
+        // });
     }
 }
 export function updateProduct(component, cb){

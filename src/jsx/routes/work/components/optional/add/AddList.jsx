@@ -13,16 +13,17 @@ class AddList extends PureComponent{
     }
 
     toggleClick = (id)=>{
+       
         var index = this._selected.indexOf(id);
         var {data,optList} =this.props;
         if(index!=-1){//删除
            // selected.splice(index,1);
             var indexLoc = optList.indexOf(data[id].prodCode);
+
             if(indexLoc>-1)
                 optList.splice(indexLoc,1);
         }
         else{//添加
-            // selected.push(id);
             var indexLoc = optList.indexOf(data[id].prodCode);
             if(indexLoc ==-1)
                 optList.push(data[id].prodCode);

@@ -9,15 +9,21 @@ class OptionalItem extends PureComponent{
 
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
-        var {name,code,ask,bid,isClose}= this.props;
+    //    digits={item.digits} maxVolume={item.maxVolume} 
+    //    minVolume={item.minVolume} minstDec={item.minstDec} 
+    //    volumeStep={item.volumeStep} 
+        var {name,code,ask,bid,isClose,   digits,maxVolume,minVolume,minstDec,volumeStep}= this.props;
+
         hashHistory.push({
             pathname: "/work/optional/detail",
-            query: {prodName:name,prodCode:code,ask,bid,isClose}
+            query: {prodName:name,prodCode:code,ask,bid,isClose,
+                digits,maxVolume,minVolume,minstDec,volumeStep}
         });
     }
 
     //渲染函数
     render(){
+  
 
         var {editable,name,code,ask,bid,isClose,type} = this.props;
         var ask1,ask2,ask3,bid1,bid2,bid3;
@@ -64,7 +70,7 @@ class OptionalItem extends PureComponent{
                     <div className={this.mergeClassName(styles.price_box,isClose?styles.close:null, styles.sell, "font-arial")}>
                     {bid1?<span>{bid1}</span>:null}
                         {bid2?<span className={this.mergeClassName(styles.font50, styles.text)}>{bid2}</span>:null}
-                        {bid3? <span className={"vertical-top"}>1</span>:null}
+                        {bid3? <span className={"vertical-top"}>{bid3}</span>:null}
                     </div>
                 </div>
             </li>

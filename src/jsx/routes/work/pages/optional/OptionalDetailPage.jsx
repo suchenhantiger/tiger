@@ -14,23 +14,27 @@ class OptionalDetailPage extends PageComponent{
 
     constructor(props,context) {
         super(props,context);
-        var {prodName,prodCode,ask="--",bid="--",status=true} = this.props.location.query; 
+        var {prodName,prodCode,
+            digits,maxVolume,minVolume,minstDec,volumeStep,
+            ask="--",bid="--",status=true} = this.props.location.query; 
         this._prodName = prodName;
         this._prodCode = prodCode;
+        this._digits = digits;
         this.state = {
             index:0,
             fullscreen:false,
             price:{}
             
         }
+        this._proInfo = {
+            digits,maxVolume,minVolume,minstDec,volumeStep,
+        };
     }
 
     componentDidMount(){
         //
   
     }
-      //获取页面名称
-    getPageName(){ return "自选-简单"; }
 
     tabChange = (index)=>()=>{
         this.setState({index});
@@ -73,15 +77,23 @@ class OptionalDetailPage extends PageComponent{
                 <Content coverHeader={true}>
                     {fullscreen?<ProdInfoFullscreen price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
-                        <K_Chart updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={this._prodCode}/>
+                        <K_Chart 
+                        digits={this._digits}
+                        updatePrice={this.updatePrice} 
+                        fullscreen={fullscreen} 
+                        prodCode={this._prodCode}/>
                     </div>
                     {fullscreen?null:<div style={{margin:"0.3rem", overflow: "hidden"}}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
                     {fullscreen?null:
                     <LazyLoad index={index} >
-                        <SimpleDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
-                        <ComplexDetail price={price} prodName={this._prodName} prodCode={this._prodCode} />
+                        <SimpleDetail price={price} 
+                        proInfo={this._proInfo}
+                        prodName={this._prodName} prodCode={this._prodCode} />
+                        <ComplexDetail price={price} 
+                        proInfo={this._proInfo}
+                        prodName={this._prodName} prodCode={this._prodCode} />
                     </LazyLoad>}
                 </Content>
             </FullScreenView>

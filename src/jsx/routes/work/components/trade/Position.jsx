@@ -28,7 +28,7 @@ class Position extends PureComponent {
             return;
         }
 
-        this.props.getPositionInfo(this, { mt4Id, queryType: 2 }, true, (mt4_list) => {
+        this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, true, () => {
 
             this.beginPolling();
             this.props.getPositionAllOrder(this, { mt4Id }, (data) => {
@@ -56,7 +56,7 @@ class Position extends PureComponent {
                 //没有账号或者账号异常
                 return;
             }
-            this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1}, false);
+            this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:0}, false);
 
 
         },10000);
@@ -128,13 +128,14 @@ class Position extends PureComponent {
     render() {
 
         var { subIndex, allList, fixTabs } = this.state;
-        var {infoEquity} =this.props;
+        var {infoEquity={},floatTrade=[]} =this.props;
         var { hanglist = [], couplist = [], orderlist = [] } = allList;
         var { equity = "--",
             floatPL = "--",
             freeMargin = "--",
             ratioMargin = "--",
             usedMargin = "--" } = infoEquity;
+
 
         return (
             <div>
@@ -185,9 +186,9 @@ class Position extends PureComponent {
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
-                                <PositionAllList data={orderlist} onItemClick={this.clickOrder} />
+                                <PositionAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />
                                 <HangList data={hanglist} onItemClick={this.clickHang} />
-                                <PositionAllList data={couplist} />
+                                <PositionAllList floatTrade={floatTrade} data={couplist} />
                             </LazyLoad>
                         </div>
                     </div>
@@ -202,8 +203,8 @@ class Position extends PureComponent {
 
 }
 function injectProps(state) {
-    var { infoEquity } = state.trade || {};
-    return { infoEquity };
+    var { infoEquity ,floatTrade} = state.trade || {};
+    return { infoEquity,floatTrade };
 }
 function injectAction() {
     return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder }
