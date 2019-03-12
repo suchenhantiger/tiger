@@ -134,7 +134,7 @@ class FlateDetail extends PureComponent{
                       <tr>
                           <td>
                               <span className={styles.fl_label}>订单号</span>
-                              <span >{orderId}</span>
+                              <span >{ticket}</span>
                           </td>
                           <td>
                               <span className={styles.fl_label}>跟随高手</span>

@@ -64,20 +64,12 @@ class TradeDetailPage extends PageComponent {
             } =this._prodInfo ;
         this.props.flatOrder(this,{tradeType,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
             //this.setState({showOpenSucc:true});
+            Event.fire("refresh_order_list");
             hashHistory.goBack();
         });
 
     }
 
-    renderHeader() {
-        var { index } = this.state;
-        return (
-            <div className={styles.tabs}>
-                <span className={this.mergeClassName(styles.item, index == 0 ? styles.on : "")} onClick={this.tabChange(0)}>简单<i></i></span>
-                <span className={this.mergeClassName(styles.item, index == 1 ? styles.on : "")} onClick={this.tabChange(1)}>高级<i></i></span>
-            </div>
-        )
-    }
 
     stopClick = ()=>{
 

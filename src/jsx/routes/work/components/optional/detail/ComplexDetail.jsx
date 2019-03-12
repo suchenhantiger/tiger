@@ -1,6 +1,7 @@
 import styles from './css/complexDetail.less';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
+import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
 
 import DatePicker from './DatePicker';
 
@@ -10,8 +11,21 @@ class ComplexDetail extends PureComponent{
     //构造函数
     constructor(props) {
         super(props);
+
+        var {proInfo}=this.props;
+        var {digits,volumeStep,minstDec,maxVolume,minVolume}=proInfo;
+        this._digits = +digits;
+        this._volumeStep = +volumeStep;
+        this._valueStep = Math.pow(10,-this._digits);
+        this._minDis = (+minstDec) * this._valueStep;
+        this._minVolume=+minVolume;
+        this._maxVolume =+maxVolume;
+        this._volumeDigits=0;
+        if(volumeStep.indexOf(".")>-1)
+            this._volumeDigits = volumeStep.split(".")[1].length;
+
         this.state = {
-            num:0.01,
+            num:this._minVolume,
             actualPrice:null,
             stopPrice:null,
             profitPrice:null,
@@ -22,6 +36,7 @@ class ComplexDetail extends PureComponent{
             trantype:true,
             tranDire:true,
         }
+
     
     }
 
@@ -47,52 +62,150 @@ class ComplexDetail extends PureComponent{
     }
 
     plusClick =(type) =>  ()=>{
-        var {price}=this.props;
-        var {ask,bid} = price;
-        var {tranDire} =this.state;
-        var refPrice  = tranDire?ask:bid;
-        var step=0.01;
+        var {price={}}=this.props;
+        var {ask="--",bid="--"} = price;
+        var {tranDire,trantype} =this.state;
+        // this._minVolume=minVolume;
+        // this._maxVolume = maxVolume;
 
 
         switch(type){
             case 1:
                 var {actualPrice} = this.state;
                 if(actualPrice){
-                    actualPrice+=step;
-                    this.setState({actualPrice});
+                    actualPrice=(+actualPrice)+ this._valueStep ;
                 }else{
-                    actualPrice = refPrice+step;
-                    this.setState({actualPrice});
+                    actualPrice = (+bid)+this._minDis+ this._valueStep ;
                 }
+                this.setState({actualPrice:actualPrice.toFixed(this._digits)});
+                
                 break;
             case 2:
                 var {num} = this.state;
-                if(num){
-                    num+=0.01;
-                    this.setState({num});
-                }else{
-                    num = 0.01;
-                    this.setState({num});
-                }
+                num=+num+this._volumeStep;
+                if(num>=this._maxVolume) num =this._maxVolume;
+                this.setState({num:num.toFixed(this._volumeDigits)});
+                
                 break;
             case 3:
                 var {stopPrice} = this.state;
-                if(stopPrice){
-                    stopPrice+=step;
-                    this.setState({stopPrice});
-                }else{
-                    stopPrice = refPrice+step;
-                    this.setState({stopPrice});
+                if(stopPrice){//已存在
+                    if(trantype){
+                        stopPrice =(+stopPrice)+this._valueStep;
+                        if(tranDire){
+                            if(stopPrice<(ask-this._minDis)){
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({stopPrice:(ask-this._minDis).toFixed(this._digits)});
+                            }
+                          
+                        }else{
+                            if(stopPrice>(bid+this._minDis))
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            else
+                                this.setState({stopPrice:(bid+this._minDis).toFixed(this._digits)});
+                        }
+                          
+                    }else{
+                        stopPrice =(+stopPrice)+this._valueStep;
+                        if(tranDire){
+                            if(stopPrice<(+actualPrice-this._minDis)){
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({stopPrice:(+actualPrice-this._minDis).toFixed(this._digits)});
+                            }
+                          
+                        }else{
+                            if(stopPrice>(+actualPrice+this._minDis))
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            else
+                                this.setState({stopPrice:(+actualPrice+this._minDis).toFixed(this._digits)});
+                        }
+
+
+                    }
+                    
+                    
+                }else{//初始化
+                    if(trantype){
+                        if(tranDire){
+                            stopPrice = (+ask) -this._minDis;
+                        }else{
+                            stopPrice = (+bid) +this._minDis;
+                        }
+                        this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                    }else{
+                        var {actualPrice} = this.state;
+                        if(actualPrice){
+                            if(tranDire){
+                                stopPrice = (+actualPrice) -this._minDis;
+                            }else{
+                                stopPrice = (+actualPrice) +this._minDis;
+                            }
+                            this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                        }               
+                    }    
                 }
                 break;
             case 4:
                 var {profitPrice} = this.state;
-                if(profitPrice){
-                    profitPrice+=step;
-                    this.setState({profitPrice});
-                }else{
-                    profitPrice = refPrice+step;
-                    this.setState({profitPrice});
+                if(profitPrice){//已存在
+                    if(trantype){
+                        profitPrice =(+profitPrice)+this._valueStep;
+                        if(tranDire){
+                            if(profitPrice>(ask+this._minDis)){
+                                this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({profitPrice:(ask+this._minDis).toFixed(this._digits)});
+                            }
+                          
+                        }else{
+                            if(profitPrice<(bid-this._minDis)){
+                                this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({profitPrice:(bid-this._minDis).toFixed(this._digits)});
+                            }
+                        }
+                          
+                    }else{
+                        profitPrice =(+profitPrice)+this._valueStep;
+                        if(tranDire){
+                            if(profitPrice>(+actualPrice+this._minDis)){
+                                this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({profitPrice:(ask+this._minDis).toFixed(this._digits)});
+                            }
+                          
+                        }else{
+                            if(profitPrice<(+actualPrice-this._minDis)){
+                                this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({profitPrice:(+actualPrice-this._minDis).toFixed(this._digits)});
+                            }
+                        }
+
+                    }
+                    
+                    
+                }else{//初始化
+                    if(trantype){
+                        if(tranDire){
+                            profitPrice = (+ask) +this._minDis;
+                        }else{
+                            profitPrice = (+bid) -this._minDis;
+                        }
+                        this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                    }else{
+                        var {actualPrice} = this.state;
+                        if(actualPrice){
+                            if(tranDire){
+                                profitPrice = (+actualPrice) +this._minDis;
+                            }else{
+                                profitPrice = (+actualPrice) -this._minDis;
+                            }
+                            this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                        }               
+                    }    
                 }
                 break;
 
@@ -103,51 +216,113 @@ class ComplexDetail extends PureComponent{
     minusClick=(type) => ()=>{
         var {price}=this.props;
         var {ask,bid} = price;
-        var {tranDire} =this.state;
-        var refPrice  = tranDire?ask:bid;
-        var step=0.01;
+        var {tranDire,trantype} =this.state;
 
 
         switch(type){
             case 1:
                 var {actualPrice} = this.state;
                 if(actualPrice){
-                    actualPrice-=step;
-                    this.setState({actualPrice:actualPrice>0?actualPrice:0});
+                    actualPrice=(+actualPrice)-this._valueStep;
                 }else{
-                    actualPrice = refPrice-step;
-                    this.setState({actualPrice:actualPrice>0?actualPrice:0});
+                    actualPrice = bid-this._minDis-this._valueStep;
                 }
+                this.setState({actualPrice:actualPrice>0?actualPrice.toFixed(this._digits):"0"});
+
                 break;
             case 2:
                 var {num} = this.state;
-                if(num){
-                    num-=0.01;
-                    this.setState({num:num>0?num:0});
-                }else{
-                    num = 0.01;
-                    this.setState({num:num>0?num:0});
-                }
+                num = +num-this._volumeStep;
+                if(num<=this._minVolume) num =this._minVolume;
+                this.setState({num:num.toFixed(this._volumeDigits)});
+                
                 break;
             case 3:
                 var {stopPrice} = this.state;
-                if(stopPrice){
-                    stopPrice-=step;
-                    this.setState({ stopPrice:stopPrice>0?stopPrice:0});
-                }else{
-                    stopPrice = refPrice-step;
-                    this.setState({stopPrice:stopPrice>0?stopPrice:0});
+                if(stopPrice){//已存在
+                    if(trantype){
+                        stopPrice =(+stopPrice)-this._valueStep;
+                        if(tranDire){
+                            this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                        }else{
+                            if(stopPrice>(bid+this._minDis)){
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({stopPrice:(bid+this._minDis).toFixed(this._digits)});
+                            }
+                        }
+                          
+                    }else{
+
+                    }
+                    
+                    
+                }else{//初始化
+                    if(trantype){
+                        if(tranDire){
+                            stopPrice = (+ask) -this._minDis;
+                        }else{
+                            stopPrice = (+bid) +this._minDis;
+                        }
+                        this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                    }else{
+                        var {actualPrice} = this.state;
+                        if(actualPrice){
+                            if(tranDire){
+                                stopPrice = (+actualPrice) -this._minDis;
+                            }else{
+                                stopPrice = (+actualPrice) +this._minDis;
+                            }
+                            this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                        }               
+                    }    
                 }
                 break;
             case 4:
-                var {profitPrice} = this.state;
-                if(profitPrice){
-                    profitPrice-=step;
-                    this.setState({ profitPrice:profitPrice>0?profitPrice:0});
+            var {profitPrice} = this.state;
+            if(profitPrice){//已存在
+                if(trantype){
+                    profitPrice =(+profitPrice)-this._valueStep;
+                    if(tranDire){
+                        if(profitPrice>(ask+this._minDis)){
+                            this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                        }else{
+                            this.setState({profitPrice:(ask+this._minDis).toFixed(this._digits)});
+                        }
+                      
+                    }else{
+                        if(profitPrice<(bid-this._minDis)){
+                            this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                        }else{
+                            this.setState({profitPrice:(bid-this._minDis).toFixed(this._digits)});
+                        }
+                    }
+                      
                 }else{
-                    profitPrice = refPrice-step;
-                    this.setState({ profitPrice:profitPrice>0?profitPrice:0});
+
                 }
+                
+                
+            }else{//初始化
+                if(trantype){
+                    if(tranDire){
+                        profitPrice = (+ask) +this._minDis;
+                    }else{
+                        profitPrice = (+bid) -this._minDis;
+                    }
+                    this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                }else{
+                    var {actualPrice} = this.state;
+                    if(actualPrice){
+                        if(tranDire){
+                            profitPrice = (+actualPrice) +this._minDis;
+                        }else{
+                            profitPrice = (+actualPrice) -this._minDis;
+                        }
+                        this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                    }               
+                }    
+            }
                 break;
 
         }
@@ -158,6 +333,7 @@ class ComplexDetail extends PureComponent{
        var mt4Id = systemApi.getValue("mt4Id");
        if(mt4Id ==null || mt4Id.length==0 ){
            //没有账号或者账号异常
+           this.props.showMessage(ERROR,"请选择交易账号");
 
             return;
        }
@@ -170,6 +346,10 @@ class ComplexDetail extends PureComponent{
         if(trantype==false){
             expireTime =  this.refs.timePicker.getTimeStamp();
             tradePrice = actualPrice;
+            if(actualPrice == null){
+                this.props.showMessage(ERROR,"请设置成交价格");
+                return;
+            }
         }
             
         
@@ -201,7 +381,7 @@ class ComplexDetail extends PureComponent{
         this.setState({showBuyDialog:false});
     }
     chooseTranDir=(type)=>()=>{
-        this.setState({tranDire:type});
+        this.setState({tranDire:type,stopPrice:null,profitPrice:null});
     }
     chooseTranType=(type)=>()=>{
         this.setState({trantype:type,stopPrice:null,profitPrice:null,});
@@ -250,10 +430,8 @@ class ComplexDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>合计：</span>
-                                <span>$510.00</span>&nbsp;&nbsp;
-                                <span>可用保证金：</span>
-                                <span>$0.00</span>
+                                <span>价格(&lt;={(bid-this._minDis).toFixed(this._digits)}或&gt;={(bid+this._minDis).toFixed(this._digits)})</span>
+
                             </span>
                         </div>
                         </div>
@@ -269,10 +447,10 @@ class ComplexDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>合计：</span>
+                                {/* <span>合计：</span>
                                 <span>$510.00</span>&nbsp;&nbsp;
                                 <span>可用保证金：</span>
-                                <span>$0.00</span>
+                                <span>$0.00</span> */}
                             </span>
                         </div>
                     </div>
@@ -285,8 +463,11 @@ class ComplexDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>价格&lt;=</span>
-                                <span>预计亏损--</span>
+                                {trantype && tranDire?<span>价格&lt;={(ask-this._minDis).toFixed(this._digits)}</span>:null}
+                                {trantype && !tranDire?<span>价格&gt;={(bid+this._minDis).toFixed(this._digits)}</span>:null}
+                                {!trantype && tranDire?<span>价格&lt;={(ask-this._minDis).toFixed(this._digits)}</span>:null}
+                                {!trantype && !tranDire?<span>价格&gt;={(bid+this._minDis).toFixed(this._digits)}</span>:null} 
+                                {/* <span>预计亏损--</span> */}
                             </span>
                         </div>
                     </div>
@@ -299,8 +480,11 @@ class ComplexDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>价格&#60;=</span>
-                                <span>预计盈利--</span>
+                                {trantype && tranDire?<span>价格&gt;={(ask+this._minDis).toFixed(this._digits)}</span>:null}
+                                {trantype && !tranDire?<span>价格&lt;={(bid-this._minDis).toFixed(this._digits)}</span>:null} 
+                                {!trantype && tranDire && actualPrice?<span>价格&gt;={(+actualPrice+this._minDis).toFixed(this._digits)}</span>:null}
+                                {!trantype && !tranDire && actualPrice?<span>价格&lt;={(+actualPrice-this._minDis).toFixed(this._digits)}</span>:null} 
+                                {/* <span>预计盈利--</span> */}
                             </span>
                         </div>
                     </div>
@@ -336,7 +520,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder};
+    return {openOrder,showMessage};
 }
 
 module.exports = connect(null,injectAction())(ComplexDetail);

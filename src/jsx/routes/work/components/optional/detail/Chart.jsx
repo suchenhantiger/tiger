@@ -245,7 +245,6 @@ class CandleStickChartPanToLoadMore extends React.Component {
             tickStrokeOpacity: 0.2,
             tickStrokeWidth: 1
         };
-// console.log(data);
 		return (
             <div style={{height:"100%"}}>
 			<ChartCanvas 
@@ -274,10 +273,12 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					<CurrentCoordinate yAccessor={ema26.accessor()} fill={ema26.stroke()} />
 					<CurrentCoordinate yAccessor={ema12.accessor()} fill={ema12.stroke()} />
 
-					<EdgeIndicator fontSize={10} itemType="last" orient="right" edgeAt="right"
+					<EdgeIndicator 
+					fontSize={10} itemType="last" orient="right" edgeAt="right"
 					rectHeight= {15}
 					rectWidth= {30}
 					arrowWidth= {1}
+					displayFormat={format("."+this._digits+"f")}
 						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
 
 					{/* <PriceCoordinate

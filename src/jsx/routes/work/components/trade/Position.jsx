@@ -38,13 +38,26 @@ class Position extends PureComponent {
             //失败回调，也需要轮巡
             this.beginPolling();
         });
+        Event.register("refresh_order_list",this.refreshOrderList);
+    }
 
+    refreshOrderList=()=>{
+           //持仓详情
+           var mt4Id = systemApi.getValue("mt4Id");
+           if (mt4Id == null || mt4Id.length == 0) {
+               //没有账号或者账号异常
+               return;
+           }
+        this.props.getPositionAllOrder(this, { mt4Id }, (data) => {
+            this.setState({ allList: data });
+        });
     }
 
 
     componentWillUnmount(){
         super.componentWillUnmount();
         clearInterval(this._interval);
+        Event.unregister("refresh_order_list",this.refreshOrderList);
     }
 
     beginPolling = ()=>{

@@ -4,15 +4,24 @@ import BuyDialog from './BuyDialog';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
-
+import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
 class SimpleDetail extends PureComponent{
 
     //构造函数
     constructor(props) {
         super(props);
+        var {proInfo}=this.props;
+        var {volumeStep,maxVolume,minVolume}=proInfo;
+        this._volumeStep = +volumeStep;
+        this._minVolume=+minVolume;
+        this._maxVolume =+maxVolume;
+        this._volumeDigits=0;
+        if(volumeStep.indexOf(".")>-1)
+            this._volumeDigits = volumeStep.split(".")[1].length;
+
         this.state = {
             index:0,
-            num:0.01,
+            num:this._minVolume,
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
             showOpenSucc:false,
@@ -21,14 +30,10 @@ class SimpleDetail extends PureComponent{
        
     }
 
-    countClick = (index)=>()=>{
-        this.setState({num:(+num).toFixed(2)});
-        var num = 0.01;
-        if(index==1)num = 0.1;
-        else if(index==2)num = 0.5;
-        else if(index==3)num = 1;
+    countClick = (index,level)=>()=>{
 
-        this.setState({num,index});
+
+        this.setState({num:level.toFixed(this._volumeDigits),index});
     }
 
     introClick = ()=>{
@@ -52,17 +57,17 @@ class SimpleDetail extends PureComponent{
     }
 
     plusClick = ()=>{
-        var {index, num} = this.state,
-            diffs = [0.01, 0.1, 0.5, 1],
-            num = (+num)+diffs[index];
-        this.setState({num:(+num).toFixed(2)});
+        var {num} = this.state;
+        num =+num+this._volumeStep;
+        if(num>=this._maxVolume) num =this._maxVolume;
+        this.setState({num:num.toFixed(this._volumeDigits)});
     }
 
     minusClick = ()=>{
-        var {index, num} = this.state,
-            diffs = [0.01, 0.1, 0.5, 1],
-            num = num-diffs[index];
-        this.setState({num:num>0?(+num).toFixed(2):"0.00"});
+        var {num} = this.state;
+        num = +num-this._volumeStep;
+        if(num<=this._minVolume) num =this._minVolume;
+        this.setState({num:num.toFixed(this._volumeDigits)});
     }
 
     buyClick = ()=>{
@@ -79,7 +84,7 @@ class SimpleDetail extends PureComponent{
         console.log(mt4Id);
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
- 
+            this.props.showMessage(SUCCESS,"请选择交易账号");
              return;
         }
 
@@ -105,7 +110,21 @@ class SimpleDetail extends PureComponent{
         var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
         var {price} =this.props;
         var {ask="--",bid="--",isClose=false}=price;
-        console.log(price);
+        var level1 = 1.0,
+            level2 = 2.0,
+            level3 = 3.0,
+            level4 = 4.0;
+        if(this._volumeStep==0.1){
+            level1 = 0.1;
+            level2 = 0.2;
+            level3 = 0.3;
+            level4 = 0.4;
+        }else if(this._volumeStep==0.01){
+            level1 = 0.01;
+            level2 = 0.1;
+            level3 = 0.5;
+            level4 = 1.0;
+        }
         return(
             <div>
 
@@ -127,10 +146,10 @@ class SimpleDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_tabs}>
                             <ul>
-                                <li className={index==0?styles.on:""} onClick={this.countClick(0)}><span>0.01手</span><i></i></li>
-                                <li className={index==1?styles.on:""} onClick={this.countClick(1)}><span>0.1手</span><i></i></li>
-                                <li className={index==2?styles.on:""} onClick={this.countClick(2)}><span>0.5手</span><i></i></li>
-                                <li className={index==3?styles.on:""} onClick={this.countClick(3)}><span>1手</span><i></i></li>
+                                <li className={index==0?styles.on:""} onClick={this.countClick(0,level1)}><span>{level1}手</span><i></i></li>
+                                <li className={index==1?styles.on:""} onClick={this.countClick(1,level2)}><span>{level2}手</span><i></i></li>
+                                <li className={index==2?styles.on:""} onClick={this.countClick(2,level3)}><span>{level3}手</span><i></i></li>
+                                <li className={index==3?styles.on:""} onClick={this.countClick(3,level4)}><span>{level4}手</span><i></i></li>
                             </ul>
                         </div>
                     </div>
@@ -165,7 +184,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder};
+    return {openOrder,showMessage};
 }
 
 module.exports = connect(injectProps,injectAction())(SimpleDetail);

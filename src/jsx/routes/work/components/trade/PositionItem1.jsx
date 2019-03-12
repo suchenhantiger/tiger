@@ -45,7 +45,7 @@ class PositionItem1 extends PureComponent{
                     <p className={styles.mg_tp_10}><span className={styles.c9}>开仓价：</span><span className={styles.c9}>{openPrice}</span>&nbsp;<span class="c9">现价：</span><span class="c9">{marketPrice}</span></p>
                 </div>
                 <div className={styles.right}>
-                    <p><span className={styles.left +" " +styles.font30 +" " +(netProfit>=0?styles.red:styles.green)}>{netProfit}</span></p>
+                    <p><span className={styles.left +" " +styles.font30 +" " +(netProfit>=0?styles.red:styles.green)}>${netProfit}</span></p>
                     <p className={styles.mg_tp_42}><span className={styles.c9}>浮动盈亏</span></p>
                 </div>
             </li>

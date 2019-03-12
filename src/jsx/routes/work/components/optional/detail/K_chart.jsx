@@ -85,7 +85,7 @@ class K_chart extends PureComponent{
             console.log();
             if(recentBars==null || recentBars.length==0)
                 return;
-            var newone = recentBars[0];
+            var newone = recentBars[1];
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
              if(oldone.opentime == newone.opentime ){
@@ -178,7 +178,7 @@ class K_chart extends PureComponent{
         systemApi.log("k_chart render");
 
         var {timeL,showKchart} = this.state;
-        var {fullscreen,digits} = this.props;
+        var {fullscreen,digits=2} = this.props;
         var kdlist = this._kdata.slice(0);
         return(
             <div style={{position:"relative",height:"100%"}}>
