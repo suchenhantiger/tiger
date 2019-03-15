@@ -20,18 +20,35 @@ export function getPositionInfo(component,params,loading, update,fail){
     }
 }
 
-//获取持仓全部订单
-export function getPositionAllOrder(component, params, update){
+export function updatePositionInfo(data){
     return function(dispatch, state){
-        dispatch(showLoading());
+
+        dispatch({type:"QUERY_POSITION_DATA",data});
+
+    }
+}
+
+export function updatePositionList(data){
+    return function(dispatch, state){
+
+        dispatch({type:"QUERY_POSITION_LIST_DATA",data});
+
+    }
+}
+
+
+//获取持仓全部订单
+export function getPositionAllOrder(component, showload,params, update){
+    return function(dispatch, state){
+        if(showload) dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
         component.requestJSON("users/queryPositionList",params).done((data)=>{
-            dispatch(hideLoading());
+            if(showload) dispatch(hideLoading());
             console.log(data);
             update && update(data);
         }).fail((data)=>{
-            dispatch(hideLoading());
+            if(showload) dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
         });
 

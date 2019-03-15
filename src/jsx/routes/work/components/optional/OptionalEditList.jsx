@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getOptionalList } from "../../actions/optional/optionalAction";
+import { updateOptionalList } from "../../../../store/actions";
 
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 
@@ -10,19 +10,27 @@ class OptionalEditList extends PureComponent {
     //构造函数
     constructor(props) {
         super(props);
+        var {OptionalListData,OptionalList} = props;
         this.state = {
-            list: [1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1,]
+            list: OptionalListData.slice(0)
         };
+        this._OptionalList=OptionalList;
         this.SortableItem = this.getItemElement();
         this.SortableList = this.getListElement();
+
+        this._Change=false;
     }
 
     componentDidMount() {
-        this.props.getOptionalList(this, {}, this.updateList);
+        // this.props.getOptionalList(this, {}, this.updateList);
     }
 
     updateList = (list) => {
         this.setState({ list })
+    }
+
+    save=()=>{
+        this.props.updateOptionalList(this._OptionalList);
     }
 
     getListElement(){
@@ -38,16 +46,21 @@ class OptionalEditList extends PureComponent {
         });
     }
 
-    getItemElement(){
+    deleteOne = (prodCode)=>()=>{
+        alert(prodCode);
+    }
+
+    getItemElement=()=>{
         return SortableElement(({ data }) => {
+            var {prodName,prodCode} =data;
             return (
                 <li className={styles.op_sort_li}>
-                    <div className={styles.list_left_icon}>
+                    {/* <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
                         <div className={styles.icon_delete_red}></div>
-                    </div>
+                    </div> */}
                     <div className={styles.currency_name}>
-                        <p className={this.mergeClassName("c3", styles.c3)}>欧元美元</p>
-                        <p className={this.mergeClassName("c9", "font-arial")}>EURUSD200</p>
+                        <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
+                        <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>
                     </div>
                     <div className={styles.list_right_icon}>
                         <div className={styles.icon_sort}></div>
@@ -57,30 +70,15 @@ class OptionalEditList extends PureComponent {
         });
     }
 
-    renderList(list) {
-        return list.map(item => {
-            return (
-                <li className={styles.op_sort_li}>
-                    <div className={styles.list_left_icon}>
-                        <div className={styles.icon_delete_red}></div>
-                    </div>
-                    <div className={styles.currency_name}>
-                        <p className={this.mergeClassName("c3", styles.c3)}>欧元美元</p>
-                        <p className={this.mergeClassName("c9", "font-arial")}>EURUSD200</p>
-                    </div>
-                    <div className={styles.list_right_icon}>
-                        <div className={styles.icon_sort}></div>
-                    </div>
-                </li>
-            );
-        })
-    }
+
 
     onSortEnd = ({ oldIndex, newIndex }) => {
-        // this.setState(({ items }) => ({
-        //     items: arrayMove(items, oldIndex, newIndex),
-        // }));
-        console.log(oldIndex, newIndex);
+        this._Change =true;
+        this.setState(({ list }) => ({
+            list: arrayMove(list, oldIndex, newIndex),
+        }));
+        this._OptionalList  = arrayMove(this._OptionalList, oldIndex, newIndex);
+        
     };
 
     //渲染函数
@@ -90,14 +88,17 @@ class OptionalEditList extends PureComponent {
             {SortableList} = this;
 
         return (
-            <SortableList items={[1, 2, 3, 4, 5]} onSortEnd={this.onSortEnd} />
+            <SortableList items={list} onSortEnd={this.onSortEnd} />
         );
     }
 
 }
-
+function injectProps(state){
+    var {OptionalListData,OptionalList} = state.base || {};
+    return {OptionalListData,OptionalList};
+}
 function injectAction() {
-    return { getOptionalList };
+    return {updateOptionalList  };
 }
 
-module.exports = connect(null, injectAction())(OptionalEditList);
+module.exports = connect(injectProps, injectAction(), null, {withRef: true})(OptionalEditList);

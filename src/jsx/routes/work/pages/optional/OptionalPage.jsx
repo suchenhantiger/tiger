@@ -33,10 +33,13 @@ class OptionalPage extends PageComponent{
     }
 
     submitClick = ()=>{
+        this.refs.edit.getWrappedInstance().save();
         this.setState({editable:false});
     }
 
     renderIcons(){
+        var {editable} = this.state;
+        if(!editable)
         return [
             <HeaderText text="添加" onClick={this.addClick}/>
         ]
@@ -60,16 +63,20 @@ class OptionalPage extends PageComponent{
                 <Content coverBottom={false}>
                     <div className={styles.optional_tit}>
                         <div className={this.mergeClassName(styles.optional_name, "c6")}>交易品种</div>
+                        {editable?null:
                         <div className={styles.optional_price}>
                             <span className={this.mergeClassName("c9", "left")}>最新价格</span>
                             <i className={styles.i_buy}>买</i>
                             <i className={styles.i_sell}>卖</i>
                         </div>
+                        
+                        }
+                        
                     </div>
                     {!editable?(
                         <OptionalList/>
                     ):(
-                        <OptionalEditList/>
+                        <OptionalEditList ref="edit"/>
                     )}
                 </Content>
                 {this.props.children}

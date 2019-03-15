@@ -15,7 +15,7 @@ class OptionalDetailPage extends PageComponent{
     constructor(props,context) {
         super(props,context);
         var {prodName,prodCode,
-            digits,maxVolume,minVolume,minstDec,volumeStep,
+            digits,maxVolume,minVolume,minstDec,volumeStep,prodSize,marginPercentage,
             ask="--",bid="--",status=true} = this.props.location.query; 
         this._prodName = prodName;
         this._prodCode = prodCode;
@@ -27,7 +27,7 @@ class OptionalDetailPage extends PageComponent{
             
         }
         this._proInfo = {
-            digits,maxVolume,minVolume,minstDec,volumeStep,
+            digits,maxVolume,minVolume,minstDec,volumeStep,prodSize,marginPercentage
         };
     }
 

@@ -79,7 +79,7 @@ export function getHistoryKList(component,params,cb ){
             cb && cb(list,hasmore);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
-            cb && cb();
+          //  cb && cb();
         });
     
     }
@@ -96,12 +96,12 @@ export function openOrder(component,params,cb ){
         params.clientId =clientId;
         component.requestJSON("deal/openOrder",params).done((data)=>{
             dispatch(hideLoading());
-            dispatch(showMessage(SUCCESS, "下单成功"));
-
+            //dispatch(showMessage(SUCCESS, "下单成功"));
+            cb && cb(true);
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
-            cb && cb();
+            cb && cb(false);
         });
     
     }

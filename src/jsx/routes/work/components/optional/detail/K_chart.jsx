@@ -4,6 +4,7 @@ import TimeChoose from './TimeChoose';
 import Chart from './Chart';
 import KSet from './KSet';
 import {getHistoryKList} from '../../../actions/optional/optionalAction';
+import SmallLoading from "../../../../../components/common/loading/SmallLoading";
 class K_chart extends PureComponent{
 
     //构造函数
@@ -79,17 +80,16 @@ class K_chart extends PureComponent{
 
     updatePrice=(data)=>{
         var {updatePrice}=this.props;
-        if(data.length>0){
-            var {recentBars}=data[0];
-            updatePrice && updatePrice(data[0]);
-            console.log();
-            if(recentBars==null || recentBars.length==0)
-                return;
+        var {quotedUD={},recentBars=[]} = data;
+        updatePrice && updatePrice(quotedUD);
+
+
+        if(recentBars.length==2){
+
             var newone = recentBars[1];
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
              if(oldone.opentime == newone.opentime ){
-
                 if(oldone.open != newone.open || 
                     oldone.close != newone.close || 
                     oldone.low != newone.low || 
@@ -100,14 +100,11 @@ class K_chart extends PureComponent{
                         this._kdata[this._kdata.length-1] = newone;
                         this.refs.chart.getWrappedInstance().updateOne(newone);
                 }
-
              }else{
-                // console.log(oldone);
-                // console.log(newone);
+
                newone.date= new Date(newone.opentime*1000);
                this._kdata.push(newone);
                this.refs.chart.getWrappedInstance().addOne(newone);
-
              }             
         }
 
@@ -115,16 +112,22 @@ class K_chart extends PureComponent{
 
     getOneK=()=>{
         var {prodCode} = this.props;
-        var reqStr = JSON.stringify({"funCode":"301001","prodCode":prodCode,"period":this._period,"clientId":systemApi.getValue("clientId"),"agentId":100001,"sign":""});
+        var reqStr = JSON.stringify({"funCode":"3010011","prodCode":prodCode,"period":this._period});
         //重置回调函数
         WebSocketUtil.onClose=()=>{
             console.log("WebSocketClosed!");
            };
-        WebSocketUtil.onMessage=(data)=>{
+        WebSocketUtil.onMessage=(wsData)=>{
             //    console.log("---onmessage");
-            data = JSON.parse(data);
-              console.log(data);
-            this.updatePrice(data);
+            wsData = JSON.parse(wsData);
+            // console.log(wsData);
+            for(var i=0,l=wsData.length;i<l;i++){
+                var {funCode,data} = wsData[i];
+                if(funCode=="3010011"){
+                    this.updatePrice(data);
+                    break;
+                }
+            }
 
         };
         WebSocketUtil.onError=(evt)=>{
@@ -184,11 +187,13 @@ class K_chart extends PureComponent{
             <div style={{position:"relative",height:"100%"}}>
                 <div className={styles.k_frame} style={fullscreen?{marginRight:"0.9rem"}:{width:"100%"}}>
                         <TimeChoose fullscreen={ fullscreen}timeL={timeL} onChoose={this.chooseTime}/>
-                        <div style={{height:"94%",}}>
-                            {showKchart?<Chart digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore}/>:null}
+                        <div style={{height:"94%"}}>
+                            {showKchart?
+                            <Chart digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore} />
+                            :<div style={{position:"absolute",left: "38%"}}><SmallLoading /></div>
+                            }
                         </div>
-                        {fullscreen? <KSet /> :null}           
-                    
+                        {fullscreen? <KSet /> :null} 
                 </div>
           </div>
         );

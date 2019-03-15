@@ -125,7 +125,7 @@ class TradeDetailPage extends PageComponent {
                     {fullscreen ? null : <div style={{ margin: "0.3rem", overflow: "hidden" }}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
-                    <FlateDetail data={this._prodInfo}/>
+                    <FlateDetail price={price} data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
                     {detailType?
                         <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>:

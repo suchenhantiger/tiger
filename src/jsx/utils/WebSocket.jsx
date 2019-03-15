@@ -1,3 +1,5 @@
+
+
 var webSocket = {
     webSocketIns:null,
     creatWebSocket:function (url){
@@ -5,6 +7,11 @@ var webSocket = {
         if(this.webSocketIns==null || this.webSocketIns.readyState!=1){
             if(this.webSocketIns!=null) 
                 this.webSocketIns.close();
+            var clientId = systemApi.getValue("clientId");
+            var time = new Date();
+            time = time.getTime();
+            var paramsStr = "clientId="+clientId+"&time="+time;
+            url=url+"?"+paramsStr+"&sign="+md5(paramsStr+"&token="+systemApi.getValue("tigertoken"));
             this.webSocketIns = new WebSocket(url);
             this.webSocketIns.onopen = (evt)=>{
                 this.onOpen && this.onOpen(evt);

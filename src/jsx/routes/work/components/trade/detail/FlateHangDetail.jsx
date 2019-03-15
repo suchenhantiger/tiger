@@ -84,7 +84,7 @@ class FlateDetail extends PureComponent{
         var {num} =this.state;
         var {ask,bid,ctm} = price;
         var tradePrice = direction==0?ask :bid;
-        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},()=>{
+        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},(success)=>{
             
         });
     }

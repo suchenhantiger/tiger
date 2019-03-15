@@ -56,7 +56,10 @@ function requestSuccess(ver, deferred, iskick, data){
             deferred.resolve(body);
         }
         else if(code == 401 ||code ==400 ){	//session超时
-
+            deferred.reject({message:"登录超时"});
+            systemApi.removeValue("tigertoken");
+            systemApi.removeValue("mt4Id");
+            systemApi.removeValue("mt4AccType");
             hashHistory.replace("/login");
         }
         else{//请求失败

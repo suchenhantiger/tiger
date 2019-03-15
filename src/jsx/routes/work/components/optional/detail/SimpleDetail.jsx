@@ -11,10 +11,11 @@ class SimpleDetail extends PureComponent{
     constructor(props) {
         super(props);
         var {proInfo}=this.props;
-        var {volumeStep,maxVolume,minVolume}=proInfo;
+        var {volumeStep,maxVolume,minVolume,prodSize,marginPercentage}=proInfo;
         this._volumeStep = +volumeStep;
         this._minVolume=+minVolume;
         this._maxVolume =+maxVolume;
+        this._marginRate = prodSize*marginPercentage;
         this._volumeDigits=0;
         if(volumeStep.indexOf(".")>-1)
             this._volumeDigits = volumeStep.split(".")[1].length;
@@ -25,7 +26,8 @@ class SimpleDetail extends PureComponent{
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
             showOpenSucc:false,
-            showBuyDialog:false
+            showBuyDialog:false,
+            openInfo:{}
         }
        
     }
@@ -53,7 +55,7 @@ class SimpleDetail extends PureComponent{
     }
 
     tradeDetail = ()=>{
-
+        hashHistory.push("/work/trade");
     }
 
     plusClick = ()=>{
@@ -81,7 +83,6 @@ class SimpleDetail extends PureComponent{
     tradeSubmit = (direction,isChoose)=>{
         var mt4Id = systemApi.getValue("mt4Id");
 
-        console.log(mt4Id);
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
             this.props.showMessage(SUCCESS,"请选择交易账号");
@@ -90,12 +91,24 @@ class SimpleDetail extends PureComponent{
 
 
         this.setState({showBuyDialog:false});
-        var {prodCode,price}=this.props;
+        var {prodCode,price,prodName}=this.props;
 
         var {num} =this.state;
         var {ask,bid,ctm} = price;
         var tradePrice = direction==0?ask :bid;
-        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},()=>{
+     
+        this.props.openOrder(this,{tradePrice,tradeTime:ctm,buySell:direction,prodCode,openType:0,totalQty:num,mt4Id},
+            (success)=>{
+                if(success){
+                    var tmpobj={}; 
+                    tmpobj.buySell = direction;
+                    tmpobj.prodName =prodName;
+                    tmpobj.totalQty =num;
+                    tmpobj.prodCode =prodCode;
+                    tmpobj.money =null;
+                    tmpobj.tradePrice =tradePrice;
+                    this.setState({showOpenSucc:true,openInfo:tmpobj});
+                }
             
         });
     }
@@ -107,9 +120,9 @@ class SimpleDetail extends PureComponent{
     //渲染函数
     render(){
 
-        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect} = this.state;
+        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect,openInfo} = this.state;
         var {price} =this.props;
-        var {ask="--",bid="--",isClose=false}=price;
+        var {ask="--",bid="--",isClose=false,exchangeRate=0}=price;
         var level1 = 1.0,
             level2 = 2.0,
             level3 = 3.0,
@@ -125,6 +138,10 @@ class SimpleDetail extends PureComponent{
             level3 = 0.5;
             level4 = 1.0;
         }
+
+       // var totalMoney = num*exchangeRate*(tradeDirect==0?ask:bid)*this._marginRate;
+       var totalMoney = num*exchangeRate*ask*this._marginRate;
+      
         return(
             <div>
 
@@ -138,10 +155,10 @@ class SimpleDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                <span>合计：</span>
-                                <span>$510.00</span>&nbsp;&nbsp;
-                                <span>可用保证金：</span>
-                                <span>$0.00</span>
+                                <span>预计保证金：</span>
+                                <span>${totalMoney.toFixed(2)}</span>&nbsp;&nbsp;
+                                {/* <span>可用保证金：</span>
+                                <span>$0.00</span> */}
                             </span>
                         </div>
                         <div className={styles.tran_tabs}>
@@ -168,7 +185,7 @@ class SimpleDetail extends PureComponent{
                     <Intro onClose={this.closeIntro}/>
                 ):null}
                 {showOpenSucc?(
-                    <OpenSucc onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
+                    <OpenSucc data={openInfo} onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
                 ):null}
                 {showBuyDialog?(
                     <BuyDialog direction={tradeDirect} num={num} onSure={this.tradeSubmit} onCancel={this.tradeCancel}/>

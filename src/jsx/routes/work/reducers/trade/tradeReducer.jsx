@@ -5,18 +5,16 @@ module.exports = function tradeReducer(state,action){
         floatTrade:[],
     };
     if(type == "QUERY_POSITION_DATA"){
-        var {infoEquity,floatTrade} =action.data;
-        if(infoEquity && floatTrade){
-            return Object.assign({},state,{
-                infoEquity:infoEquity,
-                floatTrade:floatTrade
-            });
-        }else{
-            return Object.assign({},state,{
-                infoEquity:infoEquity
-            });
-        }
+        return Object.assign({},state,{
+            infoEquity:action.data
+        });
         
+      }else if(type == "QUERY_POSITION_LIST_DATA"){
+          console.log("sch");
+        return Object.assign({},state,{
+            floatTrade:action.data
+        });
+
       }
     return state;
 };

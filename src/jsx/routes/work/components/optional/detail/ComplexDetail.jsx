@@ -2,7 +2,8 @@ import styles from './css/complexDetail.less';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
 import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
-
+import OpenSuccComplex from './OpenSuccComplex';
+import BuyDialog from './BuyDialog';
 import DatePicker from './DatePicker';
 
 
@@ -13,13 +14,14 @@ class ComplexDetail extends PureComponent{
         super(props);
 
         var {proInfo}=this.props;
-        var {digits,volumeStep,minstDec,maxVolume,minVolume}=proInfo;
+        var {digits,volumeStep,minstDec,maxVolume,minVolume,prodSize,marginPercentage}=proInfo;
         this._digits = +digits;
         this._volumeStep = +volumeStep;
         this._valueStep = Math.pow(10,-this._digits);
         this._minDis = (+minstDec) * this._valueStep;
         this._minVolume=+minVolume;
         this._maxVolume =+maxVolume;
+        this._marginRate = prodSize*marginPercentage;
         this._volumeDigits=0;
         if(volumeStep.indexOf(".")>-1)
             this._volumeDigits = volumeStep.split(".")[1].length;
@@ -35,6 +37,7 @@ class ComplexDetail extends PureComponent{
             deadline:null,
             trantype:true,
             tranDire:true,
+            openInfo:{}
         }
 
     
@@ -58,7 +61,7 @@ class ComplexDetail extends PureComponent{
     }
 
     tradeDetail = ()=>{
-
+        hashHistory.push("/work/trade");
     }
 
     plusClick =(type) =>  ()=>{
@@ -108,8 +111,10 @@ class ComplexDetail extends PureComponent{
                           
                     }else{
                         stopPrice =(+stopPrice)+this._valueStep;
+                        var {actualPrice} = this.state;
                         if(tranDire){
                             if(stopPrice<(+actualPrice-this._minDis)){
+                               
                                 this.setState({stopPrice:stopPrice.toFixed(this._digits)});
                             }else{
                                 this.setState({stopPrice:(+actualPrice-this._minDis).toFixed(this._digits)});
@@ -168,12 +173,13 @@ class ComplexDetail extends PureComponent{
                         }
                           
                     }else{
+                        var {actualPrice} = this.state;
                         profitPrice =(+profitPrice)+this._valueStep;
                         if(tranDire){
                             if(profitPrice>(+actualPrice+this._minDis)){
                                 this.setState({profitPrice:profitPrice.toFixed(this._digits)});
                             }else{
-                                this.setState({profitPrice:(ask+this._minDis).toFixed(this._digits)});
+                                this.setState({profitPrice:(actualPrice+this._minDis).toFixed(this._digits)});
                             }
                           
                         }else{
@@ -253,6 +259,23 @@ class ComplexDetail extends PureComponent{
                         }
                           
                     }else{
+                        stopPrice =(+stopPrice)-this._valueStep;
+                        var {actualPrice} = this.state;
+                        if(tranDire){
+                            if(stopPrice<(+actualPrice-this._minDis)){
+                               
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            }else{
+                                this.setState({stopPrice:(+actualPrice-this._minDis).toFixed(this._digits)});
+                            }
+                          
+                        }else{
+                            if(stopPrice>(+actualPrice+this._minDis))
+                                this.setState({stopPrice:stopPrice.toFixed(this._digits)});
+                            else
+                                this.setState({stopPrice:(+actualPrice+this._minDis).toFixed(this._digits)});
+                        }
+
 
                     }
                     
@@ -299,6 +322,22 @@ class ComplexDetail extends PureComponent{
                     }
                       
                 }else{
+                    var {actualPrice} = this.state;
+                    profitPrice =(+profitPrice)-this._valueStep;
+                    if(tranDire){
+                        if(profitPrice>(+actualPrice+this._minDis)){
+                            this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                        }else{
+                            this.setState({profitPrice:(+actualPrice+this._minDis).toFixed(this._digits)});
+                        }
+                      
+                    }else{
+                        if(profitPrice<(+actualPrice-this._minDis)){
+                            this.setState({profitPrice:profitPrice.toFixed(this._digits)});
+                        }else{
+                            this.setState({profitPrice:(+actualPrice-this._minDis).toFixed(this._digits)});
+                        }
+                    }
 
                 }
                 
@@ -328,8 +367,28 @@ class ComplexDetail extends PureComponent{
         }
     }
 
+
+
     buyClick = ()=>{
-       // this.setState({showBuyDialog:true});
+        var {trantype} =this.state;
+        if(trantype){
+             this.setState({showBuyDialog:true});
+            
+        }else{
+            this.confirmSubmit();
+        }
+       
+      
+    }
+
+    tradeSubmit = (isChoose)=>{
+        this.setState({showBuyDialog:false});
+        this.confirmSubmit();
+    }
+
+    confirmSubmit = ()=>{
+
+        
        var mt4Id = systemApi.getValue("mt4Id");
        if(mt4Id ==null || mt4Id.length==0 ){
            //没有账号或者账号异常
@@ -337,9 +396,8 @@ class ComplexDetail extends PureComponent{
 
             return;
        }
-        var {prodCode,price}=this.props;
-        
-        var {num,trantype,tranDire,stopPrice,profitPrice,actualPrice} =this.state;
+       var {num,trantype,tranDire,stopPrice,profitPrice,actualPrice} =this.state;
+        var {prodCode,price,prodName}=this.props;
         var {ask,bid,ctm} = price;
         var tradePrice = tranDire?ask:bid;
         var expireTime = null;
@@ -366,16 +424,17 @@ class ComplexDetail extends PureComponent{
         params.totalQty=num;
         params.mt4Id=mt4Id;
         params.openType=(trantype?0:1)
-        this.props.openOrder(this,params,()=>{
+        this.props.openOrder(this,params,(success)=>{
             // hashHistory.goBack();
+            if(success){
+                params.prodName= prodName;
+                this.setState({showOpenSucc:true,openInfo:params});
+            }
+      
         }); 
 
-    }
 
-    tradeSubmit = (isChoose)=>{
-        this.setState({showBuyDialog:false});
     }
-
 
     tradeCancel = ()=>{
         this.setState({showBuyDialog:false});
@@ -393,11 +452,23 @@ class ComplexDetail extends PureComponent{
              trantype,tranDire,
              actualPrice,
              stopPrice,
-             profitPrice
+             profitPrice,openInfo
             } = this.state;
 
         var {price} =this.props;
-        var {ask="--",bid="--",ctm,isClose=false}=price;
+        var {ask="--",bid="--",ctm,isClose=false,exchangeRate=0}=price;
+        var totalMoney=0;
+        if(trantype){
+            totalMoney = num*exchangeRate*ask*this._marginRate;
+        }else{
+            if(actualPrice){
+                totalMoney = num*exchangeRate*(+actualPrice)*this._marginRate;
+            }else{
+                totalMoney = 0;
+            }
+            
+        }
+        
         return(
             <div>
                 <div className="mg-lr-30">
@@ -447,9 +518,9 @@ class ComplexDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_total}>
                             <span className={styles.total_span}>
-                                {/* <span>合计：</span>
-                                <span>$510.00</span>&nbsp;&nbsp;
-                                <span>可用保证金：</span>
+                                <span>预计保证金：</span>
+                                <span>${totalMoney.toFixed(2)}</span>&nbsp;&nbsp;
+                             {/*    <span>可用保证金：</span>
                                 <span>$0.00</span> */}
                             </span>
                         </div>
@@ -465,8 +536,8 @@ class ComplexDetail extends PureComponent{
                             <span className={styles.total_span}>
                                 {trantype && tranDire?<span>价格&lt;={(ask-this._minDis).toFixed(this._digits)}</span>:null}
                                 {trantype && !tranDire?<span>价格&gt;={(bid+this._minDis).toFixed(this._digits)}</span>:null}
-                                {!trantype && tranDire?<span>价格&lt;={(ask-this._minDis).toFixed(this._digits)}</span>:null}
-                                {!trantype && !tranDire?<span>价格&gt;={(bid+this._minDis).toFixed(this._digits)}</span>:null} 
+                                {!trantype && tranDire && actualPrice?<span>价格&lt;={(+actualPrice-this._minDis).toFixed(this._digits)}</span>:null}
+                                {!trantype && !tranDire && actualPrice?<span>价格&gt;={(+actualPrice+this._minDis).toFixed(this._digits)}</span>:null} 
                                 {/* <span>预计亏损--</span> */}
                             </span>
                         </div>
@@ -508,6 +579,13 @@ class ComplexDetail extends PureComponent{
                         <div className={styles.confirm} style={isClose?{backgroundColor:"#b6b6b6"}:null}>{trantype?"确认交易":"确认挂单"}</div>
                     </div>
                 </div>
+
+                {showOpenSucc?(
+                    <OpenSuccComplex data={openInfo} onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
+                ):null}
+                {showBuyDialog?(
+                    <BuyDialog direction={tranDire==0} num={num} onSure={this.tradeSubmit} onCancel={this.tradeCancel}/>
+                ):null}
 
                  
             </div>

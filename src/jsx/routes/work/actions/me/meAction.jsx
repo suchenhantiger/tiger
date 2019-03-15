@@ -4,15 +4,11 @@ import JSEncrypt from 'jsencrypt';
 
 export function getMt4Message(component, params,cb){
     return function(dispatch, state){
-        // queryType
-        // floatTrade
-        // ticket
-        // mt4Id
+        // dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
         component.requestJSON("users/getMt4Message",params).done((data)=>{
          var {infoEquity={}}=data;
-         console.log(data);
          cb && cb(infoEquity);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
@@ -24,10 +20,8 @@ export function getMt4Message(component, params,cb){
 export function upLoadImage(component, file,type,cb){
     return function(dispatch, state){
         file = encodeURIComponent(file);
-        console.log(file);
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("users/uploadIdCardOrHead",{clientId,file,type}).done((data)=>{
-            console.log(data);
          cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

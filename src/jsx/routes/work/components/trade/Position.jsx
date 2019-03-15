@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder } from "../../actions/trade/tradeAction";
+import { getPositionInfo, updatePositionInfo,updatePositionList,getPositionAllOrder, flatOrder, updateOrder } from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import PositionAllList from "./PositionAllList";
 import HangList from "./HangList";
@@ -28,17 +28,80 @@ class Position extends PureComponent {
             return;
         }
 
-        this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, true, () => {
+        this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, false, () => {
 
-            this.beginPolling();
-            this.props.getPositionAllOrder(this, { mt4Id }, (data) => {
-                this.setState({ allList: data });
+           // this.beginPolling();
+            this.props.getPositionAllOrder(this,false, { mt4Id }, (data) => {
+                this.setState({ allList: data },()=>{
+                   // console.log(data);
+                    var {hanglist = [], couplist = [], orderlist = [] } = data;
+                    var prodList=[];
+                    for(var i=0,l=orderlist.length;i<l;i++){
+                        var {prodCode}=orderlist[i];
+                        prodList.push(prodCode);
+                    }
+                    for(var i=0,l=hanglist.length;i<l;i++){
+                        var {prodCode}=hanglist[i];
+                        prodList.push(prodCode);
+                    }
+                    for(var i=0,l=couplist.length;i<l;i++){
+                        var {prodCode}=couplist[i];
+                        prodList.push(prodCode);
+                    }
+                    this.startWs(mt4Id,prodList.join(","));
+                });
             });
         },()=>{
             //失败回调，也需要轮巡
-            this.beginPolling();
+         //   this.beginPolling();
         });
         Event.register("refresh_order_list",this.refreshOrderList);
+    }
+
+    startWs =(mt4Id,prodCode)=>{
+
+        var reqStr = JSON.stringify({"funCode":"301003","mt4Id":mt4Id,prodCode});
+        //重置回调函数
+        WebSocketUtil.onClose=()=>{
+            console.log("301003 close");
+            };
+        WebSocketUtil.onMessage=(wsData)=>{
+            //    console.log("---onmessage");
+            wsData = JSON.parse(wsData);
+            // console.log(wsData);
+            for(var i=0,l=wsData.length;i<l;i++){
+                var {funCode,data} = wsData[i];
+                if(funCode=="301003"){
+                    this.updateFloat(data);
+                }else if(funCode=="301002"){
+                    this.updatePosition(data);
+                }
+            }
+
+        };
+        WebSocketUtil.onError=(evt)=>{
+            console.log("301003 Error");
+        };
+
+        if(!WebSocketUtil.send(reqStr)){
+            //发送失败就重新创建一个
+            WebSocketUtil.onOpen=()=>{
+                console.log("301003 open ");
+                WebSocketUtil.send(reqStr)
+            };
+            WebSocketUtil.creatWebSocket(systemApi.getValue("websocketUrl"));
+        }
+        
+    
+    }
+
+    updatePosition = (data)=>{
+        this.props.updatePositionInfo(data);
+    }
+
+    updateFloat = (data)=>{
+        this.props.updatePositionList(data);
+        
     }
 
     refreshOrderList=()=>{
@@ -48,8 +111,10 @@ class Position extends PureComponent {
                //没有账号或者账号异常
                return;
            }
-        this.props.getPositionAllOrder(this, { mt4Id }, (data) => {
-            this.setState({ allList: data });
+        this.props.getPositionAllOrder(this,true, { mt4Id }, (data) => {
+            this.setState({ allList: data },()=>{
+                this.startWs(mt4Id);
+            });
         });
     }
 
@@ -72,7 +137,7 @@ class Position extends PureComponent {
             this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:0}, false);
 
 
-        },10000);
+        },5000);
     }
     componentWillUpdate(nextProps, nextState){
         var {fixTabs} = nextState;
@@ -200,7 +265,7 @@ class Position extends PureComponent {
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
                                 <PositionAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />
-                                <HangList data={hanglist} onItemClick={this.clickHang} />
+                                <HangList floatTrade={floatTrade} data={hanglist} onItemClick={this.clickHang} />
                                 <PositionAllList floatTrade={floatTrade} data={couplist} />
                             </LazyLoad>
                         </div>
@@ -220,7 +285,7 @@ function injectProps(state) {
     return { infoEquity,floatTrade };
 }
 function injectAction() {
-    return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder }
+    return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder ,updatePositionInfo,updatePositionList}
 }
 
 module.exports = connect(injectProps, injectAction())(Position);

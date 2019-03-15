@@ -63,6 +63,8 @@ class ImproveForm extends PureComponent {
             this.setState({errMsg:"请输入邮箱"});
         }else if( emailCode.length==0){
             this.setState({errMsg:"请输入邮箱验证码"});
+        }else if( address.length==0){
+            this.setState({errMsg:"请输入地址信息"});
         }else{
             this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
                 this.props.updateUserInfo(this,()=>{

@@ -17,22 +17,19 @@ class PositionAllList extends PureComponent {
 
     renderList() {
         var { data = [] ,floatTrade=[]} = this.props;
-        //   console.log("sch renderlist");
+         
         for(var i=0,l=data.length;i<l;i++){
-            var tmpTicket = data[i].ticket;
+
+            var prodCode = data[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
-                if(tmpTicket == floatTrade[j].ticket){
-                    var {marketPrice,
-                        marketTime,
-                        netProfit,
-                        }=floatTrade[j];
-                    data[i].marketPrice=marketPrice;
-                    data[i].marketTime=marketTime;
-                    data[i].netProfit=netProfit;
+
+                if(prodCode == floatTrade[j].symbol){
+                    data[i] = Object.assign({}, data[i],floatTrade[j]);
                     break;
                 }
             }
         }
+
         return data.map(item => {
             return <PositionItem1 data={item} onChoose={this.onItemclick} />
         })

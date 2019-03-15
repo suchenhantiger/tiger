@@ -13,8 +13,7 @@ class OpenSucc extends PureComponent{
     render(){
 
         var {onSure, onClose,data={}} = this.props;
-        var {buySell=true,prodName="--",prodCode="--",tradePrice="--",totalQty=0,money="--"} = data;
-
+        var {buySell=true,prodName="--",prodCode="--",tradePrice="--",totalQty=0,money,stopPrice,profitPrice} = data;
         return(
             <Alert title="开仓成功" onClose={onClose} onSure={onSure} text="查看交易记录">
                 <table className={this.mergeClassName(styles.table, styles.nowrap)}>
@@ -35,9 +34,19 @@ class OpenSucc extends PureComponent{
                         <td className="text-al-right">{totalQty}</td>
                     </tr>
                     <tr>
+                        <td className="c6">止损价格</td>
+                        <td className="text-al-right">{stopPrice?"$"+stopPrice:"未设置"}</td>
+                    </tr>
+                    <tr>
+                        <td className="c6">止盈价格</td>
+                        <td className="text-al-right">{profitPrice?"$"+profitPrice:"未设置"}</td>
+                    </tr>
+                    {money?<tr>
                         <td className="c6">占用资金</td>
                         <td className="text-al-right">${money}</td>
-                    </tr>
+                    </tr>:null  
+                    }
+                    
                 </table>
             </Alert>
         );

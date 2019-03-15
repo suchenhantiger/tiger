@@ -157,6 +157,7 @@ function Decrypt(data,AuthTokenKey,AuthTokenIv) {
 export function login(component, params,logintype,cb){
     return function(dispatch, state){
         dispatch(showLoading());
+        var {phone} =params;
         params.time = (new Date()).getTime();
         var key=""+Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,15));
         var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ5bl4BX70dt6X0mH1nN4Od4mZgYOaq7Zzlz3c8Au/Jiar3nP7NRetI5UP8mHxn5xhbjM9sOD0dbr2j1TjV/6sa8xlHLYN8QMjc1SU3wskMYUEup+OT7+w01IHeN1hxCcSZ3mMOEV5nHiJw6nn7yXvox7G48SRLwsgOOPXFm/C7QIDAQAB';
@@ -175,6 +176,7 @@ export function login(component, params,logintype,cb){
                 token,mt4Accs=[],
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
+                systemApi.setValue("phone",phone);
                 systemApi.setValue("avatarUrl",avatarUrl);
                 systemApi.setValue("clientId",clientId);
                 systemApi.setValue("email",email);

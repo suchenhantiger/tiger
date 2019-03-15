@@ -6,12 +6,15 @@ class MsgLogin extends PureComponent {
     //构造函数
     constructor(props) {
         super(props);
+        var phone = systemApi.getValue("phone");
+        var canSend = false;
+        if(phone && phone.length==11) canSend = true;
         this.state = {
-            phone:"",
+            phone:phone,
             validCode:"",
             errMsg:"",
             restTime:60,
-            canSend:false,
+            canSend:canSend,
             showBtn:true
         }
         this._interval;

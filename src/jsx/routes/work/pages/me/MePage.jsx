@@ -219,7 +219,7 @@ class MePage extends PageComponent {
                     </div>
                 </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
-{showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="完善资料后可开通体验账号" />:null}
+                {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="根据监管要求，请先实名认证" />:null}
                 {showAccount?<AccountSelect onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
                 {this.props.children}
             </div>

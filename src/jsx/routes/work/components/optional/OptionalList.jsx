@@ -41,12 +41,19 @@ class OptionalList extends PureComponent{
         WebSocketUtil.onClose=()=>{
          console.log("WebSocketClosed!");
         };
-        WebSocketUtil.onMessage=(data)=>{
+        WebSocketUtil.onMessage=(wsData)=>{
          //   console.log("sch optList ws new data");
 
-            data = JSON.parse(data);
-            console.log(data);
-            this.props.updatePrice(data);
+            wsData = JSON.parse(wsData);
+            // console.log(wsData);
+            for(var i=0,l=wsData.length;i<l;i++){
+                var {funCode,data} = wsData[i];
+                if(funCode=="301001"){
+                    this.props.updatePrice(data);
+                    break;
+                }
+            }
+      
         };
         WebSocketUtil.onError=(evt)=>{
          console.log("WebSocketError!");
@@ -85,15 +92,6 @@ class OptionalList extends PureComponent{
         return styles.frame;
     }
 
-    // digits: 3
-    // isClose: false
-    // maxVolume: 50
-    // minVolume: 0.01
-    // minstDec: 5
-    // prodCode: "CHFJPY"
-    // prodName: "瑞日"
-    // prodSize: 100000
-    // volumeStep: 0.01
     renderList(){
         var  {editable,OptionalListData,ProductList} = this.props;
          //   console.log("sch renderlist");
@@ -105,7 +103,7 @@ class OptionalList extends PureComponent{
             ask={item.ask} bid={item.bid} 
             digits={item.digits} maxVolume={item.maxVolume} 
             minVolume={item.minVolume} minstDec={item.minstDec} 
-            volumeStep={item.volumeStep} prodSize={item.prodSize}  
+            volumeStep={item.volumeStep} prodSize={item.prodSize}  marginPercentage={item.marginPercentage}
             
             />
         })
@@ -120,7 +118,9 @@ class OptionalList extends PureComponent{
                   upFresh={this.iscollUpfresh}
                   ref="scroll"
                 >
+                <ul>
                 {this.renderList()}
+                </ul>
                 
                 </IScrollView>
    

@@ -6,9 +6,9 @@ class LoginForm extends PureComponent {
     //构造函数
     constructor(props) {
         super(props);
-
+        var phone = systemApi.getValue("phone");
         this.state = {
-            phone:"",
+            phone:phone,
             validCode:"",
             errMsg:"",
             restTime:60,

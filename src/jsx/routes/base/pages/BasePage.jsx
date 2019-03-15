@@ -18,6 +18,10 @@ class BasePage extends PureComponent{
         this.props.initProductList(()=>{
             this.props.initOptionalList();
         });
+        var tigertoken = systemApi.getValue("tigertoken");
+        if(tigertoken  && tigertoken.length>0){
+            hashHistory.push("/work");
+        }
        // this.props.initAccountList();
       
     }

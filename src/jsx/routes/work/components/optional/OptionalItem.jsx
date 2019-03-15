@@ -5,6 +5,9 @@ class OptionalItem extends PureComponent{
     //构造函数
     constructor(props) {
         super(props);
+        this.state={
+            showBg:0
+        };
     }
 
     itemClick = ()=>{
@@ -12,27 +15,59 @@ class OptionalItem extends PureComponent{
     //    digits={item.digits} maxVolume={item.maxVolume} 
     //    minVolume={item.minVolume} minstDec={item.minstDec} 
     //    volumeStep={item.volumeStep} 
-        var {name,code,ask,bid,isClose,   digits,maxVolume,minVolume,minstDec,volumeStep}= this.props;
+        var {name,code,ask,bid,isClose, prodSize,  marginPercentage,digits,maxVolume,minVolume,minstDec,volumeStep}= this.props;
 
         hashHistory.push({
             pathname: "/work/optional/detail",
-            query: {prodName:name,prodCode:code,ask,bid,isClose,
+            query: {prodName:name,prodCode:code,ask,bid,isClose,prodSize,marginPercentage,
                 digits,maxVolume,minVolume,minstDec,volumeStep}
         });
     }
+
+    componentWillReceiveProps(nextProps){
+        // 自选股更新的时候重新发一次
+        var {bid,ask} = this.props;
+        var {bid:bid2} = nextProps;
+        if(bid2>bid){
+            this.setState({showBg:1});
+            setTimeout(()=>{
+                this.setState({showBg:0});
+            },300);
+        }else if(bid2<bid){
+            this.setState({showBg:2});
+            setTimeout(()=>{
+                this.setState({showBg:0});
+            },300);
+        }
+       // 
+     }
 
     //渲染函数
     render(){
   
 
-        var {editable,name,code,ask,bid,isClose,type} = this.props;
+        var {editable,name,code,ask,bid,isClose,type,digits} = this.props;
         var ask1,ask2,ask3,bid1,bid2,bid3;
+        var {showBg}=this.state;
         if(ask==null|| bid ==null || ask.length==0|| bid.length==0){
             ask2 ="--";
             bid2 ="--"
         }else{
             ask +="";
             bid +="";
+            var tmpDig=0;
+            if(ask.indexOf(".")>-1)
+                tmpDig = ask.split(".")[1].length;
+            for(var i=tmpDig;i<digits;i++){
+                ask+="0";
+            }
+
+            tmpDig=0;
+            if(bid.indexOf(".")>-1)
+                tmpDig = bid.split(".")[1].length;
+            for(var i=tmpDig;i<digits;i++){
+                bid+="0";
+            }
             if(type=="1" || type=="3"){
                 ask1=ask.slice(0,-3);
                 ask2=ask.slice(-3,-1);
@@ -49,13 +84,15 @@ class OptionalItem extends PureComponent{
             }
           
         }
-
-
-
-
+        var itembg = styles.item;
+        if(showBg ==1){
+            itembg +=" "+ styles.gradient_red;
+        }else if(showBg ==2){
+            itembg +=" "+ styles.gradient_green;
+        }
 
         return(
-            <li className={styles.item} onClick={this.itemClick}>
+            <li className={itembg} onClick={this.itemClick}>
                 <div className={styles.currency_name}>
                     <p className={this.mergeClassName("c3", styles.c3)}>{name}</p>
                     <p className={this.mergeClassName("c9", "font-arial")}>{code}</p>

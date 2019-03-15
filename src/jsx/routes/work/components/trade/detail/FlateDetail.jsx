@@ -9,12 +9,12 @@ class FlateDetail extends PureComponent{
     //构造函数
     constructor(props) {
         super(props);
+        
         this.state = {
             index:0,
             num:0.01,
             tradeDirect:"", //0-买 1-卖
             showIntro:false,
-
             showBuyDialog:false
         }
     }
@@ -73,20 +73,13 @@ class FlateDetail extends PureComponent{
     render(){
 
         var {showOpenSucc} = this.state;
-
-        var {infoEquity}=this.props;
-
-        var { equity = "--",
-        floatPL = "--",
-        freeMargin = "--",
-        ratioMargin = "--",
-        usedMargin = "--" } = infoEquity;
+        var {price} = this.props;
 
         var {
             buySell, clientId,
             commission,hangType,marketPrice="--",
-            marketTime,mt4Id,netProfit,openPrice="--",
-            openTime,orderId,
+            marketTime,mt4Id,openPrice="--",
+            openTime,orderId,prodSize,
             prodCode,prodName,profitPrice,stopPrice,
             swaps,ticket,tradeNo,followerId="--",tradedQty
         } = this.props.data;
@@ -99,6 +92,15 @@ class FlateDetail extends PureComponent{
         }else {
             openTime="--";
         }
+        var {ask,bid,exchangeRate} =price;
+        var netProfit=0;
+        var totalProfit = 0;
+        if(ask && bid){
+            marketPrice = buySell==0?ask:bid;
+            var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
+            netProfit = (pl)*exchangeRate*prodSize*tradedQty;
+            totalProfit = netProfit -swaps-commission;
+       }
 
         return(
             <div>
@@ -109,23 +111,23 @@ class FlateDetail extends PureComponent{
                           <p className={styles.c9 +" "+styles.mg_tp_10}>(包含手续费、库存费)</p>
                       </div>
                       <div className={styles.right}>
-                          <p className={styles.font32 +" "+styles.green}>${netProfit}</p>
+                          <p className={styles.font32 +" "+styles.green}>${totalProfit.toFixed(2)}</p>
                       </div>
                   </div>
                   <div className={styles.clear}></div>
                   <div className={styles.account_dt +" "+styles.bd_none +" "+styles.mg_tp_0}>
                       <ul>
                           <li>
-                              <p className={styles.font32}>${netProfit}</p>
-                              <p className={styles.c9 +" "+styles.mg_tp_10}>浮动盈亏</p>
+                              <p className={styles.font32}>${netProfit.toFixed(2)}</p>
+                              <p className={styles.c9 +" "+styles.mg_tp_10}>订单盈亏</p>
                           </li>
                           <li>
-                              <p className={styles.font32}>${equity}</p>
-                              <p className={styles.c9 +" "+styles.mg_tp_10}>账户净值</p>
+                              <p className={styles.font32}>${swaps}</p>
+                              <p className={styles.c9 +" "+styles.mg_tp_10}>库存费</p>
                           </li>
                           <li>
-                              <p className={styles.font32}>{ratioMargin}%</p>
-                              <p className={styles.c9 +" "+styles.mg_tp_10}>保证金比例</p>
+                              <p className={styles.font32}>${commission}</p>
+                              <p className={styles.c9 +" "+styles.mg_tp_10}>手续费</p>
                           </li>
                       </ul>
                   </div>
@@ -195,4 +197,4 @@ function injectAction(){
     return {openOrder};
 }
 
-module.exports = connect(injectProps,injectAction())(FlateDetail);
+module.exports = connect(null,injectAction())(FlateDetail);
