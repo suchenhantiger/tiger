@@ -181,15 +181,18 @@ class K_chart extends PureComponent{
         systemApi.log("k_chart render");
 
         var {timeL,showKchart} = this.state;
-        var {fullscreen,digits=2} = this.props;
+        var {fullscreen,digits=2,chartWidth=300,chartHeight=210} = this.props;
         var kdlist = this._kdata.slice(0);
+
+
+  
         return(
             <div style={{position:"relative",height:"100%"}}>
                 <div className={styles.k_frame} style={fullscreen?{marginRight:"0.9rem"}:{width:"100%"}}>
-                        <TimeChoose fullscreen={ fullscreen}timeL={timeL} onChoose={this.chooseTime}/>
+                        <TimeChoose  timeL={timeL} onChoose={this.chooseTime}/>
                         <div style={{height:"94%"}}>
                             {showKchart?
-                            <Chart digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore} />
+                            <Chart width={chartWidth} height ={chartHeight} digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore} />
                             :<div style={{position:"absolute",left: "38%"}}><SmallLoading /></div>
                             }
                         </div>

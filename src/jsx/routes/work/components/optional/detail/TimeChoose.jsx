@@ -16,7 +16,7 @@ class TimeChoose extends PureComponent{
     //渲染函数
     render(){
 
-         var {timeL,fullscreen} = this.props;
+         var {timeL} = this.props;
         let liSty= {color: "#999",
             textAlign: "center",
             float: "left",
@@ -31,7 +31,7 @@ class TimeChoose extends PureComponent{
             fontSize: "0.2rem"};
 
         return(
-            <div  style={fullscreen?{height:"5%",borderBottom: "1px solid #ccc"}:{height: "0.3rem", borderBottom: "1px solid #ccc"}}>
+            <div  style={{height:"0.3rem",borderBottom: "1px solid #ccc"}}>
                         <ul >
                             <li onClick={this.itemClick(1)} style={timeL==1?liStyOn:liSty}>1分</li>
                             <li onClick={this.itemClick(2)} style={timeL==2?liStyOn:liSty}>5分</li>

@@ -22,6 +22,8 @@ class TradeDetailPage extends PageComponent {
             price:{}
 
         }
+        this._widthCut = this.calculatePx(0.8,0);
+        this._heightCut = this.calculatePx(1.98,0);
     }
 
     componentDidMount() {
@@ -121,13 +123,30 @@ class TradeDetailPage extends PageComponent {
         var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
         var {prodName,prodCode,buySell,hangType,marketPrice} =this._prodInfo;
 
+        var devinfo = systemApi.getDeviceMessage();
+        var {screenHeight,
+            screenWidth} = devinfo;
+
+        
+        var chartWidth = screenWidth;
+        var chartHeight = 210;
+        if(fullscreen){
+            chartWidth = screenHeight -this._widthCut;
+            chartHeight = screenWidth - this._heightCut ;
+        }
+        console.log("sch chartWidth:"+chartWidth);
+        console.log("sch chartHeight:"+chartHeight);
+
 
         return (
             <FullScreenView>
                 {fullscreen ? null : <AppHeader headerName={(buySell==0?"买 ":"卖 ")+prodName + " " + prodCode} theme="white" />}
                 <Content >
                     <div className={fullscreen ? styles.kchatFull : styles.kchat}>
-                        <K_Chart updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={prodCode} />
+                        <K_Chart 
+                        chartWidth = {chartWidth}
+                        chartHeight = {chartHeight}
+                        updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={prodCode} />
                     </div>
                     {true  || fullscreen ? null : <div style={{ margin: "0.3rem", overflow: "hidden" }}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>

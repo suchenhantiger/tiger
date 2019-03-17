@@ -43,7 +43,7 @@ class OptionalEditList extends PureComponent {
     }
 
     deleteOne = (prodCode)=>(e)=>{
-        alert(prodCode);
+      
     }
 
     getItemElement=()=>{
@@ -51,9 +51,9 @@ class OptionalEditList extends PureComponent {
             var {prodName,prodCode} =data;
             return (
                 <li className={styles.op_sort_li}>
-                    <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
+                    {/* <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
                         <div className={styles.icon_delete_red}></div>
-                    </div>
+                    </div> */}
                     <div className={styles.currency_name}>
                         <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
                         <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>

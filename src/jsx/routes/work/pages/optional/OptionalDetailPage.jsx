@@ -29,6 +29,9 @@ class OptionalDetailPage extends PageComponent{
         this._proInfo = {
             digits,maxVolume,minVolume,minstDec,volumeStep,prodSize,marginPercentage
         };
+        this._widthCut = this.calculatePx(0.8,0);
+        this._heightCut = this.calculatePx(1.98,0);
+        // console.log(this._widthCut + "width sch height"+ this._heightCut);
     }
 
     componentDidMount(){
@@ -81,13 +84,30 @@ class OptionalDetailPage extends PageComponent{
         systemApi.log("OptionalDetailPage render");
 
         var {index,fullscreen,price} = this.state;
+        var devinfo = systemApi.getDeviceMessage();
+        var {screenHeight,
+            screenWidth} = devinfo;
+
+        
+        var chartWidth = screenWidth;
+        var chartHeight = 210;
+        if(fullscreen){
+            chartWidth = screenHeight -this._widthCut;
+            chartHeight = screenWidth - this._heightCut ;
+        }
+        console.log("sch chartWidth:"+chartWidth);
+        console.log("sch chartHeight:"+chartHeight);
+        
+        
         return (
             <FullScreenView>
                 {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="transparent"/>}
                 <Content coverHeader={true}>
                     {fullscreen?<ProdInfoFullscreen price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
-                        <K_Chart 
+                        <K_Chart
+                        chartWidth = {chartWidth}
+                        chartHeight = {chartHeight}
                         digits={this._digits}
                         updatePrice={this.updatePrice} 
                         fullscreen={fullscreen} 

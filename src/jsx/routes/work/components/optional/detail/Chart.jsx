@@ -225,11 +225,11 @@ class CandleStickChartPanToLoadMore extends React.Component {
 
     
 	render() {
-		const { width, ratio ,fullscreen} = this.props;
+		const { width, ratio ,fullscreen,height=250} = this.props;
         const { data, ema26,xExtents, ema12, macdCalculator, xScale, xAccessor, displayXAccessor } = this.state;
-        const height = 250;
+        // const height = 250;
 
-        var margin = {left: 5, right: 40, top: 20, bottom: 30 };
+        var margin = {left: 5, right: 20, top: 2, bottom: 30 };
         var gridHeight = height - margin.top - margin.bottom;
         var gridWidth = width - margin.left - margin.right;
 
@@ -244,13 +244,16 @@ class CandleStickChartPanToLoadMore extends React.Component {
             tickStrokeDasharray: 'ShortDot',
             tickStrokeOpacity: 0.2,
             tickStrokeWidth: 1
-        };
+		};
+
+		
+		
 		return (
             <div style={{height:"100%"}}>
 			<ChartCanvas 
                     ratio={ratio} 
                     width={width} 
-                    height={fullscreen?255:210}
+                    height={height}
 					margin={{ left: 5, right: 45, top: 5, bottom: 10 }} type={"hybrid"}
 					seriesName="MSFT"
                     data={data}
@@ -298,7 +301,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 				</Chart>
 				{fullscreen?<Chart id={2} height={60}
 						yExtents={macdCalculator.accessor()}
-						origin={(w, h) => {console.log(w);console.log(h);return [0, h-60]}} padding={{ top: 5, bottom: 5 }} >
+						origin={(w, h) => {return [0, h-60]}} padding={{ top: 5, bottom: 5 }} >
 					<YAxis axisAt="right" ozoomEnabled={false} rient="right" ticks={2} />
 
 					{/* <MouseCoordinateX
