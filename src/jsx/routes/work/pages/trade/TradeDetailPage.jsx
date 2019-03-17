@@ -18,7 +18,8 @@ class TradeDetailPage extends PageComponent {
             index: 0,
             fullscreen: false,
             showOpenSucc:false,
-            editProfit:false
+            editProfit:false,
+            price:{}
 
         }
     }
@@ -27,6 +28,14 @@ class TradeDetailPage extends PageComponent {
         //
 
     }
+
+
+    componentWillUnmount(){
+        //触发列表页的websocket
+        Event.fire("ws_trade_list");
+        
+    }
+
     openSucc = ()=>{
         this.setState({showOpenSucc:true});
     }
@@ -111,9 +120,7 @@ class TradeDetailPage extends PageComponent {
 
         var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
         var {prodName,prodCode,buySell,hangType,marketPrice} =this._prodInfo;
-        //hangType需要进一步判断
-        var detailType = true;
-        if(hangType == 2 ||hangType == 3  ||hangType == 4 ||hangType == 5 ) detailType=false;
+
 
         return (
             <FullScreenView>
@@ -122,20 +129,14 @@ class TradeDetailPage extends PageComponent {
                     <div className={fullscreen ? styles.kchatFull : styles.kchat}>
                         <K_Chart updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={prodCode} />
                     </div>
-                    {fullscreen ? null : <div style={{ margin: "0.3rem", overflow: "hidden" }}>
+                    {true  || fullscreen ? null : <div style={{ margin: "0.3rem", overflow: "hidden" }}>
                         <div className={styles.icon_full_screen} onClick={this.fullScreenToggle}></div>
                     </div>}
                     <FlateDetail price={price} data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
-                    {detailType?
-                        <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>:
-                        <div className={styles.bt_btn_50}> <span className={styles.nowprice} > 现价:{marketPrice}</span></div>
-                    }
+                    <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>
+                    <div className={styles.bt_btn_50}><button  onClick={this.flatClick(0)} >平仓</button></div>
                        
-                       {detailType?
-                       <div className={styles.bt_btn_50}><button  onClick={this.flatClick(0)} >平仓</button></div>:
-                       <div className={styles.bt_btn_50}><button  onClick={this.flatClick(1)} >删除</button></div>
-                    } 
                     </div>
                 </Content>
 
@@ -144,7 +145,7 @@ class TradeDetailPage extends PageComponent {
                 ):null}
 
                 {editProfit?(
-                    <StopProfitPage prodInfo={this._prodInfo} onClose={this.closeEdit} onSure={this.commitEdit}/>
+                    <StopProfitPage price={price} prodInfo={this._prodInfo} onClose={this.closeEdit} onSure={this.commitEdit}/>
                 ):null}
 
 

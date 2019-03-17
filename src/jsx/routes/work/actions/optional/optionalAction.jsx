@@ -43,6 +43,23 @@ export function updateProduct(component, cb){
     }
 }
 
+export function getProdInfo(component,params, cb){
+    return function(dispatch, state){
+
+        params.clientId = systemApi.getValue("clientId");
+        component.requestJSON("optionalstock/getProductByProdCode",params).done((data)=>{
+            // console.log(data);
+            if(data && data.length>0){
+                cb && cb (data[0]);
+            }
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            //cb && cb();
+        });
+    }
+}
+
+
 //获取客户列表
 export function getOptionalList(component, params,updateList, cb){
     return function(dispatch, state){

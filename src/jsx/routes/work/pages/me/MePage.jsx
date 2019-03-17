@@ -175,8 +175,8 @@ class MePage extends PageComponent {
                             <div className={styles.head_portrait}><img src="./images/me/img03.png" alt="" /></div>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
-                                <p>
-                                    <span className={this.mergeClassName("blue", "left")} onClick={this.showAccount}>{accName}</span>
+                                <p onClick={this.showAccount}>
+                                    <span className={this.mergeClassName("blue", "left")} >{accName}</span>
                                     <span className={this.mergeClassName("c9", "left")}>({mt4Id?mt4Id:"--"})</span>
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>

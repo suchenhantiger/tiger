@@ -10,7 +10,6 @@ module.exports = function tradeReducer(state,action){
         });
         
       }else if(type == "QUERY_POSITION_LIST_DATA"){
-          console.log("sch");
         return Object.assign({},state,{
             floatTrade:action.data
         });

@@ -9,8 +9,13 @@ class PositionItem1 extends PureComponent{
 
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
-        var {onChoose,data}= this.props;
-        onChoose && onChoose(data);
+        var {data}= this.props;
+        console.log(data);
+        hashHistory.push({
+            pathname:"/work/trade/historydetail",
+            query:{historyInfo:JSON.stringify(data)}
+        })
+        
     }
 
     //渲染函数

@@ -23,8 +23,6 @@ class StopProfitPage extends PageComponent {
          this._digits = +digits;
          this._valueStep = Math.pow(10,-this._digits);
          this._minDis = (+minstDec) * this._valueStep;
-console.log("sch");
-         console.log(this.props.prodInfo);
 
     }
     //获取页面名称
@@ -194,12 +192,16 @@ console.log("sch");
 
         var {stopPrice, profitPrice} = this.state;
 
-        var {prodInfo}=this.props;
+        var {prodInfo,price}=this.props;
         var { 
            marketPrice,
             openPrice="--"
         }=prodInfo;
 
+        var {ask, bid} =price
+        if(ask && bid){
+            marketPrice = this._buySell==1?ask:bid;
+       }
         return (
             <FullScreenView>
                 <AppHeader onBackClick={this.closeEdit} headerName="修改止盈止损" />

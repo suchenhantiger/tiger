@@ -3,7 +3,7 @@ import { getPositionInfo, updatePositionInfo,updatePositionList,getPositionAllOr
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import PositionAllList from "./PositionAllList";
 import HangList from "./HangList";
-
+import AccountSelect from '../../components/me/AccountSelect';
 import styles from './css/position.less';
 
 class Position extends PureComponent {
@@ -14,53 +14,30 @@ class Position extends PureComponent {
         this.state = {
             subIndex: 0,
             allList: {},
-            fixTabs: false
+            fixTabs: false,
+            showAccount:false
         }
         this.shouldFresh = false;
+        this._mt4Id = systemApi.getValue("mt4Id");
+        this._mt4AccType = systemApi.getValue("mt4AccType");
+        this._prodsStr = "";
     }
+
+
 
     componentDidMount() {
-        //持仓详情
-        var mt4Id = systemApi.getValue("mt4Id");
-        if (mt4Id == null || mt4Id.length == 0) {
-            //没有账号或者账号异常
 
-            return;
-        }
-
-        this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, false, () => {
-
-           // this.beginPolling();
-            this.props.getPositionAllOrder(this,false, { mt4Id }, (data) => {
-                this.setState({ allList: data },()=>{
-                   // console.log(data);
-                    var {hanglist = [], couplist = [], orderlist = [] } = data;
-                    var prodList=[];
-                    for(var i=0,l=orderlist.length;i<l;i++){
-                        var {prodCode}=orderlist[i];
-                        prodList.push(prodCode);
-                    }
-                    for(var i=0,l=hanglist.length;i<l;i++){
-                        var {prodCode}=hanglist[i];
-                        prodList.push(prodCode);
-                    }
-                    for(var i=0,l=couplist.length;i<l;i++){
-                        var {prodCode}=couplist[i];
-                        prodList.push(prodCode);
-                    }
-                    this.startWs(mt4Id,prodList.join(","));
-                });
-            });
-        },()=>{
-            //失败回调，也需要轮巡
-         //   this.beginPolling();
-        });
+        this.refreshAllData();
+       
         Event.register("refresh_order_list",this.refreshOrderList);
+        Event.register("ws_trade_list",this.wsPush);
     }
 
-    startWs =(mt4Id,prodCode)=>{
 
-        var reqStr = JSON.stringify({"funCode":"301003","mt4Id":mt4Id,prodCode});
+
+    startWs =()=>{
+
+        var reqStr = JSON.stringify({"funCode":"301003","mt4Id":this._mt4Id,prodCode:this._prodsStr});
         //重置回调函数
         WebSocketUtil.onClose=()=>{
             console.log("301003 close");
@@ -75,6 +52,8 @@ class Position extends PureComponent {
                     this.updateFloat(data);
                 }else if(funCode=="301002"){
                     this.updatePosition(data);
+                }else if(funCode=="3010031"){
+                    this.refreshOrderList();
                 }
             }
 
@@ -104,16 +83,72 @@ class Position extends PureComponent {
         
     }
 
+    refreshAllData =()=>{
+
+         //持仓详情
+         var mt4Id = this._mt4Id;
+         if (mt4Id == null || mt4Id.length == 0) {
+             //没有账号或者账号异常
+ 
+             return;
+         }
+ 
+         this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, false, () => {
+ 
+            // this.beginPolling();
+             this.props.getPositionAllOrder(this,false, { mt4Id }, (data) => {
+                 this.setState({ allList: data },()=>{
+                    // console.log(data);
+                     var {hanglist = [], couplist = [], orderlist = [] } = data;
+                     var prodList=[];
+                     for(var i=0,l=orderlist.length;i<l;i++){
+                         var {prodCode}=orderlist[i];
+                         prodList.push(prodCode);
+                     }
+                     for(var i=0,l=hanglist.length;i<l;i++){
+                         var {prodCode}=hanglist[i];
+                         prodList.push(prodCode);
+                     }
+                     for(var i=0,l=couplist.length;i<l;i++){
+                         var {prodCode}=couplist[i];
+                         prodList.push(prodCode);
+                     }
+                     this._prodsStr = prodList.join(",");
+                     this.startWs();
+                 });
+             });
+         },()=>{
+             //失败回调，也需要轮巡
+          //   this.beginPolling();
+         });
+
+    }
+
     refreshOrderList=()=>{
            //持仓详情
-           var mt4Id = systemApi.getValue("mt4Id");
-           if (mt4Id == null || mt4Id.length == 0) {
-               //没有账号或者账号异常
-               return;
-           }
+        var mt4Id = this._mt4Id;
+        if (mt4Id == null || mt4Id.length == 0) {
+            //没有账号或者账号异常
+            return;
+        }
         this.props.getPositionAllOrder(this,true, { mt4Id }, (data) => {
             this.setState({ allList: data },()=>{
-                this.startWs(mt4Id);
+                var {hanglist = [], couplist = [], orderlist = [] } = data;
+                var prodList=[];
+                for(var i=0,l=orderlist.length;i<l;i++){
+                    var {prodCode}=orderlist[i];
+                    prodList.push(prodCode);
+                }
+                for(var i=0,l=hanglist.length;i<l;i++){
+                    var {prodCode}=hanglist[i];
+                    prodList.push(prodCode);
+                }
+                for(var i=0,l=couplist.length;i<l;i++){
+                    var {prodCode}=couplist[i];
+                    prodList.push(prodCode);
+                }
+                this._prodsStr = prodList.join(",");
+                this.startWs();
             });
         });
     }
@@ -123,13 +158,19 @@ class Position extends PureComponent {
         super.componentWillUnmount();
         clearInterval(this._interval);
         Event.unregister("refresh_order_list",this.refreshOrderList);
+        Event.unregister("ws_trade_list",this.wsPush);
+    }
+
+    wsPush = ()=>{
+        if(this._mt4Id && this._prodsStr)
+            this.startWs();
     }
 
     beginPolling = ()=>{
 
         this._interval = setInterval(()=>{
                         //持仓详情
-            var mt4Id = systemApi.getValue("mt4Id");
+            var mt4Id = this._mt4Id;
             if (mt4Id == null || mt4Id.length == 0) {
                 //没有账号或者账号异常
                 return;
@@ -172,7 +213,7 @@ class Position extends PureComponent {
  
 
         hashHistory.push({
-            pathname: "/work/trade/flatdetail",
+            pathname: "/work/trade/hangdetail",
             query: { prodInfo: JSON.stringify(data) }
         });
 
@@ -201,11 +242,28 @@ class Position extends PureComponent {
             </div>
         )
     }
+//切换账号
+    showAccount = ()=>{
+        this.setState({showAccount:true});
+    }
+
+    closeAccount = ()=>{
+        this.setState({showAccount:false});
+    }
+
+    selectAccount = (mt4AccType, mt4Id)=>{
+        systemApi.setValue("mt4AccType", mt4AccType);
+        systemApi.setValue("mt4Id", mt4Id);
+        this._mt4Id =mt4Id;
+        this._mt4AccType = mt4AccType;
+        this.setState({showAccount:false});
+        this.refreshAllData();
+    }
 
     //渲染函数
     render() {
 
-        var { subIndex, allList, fixTabs } = this.state;
+        var { subIndex, allList, fixTabs ,showAccount} = this.state;
         var {infoEquity={},floatTrade=[]} =this.props;
         var { hanglist = [], couplist = [], orderlist = [] } = allList;
         var { equity = "--",
@@ -213,7 +271,19 @@ class Position extends PureComponent {
             freeMargin = "--",
             ratioMargin = "--",
             usedMargin = "--" } = infoEquity;
+        
 
+
+        
+        var accName = "--";
+        if(this._mt4Id ==null || this._mt4Id.length==0 ){
+            //没有账号或者账号异常
+
+        }else if(this._mt4AccType =="0"){
+            accName ="体验金账户";
+        }else if(this._mt4AccType=="1"){
+            accName ="交易账户";
+        }
 
         return (
             <div>
@@ -224,15 +294,15 @@ class Position extends PureComponent {
                     <div>
                         <div className={styles.optional_detail}>
                             <div className={styles.currency_name}>
-                                <p>
-                                    <span className={this.mergeClassName("blue", "left")}>体验金账号</span>
-                                    <span className={this.mergeClassName("c9", "left")}>(自主交易)</span>
+                                <p onClick={this.showAccount}>
+                                    <span className={this.mergeClassName("blue", "left")} >{accName}</span>
+                                    <span className={this.mergeClassName("c9", "left")}>({this._mt4Id?this._mt4Id:"--"})</span>
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
                                 <p className={this.mergeClassName("c3", "font48", "mg-tp-42", styles.c3)}>${floatPL}</p>
                             </div>
                             <div className={"right"}>
-                                <div className={styles.icon_account}>切换</div>
+                                <div className={styles.icon_account} onClick={this.showAccount}>切换</div>
                             </div>
                             <div className={"clear"}></div>
                             <div className={"mg-lr-30"}>
@@ -275,6 +345,8 @@ class Position extends PureComponent {
                 {fixTabs ? (
                     <div className={styles.fixed}>{this.renderTabs()}</div>
                 ) : null}
+                {showAccount?<AccountSelect onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
+
             </div>
         );
     }

@@ -8,6 +8,14 @@ class ProdInfo extends PureComponent{
         super(props);
     }
 
+    gotoIntro =()=>{
+        var {prodName,prodCode} = this.props;
+        hashHistory.push({
+            pathname:"/work/optional/detail/intro",
+            query:{prodName,prodCode}
+        })
+    }
+
 
     //渲染函数
     render(){
@@ -23,7 +31,7 @@ class ProdInfo extends PureComponent{
                                 <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
                                 <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>
                             </div>
-                            <div className={styles.icon_intro}>?</div>
+                            <div className={styles.icon_intro} onClick={this.gotoIntro}>?</div>
                             <div className={styles.optional_dt_price}>
                                 <div className={this.mergeClassName("font56", "red", styles.font56)}>{bid}</div>
                                 <div className={this.mergeClassName("font24", (updownratio>=0?"red":"green"), "text-al-right")}>

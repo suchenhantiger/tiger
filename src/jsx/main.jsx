@@ -24,7 +24,9 @@ ReactDOM.render(
                     <IndexRedirect to="documentary"/>
                     <Route path="optional" getComponent={require('./routes/work/config/optional/optional')(store)}>
                         <Route path="add" getComponent={require('./routes/work/config/optional/add')(store)}></Route>
-                        <Route path="detail" getComponent={require('./routes/work/config/optional/optionaldetail')(store)}></Route>
+                        <Route path="detail" getComponent={require('./routes/work/config/optional/optionaldetail')(store)}>
+                            <Route path="intro" getComponent={require('./routes/work/config/optional/intro')(store)}></Route>
+                        </Route>
                     </Route>
                     <Route path="documentary" getComponent={require('./routes/work/config/documentary/documentary')(store)}>
                         <Route path="detail" getComponent={require('./routes/work/config/documentary/detail')(store)}></Route>
@@ -34,6 +36,7 @@ ReactDOM.render(
                             <Route path="stopprofit" getComponent={require('./routes/work/config/trade/stopprofit')(store)}></Route>
                         </Route>
                         <Route path="hangdetail" getComponent={require('./routes/work/config/trade/hangdetail')(store)}></Route>
+                        <Route path="historydetail" getComponent={require('./routes/work/config/trade/historydetail')(store)}></Route>
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>

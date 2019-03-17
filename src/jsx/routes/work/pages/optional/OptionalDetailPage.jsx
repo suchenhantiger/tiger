@@ -36,6 +36,14 @@ class OptionalDetailPage extends PageComponent{
   
     }
 
+    componentWillUnmount(){
+        //触发列表页的websocket
+        Event.fire("ws_optional_list");
+        
+    }
+
+
+
     tabChange = (index)=>()=>{
         this.setState({index});
     }
@@ -46,15 +54,17 @@ class OptionalDetailPage extends PageComponent{
     }
     
     fullScreenToggle =()=>{
-
-        this.setState({fullscreen:true},()=>{
-            window.screen.orientation.lock('landscape');
-        });
+        window.screen.orientation.lock('landscape');
+        setTimeout(()=>{
+            this.setState({fullscreen:true});
+        },500);
+        
     }
     closeFullScreen =()=>{
-        this.setState({fullscreen:false},()=>{
-            window.screen.orientation.lock('portrait');
-        });
+        window.screen.orientation.lock('portrait');
+        setTimeout(()=>{
+            this.setState({fullscreen:false});
+        },500);
     }
 
     renderHeader(){
@@ -96,6 +106,7 @@ class OptionalDetailPage extends PageComponent{
                         prodName={this._prodName} prodCode={this._prodCode} />
                     </LazyLoad>}
                 </Content>
+                {this.props.children}
             </FullScreenView>
         );
     }

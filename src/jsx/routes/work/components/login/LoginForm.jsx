@@ -8,7 +8,7 @@ class LoginForm extends PureComponent {
         super(props);
         var phone = systemApi.getValue("phone");
         this.state = {
-            phone:phone,
+            phone:phone?phone:"",
             validCode:"",
             errMsg:"",
             restTime:60,

@@ -10,7 +10,7 @@ class MsgLogin extends PureComponent {
         var canSend = false;
         if(phone && phone.length==11) canSend = true;
         this.state = {
-            phone:phone,
+            phone:phone?phone:"",
             validCode:"",
             errMsg:"",
             restTime:60,

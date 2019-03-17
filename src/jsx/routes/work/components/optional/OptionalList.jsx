@@ -21,8 +21,22 @@ class OptionalList extends PureComponent{
      //   var {OptionalList=[]} =this.props;
         this._optLength = this.props.OptionalListData.length;
         this.sendWS(this.props);
-        // console.log("sch componentDidMount send");
+        Event.register("ws_optional_list",this.eventSendWS);
     }
+
+    componentWillUnmount(){
+        Event.unregister("ws_optional_list",this.eventSendWS);
+        
+    }
+
+    eventSendWS = ()=>{
+        this.sendWS(this.props);
+    }
+
+
+
+
+
     sendWS=(curProps)=>{
         var {OptionalList=[]}=curProps;
           //进入自选股开始推送，离开时关闭推送

@@ -76,7 +76,7 @@ class FlateDetail extends PureComponent{
         var {price} = this.props;
 
         var {
-            buySell, clientId,
+            buySell, clientId,margin,
             commission,hangType,marketPrice="--",
             marketTime,mt4Id,openPrice="--",
             openTime,orderId,prodSize,
@@ -96,7 +96,7 @@ class FlateDetail extends PureComponent{
         var netProfit=0;
         var totalProfit = 0;
         if(ask && bid){
-            marketPrice = buySell==0?ask:bid;
+            marketPrice = buySell==1?ask:bid;
             var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
             netProfit = (pl)*exchangeRate*prodSize*tradedQty;
             totalProfit = netProfit -swaps-commission;
@@ -160,7 +160,7 @@ class FlateDetail extends PureComponent{
                           </td>
                           <td>
                               <span className={styles.fl_label}>交易金额</span>
-                              <span >{false?"--":"--"}</span>
+                              <span >${margin?margin:"--"}</span>
                           </td>
                       </tr>
                       <tr>
