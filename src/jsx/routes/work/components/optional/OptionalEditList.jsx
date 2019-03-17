@@ -42,7 +42,7 @@ class OptionalEditList extends PureComponent {
         });
     }
 
-    deleteOne = (prodCode)=>(e)=>{
+    deleteOne = (prodCode)=>()=>{
         alert(prodCode);
     }
 
