@@ -21,10 +21,6 @@ class OptionalEditList extends PureComponent {
         this._Change=false;
     }
 
-    componentDidMount() {
-        // this.props.getOptionalList(this, {}, this.updateList);
-    }
-
     updateList = (list) => {
         this.setState({ list })
     }
@@ -46,7 +42,7 @@ class OptionalEditList extends PureComponent {
         });
     }
 
-    deleteOne = (prodCode)=>()=>{
+    deleteOne = (prodCode)=>(e)=>{
         alert(prodCode);
     }
 
@@ -55,9 +51,9 @@ class OptionalEditList extends PureComponent {
             var {prodName,prodCode} =data;
             return (
                 <li className={styles.op_sort_li}>
-                    {/* <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
+                    <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
                         <div className={styles.icon_delete_red}></div>
-                    </div> */}
+                    </div>
                     <div className={styles.currency_name}>
                         <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
                         <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>
@@ -88,7 +84,7 @@ class OptionalEditList extends PureComponent {
             {SortableList} = this;
 
         return (
-            <SortableList items={list} onSortEnd={this.onSortEnd} />
+            <SortableList items={list} onSortEnd={this.onSortEnd} pressDelay={50} />
         );
     }
 
