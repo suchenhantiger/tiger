@@ -34,8 +34,8 @@ class TradeHistory extends PureComponent {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        var { fixTabs } = nextState;
-        if (this.state.fixTabs == fixTabs) {
+        var { fixTabs, subIndex} = nextState;
+        if (this.state.fixTabs == fixTabs || this.state.subIndex != subIndex) {
             this.shouldFresh = true;
         }
     }
@@ -43,7 +43,9 @@ class TradeHistory extends PureComponent {
     componentDidUpdate() {
         var { iscroll } = this.refs;
         if (this.shouldFresh) {
-            iscroll && iscroll.refresh()
+            setTimeout(function(){
+                iscroll && iscroll.refresh()
+            },50);
         }
         this.shouldFresh = false;
     }
