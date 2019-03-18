@@ -154,6 +154,84 @@ function Decrypt(data,AuthTokenKey,AuthTokenIv) {
     return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
+
+export function updateToken(component,cb){
+    return function(dispatch, state){
+        var params = {};
+        var key=""+Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,15));
+        var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ5bl4BX70dt6X0mH1nN4Od4mZgYOaq7Zzlz3c8Au/Jiar3nP7NRetI5UP8mHxn5xhbjM9sOD0dbr2j1TjV/6sa8xlHLYN8QMjc1SU3wskMYUEup+OT7+w01IHeN1hxCcSZ3mMOEV5nHiJw6nn7yXvox7G48SRLwsgOOPXFm/C7QIDAQAB';
+        var encrypt = new JSEncrypt();
+        // console.log(key);
+        encrypt.setPublicKey(PUBLIC_KEY);
+        params.token =  encrypt.encrypt(key);
+        params.clientId = systemApi.getValue("clientId");
+        // console.log('加密后数据:%o',params.token);
+
+        component.requestJSON("users/updateToken",params).done((data)=>{
+            // dispatch(hideLoading());
+            var { avatarUrl,clientId,
+                email,emailIsActive,
+                freeze,isFinger,isPushMsg,isReal,
+                nickname,tel,telActive,syntoken,
+                token,mt4Accs=[],
+                expireTime} = data;
+                token = Decrypt(token,key,"20190315mcappaes");
+                systemApi.setValue("tigertoken",token);
+                //systemApi.setValue("phone",phone);
+                // systemApi.setValue("avatarUrl",avatarUrl);
+                // systemApi.setValue("clientId",clientId);
+                // systemApi.setValue("email",email);
+                systemApi.setValue("emailIsActive",emailIsActive);
+                systemApi.setValue("freeze",freeze);
+                systemApi.setValue("isFinger",isFinger);
+                // systemApi.setValue("syntoken",syntoken);
+                // systemApi.setValue("isPushMsg",isPushMsg);
+                systemApi.setValue("isReal",isReal);
+                // systemApi.setValue("nickname",nickname);
+                // systemApi.setValue("tel",tel);
+                systemApi.setValue("telActive",telActive);
+                // systemApi.setValue("expireTime",expireTime);
+                // if(mt4Accs && mt4Accs.length>0){
+                //     var currAcc = systemApi.getValue("mt4Id");
+                //     var isChange = true;
+                //     for(var item in mt4Accs){
+                //         if(currAcc == mt4Accs[item].mt4Id){//不需要更新
+                //             isChange=false;
+                //             break;
+                //         }
+                //     }
+                //     if(isChange)
+                //     {
+                //         systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
+                //         systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
+                //     }
+
+                // }else{
+                //     //没有账号
+                //     systemApi.removeValue("mt4Id");
+                //     systemApi.removeValue("mt4AccType");
+
+                // }              
+              
+                // if(freeze==0){
+                //     dispatch(showMessage(ERROR, "账号已冻结，请联系客服"));
+                // }else if(freeze==1){
+                //     hashHistory.push("/login/setpwd");
+                // }else if(freeze==9){
+                //     hashHistory.replace("/work");
+                // }else{
+                //     hashHistory.replace("/work");
+                // }
+                
+            cb && cb();
+        }).fail((data)=>{
+            // dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
 export function login(component, params,logintype,cb){
     return function(dispatch, state){
         dispatch(showLoading());

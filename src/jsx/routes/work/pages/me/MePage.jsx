@@ -100,9 +100,18 @@ class MePage extends PageComponent {
     }
 
     addRealAccount=()=>{
-        hashHistory.push("/work/me/certification");
-        //this.setState({showReal:true});
+       // hashHistory.push("/work/me/certification");
+       let isReal = systemApi.getValue("isReal"); 
+       if(isReal ==2){
+            hashHistory.push("/work/me/checking");
+       }else
+            this.setState({showReal:true});
     }
+
+    gotoReal=()=>{
+         hashHistory.push("/work/me/certification");
+         this.setState({showReal:false});
+     }
 
     closeRealConfirm =()=>{
         this.setState({showReal:false});

@@ -117,6 +117,11 @@ class SimpleDetail extends PureComponent{
         this.setState({showBuyDialog:false});
     }
 
+    numChange = (e) => {
+        var { value } = e.target;
+        this.setState({ num: (+value).toFixed(this._volumeDigits) });
+    }
+
     //渲染函数
     render(){
 
@@ -150,7 +155,10 @@ class SimpleDetail extends PureComponent{
                         <h1>交易手数</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick}></div>
-                            <div className={styles.icon_num}>{num}</div>
+                            <div className={styles.icon_num}>
+                                <input type="number" value={num} onChange={this.numChange} />
+                            </div>
+                             
                             <div className={styles.icon_plus} onClick={this.plusClick}></div>
                         </div>
                         <div className={styles.tran_total}>

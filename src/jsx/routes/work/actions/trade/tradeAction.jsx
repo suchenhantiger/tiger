@@ -8,10 +8,10 @@ export function getPositionInfo(component,params,loading, update,fail){
         params.clientId =clientId;
         component.requestJSON("users/getMt4Message",params).done((data)=>{
             if(loading) dispatch(hideLoading());
-            // var {infoEquity} = data;
+            var {infoEquity} = data;
            // update && update(data);
            update && update();
-           dispatch({type:"QUERY_POSITION_DATA",data});
+           dispatch({type:"QUERY_POSITION_DATA",data:infoEquity});
         }).fail((data)=>{
             if(loading) dispatch(hideLoading());
             fail && fail();

@@ -5,6 +5,7 @@ module.exports = function tradeReducer(state,action){
         floatTrade:[],
     };
     if(type == "QUERY_POSITION_DATA"){
+        console.log(action.data);
         return Object.assign({},state,{
             infoEquity:action.data
         });
