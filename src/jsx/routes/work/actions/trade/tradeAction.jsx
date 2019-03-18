@@ -124,7 +124,21 @@ export function getHistoryList(component, params, isAppend, updateList,cb){
     }
 }
 
-
+//获取资金记录列表
+export function getFundRecordList(component, params, isAppend, updateList,cb){
+    var {pageSize} = params;
+    return function(dispatch, state){
+        component.requestJSON("bank/queryAccFundRecord",params).done((data)=>{
+            var {list} = data,
+                hasMore = list.length==pageSize;
+            updateList && updateList(isAppend, list);
+            cb && cb(null, hasMore);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    }
+}
 export function flatOrder(component,params,cb ){
     return function(dispatch, state){
         dispatch(showLoading());

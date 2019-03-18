@@ -3,6 +3,7 @@ import { getHistoryInfo, } from "../../actions/trade/tradeAction";
 
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import HistoryList from './HistoryList';
+import AccFundRecordList from './AccFundRecordList';
 
 import styles from './css/tradeHistory.less';
 
@@ -139,7 +140,7 @@ class TradeHistory extends PureComponent {
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
                                 <HistoryList ref="historyList"/>
-                                <HistoryList />
+                                <AccFundRecordList />
                             </LazyLoad>
                         </div>
                     </div>
