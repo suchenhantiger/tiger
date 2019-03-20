@@ -1,17 +1,14 @@
 li.item{
-    float: left;
+	position: relative;
+    display: inline-block;
     margin-right: .3rem;
-    background: #fff;
-    border-radius: .1rem;
-    padding: 0 0 .4rem 0;
     width: 2.6rem;
-    box-shadow: 0 0 0.38rem rgba(0,0,0,.1);
 }
 .bk_pic{
-	margin-bottom: .1rem;
-	margin-top: -.44rem;
-	margin-left:auto;
-	margin-right: auto;
+	position: absolute;
+	top:0;
+	left:50%;
+	margin-left: -.44rem;
 	width: .88rem;
 	height: .88rem;
 }
@@ -20,6 +17,15 @@ li.item{
 	height: 100%;
 	border-radius: 50%;
 	box-shadow: 0 0 0.15rem rgba(173,174,181,.3);
+}
+.blank{
+	height:.44rem;
+}
+.cont{
+	padding:.6rem 0 .4rem 0;
+	background: #fff;
+	border-radius: .1rem;
+	box-shadow: 0 0 0.38rem rgba(0,0,0,.1);
 }
 .bk_name{
 	margin-bottom: .2rem;

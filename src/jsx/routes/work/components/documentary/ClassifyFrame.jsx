@@ -17,12 +17,12 @@ class ClassifyFrame extends PureComponent {
                     <img src="./images/documentary/banner.png" alt="" />
                 </div>
                 <div className={styles.home_list}>
-                    <div className={this.mergeClassName("left", "mg-bt-20")}>
+                    <div className={this.mergeClassName("mg-bt-20")}>
                         <div className={styles.list_tit}>
                             <span className={this.mergeClassName("font32", "left")}>收益高手</span>
                             <span className={this.mergeClassName("c9", "right", "pd-rt-30")}>收益领先，表现突出</span>
                         </div>
-                        <ul>
+                        <ul className={styles.list}>
                             <ProductItem />
                             <ProductItem />
                             <ProductItem />

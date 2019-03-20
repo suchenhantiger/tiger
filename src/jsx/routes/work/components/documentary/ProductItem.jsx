@@ -20,9 +20,12 @@ class ProductItem extends PureComponent {
         return (
             <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.bk_pic}><img src="./images/documentary/img03.png" alt="" /></div>
-                <div className={styles.bk_name}>中流砥柱</div>
-                <div className={this.mergeClassName(styles.bk_num, "red")}>200.90%</div>
-                <div className={styles.bk_text}>近30日收益率</div>
+                <div className={styles.blank}></div>
+                <div className={styles.cont}>
+                    <div className={styles.bk_name}>中流砥柱</div>
+                    <div className={this.mergeClassName(styles.bk_num, "red")}>200.90%</div>
+                    <div className={styles.bk_text}>近30日收益率</div>
+                </div>
             </li>
         );
     }
