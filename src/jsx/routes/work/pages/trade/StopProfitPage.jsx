@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
-
+import InputFormate from '../../components/optional/detail/InputFormate';
 import styles from './css/stopProfitPage.less';
 
 /********交易主页*********/
@@ -32,7 +32,12 @@ class StopProfitPage extends PageComponent {
         var { 
             marketPrice=0
          }=this.props.prodInfo;
-         marketPrice = +marketPrice;
+         var {price} = this.props;
+
+         var {ask, bid} =price;
+         if(ask && bid){
+             marketPrice = this._buySell==1?ask:bid;
+        }
 
         switch(type){
             case 1:
@@ -102,7 +107,12 @@ class StopProfitPage extends PageComponent {
         var { 
             marketPrice=0
          }=this.props.prodInfo;
-         marketPrice = +marketPrice;
+         var {price} = this.props;
+
+         var {ask, bid} =price;
+         if(ask && bid){
+             marketPrice = this._buySell==1?ask:bid;
+        }
 
         switch(type){
             case 1:
@@ -185,6 +195,15 @@ class StopProfitPage extends PageComponent {
 
     }
 
+    stopPriceChange= (stopPrice)=>{
+        this.setState({stopPrice});
+    }
+
+
+    profitPriceChange= (profitPrice)=>{
+        this.setState({profitPrice});
+    }
+
 
 
     render() {
@@ -225,7 +244,12 @@ class StopProfitPage extends PageComponent {
                                 <h1>止损价格</h1>
                                 <div className={styles.tran_icon}>
                                     <div className={styles.icon_minus} onClick={this.minusClick(1)}></div>
-                                    <div className={styles.icon_num}>{stopPrice?stopPrice:"未设置"} </div>
+                                    <div className={styles.icon_num}>
+                                    <InputFormate 
+                                        valueChange={this.stopPriceChange}
+                                        value={stopPrice} 
+                                        digit={this._digits}  />
+                                    </div>
                                     <div className={styles.icon_plus} onClick={this.plusClick(1)}></div>
                                 </div>
                                 <div className={styles.tran_total}>
@@ -243,7 +267,13 @@ class StopProfitPage extends PageComponent {
                                 <h1>止盈价格</h1>
                                 <div className={styles.tran_icon}>
                                     <div className={styles.icon_minus} onClick={this.minusClick(2)}></div>
-                                    <div className={styles.icon_num}>{profitPrice?profitPrice:"未设置"}</div>
+                                    <div className={styles.icon_num}>
+                                    <InputFormate 
+                                        valueChange={this.profitPriceChange}
+                                        value={profitPrice} 
+                                        digit={this._digits}  />
+                                    
+                                    </div>
                                     <div className={styles.icon_plus} onClick={this.plusClick(2)}></div>
                                 </div>
                                 <div className={styles.tran_total}>

@@ -47,7 +47,7 @@ class PositionItem1 extends PureComponent{
            if(ask && bid){
                 marketPrice = buySell==1?ask:bid;
                 var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
-                netProfit = (pl)*exchangeRate*prodSize*tradedQty-swaps-commission;
+                netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
            }
 
         return(

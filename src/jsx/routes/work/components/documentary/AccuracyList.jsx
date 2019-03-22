@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { getBenefitList } from '../../actions/documentary/documentaryAction';
+import { getAlwaysList } from '../../actions/documentary/documentaryAction';
 
 import styles from './css/multipleList.less'
 
-class BenefitList extends CursorList {
+class AccuracyList extends CursorList {
 
     //构造函数
     constructor(props) {
@@ -12,10 +12,10 @@ class BenefitList extends CursorList {
 
     //获取数据
     getData(pageNo, isAppend, cb, props) {
-        this.props.getBenefitList({
+        this.props.getAlwaysList({
             pageNo,
             pageSize: 20,
-            followType:1
+            followType:3
         }, isAppend, cb, this, this.update);
 
     }
@@ -92,7 +92,7 @@ function injectProps(state){
         };
 }
 function injectAction() {
-    return { getBenefitList };
+    return { getAlwaysList };
 }
 
-module.exports = connect(injectProps, injectAction())(BenefitList);
+module.exports = connect(injectProps, injectAction())(AccuracyList);

@@ -99,7 +99,7 @@ class FlateDetail extends PureComponent{
             marketPrice = buySell==1?ask:bid;
             var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
             netProfit = (pl)*exchangeRate*prodSize*tradedQty;
-            totalProfit = netProfit -swaps-commission;
+            totalProfit = netProfit +swaps+commission;
        }
 
         return(

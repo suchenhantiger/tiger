@@ -12,7 +12,8 @@ class DocumentaryPage extends PageComponent{
     constructor(props,context) {
         super(props,context);
         this.state = {
-            index:0
+            index:0,
+            mulIndex:0
         }
     }
       //获取页面名称
@@ -31,19 +32,24 @@ class DocumentaryPage extends PageComponent{
             </div>
         )
     }
+    gotoMultipleFrame=(mulIndex)=>{
+        this.setState({index:1,mulIndex});
+
+
+    }
 
     render(){
         systemApi.log("DocumentaryPage render");
 
-        var {index} = this.state;
+        var {index,mulIndex} = this.state;
 
         return (
             <div>
                 <AppHeader headerName={this.renderHeader()} showBack={false}/>
                 <Content coverBottom={false}>
                     <LazyLoad index={index}>
-                        <ClassifyFrame/>
-                        <MultipleFrame/>
+                        <ClassifyFrame mulFrame = {this.gotoMultipleFrame}/>
+                        <MultipleFrame index={mulIndex}/>
                     </LazyLoad>
                 </Content>
                 {this.props.children}

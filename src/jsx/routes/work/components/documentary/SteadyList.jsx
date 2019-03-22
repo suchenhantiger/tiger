@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getBenefitList } from '../../actions/documentary/documentaryAction';
+import { getSteadyList } from '../../actions/documentary/documentaryAction';
 
 import styles from './css/multipleList.less'
 
@@ -12,10 +12,10 @@ class BenefitList extends CursorList {
 
     //获取数据
     getData(pageNo, isAppend, cb, props) {
-        this.props.getBenefitList({
+        this.props.getSteadyList({
             pageNo,
             pageSize: 20,
-            followType:1
+            followType:2
         }, isAppend, cb, this, this.update);
 
     }
@@ -92,7 +92,7 @@ function injectProps(state){
         };
 }
 function injectAction() {
-    return { getBenefitList };
+    return { getSteadyList };
 }
 
 module.exports = connect(injectProps, injectAction())(BenefitList);

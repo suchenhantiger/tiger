@@ -1,6 +1,7 @@
 import Intro from './Intro';
 import OpenSucc from './OpenSucc';
 import BuyDialog from './BuyDialog';
+import InputFormate from './InputFormate';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
@@ -117,10 +118,10 @@ class SimpleDetail extends PureComponent{
         this.setState({showBuyDialog:false});
     }
 
-    numChange = (e) => {
-        var { value } = e.target;
-        this.setState({ num: (+value).toFixed(this._volumeDigits) });
+    numChange = (num)=>{
+        this.setState({num});
     }
+
 
     //渲染函数
     render(){
@@ -143,9 +144,9 @@ class SimpleDetail extends PureComponent{
             level3 = 0.5;
             level4 = 1.0;
         }
-
+      //  console.log("sch 3:"+num);
        // var totalMoney = num*exchangeRate*(tradeDirect==0?ask:bid)*this._marginRate;
-       var totalMoney = num*exchangeRate*ask*this._marginRate;
+       var totalMoney = (+num)*exchangeRate*ask*this._marginRate;
       
         return(
             <div>
@@ -156,7 +157,13 @@ class SimpleDetail extends PureComponent{
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick}></div>
                             <div className={styles.icon_num}>
-                                <input type="number" value={num} onChange={this.numChange} />
+                                {/* <input type="text"  className={styles.input}  value={num} onChange={this.numChange} onBlur={this.numFormate }/> */}
+                                <InputFormate 
+                                valueChange={this.numChange}
+                                value={num} 
+                                minValue={this._minVolume} 
+                                maxValue={this._maxVolume} 
+                                digit={this._volumeDigits}  />
                             </div>
                              
                             <div className={styles.icon_plus} onClick={this.plusClick}></div>

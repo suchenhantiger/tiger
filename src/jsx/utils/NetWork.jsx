@@ -76,13 +76,13 @@ function requestError(ver, deferred, data){
         delete ajaxQueue[ver];
         systemApi.log("接口访问失败");
         var info="连接失败",
-            info_detail="亲，有点小意外，请您稍后再试！";
+            info_detail="网络异常，请您稍后再试！";
 
         if(data.status=="404" && data.statusText=="error"){
-            info_detail="亲，有点小意外，请您稍后再试！";
+            info_detail="网络异常，请您稍后再试！";
         }
         else if(data.status=="0" && data.statusText=="timeout"){
-            info_detail="亲，有点小意外，请您稍后再试！";
+            info_detail="网络异常，请您稍后再试！";
         }
         deferred.reject({
             info:info,
@@ -133,7 +133,6 @@ module.exports = {
         otherParams = otherParams || {};
 
         params.agentId=100001;//代理商id 固定
-
         //拼装参数数组
         var iskick=0,
             paramStr = [],

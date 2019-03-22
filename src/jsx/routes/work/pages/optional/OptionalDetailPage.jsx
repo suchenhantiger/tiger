@@ -95,8 +95,7 @@ class OptionalDetailPage extends PageComponent{
             chartWidth = screenHeight -this._widthCut;
             chartHeight = screenWidth - this._heightCut ;
         }
-        console.log("sch chartWidth:"+chartWidth);
-        console.log("sch chartHeight:"+chartHeight);
+
         
         
         return (

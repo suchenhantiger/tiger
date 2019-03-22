@@ -5,7 +5,7 @@ import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
 import OpenSuccComplex from './OpenSuccComplex';
 import BuyDialog from './BuyDialog';
 import DatePicker from './DatePicker';
-
+import InputFormate from './InputFormate';
 
 class ComplexDetail extends PureComponent{
 
@@ -179,7 +179,7 @@ class ComplexDetail extends PureComponent{
                             if(profitPrice>(+actualPrice+this._minDis)){
                                 this.setState({profitPrice:profitPrice.toFixed(this._digits)});
                             }else{
-                                this.setState({profitPrice:(actualPrice+this._minDis).toFixed(this._digits)});
+                                this.setState({profitPrice:(+actualPrice+this._minDis).toFixed(this._digits)});
                             }
                           
                         }else{
@@ -445,6 +445,21 @@ class ComplexDetail extends PureComponent{
     chooseTranType=(type)=>()=>{
         this.setState({trantype:type,stopPrice:null,profitPrice:null,});
     }
+    numChange = (num)=>{
+        this.setState({num});
+    }
+    stopPriceChange= (stopPrice)=>{
+        this.setState({stopPrice});
+    }
+
+    actualPriceChange= (actualPrice)=>{
+        this.setState({actualPrice});
+    }
+
+    profitPriceChange= (profitPrice)=>{
+        this.setState({profitPrice});
+    }
+    
     //渲染函数
     render(){
         systemApi.log("ComplexDetail render");
@@ -496,7 +511,13 @@ class ComplexDetail extends PureComponent{
                         <h1>成交价格</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(1)}></div>
-                            <div className={styles.icon_num}>{actualPrice?actualPrice:"未设置"} </div>
+                            <div className={styles.icon_num}>
+                            <InputFormate 
+                                valueChange={this.actualPriceChange}
+                                value={actualPrice} 
+                                digit={this._digits}  />
+
+                            </div>
                             <div className={styles.icon_plus} onClick={this.plusClick(1)}></div>
                         </div>
                         <div className={styles.tran_total}>
@@ -513,7 +534,15 @@ class ComplexDetail extends PureComponent{
                         <h1>交易手数</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(2)}></div>
-                            <div className={styles.icon_num}>{num}</div>
+                            <div className={styles.icon_num}>
+                            <InputFormate 
+                                valueChange={this.numChange}
+                                value={num} 
+                                minValue={this._minVolume} 
+                                maxValue={this._maxVolume} 
+                                digit={this._volumeDigits}  />
+                            </div>
+                            
                             <div className={styles.icon_plus} onClick={this.plusClick(2)}></div>
                         </div>
                         <div className={styles.tran_total}>
@@ -529,7 +558,13 @@ class ComplexDetail extends PureComponent{
                         <h1>止损价格</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(3)}></div>
-                            <div className={styles.icon_num}>{stopPrice?stopPrice:"未设置"}</div>
+                            <div className={styles.icon_num}>
+                            <InputFormate 
+                                valueChange={this.stopPriceChange}
+                                value={stopPrice} 
+                                digit={this._digits}  />
+                            
+                            </div>
                             <div className={styles.icon_plus} onClick={this.plusClick(3)}></div>
                         </div>
                         <div className={styles.tran_total}>
@@ -546,7 +581,12 @@ class ComplexDetail extends PureComponent{
                         <h1>止盈价格</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(4)}></div>
-                            <div className={styles.icon_num}>{profitPrice?profitPrice:"未设置"}</div>
+                            <div className={styles.icon_num}>
+                            <InputFormate 
+                                valueChange={this.profitPriceChange}
+                                value={profitPrice} 
+                                digit={this._digits}  />
+                            </div>
                             <div className={styles.icon_plus} onClick={this.plusClick(4)}></div>
                         </div>
                         <div className={styles.tran_total}>

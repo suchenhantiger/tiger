@@ -18,7 +18,11 @@ function baseReducer(state,action){
         ProductList:{},
         OptionalList:[],
         OptionalListData:[],
-        accountArr:[]
+        accountArr:[],
+        accuracyDate:[],
+        incomeDate:[],
+        steadyDate:[]
+
 
     };
 
@@ -128,6 +132,16 @@ function baseReducer(state,action){
     }else if(type == "UPDATE_ACCOUNT_List"){
         return Object.assign({}, state, {
             accountArr:action.data.slice()
+        });
+    }else if(type == "UPDATE_5_MASTER"){
+        var {accuracyDate,
+            incomeDate,
+            steadyDate} = action.data;
+            console.log(accuracyDate);
+        return Object.assign({}, state, {
+            accuracyDate:accuracyDate.list,
+            incomeDate:incomeDate.list,
+            steadyDate:steadyDate.list
         });
     }
 

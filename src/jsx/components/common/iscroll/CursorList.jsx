@@ -104,7 +104,7 @@ class CursorList extends BaseScroll{
         return (
             <div className={styles.noMoreFrame}>
                 <div className={styles.noMorePic}></div>
-                <div className={styles.noMoreText}>我是有底线的！</div>
+                <div className={styles.noMoreText}>已全部加载</div>
             </div>
         );
     }
