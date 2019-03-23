@@ -39,6 +39,21 @@ class DocumentaryDetailPage extends PageComponent {
     //获取页面名称
     getPageName() { return "跟单详情"; }
 
+    componentDidMount(){
+        this.interval = setInterval(()=>{
+            var {iscroll} = this.refs;
+            if(iscroll){
+                var {y} = iscroll.wrapper,
+                    yRem = this.calculateRem(0, y);
+                this.setState({ fixTabs: yRem < -3.34 });;
+            }
+        }, 50);
+    }
+
+    componentWillUmount(){
+        clearInterval(this.interval);
+    }
+
     componentWillUpdate(nextProps, nextState) {
         var { fixTabs } = nextState;
         if (this.state.fixTabs == fixTabs) {
@@ -71,21 +86,6 @@ class DocumentaryDetailPage extends PageComponent {
         console.log("reload");
     }
 
-    scroll = (x, y) => {
-        var yRem = this.calculateRem(0, y);
-        if(yRem > 1) this.upFresh = true;
-        this.setState({ fixTabs: yRem < -3.34 });
-    }
-
-    scrollEnd = (x, y)=>{
-        var yRem = this.calculateRem(0, y);
-        this.setState({ fixTabs: yRem < -3.34 });
-        if(this.upFresh) {
-            this.reloadData();
-            this.upFresh = false;
-        }
-    }
-
     renderTabs() {
         var {index} = this.state;
         return (
@@ -110,9 +110,8 @@ class DocumentaryDetailPage extends PageComponent {
             <div className={styles.main}>
                 <AppHeader headerName="LEIMS" theme="transparent" />
                 <div className={styles.header}></div>
-                <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} canDownFresh={true} downFresh={this.getNextPage} probeType={3}
-                    onScroll={this.scroll} onScrollEnd={this.scrollEnd} ref="iscroll">
+                <IScrollView className={this.getScrollStyle()} canUpFresh={true} canDownFresh={true}
+                    upFresh={this.reloadData} downFresh={this.getNextPage} ref="iscroll">
                     <div className={styles.box}>
                         <div className={styles.optional_detail}>
                             <div className={styles.head_portrait}><img src="./images/documentary/img03.png" alt="" /></div>

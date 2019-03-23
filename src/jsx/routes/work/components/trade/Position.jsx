@@ -31,6 +31,14 @@ class Position extends PureComponent {
        
         Event.register("refresh_order_list",this.refreshOrderList);
         Event.register("ws_trade_list",this.wsPush);
+        this._interval1 = setInterval(()=>{
+            var {iscroll} = this.refs;
+            if(iscroll){
+                var {y} = iscroll.wrapper,
+                    yRem = this.calculateRem(0, y);
+                this.setState({ fixTabs: yRem < -3.34 });;
+            }
+        }, 50);
     }
 
 
@@ -157,6 +165,7 @@ class Position extends PureComponent {
     componentWillUnmount(){
         super.componentWillUnmount();
         clearInterval(this._interval);
+        clearInterval(this._interval1);
         Event.unregister("refresh_order_list",this.refreshOrderList);
         Event.unregister("ws_trade_list",this.wsPush);
     }
@@ -232,21 +241,6 @@ class Position extends PureComponent {
         console.log("reload");
     }
 
-    scroll = (x, y) => {
-        var yRem = this.calculateRem(0, y);
-        if(yRem > 1) this.upFresh = true;
-        this.setState({ fixTabs: yRem < -4.6 });
-    }
-
-    scrollEnd = (x, y)=>{
-        var yRem = this.calculateRem(0, y);
-        this.setState({ fixTabs: yRem < -4.6 });
-        if(this.upFresh) {
-            this.reloadData();
-            this.upFresh = false;
-        }
-    }
-
     renderTabs() {
         var { subIndex } = this.state;
         return (
@@ -303,9 +297,7 @@ class Position extends PureComponent {
         return (
             <div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} probeType={3}
-                    onScroll={this.scroll} onScrollEnd={this.scrollEnd} ref="iscroll">
-
+                    canUpFresh={true} upFresh={this.reloadData} ref="iscroll">
                     <div>
                         <div className={styles.optional_detail}>
                             <div className={styles.currency_name}>
