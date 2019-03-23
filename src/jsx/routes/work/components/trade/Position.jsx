@@ -241,7 +241,10 @@ class Position extends PureComponent {
     scrollEnd = (x, y)=>{
         var yRem = this.calculateRem(0, y);
         this.setState({ fixTabs: yRem < -4.6 });
-        if(this.upFresh) this.reloadData();
+        if(this.upFresh) {
+            this.reloadData();
+            this.upFresh = false;
+        }
     }
 
     renderTabs() {

@@ -80,7 +80,10 @@ class DocumentaryDetailPage extends PageComponent {
     scrollEnd = (x, y)=>{
         var yRem = this.calculateRem(0, y);
         this.setState({ fixTabs: yRem < -3.34 });
-        if(this.upFresh) this.reloadData();
+        if(this.upFresh) {
+            this.reloadData();
+            this.upFresh = false;
+        }
     }
 
     renderTabs() {
@@ -94,19 +97,21 @@ class DocumentaryDetailPage extends PageComponent {
         )
     }
 
+    getNextPage = ()=>{
+        console.log("getNextPage");
+    }
+
     render() {
         systemApi.log("DocumentaryDetailPage render");
 
         var { index, fixTabs } = this.state;
-
-        console.log(fixTabs);
 
         return (
             <div className={styles.main}>
                 <AppHeader headerName="LEIMS" theme="transparent" />
                 <div className={styles.header}></div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} probeType={3}
+                    canUpFresh={true} canDownFresh={true} downFresh={this.getNextPage} probeType={3}
                     onScroll={this.scroll} onScrollEnd={this.scrollEnd} ref="iscroll">
                     <div className={styles.box}>
                         <div className={styles.optional_detail}>

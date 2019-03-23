@@ -3,26 +3,46 @@ import { getCurTradeList } from '../../../actions/documentary/documentaryAction'
 
 import styles from './css/curTradeList.less'
 
+const pageSize = 20;
+
 class CurTradeList extends PureComponent {
 
     //构造函数
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            nextPage:1
         }
     }
 
-    componentDidMount() {
-        this.props.getCurTradeList({
-            
-        }, this, this.update);
+    componentDidMount(){
+        this.getData(1, false);
     }
 
-    //更新数据
-    update = (data) => {
-        this.setState({ data });
-    };
+    getData(pageNo, isAppend){
+        var mt4Id = systemApi.getValue("mt4Id"),
+            clientId = systemApi.getValue("clientId");
+        this.props.getCurTradeList(this, {
+            pageNo, mt4Id, clientId, pageSize
+        }, isAppend, this.update);
+    }
+
+    update = (isAppend, list)=>{
+        var {data, nextPage} = this.state;
+        if(isAppend){
+            data = data.concat(list);
+        }
+        else {
+            data = list;
+        }
+        this.setState({data:data.slice(), nextPage:nextPage+1});
+    }
+
+    getNextPage(){
+        var {nextPage} = this.state;
+        this.getData(nextPage, true);
+    }
 
     renderList() {
         var { data } = this.state;
