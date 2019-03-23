@@ -43,6 +43,11 @@ class HisTradeList extends PureComponent {
         this.getData(nextPage, true);
     }
 
+    reloadData(){
+        this.state.nextPage = 1;
+        this.getData(1, false);
+    }
+
     renderList() {
         var { data } = this.state;
         return [1,1,1].map((item) => {
@@ -85,4 +90,4 @@ function injectAction() {
     return { getHisTradeList };
 }
 
-module.exports = connect(null, injectAction())(HisTradeList);
+module.exports = connect(null, injectAction(), null, {withRef:true})(HisTradeList);

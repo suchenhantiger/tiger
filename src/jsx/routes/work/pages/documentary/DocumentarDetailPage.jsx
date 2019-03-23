@@ -98,7 +98,14 @@ class DocumentaryDetailPage extends PageComponent {
     }
 
     getNextPage = ()=>{
-        console.log("getNextPage");
+        var {index} = this.state,
+            {curtrade, history} = this.refs;
+        if(index == 1){
+            curtrade && curtrade.getWrappedInstance().getNextPage();
+        }
+        else if(index == 2){
+            history && history.getWrappedInstance().getNextPage();
+        }
     }
 
     render() {
@@ -144,8 +151,8 @@ class DocumentaryDetailPage extends PageComponent {
                             {this.renderTabs()}
                             <LazyLoad index={index}>
                                 <CurTradeList />
-                                <CurTradeList />
-                                <HisTradeList />
+                                <CurTradeList ref="curtrade"/>
+                                <HisTradeList ref="history" />
                             </LazyLoad>
                         </div>
                     </div>

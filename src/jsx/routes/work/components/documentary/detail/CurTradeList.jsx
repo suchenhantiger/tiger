@@ -44,6 +44,11 @@ class CurTradeList extends PureComponent {
         this.getData(nextPage, true);
     }
 
+    reloadData(){
+        this.state.nextPage = 1;
+        this.getData(1, false);
+    }
+
     renderList() {
         var { data } = this.state;
         return [1,1,1,1,1,1,1,1,1,1].map((item) => {
@@ -85,4 +90,4 @@ function injectAction() {
     return { getCurTradeList };
 }
 
-module.exports = connect(null, injectAction())(CurTradeList);
+module.exports = connect(null, injectAction(), null, {withRef:true})(CurTradeList);
