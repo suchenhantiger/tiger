@@ -198,6 +198,11 @@ class Position extends PureComponent {
 
     tabClick = (subIndex) => () => {
         this.setState({ subIndex });
+        setTimeout(()=>{
+            var {iscroll} = this.refs,
+                yRem = this.calculateRem(0, iscroll.wrapper.y);
+            this.setState({ fixTabs: yRem < -4.6 });
+        },50);
     }
 
     clickOrder = (data) => {
@@ -229,7 +234,14 @@ class Position extends PureComponent {
 
     scroll = (x, y) => {
         var yRem = this.calculateRem(0, y);
+        if(yRem > 1) this.upFresh = true;
         this.setState({ fixTabs: yRem < -4.6 });
+    }
+
+    scrollEnd = (x, y)=>{
+        var yRem = this.calculateRem(0, y);
+        this.setState({ fixTabs: yRem < -4.6 });
+        if(this.upFresh) this.reloadData();
     }
 
     renderTabs() {
@@ -288,8 +300,8 @@ class Position extends PureComponent {
         return (
             <div>
                 <IScrollView className={this.getScrollStyle()}
-                    canUpFresh={true} upFresh={this.reloadData} probeType={3}
-                    onScroll={this.scroll} onScrollEnd={this.scroll} ref="iscroll">
+                    canUpFresh={true} probeType={3}
+                    onScroll={this.scroll} onScrollEnd={this.scrollEnd} ref="iscroll">
 
                     <div>
                         <div className={styles.optional_detail}>

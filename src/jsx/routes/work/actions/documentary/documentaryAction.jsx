@@ -79,3 +79,33 @@ export function getAlwaysList(params, isAppend, cb, component,updateList ){
         });
     }
 }
+
+//获取常在高手列表
+export function getCurTradeList(params, component, updateList ){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/queryFollower",params).done((data)=>{
+            var {accuracyDate={}} = data,
+                {list=[]} = accuracyDate;
+            updateList && updateList(list);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
+//获取常在高手列表
+export function getHisTradeList(params, component,updateList ){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/queryFollower",params).done((data)=>{
+            var {accuracyDate={}} = data,
+                {list=[]} = accuracyDate;
+            updateList && updateList(list);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}

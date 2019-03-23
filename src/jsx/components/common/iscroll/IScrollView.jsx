@@ -74,7 +74,6 @@ class IScrollView extends PureComponent{
         });
 
         this.wrapper.on("scroll",function(){
-
             var {onScroll} = that.props,
                 {frame,main} = that.refs,
                 {showLoading} = that.state;
