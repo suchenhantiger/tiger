@@ -71,6 +71,11 @@ class DocumentaryDetailPage extends PageComponent {
         this.shouldFresh = false;
     }
 
+    didUpdate = ()=>{
+        var { iscroll } = this.refs;
+        iscroll && iscroll.refresh();
+    }
+
     tabChange = (index) => {
         this.setState({ index});
         setTimeout(()=>{
@@ -155,8 +160,8 @@ class DocumentaryDetailPage extends PageComponent {
                             {this.renderTabs()}
                             <LazyLoad index={index}>
                                 <Static followerId={this._followerId}/>
-                                <CurTradeList followerId={this._followerId} ref="curtrade"/>
-                                <HisTradeList followerId={this._followerId} ref="history" />
+                                <CurTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="curtrade"/>
+                                <HisTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="history" />
                             </LazyLoad>
                         </div>
                     </div>

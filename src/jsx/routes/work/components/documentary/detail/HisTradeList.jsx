@@ -19,6 +19,11 @@ class HisTradeList extends PureComponent {
         this.getData(1, false);
     }
 
+    componentDidUpdate(){
+        var {onDidUpdate} = this.props;
+        onDidUpdate && onDidUpdate();
+    }
+
     getData(pageNo, isAppend){
         var {followerId} = this.props,
             clientId = systemApi.getValue("clientId");
