@@ -41,8 +41,10 @@ class SettingPage extends PageComponent {
         systemApi.removeValue("mt4Id");
         systemApi.removeValue("mt4AccType");
         hashHistory.replace("/login");
+    }
 
-
+    personalClick = ()=>{
+        hashHistory.push("/work/me/setting/personal");
     }
 
     render() {
@@ -69,7 +71,7 @@ class SettingPage extends PageComponent {
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>个人资料设置</p></div>
-                                        <div className={this.mergeClassName("right", "c9")}><p>头像、联系方式等设置</p></div>
+                                        <div className={this.mergeClassName("right", "c9")} onClick={this.personalClick}><p>头像、联系方式等设置</p></div>
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>密码设置</p></div>
