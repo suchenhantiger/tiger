@@ -1,3 +1,4 @@
+import mad5 from './md5_Utf8'
 var ajaxVer = 0,        //ajax版本号
     ajaxQueue = {},     //ajax处理队列
     errorMapping = {
@@ -39,7 +40,7 @@ function genSignStr(params, needToken) {
 
     console.log(list);
     console.log(list.join("&"));
-    return md5(list.join("&"));
+    return mad5(list.join("&"));
     // return md5(list.join("&")).toUpperCase();
 }
 
@@ -55,7 +56,7 @@ function requestSuccess(ver, deferred, iskick, data){
         if(success == true){	//请求成功
             deferred.resolve(body);
         }
-        else if(code == 401 ||code ==400 ){	//session超时
+        else if(code ==400 ){	//session超时
             deferred.reject({message:"登录超时"});
             systemApi.removeValue("tigertoken");
             systemApi.removeValue("mt4Id");

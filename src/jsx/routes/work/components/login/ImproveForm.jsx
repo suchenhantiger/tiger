@@ -1,6 +1,7 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {saveAccMt4,getEmailPwd,updateUserInfo} from '../../actions/login/loginAction';
+
 class ImproveForm extends PureComponent {
 
     //构造函数
@@ -66,8 +67,8 @@ class ImproveForm extends PureComponent {
         }else if( address.length==0){
             this.setState({errMsg:"请输入地址信息"});
         }else{
-
-            this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address:encodeURIComponent(encodeURIComponent(address))},()=>{
+          //  console.log(encodeURIComponent(encodeURIComponent(nickname)));
+            this.props.saveAccMt4(this,{nickname:nickname,email,emailCode,country:"china",address:encodeURIComponent(encodeURIComponent(address))},()=>{
                 this.props.updateUserInfo(this,()=>{
                     hashHistory.goBack();
                 });

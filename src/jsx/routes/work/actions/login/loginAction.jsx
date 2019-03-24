@@ -74,10 +74,12 @@ export function saveAccMt4(component, params,cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        dispatch(showLoading());
         component.requestJSON("users/saveAccMt4",params).done((data)=>{
-            var {mt4Id,mt4AccType} = data;
+            // var {mt4Id,mt4AccType} = data;
             // systemApi.setValue("mt4Id",mt4Id);
             // systemApi.setValue("mt4AccType",mt4AccType);
+            dispatch(hideLoading());
             cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
