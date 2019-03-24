@@ -120,7 +120,7 @@ class MePage extends PageComponent {
 
     gotoImprove=()=>{
         this.setState({showConfirm:false});
-        hashHistory.push("/work/me/improve");
+        hashHistory.push("/work/improve");
     }
 
     closeConfirm =()=>{

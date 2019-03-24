@@ -15,8 +15,21 @@ class LoginPage extends PageComponent {
             focus :false,
         }
     }
-    //获取页面名称
-    getPageName() { return "我的主页"; }
+    componentDidMount(){
+        document.addEventListener("backbutton", this.onBackKeyDown, false);
+    }
+
+    componentWillUnmount(){
+
+        document.removeEventListener("backbutton", this.onBackKeyDown, false);
+        super.componentWillUnmount();
+    }
+
+    onBackKeyDown=()=>{
+
+        this.setState({index:0});
+    
+    }
 
     renderIcons() {
         return [

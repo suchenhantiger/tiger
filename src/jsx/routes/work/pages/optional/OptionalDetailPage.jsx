@@ -33,19 +33,27 @@ class OptionalDetailPage extends PageComponent{
         this._heightCut = this.calculatePx(1.98,0);
         // console.log(this._widthCut + "width sch height"+ this._heightCut);
     }
-
     componentDidMount(){
-        //
-  
+       // document.addEventListener("backbutton", this.onBackKeyDown, false);
     }
 
     componentWillUnmount(){
-        //触发列表页的websocket
+
+    //    document.removeEventListener("backbutton", this.onBackKeyDown, false);
         Event.fire("ws_optional_list");
-        
+        super.componentWillUnmount();
     }
 
+    onBackKeyDown=()=>{
+        var {fullscreen} =this.state;
+        if(fullscreen){
+            this.closeFullScreen();
+        }else{
+            hashHistory.goBack();
+        }
 
+    
+    }
 
     tabChange = (index)=>()=>{
         this.setState({index});
@@ -58,6 +66,7 @@ class OptionalDetailPage extends PageComponent{
     
     fullScreenToggle =()=>{
         window.screen.orientation.lock('landscape');
+        document.addEventListener("backbutton", this.onBackKeyDown, false);        
         setTimeout(()=>{
             this.setState({fullscreen:true});
         },500);
@@ -65,6 +74,7 @@ class OptionalDetailPage extends PageComponent{
     }
     closeFullScreen =()=>{
         window.screen.orientation.lock('portrait');
+        document.removeEventListener("backbutton", this.onBackKeyDown, false);
         setTimeout(()=>{
             this.setState({fullscreen:false});
         },500);

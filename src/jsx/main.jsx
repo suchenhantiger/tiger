@@ -40,7 +40,7 @@ ReactDOM.render(
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>
-                        <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
+                        
                         <Route path="certification" getComponent={require('./routes/work/config/login/certification')(store)}></Route>
                         <Route path="checking" getComponent={require('./routes/work/config/me/checking')(store)}></Route> 
                         <Route path="setting" getComponent={require('./routes/work/config/me/setting')(store)}></Route>
@@ -49,6 +49,7 @@ ReactDOM.render(
                         <Route path="manageacc" getComponent={require('./routes/work/config/me/manageacc')(store)}></Route>
                         <Route path="bank" getComponent={require('./routes/work/config/me/bank')(store)}></Route>
                     </Route>
+                    <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
 
                 </Route>
             </Route>

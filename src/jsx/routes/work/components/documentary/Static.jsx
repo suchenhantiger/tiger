@@ -111,7 +111,7 @@ class Static extends PureComponent {
                                   <p className={"c9"}>亏损订单</p>
                               </td>
                               <td>
-                                  <p className={"font26"}>{avgPosTime}笔</p>
+                                  <p className={"font26"}>{avgPosTime}</p>
                                   <p className={"c9"}>平均持仓时间</p>
                               </td>
                           </tr>

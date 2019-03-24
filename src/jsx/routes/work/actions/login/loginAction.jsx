@@ -75,12 +75,9 @@ export function saveAccMt4(component, params,cb){
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
         component.requestJSON("users/saveAccMt4",params).done((data)=>{
-            // var {mt4Id,mt4AccType} = data;
-            // var account_list = systemApi.getValue("account_list") || "[]";
-            // account_list = JSON.parse(account_list);
-            // account_list.push({mt4Id,mt4AccType});
-            // systemApi.setValue("account_list",JSON.stringify(account_list))
-            // dispatch({type:"UPDATE_ACCOUNT_List",data:account_list });
+            var {mt4Id,mt4AccType} = data;
+            // systemApi.setValue("mt4Id",mt4Id);
+            // systemApi.setValue("mt4AccType",mt4AccType);
             cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

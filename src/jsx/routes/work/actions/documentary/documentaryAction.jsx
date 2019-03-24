@@ -105,10 +105,10 @@ export function getCurTradeList(component, params, isAppend, updateList ){
         var {pageSize} = params;
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
-        component.requestJSON("follower/queryFollower",params).done((data)=>{
-            var {accuracyDate={}} = data,
-                {list=[]} = accuracyDate;
-            updateList && updateList(isAppend, list);
+        component.requestJSON("follower/queryFollowerPositionList",params).done((data)=>{
+            // var {accuracyDate={}} = data,
+            //     {list=[]} = accuracyDate;
+            updateList && updateList(isAppend, data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
         });
@@ -121,9 +121,9 @@ export function getHisTradeList(component, params, isAppend, updateList ){
         var {pageSize} = params;
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
-        component.requestJSON("follower/queryFollower",params).done((data)=>{
-            var {accuracyDate={}} = data,
-                {list=[]} = accuracyDate;
+        component.requestJSON("follower/queryFollowerTradeList",params).done((data)=>{
+             var {list=[]} = data;
+            //     {list=[]} = accuracyDate;
             updateList && updateList(isAppend, list);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

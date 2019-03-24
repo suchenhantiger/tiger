@@ -20,10 +20,10 @@ class HisTradeList extends PureComponent {
     }
 
     getData(pageNo, isAppend){
-        var mt4Id = systemApi.getValue("mt4Id"),
+        var {followerId} = this.props,
             clientId = systemApi.getValue("clientId");
         this.props.getHisTradeList(this, {
-            pageNo, mt4Id, clientId, pageSize
+            pageNo, followerId, clientId, pageSize
         }, isAppend, this.update);
     }
 
@@ -50,24 +50,26 @@ class HisTradeList extends PureComponent {
 
     renderList() {
         var { data } = this.state;
-        return [1,1,1].map((item) => {
+        return data.map((item) => {
+            var {buySell=0,closePrice="--",netProfit="--",prodName="--",timeStr="--",openPrice="--"} = item;
+            var nameStr = buySell==0?("买入"+prodName):("卖出"+prodName);
             return (
                 <tr className={styles.item}>
                     <td>
-                        <p className="font26">买入黄金</p>
-                        <p className="c9">手动平仓</p>
-                        <p className="c9">12小时前</p>
+                        <p className="font26">{nameStr}</p>
+                        {/* <p className="c9">手动平仓</p> */}
+                        <p className="c9">{timeStr}</p>
                     </td>
                     <td>
-                        <p className="font26">1255.86</p>
+                        <p className="font26">{openPrice}</p>
                         <p className="c9">开仓价</p>
                     </td>
                     <td>
-                        <p className="font26">1255.86</p>
+                        <p className="font26">{closePrice}</p>
                         <p className="c9">现价</p>
                     </td>
                     <td>
-                        <p className="font26 green">$-123.44</p>
+                        <p className={netProfit>=0?"font26 green":"font26 red"}>${netProfit}</p>
                         <p className="c9">收益</p>
                     </td>
                 </tr>

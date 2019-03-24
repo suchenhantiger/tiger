@@ -155,8 +155,8 @@ class DocumentaryDetailPage extends PageComponent {
                             {this.renderTabs()}
                             <LazyLoad index={index}>
                                 <Static followerId={this._followerId}/>
-                                <CurTradeList ref="curtrade"/>
-                                <HisTradeList ref="history" />
+                                <CurTradeList followerId={this._followerId} ref="curtrade"/>
+                                <HisTradeList followerId={this._followerId} ref="history" />
                             </LazyLoad>
                         </div>
                     </div>
