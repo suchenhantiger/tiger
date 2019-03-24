@@ -25,7 +25,7 @@ class ClassifyFrame extends PureComponent {
         //console.log(incomeDate);
         var tmpArr = incomeDate.slice(0,5);
         return tmpArr.map(item=>{
-            return (<ProductItem data={item}/>)
+            return <ProductItem data={item}/>
         });
     }
 

@@ -2,7 +2,8 @@ import FullScreenView from '../../../../components/common/fullscreen/FullScreenV
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import SubTabs from '../../../../components/common/subtabs/SubTabs';
 import FlatTab from '../../../../components/common/subtabs/FlatTab';
-
+import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
+import Static from '../../components/documentary/Static';
 import styles from './css/documentarDetailPage.less';
 
 /********跟单主页*********/
@@ -41,7 +42,7 @@ class DocumentaryDetailPage extends PageComponent {
 
         return (
             <FullScreenView>
-                <AppHeader headerName="LEIMS" theme="transparent" />
+                <AppHeader headerName={this._followNmae} theme="transparent" />
                 <Content coverHeader={true}>
                     <div className={styles.header}></div>
                     <div className={styles.optional_detail}>
@@ -76,6 +77,10 @@ class DocumentaryDetailPage extends PageComponent {
                         <FlatTab text="当前交易"/>
                         <FlatTab text="历史交易"/>
                     </SubTabs>
+                    <LazyLoad index={index}>
+                        <Static followerId={this._followerId}/>
+                        
+                    </LazyLoad>
                 </Content>
                 {this.props.children}
             </FullScreenView>

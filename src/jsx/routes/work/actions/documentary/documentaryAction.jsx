@@ -1,5 +1,24 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
+
+export function getMasterDetail(component, params,cb){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/getFollowerByFollowerId",params).done((data)=>{
+            console.log(data);
+            dispatch(hideLoading());
+            cb && cb(data);
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
+
 export function getMasterList(component, params,cb){
     return function(dispatch, state){
         dispatch(showLoading());
