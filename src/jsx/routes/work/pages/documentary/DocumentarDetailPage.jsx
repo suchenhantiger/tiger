@@ -115,6 +115,10 @@ class DocumentaryDetailPage extends PageComponent {
         }
     }
 
+    copyClick = ()=>{
+        
+    }
+
     render() {
         systemApi.log("DocumentaryDetailPage render");
 
@@ -167,6 +171,9 @@ class DocumentaryDetailPage extends PageComponent {
                     </div>
 
                 </IScrollView>
+                <div className={styles.bottomBtn}>
+                    <div className={styles.btn} onClick={this.copyClick}>复制</div>
+                </div>
                 {fixTabs ? (
                     <div className={styles.fixed}>{this.renderTabs()}</div>
                 ) : null}
