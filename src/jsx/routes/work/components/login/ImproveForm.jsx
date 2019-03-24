@@ -66,7 +66,8 @@ class ImproveForm extends PureComponent {
         }else if( address.length==0){
             this.setState({errMsg:"请输入地址信息"});
         }else{
-            this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address},()=>{
+
+            this.props.saveAccMt4(this,{nickname,email,emailCode,country:"china",address:encodeURIComponent(encodeURIComponent(address))},()=>{
                 this.props.updateUserInfo(this,()=>{
                     hashHistory.goBack();
                 });

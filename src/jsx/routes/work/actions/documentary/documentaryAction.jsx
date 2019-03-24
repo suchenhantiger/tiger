@@ -98,3 +98,35 @@ export function getAlwaysList(params, isAppend, cb, component,updateList ){
         });
     }
 }
+
+
+export function getCurTradeList(component, params, isAppend, updateList ){
+    return function(dispatch, state){
+        var {pageSize} = params;
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/queryFollower",params).done((data)=>{
+            var {accuracyDate={}} = data,
+                {list=[]} = accuracyDate;
+            updateList && updateList(isAppend, list);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
+//获取常在高手列表
+export function getHisTradeList(component, params, isAppend, updateList ){
+    return function(dispatch, state){
+        var {pageSize} = params;
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/queryFollower",params).done((data)=>{
+            var {accuracyDate={}} = data,
+                {list=[]} = accuracyDate;
+            updateList && updateList(isAppend, list);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
