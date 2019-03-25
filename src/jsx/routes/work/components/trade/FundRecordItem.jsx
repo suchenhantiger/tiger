@@ -37,7 +37,7 @@ class FundRecordItem extends PureComponent{
            var tmpdate = new Date();
            tmpdate.setTime(createDate * 1000);
            createDate = tmpdate.getFullYear()+"-" +
-           (tmpdate.getMonth()+1)+"-"+tmpdate.getDay()+" "+
+           (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
            var recordTypeStr = "转账";//0 转账 1 充值 2 提现
            if(recordType==1 || recordType=="1") recordTypeStr="充值";

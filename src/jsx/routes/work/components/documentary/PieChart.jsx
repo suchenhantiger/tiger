@@ -9,35 +9,41 @@ class PieChart extends PureComponent {
     systemApi.log("PieChart render");
     const {data,config} = this.props;
     var option = {
+        animation:false,
         tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+            formatter: "{a} <br/>{b}:{d}%"
+            // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
+            
             orient: 'horizontal',
             x: 'center',
-            data:['直接访问1','邮件营销1','联盟广告1','视频广告1','搜索引擎1','邮件营销1','联盟广告1','视频广告1','搜索引擎1']
-            // (function(){
-            //   if (data && data.length > 0) {
-            //     return data.map((item)=>{
-            //       return {
-            //          name: item[config.dataConf.nameField],
-            //          icon:'rect'
-            //       }
-            //     });
-            //   }
-            // })()
+            y: 'bottom',
+            
+            data:
+            (function(){
+              if (data && data.length > 0) {
+                return data.map((item)=>{
+                  return {
+                     name: item.prodName,
+                     icon:'circle'
+                  }
+                });
+              }
+            })()
         },
         series: [
             {
-                name: "schschsch",
+                height:20,
+                name:"月交易品种",
                 type:'pie',
-                radius: ['50%', '70%'],
+                radius: ['25%', '40%'],
                 label: {
                     normal: {
                         show: true,
                         position: 'inside',
-                        formatter: '{c}'
+                        formatter: '{d}%'
                     }//,
                     // emphasis: {
                     //     show: true,
@@ -53,40 +59,40 @@ class PieChart extends PureComponent {
                     }
                 },
                 data:
-                [
-                    {
-                      value:335,
-                      name:'直接访问',
-                      itemStyle:{
-                          normal:{
-                              // color:'rgb(128,128,128)'
-                          }
-                      }
-                    },
-                    {value:310, name:'邮件营销'},
-                    {value:234, name:'联盟广告'},
-                    {value:135, name:'视频广告'},
-                    {value:1548, name:'搜索引擎'},
-                    {value:310, name:'邮件营销1'},
-                    {value:234, name:'联盟广告1'},
-                    {value:135, name:'视频广告1'},
-                    {value:1548, name:'搜索引擎1'}
-                ]
-                // (function(){
-                //   if (data && data.length > 0) {
-                //     return data.map((item)=>{
-                //       return {
-                //         value: item[config.dataConf.valueField],
-                //         name: item[config.dataConf.nameField],
-                //         itemStyle:{
-                //             normal:{
-                //                 color: item[config.dataConf.colorField]
-                //             }
-                //         }
+                // [
+                //     {
+                //       value:335,
+                //       name:'直接访问',
+                //       itemStyle:{
+                //           normal:{
+                //               // color:'rgb(128,128,128)'
+                //           }
                 //       }
-                //     });
-                //   }
-                // })()
+                //     },
+                //     {value:310, name:'邮件营销'},
+                //     {value:234, name:'联盟广告'},
+                //     {value:135, name:'视频广告'},
+                //     {value:1548, name:'搜索引擎'},
+                //     {value:310, name:'邮件营销1'},
+                //     {value:234, name:'联盟广告1'},
+                //     {value:135, name:'视频广告1'},
+                //     {value:1548, name:'搜索引擎1'}
+                // ]
+                (function(){
+                  if (data && data.length > 0) {
+                    return data.map((item)=>{
+                      return {
+                        value: item.prodRatio,
+                        name: item.prodName,
+                        // itemStyle:{
+                        //     normal:{
+                        //         color: item[config.dataConf.colorField]
+                        //     }
+                        // }
+                      }
+                    });
+                  }
+                })()
             }
         ]
     };

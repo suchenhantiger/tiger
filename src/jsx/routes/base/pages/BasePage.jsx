@@ -20,7 +20,7 @@ class BasePage extends PureComponent{
         });
         var tigertoken = systemApi.getValue("tigertoken");
         if(tigertoken  && tigertoken.length>0){
-            this.props.updateToken(this);
+           // this.props.updateToken(this);
             hashHistory.push("/work");
         }else{
             hashHistory.push("/login");

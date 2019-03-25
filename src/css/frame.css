@@ -200,6 +200,9 @@ body.hidden {
 .center{
 	text-align: center;
 }
+.font20{
+	font-size: .2rem;
+}
 .font24{
 	font-size: .24rem;
 }

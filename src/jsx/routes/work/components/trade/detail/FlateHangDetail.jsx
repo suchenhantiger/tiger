@@ -35,7 +35,7 @@ class FlateDetail extends PureComponent{
             var tmpdate = new Date();
             tmpdate.setTime(openTime * 1000);
             openTime = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDay()+" "+
+            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
             tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
         }else {
             openTime="--";
@@ -45,7 +45,7 @@ class FlateDetail extends PureComponent{
             var tmpdate = new Date();
             tmpdate.setTime(expireDate * 1000);
             expireDate = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDay()+" "+
+            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
             tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
         }else {
             expireDate = "--"

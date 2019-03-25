@@ -74,9 +74,20 @@ class AccountManagePage extends PageComponent {
             // ratioPL: -0.0000149248
             // totalPL: 6.34
             var {mt4AccType, mt4Id,balance,equity,ratioPL,totalPL} = item;
+            var accName = "--";
+            if(this._mt4Id ==null || this._mt4Id.length==0 ){
+                //没有账号或者账号异常
+    
+            }else if(mt4AccType=="0"){
+                accName ="体验金账户";
+            }else if(mt4AccType=="1"){
+                accName ="交易账户";
+            }else if(mt4AccType=="2"){
+                accName ="跟单账户";
+            }
             return (
                 <div className={this.mergeClassName(styles.optional_detail, curMt4Id==mt4Id?styles.on:"")}>
-                        <div className={this.mergeClassName("pd-tp-20", "mg-lr-30")}>{mt4AccType=="0"?"体验金账户":"交易账户"}</div>
+                        <div className={this.mergeClassName("pd-tp-20", "mg-lr-30")}>{accName}</div>
                         <div className={this.mergeClassName(styles.account_dt, "mg-tp-20")}>
                             <ul>
                                 <li>

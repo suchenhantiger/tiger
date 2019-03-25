@@ -292,6 +292,8 @@ class Position extends PureComponent {
             accName ="体验金账户";
         }else if(this._mt4AccType=="1"){
             accName ="交易账户";
+        }else if(this._mt4AccType=="2"){
+            accName ="跟单账户";
         }
 
         return (

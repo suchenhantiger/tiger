@@ -8,6 +8,13 @@ class LineChart extends PureComponent {
   render(){
     systemApi.log("PieChart render");
     const {data,config} = this.props;
+    console.log(data);
+    var xd=[],
+        sd=[];
+    for(var i=0,l=data.length;i<l;i++){
+        xd.push(data[i].reportDate);
+        sd.push(data[i].ratioPL);
+    }
     var option = {
         legend:{
             height:50,
@@ -15,13 +22,13 @@ class LineChart extends PureComponent {
         },
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: xd
         },
         yAxis: {
             type: 'value'
         },
         series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: sd,
             type: 'line'
         }]
     };

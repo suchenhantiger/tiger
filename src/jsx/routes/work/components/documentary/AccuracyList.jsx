@@ -44,11 +44,27 @@ class AccuracyList extends CursorList {
         )
     }
 
-    itemClick = ()=>{
+    itemClick = (item)=>()=>{
+        var {accuracy30d,
+            downRate30d,
+            followNmae,
+            followerId,
+            fowwerNumHis,
+            incomeRate30d,
+            lastDayPLRate,
+            signature} = item;
         hashHistory.push({
             pathname:"/work/documentary/detail",
-            query:{}
+            query:{accuracy30d,
+                downRate30d,
+                followNmae,
+                followerId,
+                fowwerNumHis,
+                incomeRate30d,
+                lastDayPLRate,
+                signature}
         })
+
     }
 
     renderList() {
@@ -63,7 +79,7 @@ class AccuracyList extends CursorList {
                 lastDayPLRate,
                 signature} =item;
             return (
-                <tr className={styles.item} onClick={this.itemClick}>
+                <tr className={styles.item} onClick={this.itemClick(item)}>
                     <td>
                         <div className={styles.gs_pic}><img src="./images/documentary/img03.png" alt="" /></div>
                         <p className={styles.gs_name}>{followNmae}</p>

@@ -4,7 +4,7 @@ import { getHistoryInfo, } from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import HistoryList from './HistoryList';
 import AccFundRecordList from './AccFundRecordList';
-
+import AccountSelect from '../../components/me/AccountSelect';
 import styles from './css/tradeHistory.less';
 
 class TradeHistory extends PureComponent {
@@ -15,9 +15,12 @@ class TradeHistory extends PureComponent {
         this.state = {
             subIndex: 0,
             infoBalance: {},
-            fixTabs: false
+            fixTabs: false,
+            showAccount:false
         }
         this.shouldFresh = false;
+        this._mt4Id = systemApi.getValue("mt4Id");
+        this._mt4AccType = systemApi.getValue("mt4AccType");
     }
 
     componentDidMount() {
@@ -86,14 +89,43 @@ class TradeHistory extends PureComponent {
         }
     }
 
+    closeAccount = ()=>{
+        this.setState({showAccount:false});
+    }
+
+    selectAccount = (mt4AccType, mt4Id)=>{
+        systemApi.setValue("mt4AccType", mt4AccType);
+        systemApi.setValue("mt4Id", mt4Id);
+        this._mt4Id =mt4Id;
+        this._mt4AccType = mt4AccType;
+        this.setState({showAccount:false});
+        this.refreshAllData();
+    }
+    showAccount = ()=>{
+        this.setState({showAccount:true});
+    }
+
     //渲染函数
     render() {
 
-        var { infoBalance, subIndex, fixTabs } = this.state;
+        var { infoBalance, subIndex, fixTabs,showAccount } = this.state;
         var { balance = "--",
             ratioPL = 0,
             totalPL = 0,
             totalQty = 0 } = infoBalance;
+
+            var accName = "--";
+            if(this._mt4Id ==null || this._mt4Id.length==0 ){
+                //没有账号或者账号异常
+    
+            }else if(this._mt4AccType =="0"){
+                accName ="体验金账户";
+            }else if(this._mt4AccType=="1"){
+                accName ="交易账户";
+            }else if(this._mt4AccType=="2"){
+                accName ="跟单账户";
+            }
+    
 
         return (
             <div>
@@ -104,19 +136,21 @@ class TradeHistory extends PureComponent {
                     <div>
                         <div className={styles.optional_detail}>
                             <div className={styles.currency_name}>
-                                <p>
-                                    <span className={this.mergeClassName("blue", "left")}>体验金账号</span>
-                                    <span className={this.mergeClassName("c9", "left")}>(自主交易)</span>
+                                <p onClick={this.showAccount}>
+                                    <span className={this.mergeClassName("blue", "left")}>{accName}</span>
+                                    {/* <span className={this.mergeClassName("c9", "left")}>(自主交易)</span> */}
+                                    <span className={this.mergeClassName("c9", "left")}>({this._mt4Id?this._mt4Id:"--"})</span>
+
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
                                 <p className={this.mergeClassName("c3", "font48", "mg-tp-42", styles.c3)}>${balance}</p>
                             </div>
-                            <div className={"right"}>
+                            <div className={"right"} onClick={this.showAccount}>
                                 <div className={styles.icon_account}>切换</div>
                             </div>
                             <div className={"clear"}></div>
                             <div className={"mg-lr-30"}>
-                                <span className={this.mergeClassName("left", "c9")}>交易账户</span>
+                                {/* <span className={this.mergeClassName("left", "c9")}>交易账户</span> */}
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
@@ -148,6 +182,8 @@ class TradeHistory extends PureComponent {
                 {fixTabs ? (
                     <div className={styles.fixed}>{this.renderTabs()}</div>
                 ) : null}
+                {showAccount?<AccountSelect onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
+
             </div>
         );
     }

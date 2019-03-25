@@ -1,7 +1,7 @@
 
 import styles from './css/static.less';
 import { connect } from 'react-redux';
-import { getMasterDetail } from '../../actions/documentary/documentaryAction';
+import { getMasterDetail ,queryFollReportProd} from '../../actions/documentary/documentaryAction';
 import ReactEcharts from 'echarts-for-react';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
@@ -12,18 +12,32 @@ class Static extends PureComponent {
         super(props);
         this.state={
             info:{},
-            report:[]
+            report:[],
+            prodCodeList:[]
         }
 
       
     }
 
+
+    componentDidUpdate(){
+        var {onDidUpdate} = this.props;
+        onDidUpdate && onDidUpdate();
+    }
+    
     componentDidMount(){
         var {followerId} =this.props;
         this.props.getMasterDetail(this,{followerId},(data)=>{
             var {info,report} =data;
-            
             this.setState({info,report});
+            if(report.length>0){
+                var {reportDate} =report[report.length-1];
+                this.props.queryFollReportProd(this,{reportDate,followerId:followerId,reportTpye:0,},(prodCodeList)=>{
+
+                    this.setState({prodCodeList});
+                });
+            }
+            
         });
     }
 
@@ -47,7 +61,7 @@ class Static extends PureComponent {
     //渲染函数
     render() {
 
-        var {info,report} =this.state;
+        var {info,report,prodCodeList} =this.state;
         var {  accuracy="--",
             ratioPL="--",
             downRate="--",
@@ -73,7 +87,7 @@ class Static extends PureComponent {
                     </div>
                     <div >
                     {/* <ReactEcharts option={this.getOption()} /> */}
-                    <LineChart />
+                    <LineChart data={report}/>
                     </div>
                     <div className={"clear"}></div>
                     <div className={"c9" +" "+"mg-tp-20"}>*过往表现并不代表未来交易的成功率，您需要理智地做出判断</div>
@@ -169,7 +183,7 @@ class Static extends PureComponent {
                       </div>
                   </div>
                   <div>
-                    <PieChart />
+                    {prodCodeList.length>0?<PieChart data={prodCodeList} />:null}
                   </div>
               </div>
                 
@@ -185,7 +199,7 @@ class Static extends PureComponent {
 //         };
 // }
 function injectAction() {
-    return { getMasterDetail };
+    return { getMasterDetail ,queryFollReportProd};
 }
 
-module.exports = connect(null, injectAction())(Static);
+module.exports = connect(null, injectAction(), null, {withRef:true})(Static);

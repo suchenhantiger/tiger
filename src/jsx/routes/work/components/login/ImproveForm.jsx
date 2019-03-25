@@ -24,7 +24,6 @@ class ImproveForm extends PureComponent {
 
     nicknameChange = (e) => {
         var { value } = e.target;
-        console.log(value);
         this.setState({ nickname: value });
     }
 
@@ -68,7 +67,7 @@ class ImproveForm extends PureComponent {
             this.setState({errMsg:"请输入地址信息"});
         }else{
           //  console.log(encodeURIComponent(encodeURIComponent(nickname)));
-            this.props.saveAccMt4(this,{nickname:nickname,email,emailCode,country:"china",address:encodeURIComponent(encodeURIComponent(address))},()=>{
+            this.props.saveAccMt4(this,{nickname:nickname,email,emailCode,country:"china",address:address},()=>{
                 this.props.updateUserInfo(this,()=>{
                     hashHistory.goBack();
                 });

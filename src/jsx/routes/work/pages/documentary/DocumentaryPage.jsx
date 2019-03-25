@@ -16,6 +16,28 @@ class DocumentaryPage extends PageComponent{
             mulIndex:0
         }
     }
+    
+    componentDidMount(){
+        document.addEventListener("backbutton", this.onBackKeyDown, false);
+    }
+    componentWillUnmount(){
+        document.removeEventListener("backbutton", this.onBackKeyDown, false);
+        super.componentWillUnmount();
+    }
+
+    onBackKeyDown = ()=>{
+        var hash = this.getHashPath();
+
+        if(hash != '/work/documentary'){
+            hashHistory.goBack();
+        }
+        else{
+            if(systemApi.getDeviceMessage().isAndroid){
+                Client.backForAndroid();
+            }
+        }
+    }
+
       //获取页面名称
     getPageName(){ return "跟单主页"; }
 

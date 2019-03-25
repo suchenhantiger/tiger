@@ -41,7 +41,7 @@ class HistoryDetailPage extends PageComponent {
             var tmpdate = new Date();
             tmpdate.setTime(closeTime * 1000);
             closeTime = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDay()+" "+
+            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
             tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
         }else {
             closeTime="--";

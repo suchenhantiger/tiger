@@ -5,7 +5,8 @@ import styles from './css/accountSelect.less';
 
 const ACCOUNT_MAP = {
     "0":"体验账号",
-    "1":"交易账号"
+    "1":"交易账号",
+    "2":"跟单账号"
 }
 
 class AccountSelect extends PureComponent {

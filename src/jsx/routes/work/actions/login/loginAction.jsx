@@ -168,7 +168,7 @@ export function updateToken(component,cb){
 
         component.requestJSON("users/updateToken",params).done((data)=>{
             // dispatch(hideLoading());
-            var { avatarUrl,clientId,
+            var { avatarUrl,clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
                 nickname,tel,telActive,syntoken,
@@ -176,6 +176,7 @@ export function updateToken(component,cb){
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
                 systemApi.setValue("tigertoken",token);
+                systemApi.setValue("signVersion",tokenVersion);
                 //systemApi.setValue("phone",phone);
                 // systemApi.setValue("avatarUrl",avatarUrl);
                 // systemApi.setValue("clientId",clientId);
@@ -246,13 +247,14 @@ export function login(component, params,logintype,cb){
 
         component.requestJSON("loginregister/login",params,null,{needToken:false}).done((data)=>{
             dispatch(hideLoading());
-            var { avatarUrl,clientId,
+            var { avatarUrl,clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
                 nickname,tel,telActive,syntoken,
                 token,mt4Accs=[],
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
+                systemApi.setValue("signVersion",tokenVersion);
                 systemApi.setValue("phone",phone);
                 systemApi.setValue("avatarUrl",avatarUrl);
                 systemApi.setValue("clientId",clientId);

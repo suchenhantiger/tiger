@@ -56,7 +56,7 @@ function requestSuccess(ver, deferred, iskick, data){
         if(success == true){	//请求成功
             deferred.resolve(body);
         }
-        else if(code ==400 ){	//session超时
+        else if(code ==400){	//session超时
             deferred.reject({message:"登录超时"});
             systemApi.removeValue("tigertoken");
             systemApi.removeValue("mt4Id");
@@ -159,6 +159,10 @@ module.exports = {
             //生产环境用原生发
             //获取签名
             sendParams.sign = genSignStr(sendParams,needToken);
+            if(needToken){
+                sendParams.signVersion = systemApi.getValue("signVersion");
+            }
+            
             var sendUrl = systemApi.getValue("rootUrl") + url;
             cordovaHTTP.post(
                 sendUrl,
@@ -181,6 +185,9 @@ module.exports = {
             }
             //添加签名sign
             paramStr.push("sign=" + genSignStr(params,needToken));
+            if(needToken){
+                paramStr.push("signVersion="+systemApi.getValue("signVersion"));
+            }
             params["_"] = "" + timeStamp + ver;
 
             //拼装请求url

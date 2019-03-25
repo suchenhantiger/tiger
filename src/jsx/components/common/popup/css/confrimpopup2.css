@@ -1,0 +1,55 @@
+.pop_inner{
+	width: 6.5rem;
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	border-radius: .3rem;
+	margin-left: auto;
+	margin-right: auto;
+	background: #fff;
+}
+.pup_content{
+	padding: .25rem;
+}
+.icon_pup_close {
+    width: .24rem;
+    height: .24rem;
+    background: url(./images/common/popup/icon-close-01.png) no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: .3rem;
+    top: .3rem;
+}
+.pup_bot{
+	height: .88rem;
+	line-height: .88rem;
+	font-size: .32rem;
+	position: relative;
+	border-top:1px solid #ddd;
+}
+.btn_pup_center{
+	text-align: center;
+}
+
+.btn_pup_cancel,.btn_pup_confirm{
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+.btn_pup_cancel{
+	color: #666;
+}
+.line_01{
+	background: #ddd;
+	width: 1px;
+	height: .32rem;
+	position: absolute;
+	left: 50%;
+	margin-left: -.05px;
+	top: 50%;
+	margin-top: -.16rem;
+}

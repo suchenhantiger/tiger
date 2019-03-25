@@ -5,9 +5,11 @@ import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import FlatTab from '../../../../components/common/subtabs/FlatTab';
 import Static from '../../components/documentary/Static';
 
-
+import CopyDialog from '../../components/documentary/detail/CopyDialog';
 import CurTradeList from '../../components/documentary/detail/CurTradeList';
 import HisTradeList from '../../components/documentary/detail/HisTradeList';
+import { connect } from 'react-redux';
+import { applyFollower } from '../../actions/documentary/documentaryAction';
 
 import styles from './css/documentarDetailPage.less';
 
@@ -35,7 +37,8 @@ class DocumentaryDetailPage extends PageComponent {
 
         this.state = {
             index: 0,
-            fixTabs: false
+            fixTabs: false,
+            showDialog:false
         }
     }
     //获取页面名称
@@ -116,13 +119,27 @@ class DocumentaryDetailPage extends PageComponent {
     }
 
     copyClick = ()=>{
-        
+       this.setState({showDialog:true});    
+    }
+
+    closeDialog = ()=>{
+        this.setState({showDialog:false});
+         
+     }
+    
+    confirmCopy = (funds)=>{
+
+        this.setState({showDialog:false});
+        this.props.applyFollower(this,{followerId:this._followerId,funds},()=>{
+
+        });
+
     }
 
     render() {
         systemApi.log("DocumentaryDetailPage render");
 
-        var { index, fixTabs } = this.state;
+        var { index, fixTabs,showDialog } = this.state;
 
         return (
 
@@ -163,7 +180,7 @@ class DocumentaryDetailPage extends PageComponent {
                         <div className={styles.bg}>
                             {this.renderTabs()}
                             <LazyLoad index={index}>
-                                <Static followerId={this._followerId}/>
+                                <Static onDidUpdate={this.didUpdate} followerId={this._followerId}/>
                                 <CurTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="curtrade"/>
                                 <HisTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="history" />
                             </LazyLoad>
@@ -177,12 +194,16 @@ class DocumentaryDetailPage extends PageComponent {
                 {fixTabs ? (
                     <div className={styles.fixed}>{this.renderTabs()}</div>
                 ) : null}
+
+                {showDialog? <CopyDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
                 {this.props.children}
             </div>
         );
     }
 
 }
+function injectAction() {
+    return { applyFollower };
+}
 
-
-module.exports = DocumentaryDetailPage;
+module.exports = connect(null, injectAction())(DocumentaryDetailPage);

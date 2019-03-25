@@ -26,6 +26,7 @@ class OptionalEditList extends PureComponent {
     }
 
     save=()=>{
+        console.log(this._OptionalList);
         this.props.updateOptionalList(this._OptionalList);
     }
 
@@ -43,6 +44,15 @@ class OptionalEditList extends PureComponent {
     }
 
     deleteOne = (prodCode)=>(e)=>{
+        var {list} =this.state;
+        for(var i=0,l=list.length;i<l;i++){
+            if(list[i].prodCode ==prodCode ){
+                list.splice(i, 1);
+                this._OptionalList.splice(i, 1);
+                this.setState({list:list.slice(0)});
+                break;
+            }
+        }
       
     }
 
@@ -51,9 +61,9 @@ class OptionalEditList extends PureComponent {
             var {prodName,prodCode} =data;
             return (
                 <li className={styles.op_sort_li}>
-                    {/* <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
+                    <div className={styles.list_left_icon } onClick={this.deleteOne(prodCode)} >
                         <div className={styles.icon_delete_red}></div>
-                    </div> */}
+                    </div>
                     <div className={styles.currency_name}>
                         <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
                         <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>
