@@ -23,7 +23,6 @@ class HangList extends PureComponent{
        for(var i=0,l=data.length;i<l;i++){
 
            var prodCode = data[i].prodCode;
-           console.log(prodCode);
            for(var j=0,l2=floatTrade.length;j<l2;j++){
                if(prodCode == floatTrade[j].symbol){
                    data[i] = Object.assign({}, data[i],floatTrade[j]);

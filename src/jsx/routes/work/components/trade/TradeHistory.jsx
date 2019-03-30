@@ -3,6 +3,8 @@ import { getHistoryInfo, } from "../../actions/trade/tradeAction";
 
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import HistoryList from './HistoryList';
+import HistoryCopyList from './HistoryCopyList';
+
 import AccFundRecordList from './AccFundRecordList';
 import AccountSelect from '../../components/me/AccountSelect';
 import styles from './css/tradeHistory.less';
@@ -73,12 +75,22 @@ class TradeHistory extends PureComponent {
 
     renderTabs() {
         var { subIndex } = this.state;
-        return (
-            <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
+        if(this._mt4AccType==2){
+            return (<div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
                 <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>平仓订单<i></i></span>
-                <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>资金记录<i></i></span>
-            </div>
-        )
+                <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>历史跟随<i></i></span>
+                <span className={subIndex == 2 ? styles.on : ""} onClick={this.tabClick(2)}>资金记录<i></i></span>
+            </div>)
+
+        }else{
+            return (
+                <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
+                    <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>平仓订单<i></i></span>
+                    <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>资金记录<i></i></span>
+                </div>
+            )
+        }
+        
     }
 
     getNextPage = ()=>{
@@ -174,6 +186,7 @@ class TradeHistory extends PureComponent {
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
                                 <HistoryList ref="historyList"/>
+                                {this._mt4AccType==2?<HistoryCopyList type={2} fowMt4Id={this._mt4Id}  ref="historyCopyList"/>:null}    
                                 <AccFundRecordList />
                             </LazyLoad>
                         </div>

@@ -204,6 +204,14 @@ class StopProfitPage extends PageComponent {
         this.setState({profitPrice});
     }
 
+    defStopValue=()=>{
+        this.plusClick(1)();
+    }
+
+    defProfitValue=()=>{
+        this.plusClick(2)();
+    }
+
 
 
     render() {
@@ -245,7 +253,8 @@ class StopProfitPage extends PageComponent {
                                 <div className={styles.tran_icon}>
                                     <div className={styles.icon_minus} onClick={this.minusClick(1)}></div>
                                     <div className={styles.icon_num}>
-                                    <InputFormate 
+                                    <InputFormate
+                                        getDefault={this.defStopValue}
                                         valueChange={this.stopPriceChange}
                                         value={stopPrice} 
                                         digit={this._digits}  />
@@ -269,6 +278,7 @@ class StopProfitPage extends PageComponent {
                                     <div className={styles.icon_minus} onClick={this.minusClick(2)}></div>
                                     <div className={styles.icon_num}>
                                     <InputFormate 
+                                        getDefault={this.defProfitValue}
                                         valueChange={this.profitPriceChange}
                                         value={profitPrice} 
                                         digit={this._digits}  />

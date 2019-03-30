@@ -1,9 +1,13 @@
 import { connect } from 'react-redux';
-import { getPositionInfo, updatePositionInfo,updatePositionList,getPositionAllOrder, flatOrder, updateOrder } from "../../actions/trade/tradeAction";
+import { getPositionInfo, updatePositionInfo,
+    updatePositionList,getPositionAllOrder,
+     flatOrder, updateOrder } from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import PositionAllList from "./PositionAllList";
 import HangList from "./HangList";
 import AccountSelect from '../../components/me/AccountSelect';
+import CopyAllList from "./CopyAllList";
+import CurrFowList from "./CurrFowList";
 import styles from './css/position.less';
 
 class Position extends PureComponent {
@@ -243,13 +247,27 @@ class Position extends PureComponent {
 
     renderTabs() {
         var { subIndex } = this.state;
-        return (
-            <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
-                <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>自主持仓<i></i></span>
-                <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>挂单交易<i></i></span>
-                <span className={subIndex == 2 ? styles.on : ""} onClick={this.tabClick(2)}>跟单<i></i></span>
-            </div>
-        )
+        if(this._mt4AccType==2){
+            return (
+                <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
+                    
+                    <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>全部订单<i></i></span>
+                    <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>正在跟随<i></i></span>
+                </div>
+            )
+
+        }else{
+            return (
+                <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
+                    
+                    <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>自主持仓<i></i></span>
+                    <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>挂单交易<i></i></span>
+                    <span className={subIndex == 2 ? styles.on : ""} onClick={this.tabClick(2)}>跟单<i></i></span>
+                </div>
+            )
+
+        }
+        
     }
 //切换账号
     showAccount = ()=>{
@@ -343,9 +361,12 @@ class Position extends PureComponent {
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
-                                <PositionAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />
-                                <HangList floatTrade={floatTrade} data={hanglist} onItemClick={this.clickHang} />
-                                <PositionAllList floatTrade={floatTrade} data={couplist} />
+                                {this._mt4AccType==2?<CopyAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />:null}
+                                {this._mt4AccType==2?<CurrFowList fowMt4Id={this._mt4Id} floatTrade={floatTrade}  onItemClick={this.clickOrder} />:null}
+                                {this._mt4AccType==2?null:<PositionAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />}
+                                {this._mt4AccType==2?null:<HangList floatTrade={floatTrade} data={hanglist} onItemClick={this.clickHang} />}
+                                {this._mt4AccType==2?null:<PositionAllList floatTrade={floatTrade} data={couplist} />}
+
                             </LazyLoad>
                         </div>
                     </div>

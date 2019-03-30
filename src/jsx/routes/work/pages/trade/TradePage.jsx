@@ -46,7 +46,7 @@ class TradePage extends PageComponent {
                     <div className={styles.header}></div>
                      <LazyLoad index={index}>
                         <Position/>
-                       <TradeHistory/>
+                        <TradeHistory/>
                         <TradeFee/> 
                     </LazyLoad> 
                     {/* {index==0? <Position/>:null}

@@ -16,8 +16,6 @@ class CopyDialog extends PureComponent{
     onSure = ()=>{
         setTimeout(()=>{
             var {num}=this.state;
-            num=(+num);
-            if( num<=0) return;
             var {onSure} = this.props;
             onSure && onSure(num);
         },50);
@@ -32,12 +30,18 @@ class CopyDialog extends PureComponent{
 
     //渲染函数
     render(){
-
-        var {onCancel, followName} = this.props,
+        //suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance
+        var {onCancel, followName,suggestBalance,maxFowBalance,canFowBalance} = this.props,
             {num} = this.state;
 
+            var sureText="复制交易";
+            if(canFowBalance == null || canFowBalance ==0){
+                sureText = "立即充值";
+            }
+            console.log(canFowBalance);
+
         return(
-            <Confirm sureText={"复制交易"} onSure={this.onSure} onCancel={onCancel}>
+            <Confirm sureText={sureText} onSure={this.onSure} onCancel={onCancel}>
                 <div>
                     <p className="font30 mg-bt-10 font_bold">复制</p>
                     <p className="font30 mg-bt-20 font_bold">{followName}</p>
@@ -54,15 +58,15 @@ class CopyDialog extends PureComponent{
                     </div>
                     <div className={styles.item}>
                         <span className={"left"}>可用金额</span>
-                        <span className={"right"}>$0.00</span>
+                        <span className={"right"}>${canFowBalance}</span>
                     </div>
                     <div className={styles.item}>
                         <span className={"left"}>建议复制金额</span>
-                        <span className={"right"}>$0.00</span>
+                        <span className={"right"}>${suggestBalance}</span>
                     </div>
                     <div className={styles.item}>
                         <span className={"left"}>高手剩余可复制金额</span>
-                        <span className={"right"}>$0.00</span>
+                        <span className={"right"}>${maxFowBalance}</span>
                     </div>
                     
 

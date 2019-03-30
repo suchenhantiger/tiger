@@ -74,15 +74,16 @@ class AccountManagePage extends PageComponent {
             // ratioPL: -0.0000149248
             // totalPL: 6.34
             var {mt4AccType, mt4Id,balance,equity,ratioPL,totalPL} = item;
+            console.log(mt4AccType);
             var accName = "--";
-            if(this._mt4Id ==null || this._mt4Id.length==0 ){
+            if(mt4Id ==null || mt4Id==0 ){
                 //没有账号或者账号异常
     
-            }else if(mt4AccType=="0"){
+            }else if(mt4AccType==0){
                 accName ="体验金账户";
-            }else if(mt4AccType=="1"){
+            }else if(mt4AccType==1){
                 accName ="交易账户";
-            }else if(mt4AccType=="2"){
+            }else if(mt4AccType==2){
                 accName ="跟单账户";
             }
             return (
@@ -128,17 +129,17 @@ class AccountManagePage extends PageComponent {
         return (
             <FullScreenView>
                 <AppHeader headerName="交易账户管理" theme="transparent" />
-                <Content coverHeader={true}>
+                <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                     <div className={styles.account_manage}>
                         <div className={"white"}>
-                            <p className={this.mergeClassName("text-al-center", "font48")}>&amp;1000.00</p>
+                            <p className={this.mergeClassName("text-al-center", "font48")}>$1000.00</p>
                             <p className={this.mergeClassName("text-al-center", "mg-tp-10")}>账户总额</p>
                         </div>
                         <div className={this.mergeClassName(styles.account_dt, styles.account_list)}>
                             <ul>
                                 <li>
-                                    <p className={"font32"}>1999</p>
+                                    <p className={"font32"}>{total}</p>
                                     <p className={"mg-tp-10"}>交易手数</p>
                                 </li>
                                 <li>

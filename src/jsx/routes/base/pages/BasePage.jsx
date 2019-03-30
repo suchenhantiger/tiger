@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 
 import {showMessage,initOptionalList,initProductList} from '../../../store/actions';
-import {updateToken} from '../../work/actions/login/loginAction';
 import Toast from '../../../components/common/popup/Toast';
 import Loading from '../../../components/common/loading/Loading';
 import VConsole from 'vconsole';
@@ -18,14 +17,7 @@ class BasePage extends PureComponent{
         this.props.initProductList(()=>{
             this.props.initOptionalList();
         });
-        var tigertoken = systemApi.getValue("tigertoken");
-        if(tigertoken  && tigertoken.length>0){
-           // this.props.updateToken(this);
-            hashHistory.push("/work");
-        }else{
-            hashHistory.push("/login");
-        }
-       // this.props.initAccountList();
+       
        if(vconsole){
       
         let vConsole = new VConsole() ;
@@ -54,7 +46,7 @@ function injectProps(state){
 }
 
 function injectAction(){
-    return{showMessage,initOptionalList,initProductList,updateToken};
+    return{showMessage,initOptionalList,initProductList};
 }
 
 module.exports = connect(injectProps,injectAction())(BasePage);

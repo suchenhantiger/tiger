@@ -154,7 +154,7 @@ function Decrypt(data,AuthTokenKey,AuthTokenIv) {
 }
 
 
-export function updateToken(component,cb){
+export function updateToken(component,cb,failCb){
     return function(dispatch, state){
         var params = {};
         var key=""+Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,15));
@@ -226,6 +226,7 @@ export function updateToken(component,cb){
             cb && cb();
         }).fail((data)=>{
             // dispatch(hideLoading());
+            failCb && failCb();
             dispatch(showMessage(ERROR, data.message));
             
         });
@@ -273,8 +274,13 @@ export function login(component, params,logintype,cb){
                 if(mt4Accs && mt4Accs.length>0){
                     var currAcc = systemApi.getValue("mt4Id");
                     var isChange = true;
+                    var hasF = false;
                     for(var item in mt4Accs){
-                        if(currAcc == mt4Accs[item].mt4Id){//不需要更新
+                        var {mt4Id,mt4AccType} = mt4Accs[item];
+                        if(mt4AccType==2){//跟单账号
+                            hasF = true;
+                            systemApi.setValue("f_mt4Id",mt4Id);
+                        }else if(currAcc == mt4Id){//不需要更新
                             isChange=false;
                             break;
                         }
@@ -285,9 +291,14 @@ export function login(component, params,logintype,cb){
                         systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
                     }
 
+                    if(!hasF){
+                        systemApi.removeValue("f_mt4Id");
+                    }
+
                 }else{
                     //没有账号
                     systemApi.removeValue("mt4Id");
+                    systemApi.removeValue("f_mt4Id");
                     systemApi.removeValue("mt4AccType");
 
                 }              

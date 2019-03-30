@@ -459,11 +459,25 @@ class ComplexDetail extends PureComponent{
     profitPriceChange= (profitPrice)=>{
         this.setState({profitPrice});
     }
+
+    defActualValue = ()=>{
+        this.plusClick(1)();
+    }
+
+    defStopValue = ()=>{
+      
+        this.plusClick(3)();
+    }
+
+    defProfitValue = ()=>{
+        
+          this.plusClick(4)();
+      }
     
     //渲染函数
     render(){
         systemApi.log("ComplexDetail render");
-        var {showIntro, showOpenSucc, num, actualPrice, showBuyDialog,
+        var {showIntro, showOpenSucc, num, showBuyDialog,
              trantype,tranDire,
              actualPrice,
              stopPrice,
@@ -512,7 +526,8 @@ class ComplexDetail extends PureComponent{
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(1)}></div>
                             <div className={styles.icon_num}>
-                            <InputFormate 
+                            <InputFormate
+                                getDefault={this.defActualValue}
                                 valueChange={this.actualPriceChange}
                                 value={actualPrice} 
                                 digit={this._digits}  />
@@ -560,6 +575,7 @@ class ComplexDetail extends PureComponent{
                             <div className={styles.icon_minus} onClick={this.minusClick(3)}></div>
                             <div className={styles.icon_num}>
                             <InputFormate 
+                                getDefault={this.defStopValue}
                                 valueChange={this.stopPriceChange}
                                 value={stopPrice} 
                                 digit={this._digits}  />
@@ -583,6 +599,7 @@ class ComplexDetail extends PureComponent{
                             <div className={styles.icon_minus} onClick={this.minusClick(4)}></div>
                             <div className={styles.icon_num}>
                             <InputFormate 
+                                getDefault={this.defProfitValue}
                                 valueChange={this.profitPriceChange}
                                 value={profitPrice} 
                                 digit={this._digits}  />

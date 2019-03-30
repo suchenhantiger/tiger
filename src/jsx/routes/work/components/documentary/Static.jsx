@@ -26,14 +26,20 @@ class Static extends PureComponent {
     }
     
     componentDidMount(){
-        var {followerId} =this.props;
+        var {followerId,updateInfo} =this.props;
         this.props.getMasterDetail(this,{followerId},(data)=>{
-            var {info,report} =data;
+            var {info,report,fowInfo} =data;
             this.setState({info,report});
-            if(report.length>0){
+            var {starLevel,
+                maxFowBalance,
+                suggestBalance
+                }= info;
+                updateInfo && updateInfo({starLevel,
+                    maxFowBalance,
+                    suggestBalance,fowInfo});
+                if(report.length>0){
                 var {reportDate} =report[report.length-1];
                 this.props.queryFollReportProd(this,{reportDate,followerId:followerId,reportTpye:0,},(prodCodeList)=>{
-
                     this.setState({prodCodeList});
                 });
             }
@@ -85,7 +91,7 @@ class Static extends PureComponent {
                       <span className={"left" +" font32"}>表现</span>
                       <span className={"right" +" "+"c9"}>数据将于每日北京时间00：00更新</span>
                     </div>
-                    <div >
+                    <div style={{height:"3rem"}}>
                     {/* <ReactEcharts option={this.getOption()} /> */}
                     <LineChart data={report}/>
                     </div>

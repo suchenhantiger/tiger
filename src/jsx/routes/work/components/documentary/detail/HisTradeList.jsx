@@ -74,7 +74,7 @@ class HisTradeList extends PureComponent {
                         <p className="c9">现价</p>
                     </td>
                     <td>
-                        <p className={netProfit>=0?"font26 green":"font26 red"}>${netProfit}</p>
+                        <p className={netProfit>=0?"font26 red":"font26 green"}>${netProfit}</p>
                         <p className="c9">收益</p>
                     </td>
                 </tr>

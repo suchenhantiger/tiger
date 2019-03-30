@@ -70,7 +70,7 @@ class AccuracyList extends CursorList {
     renderList() {
         var { data } = this.state;
         return data.map((item) => {
-            var {accuracy30d,
+            var {accuracy30d,avatarUrl="",
                 downRate30d,
                 followNmae,
                 followerId,
@@ -78,10 +78,11 @@ class AccuracyList extends CursorList {
                 incomeRate30d,
                 lastDayPLRate,
                 signature} =item;
+                if(avatarUrl.length == 0) avatarUrl= "./images/me/img03.png" ;
             return (
                 <tr className={styles.item} onClick={this.itemClick(item)}>
                     <td>
-                        <div className={styles.gs_pic}><img src="./images/documentary/img03.png" alt="" /></div>
+                        <div className={styles.gs_pic}><img src={avatarUrl} alt="" /></div>
                         <p className={styles.gs_name}>{followNmae}</p>
                     </td>
                     <td>

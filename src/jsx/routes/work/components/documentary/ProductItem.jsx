@@ -31,11 +31,14 @@ class ProductItem extends PureComponent {
 
     //渲染函数
     render() {
-        var {incomeRate30d="--",followNmae} = this.props.data;
+        var {incomeRate30d="--",followNmae,avatarUrl=""} = this.props.data;
+        // 
+        if(avatarUrl.length == 0)
+            avatarUrl = "./images/me/img03.png";
 
         return (
             <li className={styles.item} onClick={this.itemClick}>
-                <div className={styles.bk_pic}><img src="./images/documentary/img03.png" alt="" /></div>
+                <div className={styles.bk_pic}><img src={avatarUrl} alt="" /></div>
                 <div className={styles.blank}></div>
                 <div className={styles.cont}>
                     <div className={styles.bk_name}>{followNmae}</div>

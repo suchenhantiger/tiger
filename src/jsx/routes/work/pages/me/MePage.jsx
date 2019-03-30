@@ -159,10 +159,11 @@ class MePage extends PageComponent {
         var {showConfirm,showReal,showAccount,infoEquity={}}=this.state;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
         let mt4Id = systemApi.getValue("mt4Id");
+        var avatarUrl = systemApi.getValue("avatarUrl");
         let mt4AccType = systemApi.getValue("mt4AccType");
         let emailIsActive = systemApi.getValue("emailIsActive");
         let isReal = systemApi.getValue("isReal"); 
-        var accName = "--"
+        var accName = "--";
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
 
@@ -173,6 +174,7 @@ class MePage extends PageComponent {
         }else if(this._mt4AccType=="2"){
             accName ="跟单账户";
         }
+        if(avatarUrl == null ||avatarUrl.length==0) avatarUrl= "./images/me/img03.png" ;
 
 
         return (
@@ -183,7 +185,7 @@ class MePage extends PageComponent {
                     <div>
                         <div className={styles.blank}></div>
                         <div className={this.mergeClassName(styles.optional_detail)}>
-                            <div className={styles.head_portrait}><img src="./images/me/img03.png" alt="" /></div>
+                            <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
                                 <p onClick={this.showAccount}>

@@ -28,7 +28,7 @@ export function hideLoading(){
 }
 export function initOptionalList(){
     return function(dispatch){
-        var optionalList_local = systemApi.getValue("optional_list") || "[]";
+        var optionalList_local = systemApi.getValue("optional_list") || "[\"XAUUSD\",\"EURUSD\",\"USDJPY\"]";
         optionalList_local = JSON.parse(optionalList_local);
         dispatch({type:"INIT_OPTIONAL_LIST",data:optionalList_local });
     }
@@ -44,7 +44,7 @@ export function updateOptionalList(optList){
 
 export function initProductList(callback){
     return function(dispatch){
-        var productList_local = systemApi.getValue("product_list") || "[]";
+        var productList_local = systemApi.getValue("product_list") || "{\"1\":[{\"volumeStep\": 0.01,\"prodName\":\"美日\",\"prodSize\": 100000,\"minstDec\": 5,\"maxVolume\": 50,\"prodCode\": \"USDJPY\",\"categoryId\": \"1\",\"marginPercentage\": 0.01,\"minVolume\": 0.01,\"digits\": 3},{\"volumeStep\": 0.01,\"prodName\": \"欧美\",\"prodSize\": 100000,\"minstDec\": 5,\"maxVolume\": 50,\"prodCode\": \"EURUSD\",\"categoryId\": \"1\",\"marginPercentage\": 0.01,\"minVolume\": 0.01,\"digits\": 5}],\"2\": [{\"volumeStep\": 0.01,\"prodName\": \"黄金美元\",\"prodSize\": 100,\"minstDec\": 5,\"maxVolume\": 50,\"prodCode\": \"XAUUSD\",\"categoryId\": \"2\",\"marginPercentage\": 0.01,\"minVolume\": 0.01,\"digits\": 2}]}";
         productList_local = JSON.parse(productList_local);
         dispatch({type:"INIT_PRODUCT_LIST",data:productList_local });
 

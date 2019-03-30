@@ -15,6 +15,23 @@ export function queryFollReportProd(component, params,cb){
     }
 }
 
+export function followRelieve(component, params,cb){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("follower/followRelieve",params).done((data)=>{
+            dispatch(hideLoading());
+            cb && cb(data);
+            dispatch(showMessage(SUCCESS, "解除跟随关系成功"));
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
 export function applyFollower(component, params,cb){
     return function(dispatch, state){
         dispatch(showLoading());
@@ -31,6 +48,21 @@ export function applyFollower(component, params,cb){
         });
     }
 }
+export function openFollow(component,cb){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        component.requestJSON("follower/openFollow",{clientId}).done((data)=>{
+            dispatch(hideLoading());
+            cb && cb(data);
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
 
 
 export function getMasterDetail(component, params,cb){

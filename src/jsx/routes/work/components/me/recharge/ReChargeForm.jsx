@@ -1,7 +1,8 @@
 import PaySelect from './PaySelect';
 import PayDest from './PayDest';
 import styles from './css/rechargeForm.less';
-
+import { connect } from 'react-redux';
+import { addAccFundRecord} from '../../../actions/trade/tradeAction';
 const PAY_MAP = [
     {id:"0",text:"电汇账户",desc:"电汇通常需要3-5个工作日到账"},
     {id:"1",text:"钱包",desc:""},
@@ -68,12 +69,31 @@ class ReChargeForm extends PureComponent {
     }
 
     rechargeSubmit = ()=>{
+        var {amount} = this.state;
+        if((+amount)<=0) return;
         
+        
+        var mt4Id = systemApi.getValue("mt4Id");
+        this.props.addAccFundRecord(this,{amountUSD:amount,recordType:1,mt4Id},()=>{
+
+        });
     }
 
     inputChange = (e)=>{
         var {value} = e.target;
-        this.setState({amount:value});
+        var {amount:old} = this.state;
+        value = value.replace(/[^\d.]/g, "");
+        if(value.indexOf('.')>-1 && value.lastIndexOf('.')!=value.indexOf('.')){
+            this.setState({amount:old});
+        }else{
+            this.setState({amount:value});
+        }
+        
+    }
+
+    numFormate =(e)=>{
+        var { value } = e.target;
+        this.setState({amount:(+value).toFixed(2)});
     }
 
     
@@ -104,7 +124,7 @@ class ReChargeForm extends PureComponent {
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p><span className={styles.form_label}>充值金额</span></p>
-                        <input type="text" placeholder="$" value={amount} onChange={this.inputChange} />
+                        <input type="text" placeholder="$" value={amount} onBlur={this.numFormate } onChange={this.inputChange} />
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <span className={styles.blue}>点击查看汇款详情&gt;</span>
@@ -139,5 +159,9 @@ class ReChargeForm extends PureComponent {
     }
 
 }
+function injectAction() {
+    return { addAccFundRecord};
+}
 
-module.exports = ReChargeForm;
+module.exports = connect(null, injectAction(), null, {withRef:true})(ReChargeForm);
+

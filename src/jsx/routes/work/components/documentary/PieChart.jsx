@@ -19,9 +19,9 @@ class PieChart extends PureComponent {
             
             orient: 'horizontal',
             x: 'center',
-            y: 'bottom',
+            y: 160,
             
-            data:
+            data://["邮件营销","联盟广告","视频广告","搜索引擎"]
             (function(){
               if (data && data.length > 0) {
                 return data.map((item)=>{
@@ -34,11 +34,13 @@ class PieChart extends PureComponent {
             })()
         },
         series: [
+          
             {
                 height:20,
                 name:"月交易品种",
                 type:'pie',
-                radius: ['25%', '40%'],
+                radius: [40, 60],
+                center: ['50%', '30%'],
                 label: {
                     normal: {
                         show: true,
@@ -73,10 +75,6 @@ class PieChart extends PureComponent {
                 //     {value:234, name:'联盟广告'},
                 //     {value:135, name:'视频广告'},
                 //     {value:1548, name:'搜索引擎'},
-                //     {value:310, name:'邮件营销1'},
-                //     {value:234, name:'联盟广告1'},
-                //     {value:135, name:'视频广告1'},
-                //     {value:1548, name:'搜索引擎1'}
                 // ]
                 (function(){
                   if (data && data.length > 0) {

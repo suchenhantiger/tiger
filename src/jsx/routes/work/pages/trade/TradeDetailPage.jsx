@@ -134,8 +134,8 @@ class TradeDetailPage extends PageComponent {
             chartWidth = screenHeight -this._widthCut;
             chartHeight = screenWidth - this._heightCut ;
         }
-        console.log("sch chartWidth:"+chartWidth);
-        console.log("sch chartHeight:"+chartHeight);
+        // console.log("sch chartWidth:"+chartWidth);
+        // console.log("sch chartHeight:"+chartHeight);
 
 
         return (

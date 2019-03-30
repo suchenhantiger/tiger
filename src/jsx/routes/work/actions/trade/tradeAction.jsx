@@ -1,5 +1,24 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
+//获取跟随列表
+export function myfollowers(component, showload,params, update){
+    return function(dispatch, state){
+
+
+        if(showload) dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("follower/myfollowers",params).done((data)=>{
+            if(showload) dispatch(hideLoading());
+            console.log(data);
+            update && update(data);
+        }).fail((data)=>{
+            if(showload) dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
 //获取持仓信息
 export function getPositionInfo(component,params,loading, update,fail){
     return function(dispatch, state){
@@ -189,4 +208,15 @@ export function getTradeFeeInfo(component, params, update){
         });
     }
 }
-
+export function addAccFundRecord(component, params, cb){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("bank/addAccFundRecord",params).done((data)=>{
+        dispatch(showMessage(SUCCESS, "充值申请已提交"));
+        cb && cb();
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}

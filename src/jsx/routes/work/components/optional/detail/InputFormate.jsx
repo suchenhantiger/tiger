@@ -18,6 +18,14 @@ class InputFormate extends PureComponent{
         return this.state.value;
     }
 
+    getDefault=()=>{
+        
+        var {value,getDefault} = this.props;
+        if(value == null){
+            getDefault && getDefault();
+        }
+    }
+
 
     numChange = (e) => {
         var {valueChange,value:oldv} = this.props;
@@ -68,7 +76,8 @@ class InputFormate extends PureComponent{
                     className={styles.input} 
                     placeholder="未设置"
                     value={value} 
-                    onChange={this.numChange} 
+                    onChange={this.numChange}
+                    onFocus = {this.getDefault}
                     onBlur={this.numFormate } />
                 
                 

@@ -12,7 +12,8 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path="/" component={require('react-router!./routes/base/pages/BasePage')}>
-                <IndexRedirect to="login"/>
+                <IndexRedirect to="welcome"/>
+                <Route path="welcome" getComponent={require('./routes/work/config/welcome/index')(store)}></Route>
                 <Route path="login" getComponent={require('./routes/work/config/login/login')(store)}>
                     <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
                     <Route path="forget" getComponent={require('./routes/work/config/login/forget')(store)}></Route>
@@ -37,6 +38,7 @@ ReactDOM.render(
                         </Route>
                         <Route path="hangdetail" getComponent={require('./routes/work/config/trade/hangdetail')(store)}></Route>
                         <Route path="historydetail" getComponent={require('./routes/work/config/trade/historydetail')(store)}></Route>
+                        <Route path="currcopydetail" getComponent={require('./routes/work/config/trade/currcopydetail')(store)}></Route>
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>

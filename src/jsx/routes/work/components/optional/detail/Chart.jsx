@@ -41,7 +41,7 @@ const macdAppearance = {
 		divergence: "#4682B4"
 	},
 };
-//kdj rsi
+// rsi kdj===stochasticOscillator
 class CandleStickChartPanToLoadMore extends React.Component {
 	constructor(props) {
 		super(props);
