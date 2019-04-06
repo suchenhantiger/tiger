@@ -1,6 +1,6 @@
 import styles from './css/positionItem1.less';
 
-class PositionItem1 extends PureComponent{
+class CopyPositionItem extends PureComponent{
 
     //构造函数
     constructor(props) {
@@ -10,6 +10,7 @@ class PositionItem1 extends PureComponent{
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
         var {onChoose,data}= this.props;
+        data.mt4Type=2;
         onChoose && onChoose(data);
     }
 
@@ -41,9 +42,9 @@ class PositionItem1 extends PureComponent{
            , stopPrice
             ,swaps
             ,ticket
-           , tradeNo,netProfit=0
+           , tradeNo,netProfit
            , tradedQty} = data;
-        if(!netProfit) netProfit=0;
+           if(!netProfit) netProfit=0;
 
         return(
             <li className={styles.item} onClick={this.itemClick}>
@@ -61,4 +62,4 @@ class PositionItem1 extends PureComponent{
 
 }
 
-module.exports = PositionItem1;
+module.exports = CopyPositionItem;

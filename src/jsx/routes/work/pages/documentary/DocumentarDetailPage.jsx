@@ -21,23 +21,14 @@ class DocumentaryDetailPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
-        var { accuracy30d,
-            downRate30d,
+        var { 
             followNmae,
             followerId,
-            fowwerNumHis,
-            incomeRate30d,
-            lastDayPLRate,
-            signature } = this.props.location.query;
+        } = this.props.location.query;
 
-        this._accuracy30d = accuracy30d;
-        this._downRate30d = downRate30d;
         this._followNmae = followNmae;
         this._followerId = followerId;
-        this._fowwerNumHis = fowwerNumHis;
-        this._incomeRate30d = incomeRate30d;
-        this._lastDayPLRate = lastDayPLRate;
-        this._signature = signature;
+
         this._fowType = 0;
         this.state = {
             index: 0,
@@ -49,7 +40,9 @@ class DocumentaryDetailPage extends PageComponent {
             starLevel:null,
             maxFowBalance:null,
             suggestBalance:null,
-            fowInfo:null
+            fowInfo:null,
+            signature:null,
+            incomeRate30d:null,downRate30d:null,lastDayPLRate:null
             
         }
     }
@@ -57,18 +50,27 @@ class DocumentaryDetailPage extends PageComponent {
     getPageName() { return "跟单详情"; }
 
     componentDidMount(){
-        this.interval = setInterval(()=>{
-            var {iscroll} = this.refs;
-            if(iscroll){
-                var {y} = iscroll.wrapper,
-                    yRem = this.calculateRem(0, y);
-                this.setState({ fixTabs: yRem < -3.34 });;
-            }
-        }, 50);
+        // this.interval = setInterval(()=>{
+        //     var {iscroll} = this.refs;
+        //     if(iscroll){
+        //         var {y} = iscroll.wrapper,
+        //             yRem = this.calculateRem(0, y);
+        //         this.setState({ fixTabs: yRem < -3.34 });;
+        //     }
+        // }, 50);
+    }
+
+    scrolling=()=>{
+        var {iscroll} = this.refs;
+        if(iscroll){
+            var {y} = iscroll.wrapper,
+                yRem = this.calculateRem(0, y);
+            this.setState({ fixTabs: yRem < -3.34 });;
+        }
     }
 
     componentWillUmount(){
-        clearInterval(this.interval);
+       // clearInterval(this.interval);
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -184,13 +186,15 @@ class DocumentaryDetailPage extends PageComponent {
 
     updateInfo=(data)=>{
         var {starLevel,
-            maxFowBalance,
+            maxFowBalance,signature,
+            incomeRate30d,downRate30d,lastDayPLRate,
             suggestBalance,fowInfo}=data;
-            console.log(fowInfo);
+
         this.setState({
             starLevel,
             maxFowBalance,
-            suggestBalance,fowInfo
+            suggestBalance,fowInfo,signature,
+            incomeRate30d,downRate30d,lastDayPLRate,
         });
 
     }
@@ -256,7 +260,9 @@ class DocumentaryDetailPage extends PageComponent {
             starLevel,
             maxFowBalance,
             suggestBalance,
-            fowInfo
+            fowInfo,
+            signature,
+            incomeRate30d,downRate30d,lastDayPLRate
          } = this.state;
          var fowStatus =null;
          var canFowBalance = null;
@@ -272,7 +278,7 @@ class DocumentaryDetailPage extends PageComponent {
             <div className={styles.main}>
                 <AppHeader headerName={this._followNmae} theme="transparent" />
                 <div className={styles.header}></div>
-                <IScrollView className={this.getScrollStyle()} canUpFresh={true} canDownFresh={true}
+                <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()} canUpFresh={true} canDownFresh={true}
                     upFresh={this.reloadData} downFresh={this.getNextPage} ref="iscroll">
                     <div className={styles.box}>
                         <div className={styles.optional_detail}>
@@ -282,21 +288,21 @@ class DocumentaryDetailPage extends PageComponent {
                                     <span >{this._followNmae}</span>
                                     {starLevel?<i className={styles.icon_grade}>{starLevel}</i>:null}
                                 </p>
-                                <p><span className={this.mergeClassName("c9", "left")}>{this._signature}</span></p>
+                                <p><span className={this.mergeClassName("c9", "left")}>{signature}</span></p>
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
                                 <ul>
                                     <li>
-                                        <p className={this.mergeClassName("font32", "red")}>{this._incomeRate30d}%</p>
+                                        <p className={this.mergeClassName("font32", "red")}>{incomeRate30d}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日收益率</p>
                                     </li>
                                     <li>
-                                        <p className={this.mergeClassName("font32", "green")}>{this._downRate30d}%</p>
+                                        <p className={this.mergeClassName("font32", "green")}>{downRate30d}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日最大跌幅</p>
                                     </li>
                                     <li>
-                                        <p className={"font32"}>{this._lastDayPLRate}%</p>
+                                        <p className={"font32"}>{lastDayPLRate}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>上一交易日</p>
                                     </li>
                                 </ul>
@@ -316,7 +322,7 @@ class DocumentaryDetailPage extends PageComponent {
                 </IScrollView>
                 
                     <div className={styles.bottomBtn}>
-                        {fowStatus?null:<div className={styles.btn} onClick={this.copyClick}>复制</div>}
+                        {fowStatus==null?<div className={styles.btn} onClick={this.copyClick}>复制</div>:null}
                         {fowStatus==0?<div className={styles.btn} onClick={this.copyClick}>复制</div>:null}
 
                         {fowStatus==1?<div className={styles.btn2Frame}>
@@ -343,6 +349,7 @@ class DocumentaryDetailPage extends PageComponent {
                 {showDialog? <CopyDialog suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
                 {showCancel? <CancelDialog   onCancel={this.closeDialog} onSure={this.confirmCancelCopy} />:null}
                 {showProtocol? <ProcotolDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmProcotol} />:null}
+                
                 {this.props.children}
             </div>
         );

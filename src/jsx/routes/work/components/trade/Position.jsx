@@ -17,7 +17,6 @@ class Position extends PureComponent {
         super(props);
         this.state = {
             subIndex: 0,
-            allList: {},
             fixTabs: false,
             showAccount:false
         }
@@ -35,14 +34,25 @@ class Position extends PureComponent {
        
         Event.register("refresh_order_list",this.refreshOrderList);
         Event.register("ws_trade_list",this.wsPush);
-        this._interval1 = setInterval(()=>{
-            var {iscroll} = this.refs;
-            if(iscroll){
-                var {y} = iscroll.wrapper,
-                    yRem = this.calculateRem(0, y);
-                this.setState({ fixTabs: yRem < -3.34 });;
-            }
-        }, 50);
+        // this._interval1 = setInterval(()=>{
+        //     var {iscroll} = this.refs;
+        //     if(iscroll){
+        //         var {y} = iscroll.wrapper,
+        //             yRem = this.calculateRem(0, y);
+        //         this.setState({ fixTabs: yRem < -3.34 });;
+        //     }
+        // }, 50);
+    }
+
+    scrolling=()=>{
+        
+        var {iscroll} = this.refs;
+        if(iscroll){
+            var {y} = iscroll.wrapper,
+                yRem = this.calculateRem(0, y);
+                console.log(yRem);
+            this.setState({ fixTabs: yRem < -4.5 });;
+        }
     }
 
 
@@ -108,27 +118,10 @@ class Position extends PureComponent {
          this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, false, () => {
  
             // this.beginPolling();
-             this.props.getPositionAllOrder(this,false, { mt4Id }, (data) => {
-                 this.setState({ allList: data },()=>{
-                    // console.log(data);
-                     var {hanglist = [], couplist = [], orderlist = [] } = data;
-                     var prodList=[];
-                     for(var i=0,l=orderlist.length;i<l;i++){
-                         var {prodCode}=orderlist[i];
-                         prodList.push(prodCode);
-                     }
-                     for(var i=0,l=hanglist.length;i<l;i++){
-                         var {prodCode}=hanglist[i];
-                         prodList.push(prodCode);
-                     }
-                     for(var i=0,l=couplist.length;i<l;i++){
-                         var {prodCode}=couplist[i];
-                         prodList.push(prodCode);
-                     }
-                     this._prodsStr = prodList.join(",");
-                     this.startWs();
-                 });
-             });
+             this.props.getPositionAllOrder(this,false, { mt4Id }, (prodList) => {
+                this._prodsStr = prodList.join(",");
+                this.startWs();
+        });
          },()=>{
              //失败回调，也需要轮巡
           //   this.beginPolling();
@@ -143,25 +136,9 @@ class Position extends PureComponent {
             //没有账号或者账号异常
             return;
         }
-        this.props.getPositionAllOrder(this,true, { mt4Id }, (data) => {
-            this.setState({ allList: data },()=>{
-                var {hanglist = [], couplist = [], orderlist = [] } = data;
-                var prodList=[];
-                for(var i=0,l=orderlist.length;i<l;i++){
-                    var {prodCode}=orderlist[i];
-                    prodList.push(prodCode);
-                }
-                for(var i=0,l=hanglist.length;i<l;i++){
-                    var {prodCode}=hanglist[i];
-                    prodList.push(prodCode);
-                }
-                for(var i=0,l=couplist.length;i<l;i++){
-                    var {prodCode}=couplist[i];
-                    prodList.push(prodCode);
-                }
+        this.props.getPositionAllOrder(this,true, { mt4Id }, (prodList) => {
                 this._prodsStr = prodList.join(",");
                 this.startWs();
-            });
         });
     }
 
@@ -169,7 +146,7 @@ class Position extends PureComponent {
     componentWillUnmount(){
         super.componentWillUnmount();
         clearInterval(this._interval);
-        clearInterval(this._interval1);
+        //clearInterval(this._interval1);
         Event.unregister("refresh_order_list",this.refreshOrderList);
         Event.unregister("ws_trade_list",this.wsPush);
     }
@@ -259,10 +236,8 @@ class Position extends PureComponent {
         }else{
             return (
                 <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
-                    
                     <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>自主持仓<i></i></span>
                     <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>挂单交易<i></i></span>
-                    <span className={subIndex == 2 ? styles.on : ""} onClick={this.tabClick(2)}>跟单<i></i></span>
                 </div>
             )
 
@@ -278,29 +253,32 @@ class Position extends PureComponent {
         this.setState({showAccount:false});
     }
 
-    selectAccount = (mt4AccType, mt4Id)=>{
+    selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
         systemApi.setValue("mt4AccType", mt4AccType);
         systemApi.setValue("mt4Id", mt4Id);
+        systemApi.setValue("mt4NickName",mt4NickName);
         this._mt4Id =mt4Id;
         this._mt4AccType = mt4AccType;
         this.setState({showAccount:false});
         this.refreshAllData();
     }
 
+    gotoCharge =()=>{
+        hashHistory.push("/work/me/recharge");
+    }
+
     //渲染函数
     render() {
+        var {hanglist,couplist,orderlist} = this.props;
+        var { subIndex, fixTabs ,showAccount} = this.state;
+        var {infoEquity={}} =this.props;
 
-        var { subIndex, allList, fixTabs ,showAccount} = this.state;
-        var {infoEquity={},floatTrade=[]} =this.props;
-        var { hanglist = [], couplist = [], orderlist = [] } = allList;
         var { equity = "--",
             floatPL = "--",
             freeMargin = "--",
             ratioMargin = "--",
             usedMargin = "--" } = infoEquity;
-        
-
-
+    
         
         var accName = "--";
         if(this._mt4Id ==null || this._mt4Id.length==0 ){
@@ -314,9 +292,10 @@ class Position extends PureComponent {
             accName ="跟单账户";
         }
 
+
         return (
             <div>
-                <IScrollView className={this.getScrollStyle()}
+                <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()}
                     canUpFresh={true} upFresh={this.reloadData} ref="iscroll">
                     <div>
                         <div className={styles.optional_detail}>
@@ -334,7 +313,7 @@ class Position extends PureComponent {
                             <div className={"clear"}></div>
                             <div className={"mg-lr-30"}>
                                 <span className={this.mergeClassName("left", "c9")}>浮动盈亏</span>
-                                <span className={this.mergeClassName("right", "blue")}>充值/提现</span>
+                                <span className={this.mergeClassName("right", "blue")} onClick={this.gotoCharge}>充值/提现</span>
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
@@ -361,12 +340,10 @@ class Position extends PureComponent {
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
-                                {this._mt4AccType==2?<CopyAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />:null}
-                                {this._mt4AccType==2?<CurrFowList fowMt4Id={this._mt4Id} floatTrade={floatTrade}  onItemClick={this.clickOrder} />:null}
-                                {this._mt4AccType==2?null:<PositionAllList floatTrade={floatTrade} data={orderlist} onItemClick={this.clickOrder} />}
-                                {this._mt4AccType==2?null:<HangList floatTrade={floatTrade} data={hanglist} onItemClick={this.clickHang} />}
-                                {this._mt4AccType==2?null:<PositionAllList floatTrade={floatTrade} data={couplist} />}
-
+                                {this._mt4AccType==2?<CopyAllList  data={couplist} onItemClick={this.clickOrder} />:null}
+                                {this._mt4AccType==2?<CurrFowList couplist={couplist} fowMt4Id={this._mt4Id}   onItemClick={this.clickOrder} />:null}
+                                {this._mt4AccType==2?null:<PositionAllList  data={orderlist} onItemClick={this.clickOrder} />}
+                                {this._mt4AccType==2?null:<HangList  data={hanglist} onItemClick={this.clickHang} />}
                             </LazyLoad>
                         </div>
                     </div>
@@ -383,8 +360,8 @@ class Position extends PureComponent {
 
 }
 function injectProps(state) {
-    var { infoEquity ,floatTrade} = state.trade || {};
-    return { infoEquity,floatTrade };
+    var {infoEquity ,hanglist,couplist,orderlist} = state.base || {};
+    return { infoEquity,hanglist,couplist,orderlist };
 }
 function injectAction() {
     return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder ,updatePositionInfo,updatePositionList}

@@ -1591,6 +1591,7 @@ IScroll.prototype = {
 			destTime = startTime + duration;
 
 		function step () {
+			that._execEvent('step');
 			var now = utils.getTime(),
 				newX, newY,
 				easing;

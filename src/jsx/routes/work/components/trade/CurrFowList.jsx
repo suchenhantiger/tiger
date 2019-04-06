@@ -35,22 +35,17 @@ class CurrFowList extends PureComponent {
 
     renderList() {
         var {allList:data} = this.state;
-        var {floatTrade=[]} = this.props;
-         
-        for(var i=0,l=data.length;i<l;i++){
-
-            var prodCode = data[i].prodCode;
-            for(var j=0,l2=floatTrade.length;j<l2;j++){
-
-                if(prodCode == floatTrade[j].symbol){
-                    data[i] = Object.assign({}, data[i],floatTrade[j]);
-                    break;
+        var {couplist} = this.props;
+        return data.map(item => {
+            var pl = 0;
+            var {followerId} = item;
+            for(var i=0,l=couplist.length;i<l;i++){
+                if(followerId == couplist[i].followerId){
+                    pl+= couplist[i].netProfit;
                 }
             }
-        }
 
-        return data.map(item => {
-            return <CopyItem type={1} data={item} onChoose={this.onItemclick} />
+            return <CopyItem pl={pl} type={1} data={item} onChoose={this.onItemclick} />
         })
     }
     render() {

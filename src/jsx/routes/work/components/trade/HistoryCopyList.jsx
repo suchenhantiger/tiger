@@ -35,22 +35,8 @@ class HistoryCopyList extends PureComponent {
 
     renderList() {
         var {allList:data} = this.state;
-        var {floatTrade=[]} = this.props;
-         
-        for(var i=0,l=data.length;i<l;i++){
-
-            var prodCode = data[i].prodCode;
-            for(var j=0,l2=floatTrade.length;j<l2;j++){
-
-                if(prodCode == floatTrade[j].symbol){
-                    data[i] = Object.assign({}, data[i],floatTrade[j]);
-                    break;
-                }
-            }
-        }
-
         return data.map(item => {
-            return <CopyItem type={1} data={item} onChoose={this.onItemclick} />
+            return <CopyItem type={2} data={item} onChoose={this.onItemclick} />
         })
     }
     render() {
@@ -65,10 +51,7 @@ class HistoryCopyList extends PureComponent {
 
 
 }
-// function injectProps(state) {
-//     var { infoEquity ,floatTrade} = state.trade || {};
-//     return { infoEquity,floatTrade };
-// }
+
 function injectAction() {
     return {myfollowers}
 }

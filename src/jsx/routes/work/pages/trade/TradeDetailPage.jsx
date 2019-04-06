@@ -121,8 +121,7 @@ class TradeDetailPage extends PageComponent {
         systemApi.log("OptionalDetailPage render");
 
         var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
-        var {prodName,prodCode,buySell,hangType,marketPrice} =this._prodInfo;
-
+        var {prodName,prodCode,buySell,hangType,marketPrice,mt4Type} =this._prodInfo;
         var devinfo = systemApi.getDeviceMessage();
         var {screenHeight,
             screenWidth} = devinfo;
@@ -153,8 +152,8 @@ class TradeDetailPage extends PageComponent {
                     </div>}
                     <FlateDetail price={price} data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.bt_btn_50}><button onClick={this.stopClick}>止损/止盈</button></div>
-                    <div className={styles.bt_btn_50}><button  onClick={this.flatClick(0)} >平仓</button></div>
+                    <div className={styles.bt_btn_50}><button  className={mt4Type==2?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.stopClick}>止损/止盈</button></div>
+                    <div className={styles.bt_btn_50}><button  className={mt4Type==2?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.flatClick(0)} >平仓</button></div>
                        
                     </div>
                 </Content>

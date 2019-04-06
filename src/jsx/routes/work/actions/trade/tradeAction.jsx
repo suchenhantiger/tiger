@@ -65,7 +65,22 @@ export function getPositionAllOrder(component, showload,params, update){
         component.requestJSON("users/queryPositionList",params).done((data)=>{
             if(showload) dispatch(hideLoading());
             console.log(data);
-            update && update(data);
+            var {hanglist = [], couplist = [], orderlist = [] } = data;
+            var prodList=[];
+            for(var i=0,l=orderlist.length;i<l;i++){
+                var {prodCode}=orderlist[i];
+                prodList.push(prodCode);
+            }
+            for(var i=0,l=hanglist.length;i<l;i++){
+                var {prodCode}=hanglist[i];
+                prodList.push(prodCode);
+            }
+            for(var i=0,l=couplist.length;i<l;i++){
+                var {prodCode}=couplist[i];
+                prodList.push(prodCode);
+            }
+            dispatch({type:"UPDATE_ALL_LIST",data});
+            update && update(prodList);
         }).fail((data)=>{
             if(showload) dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));

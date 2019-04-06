@@ -4,11 +4,15 @@ import FullScreenView from '../../../../components/common/fullscreen/FullScreenV
 import styles from './css/accountSelect.less';
 
 const ACCOUNT_MAP = {
-    "0":"体验账号",
+    "0":"体验账户",
+    "1":"自主交易",
+    "2":"跟单账户"
+}
+const ACCOUNT_MAP2 = {
+    "0":"体验金账号",
     "1":"交易账号",
     "2":"跟单账号"
 }
-
 class AccountSelect extends PureComponent {
 
     //构造函数
@@ -23,27 +27,29 @@ class AccountSelect extends PureComponent {
         this.props.getAccounts(this, this.update)
     }
 
-    update = (accountList) => {
-        this.setState({accountList});
+    update = (data) => {
+        var {mt4Accs} =data;
+        this.setState({accountList:mt4Accs});
     }
 
-    itemClick = (mt4AccType, mt4Id) => () => {
+    itemClick = (mt4AccType, mt4Id,mt4NickName) => () => {
         var {onSelect} = this.props;
-        onSelect && onSelect(mt4AccType, mt4Id)
+        onSelect && onSelect(mt4AccType, mt4Id,mt4NickName)
     }
 
     renderAccounts() {
         var { index, accountList } = this.state;
-        var curMt4Id = systemApi.getValue("mt4Id")
+        var curMt4Id = systemApi.getValue("mt4Id");
+
         return accountList.map((item, i) => {
-            var {mt4AccType, mt4Id} = item;
+            var {mt4AccType, mt4Id,mt4NickName} = item;
             return (
-                <div className={this.mergeClassName(styles.radius_box, curMt4Id==mt4Id?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id)}>
+                <div className={this.mergeClassName(styles.radius_box, curMt4Id==mt4Id?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
                     <ul>
                         <li>
                             <p className={"mg-bt-10"}>
-                                <span className={"font30"}>{ACCOUNT_MAP[mt4AccType]}</span>
-                                <span className={"c9"}>（mt4Id:{mt4Id}）</span>
+                                <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
+                                <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
                             </p>
                             {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
                         </li>
@@ -73,7 +79,7 @@ class AccountSelect extends PureComponent {
                     <div className={styles.accounts}>
                         {this.renderAccounts(accountList)}
                     </div>
-                    <div className={styles.copy_btn}><button onClick={this.newAccount}>新建账号</button></div>
+                    {/* <div className={styles.copy_btn}><button onClick={this.newAccount}>新建账号</button></div> */}
                 </div>
             </FullScreenView>
         );

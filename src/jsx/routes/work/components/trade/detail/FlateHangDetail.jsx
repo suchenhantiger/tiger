@@ -113,7 +113,7 @@ class FlateDetail extends PureComponent{
 }
 
 function injectProps(state) {
-    var { infoEquity } = state.trade || {};
+    var { infoEquity } = state.base || {};
     return { infoEquity };
 }
 function injectAction(){

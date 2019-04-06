@@ -38,7 +38,9 @@ ReactDOM.render(
                         </Route>
                         <Route path="hangdetail" getComponent={require('./routes/work/config/trade/hangdetail')(store)}></Route>
                         <Route path="historydetail" getComponent={require('./routes/work/config/trade/historydetail')(store)}></Route>
-                        <Route path="currcopydetail" getComponent={require('./routes/work/config/trade/currcopydetail')(store)}></Route>
+                        <Route path="currcopydetail" getComponent={require('./routes/work/config/trade/currcopydetail')(store)}>
+                            <Route path="master" getComponent={require('./routes/work/config/documentary/detail')(store)}></Route>
+                        </Route>
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
                         <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>

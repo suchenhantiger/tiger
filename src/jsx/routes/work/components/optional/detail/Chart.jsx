@@ -269,6 +269,9 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					<YAxis fontSize={10} tickStroke="#999"  zoomEnabled={false} {...yGrid} axisAt="right" orient="right" showTicks={true} ticks={5}  />
 
 					<CandlestickSeries 
+				fill={(d)=>{
+					return d.close > d.open ? "#FF0000"  :"#6BA583" ;
+				}}
 					/>
 					<LineSeries yAccessor={ema26.accessor()} stroke={ema26.stroke()}/>
 					<LineSeries yAccessor={ema12.accessor()} stroke={ema12.stroke()}/>
@@ -282,7 +285,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					rectWidth= {30}
 					arrowWidth= {1}
 					displayFormat={format("."+this._digits+"f")}
-						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
+						yAccessor={d => d.close} fill={d => d.close > d.open ? "#FF0000"  : "#6BA583"}/>
 
 					{/* <PriceCoordinate
 						at="right"

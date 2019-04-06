@@ -16,6 +16,37 @@ export function getMt4Message(component, params,cb){
         });
     }
 }
+export function openMt4Acc(component,nickName,cb){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var params={};
+        params.clientId=systemApi.getValue("clientId");
+        params.mt4AccType=1;
+        if(nickName) params.nickName = nickName;
+        component.requestJSON("users/openMt4Acc",params).done((data)=>{
+            dispatch(hideLoading());
+            cb && cb(data);
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
+export function updateAcc(component, params,cb){
+    return function(dispatch, state){
+        // dispatch(showLoading());
+        var clientId=systemApi.getValue("clientId");
+        params.clientId=clientId;
+        component.requestJSON("users/updateAcc",params).done((data)=>{
+         cb && cb();
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+} 
 
 export function upLoadImage(component, file,type,cb){
     return function(dispatch, state){
@@ -67,9 +98,9 @@ export function getDailyReportList(component, params, update){
 export function getAccounts(component, update){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("users/getUserMessage",{clientId}).done((data)=>{
-            var {mt4Accs=[]} = data;
-            update && update(mt4Accs);
+        component.requestJSON("users/getMt4Message",{queryType:3,clientId}).done((data)=>{
+            var {mt4Info} = data;
+            update && update(mt4Info);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
         });

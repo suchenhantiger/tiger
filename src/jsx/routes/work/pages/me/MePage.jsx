@@ -140,9 +140,11 @@ class MePage extends PageComponent {
         this.setState({showAccount:false});
     }
 
-    selectAccount = (mt4AccType, mt4Id)=>{
+    selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
         systemApi.setValue("mt4AccType", mt4AccType);
         systemApi.setValue("mt4Id", mt4Id);
+        systemApi.setValue("mt4NickName", mt4NickName);
+        
         this.setState({showAccount:false});
         this.props.getMt4Message(this,{queryType:2,mt4Id},(infoEquity)=>{
             this.setState({infoEquity});
@@ -161,55 +163,82 @@ class MePage extends PageComponent {
         let mt4Id = systemApi.getValue("mt4Id");
         var avatarUrl = systemApi.getValue("avatarUrl");
         let mt4AccType = systemApi.getValue("mt4AccType");
+        let mt4NickName = systemApi.getValue("mt4NickName");
         let emailIsActive = systemApi.getValue("emailIsActive");
         let isReal = systemApi.getValue("isReal"); 
         var accName = "--";
+        var typeName = "";
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
 
-        }else if(mt4AccType =="0"){
+        }else if(mt4AccType ==0){
             accName ="体验金账户";
-        }else if(mt4AccType=="1"){
+            typeName = "体验账户"
+        }else if(mt4AccType==1){
             accName ="交易账户";
-        }else if(this._mt4AccType=="2"){
+            typeName = "自主交易"
+        }else if(mt4AccType==2){
             accName ="跟单账户";
+            typeName = "跟随账户"
+        }
+        console.log(mt4NickName);
+        console.log(typeof(mt4NickName));
+        if(mt4NickName!=null && mt4NickName!=undefined && mt4NickName !="null" && mt4NickName !="undefined"){
+            
+
+            accName =mt4NickName;
         }
         if(avatarUrl == null ||avatarUrl.length==0) avatarUrl= "./images/me/img03.png" ;
 
 
         return (
             <div>
-                <AppHeader headerName="我的" theme="transparent" iconRight={this.renderIcons()} />
+                <AppHeader headerName="我的" theme="makecaptail" iconRight={this.renderIcons()} />
                 <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                     <div>
                         <div className={styles.blank}></div>
-                        <div className={this.mergeClassName(styles.optional_detail)}>
-                            <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
-                            <div className={styles.currency_name}>
-                                <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
-                                <p onClick={this.showAccount}>
-                                    <span className={this.mergeClassName("blue", "left")} >{accName}</span>
-                                    <span className={this.mergeClassName("c9", "left")}>({mt4Id?mt4Id:"--"})</span>
-                                    <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
-                                </p>
+                            {emailIsActive==0?
+                            <div className={styles.optional_detail}>
+                                <div className={styles.currency_name}>
+                                    <p className={this.mergeClassName(styles.c3, styles.text)}>交易账户</p>
+                                </div>
+                                <div className={"clear"}></div>
+                                <div className={styles.account_dt}>
+                                    <div style={{textAlign:"center",fontSize:".8rem",paddingTop: ".2rem",paddingBottom: ".2rem",color: "blue"}} onClick={this.addAccount}> +</div>
+                                    <div style={{textAlign:"center",paddingTop: ".1rem",color: "blue"}}  onClick={this.addAccount} >添加账户</div>
+                                </div>
                             </div>
-                            <div className={"right"}>
-                                <div className={styles.icon_account} onClick={this.manageAcc} >账号管理</div>
+                            :<div className={styles.optional_detail}>
+                                <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
+                                <div className={styles.currency_name}>
+                                    <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
+                                    <p onClick={this.showAccount}>
+                                        <span className={this.mergeClassName("blue", "left")} >{accName}</span>
+                                        <span className={this.mergeClassName("c9", "left")}>({typeName})</span>
+                                        <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
+                                    </p>
+                                </div>
+                                <div className={"right"}>
+                                    <div className={styles.icon_account} onClick={this.manageAcc} >账号管理</div>
+                                </div>
+                                <div className={"clear"}></div>
+                                <div className={styles.account_dt}>
+                                    {(emailIsActive==1 && mt4Id !=null && mt4Id.length)?
+                                    <ul>
+                                    {this.renderItem("浮动盈亏", "$"+floatPL)}
+                                    {this.renderItem("账户净值", "$"+equity)}
+                                    {this.renderItem("保证金比例", ratioMargin+"%")}
+                                </ul>:
+                                    <div style={{textAlign:"center",color: "blue"}} onClick={this.addAccount}>+添加账户</div>
+                                    }
+                                    {emailIsActive==1 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>+添加交易账户</div>:null}
+                                </div>
+
                             </div>
-                            <div className={"clear"}></div>
-                            <div className={styles.account_dt}>
-                                {(emailIsActive==1 && mt4Id !=null && mt4Id.length)?
-                                <ul>
-                                {this.renderItem("浮动盈亏", "$"+floatPL)}
-                                {this.renderItem("账户净值", "$"+equity)}
-                                {this.renderItem("保证金比例", ratioMargin+"%")}
-                            </ul>:
-                                <div style={{textAlign:"center",color: "blue"}} onClick={this.addAccount}>+添加账号</div>
-                                }
-                                {emailIsActive==1 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>升级到真实账号</div>:null}
-                            </div>
-                        </div>
+                            
+                            }
+
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.account_icons}>

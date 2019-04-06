@@ -121,3 +121,23 @@
 .header.purple{
 	background-color:rgba(181,108,122,0.95);
 }
+.makecaptail{
+	background: url(images/me/bg-img04.png) no-repeat;
+    background-size: 100%;
+}
+.makecaptail .head_arrow{
+	background-image:url(./images/common/appheader/arrow_left_transparent.png);
+}
+.makecaptail .center{
+	color:#fff;
+}
+
+.optial{
+	background: url(./images/optional/bg-img01.jpg) no-repeat;
+}
+.optial .head_arrow{
+	background-image:url(./images/common/appheader/arrow_left_transparent.png);
+}
+.optial .center{
+	color:#fff;
+}

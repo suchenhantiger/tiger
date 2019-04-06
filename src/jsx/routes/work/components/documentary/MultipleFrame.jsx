@@ -39,7 +39,7 @@ class MultipleFrame extends PureComponent {
                 <SubTabs index={index} onTabChange={this.tabChange}>
                     <FlatTab text="收益高手"/>
                     <FlatTab text="稳健高手"/>
-                    <FlatTab text="常在高手"/>
+                    <FlatTab text="常胜高手"/>
                 </SubTabs>
                 <LazyLoad index={index}>
                     <BenefitList/>

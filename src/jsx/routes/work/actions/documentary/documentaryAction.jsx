@@ -52,7 +52,7 @@ export function openFollow(component,cb){
     return function(dispatch, state){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("follower/openFollow",{clientId}).done((data)=>{
+        component.requestJSON("users/openMt4Acc",{clientId,mt4AccType:2}).done((data)=>{
             dispatch(hideLoading());
             cb && cb(data);
         }).fail((data)=>{
@@ -186,7 +186,6 @@ export function getHisTradeList(component, params, isAppend, updateList ){
         params.clientId=clientId;
         component.requestJSON("follower/queryFollowerTradeList",params).done((data)=>{
              var {list=[]} = data;
-            //     {list=[]} = accuracyDate;
             updateList && updateList(isAppend, list);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

@@ -5,6 +5,8 @@ import { getMasterDetail ,queryFollReportProd} from '../../actions/documentary/d
 import ReactEcharts from 'echarts-for-react';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
+import MonthPicker from './MonthPicker';
+
 class Static extends PureComponent {
 
     //构造函数
@@ -13,7 +15,8 @@ class Static extends PureComponent {
         this.state={
             info:{},
             report:[],
-            prodCodeList:[]
+            prodCodeList:[],
+            monthArr:[],currMonth:null
         }
 
       
@@ -29,12 +32,23 @@ class Static extends PureComponent {
         var {followerId,updateInfo} =this.props;
         this.props.getMasterDetail(this,{followerId},(data)=>{
             var {info,report,fowInfo} =data;
-            this.setState({info,report});
+            
+            var month=[];
+            for(var i=report.length-1;i>=0;i--){
+                month.push({value:report[i].reportDate,label:report[i].reportDate});
+            }
+            if(month.length>0){
+                this.setState({info,report,monthArr:month,currMonth:month[0].value});
+            }
+            else this.setState({info,report});
             var {starLevel,
                 maxFowBalance,
-                suggestBalance
+                suggestBalance,
+                signature,
+                incomeRate30d,downRate30d,lastDayPLRate,
                 }= info;
-                updateInfo && updateInfo({starLevel,
+                updateInfo && updateInfo({starLevel,signature,
+                    incomeRate30d,downRate30d,lastDayPLRate,
                     maxFowBalance,
                     suggestBalance,fowInfo});
                 if(report.length>0){
@@ -47,27 +61,28 @@ class Static extends PureComponent {
         });
     }
 
+    showMonth=()=>{
+       this.setState({showPicker:true});
+    }
 
- 
-    // accuracy
-    // ratioPL
-    // downRate
-    // fowwerNumHis
-    // lastDayPLRate
-    // plRate30d
-    // maxQty
-    // totalCount
-    // profitCount
-    // lossCount
-    // avgPosTime
-    // profitLong
-    // profitShort
-    // AvgMonthlyCount
-    
+    closeMonthPicker=()=>{
+        this.setState({showPicker:false});
+    }
+
+    changeMonth=(newMonth)=>{
+        var {currMonth}=this.state;
+        if(currMonth!=newMonth){
+            var {followerId} =this.props;
+            this.props.queryFollReportProd(this,{reportDate:newMonth,followerId:followerId,reportTpye:0},(prodCodeList)=>{
+                this.setState({prodCodeList});
+            });
+        }
+        this.setState({showPicker:false,currMonth:newMonth});
+    }
+
     //渲染函数
     render() {
-
-        var {info,report,prodCodeList} =this.state;
+        var {info,report,prodCodeList,showPicker,currMonth,monthArr} =this.state;
         var {  accuracy="--",
             ratioPL="--",
             downRate="--",
@@ -83,6 +98,7 @@ class Static extends PureComponent {
             profitShort="--",
             avgMonthlyCount="--"} =info;
 
+        var month=[{label:"201911",value:"201911"},{label:"201912",value:"201912"},{label:"201913",value:"201913"}]
 
         return (
             <div>
@@ -184,7 +200,7 @@ class Static extends PureComponent {
                   <div className={"mg-bt-20"+" overf-hid"}>
                       <span className={"left" +" "+"font32"}>月交易品种</span>
                       <div className={"right"}>
-                          <span className={"c9" +" "+"left"}>2019-02-13 13:57</span>
+                          <span className={"c9" +" "+"left"} onClick={this.showMonth} >{currMonth}</span>
                           <i className={styles.bot_arrow_down +" "+"right"}></i>
                       </div>
                   </div>
@@ -192,7 +208,11 @@ class Static extends PureComponent {
                     {prodCodeList.length>0?<PieChart data={prodCodeList} />:null}
                   </div>
               </div>
-                
+              {showPicker?
+              <MonthPicker data={monthArr} currMonth={currMonth} onClose={this.closeMonthPicker} onChange={this.changeMonth}/>
+              :
+              null}
+              
             </div>
         );
     }

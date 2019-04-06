@@ -18,21 +18,7 @@ class HangList extends PureComponent{
     }
 
     renderList(){
-        var { data = [] ,floatTrade=[]} = this.props;
-        
-       for(var i=0,l=data.length;i<l;i++){
-
-           var prodCode = data[i].prodCode;
-           for(var j=0,l2=floatTrade.length;j<l2;j++){
-               if(prodCode == floatTrade[j].symbol){
-                   data[i] = Object.assign({}, data[i],floatTrade[j]);
-                   console.log(data[i]);
-                   break;
-               }
-           }
-       }
-
-
+        var { data = [] } = this.props;
         return data.map(item=>{
             // console.log(item);
             return <HangItem data = {item} onChoose={this.onItemclick}/>

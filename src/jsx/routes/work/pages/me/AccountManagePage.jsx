@@ -2,8 +2,10 @@ import FullScreenView from '../../../../components/common/fullscreen/FullScreenV
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import Confrim from '../../../../components/common/popup/Confirm';
 import { connect } from 'react-redux';
-import { getAccounts } from '../../actions/me/meAction';
+import { getAccounts,updateAcc,openMt4Acc } from '../../actions/me/meAction';
 import styles from './css/accountManagePage.less';
+import NewAccDialog from '../../components/me/NewAccDialog';
+import ChangeAccDialog from '../../components/me/ChangeAccDialog';
 
 /********我的主页*********/
 class AccountManagePage extends PageComponent {
@@ -13,8 +15,11 @@ class AccountManagePage extends PageComponent {
 
         this.state = {
             accountList: [],
+            balances:"0.00",ratioPLs:"0.00",totalPLs:"0.00",totalQtys:"0.00",
             showReal:false,
-            showConfirm:false
+            showConfirm:false,
+            newAccConfirm:false,
+            showUpdate:false
         }
     }
     //获取页面名称
@@ -24,8 +29,9 @@ class AccountManagePage extends PageComponent {
         this.props.getAccounts(this, this.update)
     }
 
-    update = (accountList) => {
-        this.setState({accountList});
+    update = (mt4Info) => {
+        var {balances,ratioPLs,totalPLs,totalQtys,mt4Accs } = mt4Info;
+        this.setState({balances,ratioPLs,totalPLs,totalQtys,accountList:mt4Accs});
     }
 
     updateToReal = ()=>{
@@ -46,6 +52,19 @@ class AccountManagePage extends PageComponent {
     closeRealConfirm =()=>{
         this.setState({showReal:false});
     }
+
+    closeNewAcc =()=>{
+        this.setState({newAccConfirm:false});
+    }
+
+    newAcc =(nickName)=>{
+        this.props.openMt4Acc(this,nickName,()=>{
+            this.setState({newAccConfirm:false});
+            this.props.getAccounts(this, this.update);
+        });
+        
+    }
+
     gotoReal=()=>{
         hashHistory.push("/work/me/certification");
     }
@@ -63,45 +82,74 @@ class AccountManagePage extends PageComponent {
         this.setState({showConfirm:false});
     }
 
+    showUndateAcc =(mt4Id,accName)=>()=>{
+        this._mt4Id=mt4Id;
+        this._accName = accName;
+        this.setState({showUpdate:true});
+    }
+    
+    updateAcc =(nickName,mt4Id)=>{//accType
+        this.props.updateAcc(this,{accType:1,nickName,mt4Id},()=>{
+            this.setState({showUpdate:false});
+            this.props.getAccounts(this, this.update);
+        });
+    }
+    hideUndateAcc =()=>{
+        this.setState({showUpdate:false});
+    }
+    
+
+    changeMt4= (mt4Id,mt4AccType,mt4NickName)=>()=>{
+        systemApi.setValue("mt4AccType", mt4AccType);
+        systemApi.setValue("mt4Id", mt4Id);
+        systemApi.setValue("mt4NickName", mt4NickName);
+        
+        this.forceUpdate();
+    }
+
     renderAccounts() {
-        var { index, accountList } = this.state;
+        var { index, accountList} = this.state;
         var curMt4Id = systemApi.getValue("mt4Id");
         return accountList.map((item, i) => {
-            // balance: 10006.34
-            // equity: 10000
-            // mt4AccType: 0
-            // mt4Id: "12"
-            // ratioPL: -0.0000149248
-            // totalPL: 6.34
-            var {mt4AccType, mt4Id,balance,equity,ratioPL,totalPL} = item;
-            console.log(mt4AccType);
+            var {mt4AccType, mt4Id,equity,floatPL,freeMargin,ratioMargin,usedMargin,mt4NickName} = item;
             var accName = "--";
+            var typeName ="";
             if(mt4Id ==null || mt4Id==0 ){
                 //没有账号或者账号异常
     
-            }else if(mt4AccType==0){
+            }else if(mt4NickName){
+                accName =mt4NickName;
+                typeName="自主交易"
+             }
+            else if(mt4AccType==0){
                 accName ="体验金账户";
+                typeName="体验账户";
             }else if(mt4AccType==1){
                 accName ="交易账户";
+                typeName="自主交易"
             }else if(mt4AccType==2){
                 accName ="跟单账户";
+                typeName="跟随账户";
             }
-            return (
-                <div className={this.mergeClassName(styles.optional_detail, curMt4Id==mt4Id?styles.on:"")}>
-                        <div className={this.mergeClassName("pd-tp-20", "mg-lr-30")}>{accName}</div>
+            return (//    icon-instruction-black
+                <div className={this.mergeClassName(styles.optional_detail, curMt4Id==mt4Id?styles.on:"")} onClick={this.changeMt4(mt4Id,mt4AccType,mt4NickName)}>
+                        <div className={this.mergeClassName("font30","pd-tp-20", "mg-lr-30")}>
+                            {accName}<span className={styles.acctype}>{typeName}</span><i className={styles.write} onClick={this.showUndateAcc(mt4Id,accName)} />
+                            
+                        </div>
                         <div className={this.mergeClassName(styles.account_dt, "mg-tp-20")}>
                             <ul>
                                 <li>
-                                    <p className={"font32"}>${totalPL}</p>
-                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>总收益</p>
+                                    <p className={"font32"}>${floatPL}</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>浮动盈亏</p>
                                 </li>
                                 <li>
                                     <p className={"font32"}>${equity}</p>
-                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>账户净值</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>净值</p>
                                 </li>
                                 <li>
-                                    <p className={"font32"}>${balance}</p>
-                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>余额</p>
+                                    <p className={"font32"}>{ratioMargin}%</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>保证金比例</p>
                                 </li>
                             </ul>
                         </div>
@@ -115,39 +163,41 @@ class AccountManagePage extends PageComponent {
     }
 
     addNewAccount=()=>{
+        this.setState({newAccConfirm:true});
+        
 
     }
 
 
     render() {
         systemApi.log("AccountManagePage render");
-        var {showReal,showConfirm} =this.state;
+        var {showUpdate,showReal,showConfirm,newAccConfirm,balances,ratioPLs,totalPLs,totalQtys,} =this.state;
         let emailIsActive = systemApi.getValue("emailIsActive");
         let isReal = systemApi.getValue("isReal"); 
         let mt4Id = systemApi.getValue("mt4Id");
         let mt4AccType = systemApi.getValue("mt4AccType");
         return (
             <FullScreenView>
-                <AppHeader headerName="交易账户管理" theme="transparent" />
+                <AppHeader headerName="交易账户管理" theme="makecaptail" />
                 <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                     <div className={styles.account_manage}>
                         <div className={"white"}>
-                            <p className={this.mergeClassName("text-al-center", "font48")}>$1000.00</p>
+                            <p className={this.mergeClassName("text-al-center", "font48")}>${balances}</p>
                             <p className={this.mergeClassName("text-al-center", "mg-tp-10")}>账户总额</p>
                         </div>
                         <div className={this.mergeClassName(styles.account_dt, styles.account_list)}>
                             <ul>
                                 <li>
-                                    <p className={"font32"}>{total}</p>
+                                    <p className={"font32"}>{totalQtys}</p>
                                     <p className={"mg-tp-10"}>交易手数</p>
                                 </li>
                                 <li>
-                                    <p className={"font32"}>$688.00</p>
+                                    <p className={"font32"}>${totalPLs}</p>
                                     <p className={"mg-tp-10"}>总收益</p>
                                 </li>
                                 <li>
-                                    <p className={"font32"}>1.00%</p>
+                                    <p className={"font32"}>{ratioPLs}%</p>
                                     <p className={"mg-tp-10"}>总收益率</p>
                                 </li>
                             </ul>
@@ -161,26 +211,30 @@ class AccountManagePage extends PageComponent {
                     </div>:null}
                     {(emailIsActive ==1 && mt4Id && mt4Id.length>0 && isReal<3)?
                     <div className={styles.bottom_btn_fixed}>
-                        <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.updateToReal} >升级到真实账户</button></div>
+                        <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.updateToReal} >开通真实账户</button></div>
                     </div>:null}
                     {(emailIsActive ==1 && isReal==3)?
                     <div className={styles.bottom_btn_fixed}>
-                        <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.addNewAccount} >新增交易账户</button></div>
+                        <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.addNewAccount} >添加交易账户</button></div>
                     </div>:null}
 
                     
                 </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
                 {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="根据监管要求，请先实名认证" />:null}
-                {this.props.children}
+                {newAccConfirm?<NewAccDialog onSure={this.newAcc} onCancel={this.closeNewAcc} title="根据监管要求，请先实名认证" />:null}
+                {showUpdate?<ChangeAccDialog      mt4Id= {this._mt4Id}
+                                accName={this._accName} onSure={this.updateAcc} onCancel={this.hideUndateAcc} title="" />:null}
+                
             </FullScreenView>
         );
     }
 
 }
 function injectAction() {
-    return { getAccounts };
+    return { getAccounts ,updateAcc,openMt4Acc};
 }
 
 module.exports = connect(null, injectAction())(AccountManagePage);
 
+//  

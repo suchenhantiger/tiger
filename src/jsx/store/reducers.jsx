@@ -21,7 +21,9 @@ function baseReducer(state,action){
         accountArr:[],
         accuracyDate:[],
         incomeDate:[],
-        steadyDate:[]
+        steadyDate:[],
+        hanglist: [], couplist : [], orderlist :[],
+        infoEquity: {}
 
 
     };
@@ -143,7 +145,93 @@ function baseReducer(state,action){
             incomeDate:incomeDate.list,
             steadyDate:steadyDate.list
         });
-    }
+    }else if(type == "UPDATE_ALL_LIST"){
+        var {hanglist=[], couplist =[], orderlist =[]} =action.data;
+        return Object.assign({}, state, {
+            hanglist,couplist,orderlist
+        });
+    }else if(type == "UPDATE_COUPLIST"){
+        var {couplist =[]} =action.data;
+        return Object.assign({}, state, {
+           couplist
+        });
+    }else if(type == "QUERY_POSITION_DATA"){
+        console.log(action.data);
+        return Object.assign({},state,{
+            infoEquity:action.data
+        });
+        
+      }else if(type == "QUERY_POSITION_LIST_DATA"){
+        var floatTrade = action.data;
+        var {hanglist,couplist,orderlist}=state;
+        for(var i=0,l=hanglist.length;i<l;i++){
+            var prodCode = hanglist[i].prodCode;
+            for(var j=0,l2=floatTrade.length;j<l2;j++){
+
+                if(prodCode == floatTrade[j].symbol){
+                    hanglist[i] = Object.assign({}, hanglist[i],floatTrade[j]);
+                    
+                    break;
+                }
+            }
+
+        }
+
+        for(var i=0,l=couplist.length;i<l;i++){
+            var prodCode = couplist[i].prodCode;
+            for(var j=0,l2=floatTrade.length;j<l2;j++){
+
+                if(prodCode == floatTrade[j].symbol){
+
+                    couplist[i] = Object.assign({}, couplist[i],floatTrade[j]);
+                    var {ask,bid,marketPrice,buySell,
+                        openPrice,prodSize,exchangeRate,
+                        tradedQty,swaps,commission} = couplist[i] ;
+                    var netProfit = 0;
+                    if(ask && bid){
+                        marketPrice = buySell==1?ask:bid;
+                        var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
+                        netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
+                    }
+                    couplist[i].netProfit=netProfit;
+                    break;
+                }
+            }
+
+        }
+
+        for(var i=0,l=orderlist.length;i<l;i++){
+            var prodCode = orderlist[i].prodCode;
+            for(var j=0,l2=floatTrade.length;j<l2;j++){
+
+                if(prodCode == floatTrade[j].symbol){
+                    orderlist[i] = Object.assign({}, orderlist[i],floatTrade[j]);
+                    var {ask,bid,marketPrice,buySell,
+                        openPrice,prodSize,exchangeRate,
+                        tradedQty,swaps,commission} = orderlist[i] ;
+                    var netProfit = 0;
+                    if(ask && bid){
+                        marketPrice = buySell==1?ask:bid;
+                        var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
+                        netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
+                    }
+                    orderlist[i].netProfit=netProfit;
+                    break;
+                }
+            }
+
+        }
+
+
+
+
+        return Object.assign({},state,{
+            hanglist:hanglist.slice(),
+            couplist:couplist.slice(),
+            orderlist:orderlist.slice()
+        });
+
+      }
 
     return state;
 }

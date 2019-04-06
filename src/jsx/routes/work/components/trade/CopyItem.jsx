@@ -9,6 +9,7 @@ class CopyItem extends PureComponent{
 
     itemClick = ()=>{
         var {data={},type=2} = this.props;
+
        var {avatarUrl,
        balance,
        followNmae,
@@ -19,26 +20,32 @@ class CopyItem extends PureComponent{
        starLevel,
        suggestBalance,
        totalPL} = data;
-    hashHistory.push({
-        pathname:"/work/trade/currcopydetail",
-        query:{avatarUrl,
-        balance,
-        followNmae,
-        followerId,
-        fowBalance,
-        fowStatus,
-        maxFowBalance,
-        starLevel,
-        suggestBalance,
-        totalPL}
-    })
+       if(type==2){
+
+       }else{
+        hashHistory.push({
+            pathname:"/work/trade/currcopydetail",
+            query:{avatarUrl,
+            balance,
+            followNmae,
+            followerId,
+            fowBalance,
+            fowStatus,
+            maxFowBalance,
+            starLevel,
+            suggestBalance,
+            totalPL}
+        })
+
+       }
+   
         
     }
 
     //渲染函数
     render(){
 
-        var {data,type=2} = this.props;
+        var {data,type=2,pl} = this.props;
         var {
             avatarUrl="",
             balance,
@@ -53,7 +60,7 @@ class CopyItem extends PureComponent{
 
            if(avatarUrl.length == 0)
            avatarUrl = "./images/me/img03.png";
-
+        
 
 
         return(
@@ -64,7 +71,7 @@ class CopyItem extends PureComponent{
                 </div>
                 <div className={styles.right}>
                     <div className={styles.mg_tp_10} style={{float:"right"}}>
-                        <p className={styles.valueStyR +" " +(totalPL>=0?styles.red:styles.green)}>${totalPL}</p>
+                        <p className={styles.valueStyR +" " +(pl>=0?styles.red:styles.green)}>${type==2?totalPL:pl.toFixed(2)}</p>
                         <p className={styles.keyStyR}>{type==2?"收益":"浮动盈亏"}</p>
                     </div>
 

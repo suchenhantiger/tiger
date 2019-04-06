@@ -1,43 +1,34 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
+import SubTabs from '../../../../components/common/subtabs/SubTabs';
+import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
+import FlatTab from '../../../../components/common/subtabs/FlatTab';
+import Static from '../../components/documentary/Static';
+
 import CopyDialog from '../../components/documentary/detail/CopyDialog';
 import CancelDialog from '../../components/documentary/detail/CancelDialog';
-import CopyAllList from '../../components/trade/CopyAllList';
 
+import ProcotolDialog from '../../components/documentary/detail/ProcotolDialog';
+import CurTradeList from '../../components/documentary/detail/CurTradeList';
+import HisTradeList from '../../components/documentary/detail/HisTradeList';
 import { connect } from 'react-redux';
 import { applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
 
-import styles from './css/currCopyDetailPage.less';
+import styles from './css/documentarDetailPage.less';
 
 /********跟单主页*********/
-class CurrCopyDetailPage extends PageComponent {
+class DocumentaryDetailPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
-        var { avatarUrl="",
-            balance,
+        var { 
             followNmae,
             followerId,
-            fowBalance,
-            fowStatus,
-            maxFowBalance,
-            starLevel,
-            suggestBalance,
-            totalPL} = this.props.location.query;
-        if(avatarUrl.length==0) 
-            this.avatarUrl ="./images/documentary/img03.png";
-        else
-            this.avatarUrl = avatarUrl;
-        this.balance = balance;
-        this.followNmae = followNmae;
-        this.followerId = followerId;
-        this.fowBalance = fowBalance;
-        this.fowStatus = fowStatus;
-        this.maxFowBalance = maxFowBalance;
-        this.starLevel = starLevel;
-        this.suggestBalance = suggestBalance;
-        this.totalPL = totalPL;
-        
+        } = this.props.location.query;
+
+        this._followNmae = followNmae;
+        this._followerId = followerId;
+
         this._fowType = 0;
         this.state = {
             index: 0,
@@ -49,7 +40,9 @@ class CurrCopyDetailPage extends PageComponent {
             starLevel:null,
             maxFowBalance:null,
             suggestBalance:null,
-            fowInfo:null
+            fowInfo:null,
+            signature:null,
+            incomeRate30d:null,downRate30d:null,lastDayPLRate:null
             
         }
     }
@@ -57,10 +50,18 @@ class CurrCopyDetailPage extends PageComponent {
     getPageName() { return "跟单详情"; }
 
     componentDidMount(){
-
+        this.interval = setInterval(()=>{
+            var {iscroll} = this.refs;
+            if(iscroll){
+                var {y} = iscroll.wrapper,
+                    yRem = this.calculateRem(0, y);
+                this.setState({ fixTabs: yRem < -3.34 });;
+            }
+        }, 50);
     }
 
     componentWillUmount(){
+        clearInterval(this.interval);
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -100,7 +101,16 @@ class CurrCopyDetailPage extends PageComponent {
         console.log("reload");
     }
 
-
+    renderTabs() {
+        var {index} = this.state;
+        return (
+            <SubTabs index={index} onTabChange={this.tabChange}>
+                <FlatTab text="数据统计" />
+                <FlatTab text="当前交易" />
+                <FlatTab text="历史交易" />
+            </SubTabs>
+        )
+    }
 
     getNextPage = ()=>{
         var {index} = this.state,
@@ -142,7 +152,7 @@ class CurrCopyDetailPage extends PageComponent {
  
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.followRelieve(this,{followerId:this.followerId,fowType,fowMt4Id:f_mt4Id},(data)=>{
+        this.props.followRelieve(this,{followerId:this._followerId,fowType,fowMt4Id:f_mt4Id},(data)=>{
             this.setState({fowInfo:data,showCancel:false});
 
         });
@@ -167,12 +177,15 @@ class CurrCopyDetailPage extends PageComponent {
 
     updateInfo=(data)=>{
         var {starLevel,
-            maxFowBalance,
+            maxFowBalance,signature,
+            incomeRate30d,downRate30d,lastDayPLRate,
             suggestBalance,fowInfo}=data;
+
         this.setState({
             starLevel,
             maxFowBalance,
-            suggestBalance,fowInfo
+            suggestBalance,fowInfo,signature,
+            incomeRate30d,downRate30d,lastDayPLRate,
         });
 
     }
@@ -191,7 +204,7 @@ class CurrCopyDetailPage extends PageComponent {
         
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.applyFollower(this,{followerId:this.followerId,funds,fowType:this._fowType,fowMt4Id:f_mt4Id},(data)=>{
+        this.props.applyFollower(this,{followerId:this._followerId,funds,fowType:this._fowType,fowMt4Id:f_mt4Id},(data)=>{
             this.setState({fowInfo:data});
         });
 
@@ -209,7 +222,7 @@ class CurrCopyDetailPage extends PageComponent {
 
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.followRelieve(this,{followerId:this.followerId,fowType:3,fowMt4Id:f_mt4Id},(data)=>{
+        this.props.followRelieve(this,{followerId:this._followerId,fowType:3,fowMt4Id:f_mt4Id},(data)=>{
             this.setState({fowInfo:data,showCancel:false});
 
         });
@@ -220,45 +233,27 @@ class CurrCopyDetailPage extends PageComponent {
 
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.followRelieve(this,{followerId:this.followerId,fowType:4,fowMt4Id:f_mt4Id},(data)=>{
+        this.props.followRelieve(this,{followerId:this._followerId,fowType:4,fowMt4Id:f_mt4Id},(data)=>{
             this.setState({fowInfo:data,showCancel:false});
 
         });
 
     }
 
-    gotoMaster=()=>{
-
-        hashHistory.push({
-            pathname:"/work/trade/currcopydetail/master",
-            query:{
-                followNmae:this.followNmae,
-                followerId:this.followerId}
-        })
-
-    }
-
-    renderRight=()=>{
-        return <span style={{color:"white"}}onClick={this.gotoMaster}>高手主页</span>
-    }
-
+        //  fowMt4Id
+        //  fowStatus
+        //  fowBalance
+        //  canFowBalance
     render() {
         systemApi.log("DocumentaryDetailPage render");
-        var {couplist}=this.props;
-        var fowList = [];
-        var pltmp=0;
-        for(var i=0,l=couplist.length;i<l;i++){
-            if(couplist[i].followerId==this.followerId){
-                fowList.push(couplist[i]);
-                pltmp+=couplist[i].netProfit;
-            }
-            
-        }
-        var {showDialog,showProtocol,showCancel,
+
+        var { index, fixTabs,showDialog,showProtocol,showCancel,
             starLevel,
             maxFowBalance,
             suggestBalance,
-            fowInfo
+            fowInfo,
+            signature,
+            incomeRate30d,downRate30d,lastDayPLRate
          } = this.state;
          var fowStatus =null;
          var canFowBalance = null;
@@ -267,77 +262,93 @@ class CurrCopyDetailPage extends PageComponent {
          if(fowInfo){
              fowStatus = fowInfo.fowStatus;
              canFowBalance = fowInfo.canFowBalance;
-         }
-
+         } 
 
         return (
 
             <div className={styles.main}>
-                <AppHeader headerName="跟单详情" theme="transparent" iconRight = {this.renderRight()}/>
+                <AppHeader headerName={this._followNmae} theme="transparent" />
                 <div className={styles.header}></div>
                 <IScrollView className={this.getScrollStyle()} canUpFresh={true} canDownFresh={true}
                     upFresh={this.reloadData} downFresh={this.getNextPage} ref="iscroll">
                     <div className={styles.box}>
                         <div className={styles.optional_detail}>
-                            <div className={styles.head_portrait}><img src={this.avatarUrl} alt="" /></div>
+                            <div className={styles.head_portrait}><img src="./images/documentary/img03.png" alt="" /></div>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName("c3", styles.c3)}>
-                                    <span >{this.followNmae}</span>
-                                    {this.starLevel?<i className={styles.icon_grade}>{this.starLevel}</i>:null}
+                                    <span >{this._followNmae}</span>
+                                    {starLevel?<i className={styles.icon_grade}>{starLevel}</i>:null}
                                 </p>
+                                <p><span className={this.mergeClassName("c9", "left")}>{signature}</span></p>
                             </div>
                             <div className={"clear"}></div>
                             <div className={styles.account_dt}>
                                 <ul>
                                     <li>
-                                        <p className={this.mergeClassName("font32",(pltmp>=0?"red":"green"))}>${pltmp.toFixed(2)}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>浮动盈亏</p>
+                                        <p className={this.mergeClassName("font32", "red")}>{incomeRate30d}%</p>
+                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日收益率</p>
                                     </li>
                                     <li>
-                                        <p className={this.mergeClassName("font32",(this.totalPL>=0?"red":"green"))}>${this.totalPL}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>累计收益</p>
+                                        <p className={this.mergeClassName("font32", "green")}>{downRate30d}%</p>
+                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日最大跌幅</p>
                                     </li>
                                     <li>
-                                        <p className={"font32"}>${this.balance}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>复制金额</p>
+                                        <p className={"font32"}>{lastDayPLRate}%</p>
+                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>上一交易日</p>
                                     </li>
                                 </ul>
                             </div>
 
                         </div>
                         <div className={styles.bg}>
-                        
-                            <CopyAllList  data={fowList} />
-
+                            {this.renderTabs()}
+                            <LazyLoad index={index}>
+                                <Static updateInfo={this.updateInfo} onDidUpdate={this.didUpdate} followerId={this._followerId}/>
+                                <CurTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="curtrade"/>
+                                <HisTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="history" />
+                            </LazyLoad>
                         </div>
                     </div>
 
                 </IScrollView>
                 
                     <div className={styles.bottomBtn}>
-                        <div className={styles.btn2Frame}>
+                        {fowStatus?null:<div className={styles.btn} onClick={this.copyClick}>复制</div>}
+                        {fowStatus==0?<div className={styles.btn} onClick={this.copyClick}>复制</div>:null}
+
+                        {fowStatus==1?<div className={styles.btn2Frame}>
                             <div className={styles.btn2} onClick={this.changeCopy}>修改复制金额</div>
-                        </div>
-                        <div className={styles.btn2Frame}>
-                            <div className={styles.btn2} onClick={this.cancelCopy}>解除跟随关系</div>
-                        </div>
+                            </div>:null}
+                        {fowStatus==1?
+                            <div className={styles.btn2Frame}>
+                                <div className={styles.btn2} onClick={this.cancelCopy}>解除跟随关系</div>
+                            </div>:null}
+                        {fowStatus==2?<div className={styles.btn2Frame}>
+                            <div className={styles.btn2} onClick={this.recover}>复制</div>
+                            </div>:null}
+                        {fowStatus==2?
+                            <div className={styles.btn2Frame}>
+                                <div className={styles.btn2} onClick={this.flate}>立即平仓</div>
+                            </div>:null}
 
                     </div>
+
+                {fixTabs ? (
+                    <div className={styles.fixed}>{this.renderTabs()}</div>
+                ) : null}
+            
                 {showDialog? <CopyDialog suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
                 {showCancel? <CancelDialog   onCancel={this.closeDialog} onSure={this.confirmCancelCopy} />:null}
+                {showProtocol? <ProcotolDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmProcotol} />:null}
+                
                 {this.props.children}
             </div>
         );
     }
 
 }
-function injectProps(state) {
-    var { couplist} = state.base || {};
-    return { couplist};
-}
 function injectAction() {
     return { applyFollower,openFollow ,followRelieve};
 }
 
-module.exports = connect(injectProps, injectAction())(CurrCopyDetailPage);
-
+module.exports = connect(null, injectAction())(DocumentaryDetailPage);

@@ -55,11 +55,15 @@ export function updateUserInfo(component,cb){
                     {
                         systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
                         systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
+                        systemApi.setValue("mt4NickName",mt4Accs[0].mt4NickName);
+                        
                     }
                 }else{
                     //没有账号
                     systemApi.removeValue("mt4Id");
                     systemApi.removeValue("mt4AccType");
+                    systemApi.removeValue("mt4NickName");
+
                 }                
 
             cb && cb();
@@ -289,6 +293,7 @@ export function login(component, params,logintype,cb){
                     {
                         systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
                         systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
+                        systemApi.setValue("mt4NickName",mt4Accs[0].mt4NickName);
                     }
 
                     if(!hasF){

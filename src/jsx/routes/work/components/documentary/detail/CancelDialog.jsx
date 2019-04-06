@@ -48,12 +48,12 @@ class CancelDialog extends PureComponent{
             <Confirm sureText={"确认"} onSure={this.onSure} onCancel={onCancel}>
                 <div>
                     <p className="font30 mg-bt-10 font_bold">解除跟随关系</p>
-                    <div className={styles.checkFrame}>
-                        <CheckBox checked={cancelType} onChange={this.checkFirst}/> 
+                    <div className={styles.checkFrame} onClick={this.checkFirst}>
+                        <CheckBox checked={cancelType} /> 
                         <span>取消复制并跟随高手平仓</span>
                     </div>
-                    <div className={styles.checkFrame}>
-                        <CheckBox checked={!cancelType} onChange={this.checkSecond}/>
+                    <div className={styles.checkFrame}  onClick={this.checkSecond}>
+                        <CheckBox checked={!cancelType} />
                         <span>取消复制并强制平仓</span>
                     </div>
                     

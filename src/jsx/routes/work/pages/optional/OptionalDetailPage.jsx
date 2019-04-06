@@ -110,7 +110,7 @@ class OptionalDetailPage extends PageComponent{
         
         return (
             <FullScreenView>
-                {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="transparent"/>}
+                {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="optial"/>}
                 <Content coverHeader={true}>
                     {fullscreen?<ProdInfoFullscreen price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>

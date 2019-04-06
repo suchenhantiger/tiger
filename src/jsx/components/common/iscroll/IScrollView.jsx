@@ -74,6 +74,7 @@ class IScrollView extends PureComponent{
         });
 
         this.wrapper.on("scroll",function(){
+            
             var {onScroll} = that.props,
                 {frame,main} = that.refs,
                 {showLoading} = that.state;
@@ -120,6 +121,11 @@ class IScrollView extends PureComponent{
             onScrollCancel && onScrollCancel();
         });
 
+        this.wrapper.on("step", function(){
+            var {onStep} = that.props;
+            onStep && onStep();
+           
+        });
         this.wrapper.on("scrollEnd",function(){
             var {onScrollEnd} = that.props,
                 {frame,main} = that.refs,

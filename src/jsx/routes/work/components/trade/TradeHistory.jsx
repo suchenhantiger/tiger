@@ -105,9 +105,10 @@ class TradeHistory extends PureComponent {
         this.setState({showAccount:false});
     }
 
-    selectAccount = (mt4AccType, mt4Id)=>{
+    selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
         systemApi.setValue("mt4AccType", mt4AccType);
         systemApi.setValue("mt4Id", mt4Id);
+        systemApi.setValue("mt4NickName", mt4NickName);
         this._mt4Id =mt4Id;
         this._mt4AccType = mt4AccType;
         this.setState({showAccount:false});
