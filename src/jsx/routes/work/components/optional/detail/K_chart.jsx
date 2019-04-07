@@ -12,7 +12,9 @@ class K_chart extends PureComponent{
         super(props);
         this.state={
             timeL:5,
-            showKchart:false
+            showKchart:false,
+            index1:1,
+            index2:0
         };
         this._kdata=[];
         this._openTime=null;
@@ -110,6 +112,14 @@ class K_chart extends PureComponent{
 
     }
 
+    setChart2 =(index)=>{
+        this.setState({index2:index});
+    }
+
+    setChart1 =(index)=>{
+        this.setState({index1:index});
+    }
+
     getOneK=()=>{
         var {prodCode} = this.props;
         var reqStr = JSON.stringify({"funCode":"3010011","prodCode":prodCode,"period":this._period});
@@ -180,7 +190,7 @@ class K_chart extends PureComponent{
     render(){
         systemApi.log("k_chart render");
 
-        var {timeL,showKchart} = this.state;
+        var {timeL,showKchart,index1,index2} = this.state;
         var {fullscreen,digits=2,chartWidth=300,chartHeight=210} = this.props;
         var kdlist = this._kdata.slice(0);
 
@@ -192,11 +202,15 @@ class K_chart extends PureComponent{
                         <TimeChoose  timeL={timeL} onChoose={this.chooseTime}/>
                         <div style={{height:"94%"}}>
                             {showKchart?
-                            <Chart width={chartWidth} height ={chartHeight} digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore} />
+                            <Chart 
+                            index1={index1} index2={index2}
+                            width={chartWidth} 
+                            height ={chartHeight} 
+                            digits={digits} level={timeL} fullscreen={fullscreen} ref="chart" data={kdlist} loadMore={this.getMore} />
                             :<div style={{position:"absolute",left: "38%"}}><SmallLoading /></div>
                             }
                         </div>
-                        {fullscreen? <KSet /> :null} 
+                        {fullscreen? <KSet index1={index1} index2={index2} setChart1={this.setChart1} setChart2={this.setChart2} /> :null} 
                 </div>
           </div>
         );
