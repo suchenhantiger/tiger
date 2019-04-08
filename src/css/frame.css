@@ -227,6 +227,9 @@ body.hidden {
 .font56{
 	font-size: .56rem;
 }
+.font_100{
+	font-weight:100;
+}
 .font-arial{
 	font-family: arial;
 }

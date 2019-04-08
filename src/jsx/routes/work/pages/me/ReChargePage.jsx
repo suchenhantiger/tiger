@@ -42,7 +42,7 @@ class ReChargePage extends PageComponent {
         return (
             <FullScreenView>
                 <AppHeader headerName={this.renderHeader()}/>
-                <Content coverBottom={false}>
+                <Content>
                     <LazyLoad index={index}>
                         <ReChargeForm/>
                         <Withdrawal/>
