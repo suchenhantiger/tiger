@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import {getPersonInfo} from '../../actions/me/meAction';
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import Confrim from '../../../../components/common/popup/Confirm';
@@ -22,6 +23,14 @@ class PersonalInfoPage extends PageComponent {
     //获取页面名称
     getPageName() { return "个人资料设置页面"; }
 
+    componentDidMount(){
+        this.props.getPersonInfo(this, this.update);
+    }
+
+    update = (data)=>{
+        this.setState({});
+    }
+
     inputChange = (key) => (e) => {
         var { value } = e.target;
         this.setState({ [key]: value });
@@ -41,6 +50,9 @@ class PersonalInfoPage extends PageComponent {
         this.setState({[modifyKey]:this.oldValue,showModify:false});
     }
 
+    verifyClick = ()=>{
+        hashHistory.push("/work/me/certification");
+    }
 
     render() {
         systemApi.log("PersonalInfoPage render");
@@ -56,7 +68,7 @@ class PersonalInfoPage extends PageComponent {
                             <ul>
                                 <li className={styles.item}>
                                     <div className={this.mergeClassName("left", "font26")}><p>头像</p></div>
-                                    <div className={this.mergeClassName("right", "c9")}></div>
+                                    <div className={this.mergeClassName("right", "c9")}><img className={styles.header} src={"./images/pic_man.png"}/></div>
                                 </li>
                                 <li className={styles.item}>
                                     <div className={this.mergeClassName("left", "font26")}><p>昵称</p></div>
@@ -64,7 +76,7 @@ class PersonalInfoPage extends PageComponent {
                                 </li>
                                 <li className={styles.item}>
                                     <div className={this.mergeClassName("left", "font26")}><p>实名认证</p></div>
-                                    <div className={this.mergeClassName("right", "c9")}><p>{verify}</p></div>
+                                    <div className={this.mergeClassName("right", "c9")} onClick={this.verifyClick}><p>{verify}</p></div>
                                 </li>
                                 <li className={styles.item}>
                                     <div className={this.mergeClassName("left", "font26")}><p>绑定手机</p></div>
@@ -91,7 +103,7 @@ class PersonalInfoPage extends PageComponent {
 }
 
 function injectAction() {
-    return {};
+    return {getPersonInfo};
 }
 
 module.exports = connect(null, injectAction())(PersonalInfoPage);

@@ -106,3 +106,14 @@ export function getAccounts(component, update){
         });
     }
 }
+
+export function getPersonInfo(component, update){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        component.requestJSON("users/getMt4Message",{queryType:3,clientId}).done((data)=>{
+            update && update(data);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
