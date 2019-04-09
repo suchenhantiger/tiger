@@ -13,7 +13,7 @@ class BankPage extends PageComponent {
     getPageName() { return "银行账户"; }
 
     addAccount = () => {
-
+        hashHistory.push("/work/me/bank/add");
     }
 
     renderBankItem(){
