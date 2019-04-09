@@ -1,5 +1,6 @@
 import PaySelect from './PaySelect';
 import PayDest from './PayDest';
+import AccountSelect from '../AccountSelect';
 import styles from './css/rechargeForm.less';
 import { connect } from 'react-redux';
 import { addAccFundRecord} from '../../../actions/trade/tradeAction';
@@ -24,8 +25,12 @@ class ReChargeForm extends PureComponent {
             destType:"-1",
             showPaySelect:false,
             showDestSelect:false,
-            amount:""
+            amount:"",
+            showAccount:false
         }
+        this.mt4NickName=null;
+        this.mt4Id=null;
+        this.mt4AccType=null;
     }
 
     openPaySelect = ()=>{
@@ -41,7 +46,7 @@ class ReChargeForm extends PureComponent {
     }
 
     openPayDest = ()=>{
-        this.setState({showDestSelect:true})
+        this.setState({showAccount:true})
     }
 
     selectDest = (destType)=>{
@@ -96,14 +101,39 @@ class ReChargeForm extends PureComponent {
         this.setState({amount:(+value).toFixed(2)});
     }
 
-    
+    closeAccount = ()=>{
+        this.setState({showAccount:false});
+    }
+
+    selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
+        
+        if(mt4NickName==null){
+            if(mt4AccType ==0){
+                mt4NickName ="体验金账户";
+                this.typeName = "体验账户"
+            }else if(mt4AccType==1){
+                mt4NickName ="交易账户";
+                this.typeName = "自主交易"
+            }else if(mt4AccType==2){
+                mt4NickName ="跟单账户";
+                this.typeName = "跟随账户"
+            }
+
+        }
+        this.mt4NickName=mt4NickName;
+        this.mt4Id=mt4Id;
+        this.mt4AccType=mt4AccType;
+        this.setState({showAccount:false});
+
+    }
+
 
     //渲染函数
     render() {
 
-        var {showDestSelect, showPaySelect, payType, amount, destType} = this.state,
+        var {showDestSelect, showPaySelect, payType, amount, destType,showAccount} = this.state,
             {text:payText, desc:payDesc} = this.getPayItem(payType)||{},
-            {text:destText, desc:destDesc} = this.getDestItem(destType)||{};
+            {text:destText, desc:destDesc} = this.getDestItem(this.mt4AccType)||{};
 
         return (
             <div>
@@ -111,8 +141,8 @@ class ReChargeForm extends PureComponent {
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p>
                             <span className={styles.form_label}>充值到</span>
-                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPayDest}>{destText||"请选择"}</span>&nbsp;
-                            {destDesc?<span className={"c9"}>({destDesc})</span>:null}
+                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPayDest}>{this.mt4NickName||"请选择"}</span>&nbsp;
+                            {this.typeName?<span className={"c9"}>({this.typeName})</span>:null}
                         </p>
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
@@ -154,6 +184,8 @@ class ReChargeForm extends PureComponent {
                 </div>
                 {showPaySelect?<PaySelect payInfo={PAY_MAP} payType={payType} onSelect={this.selectPay} onClose={this.closePaySelect}/>:null}
                 {showDestSelect?<PayDest destInfo={DEST_MAP} destType={destType} onSelect={this.selectDest} onClose={this.closePayDest} />:null}
+                {showAccount?<AccountSelect showOn={false} selectType={1} onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
+
             </div>
         );
     }

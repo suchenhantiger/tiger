@@ -95,6 +95,18 @@ export function getDailyReportList(component, params, update){
     }
 }
 
+export function getPaySelect(component, update){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        component.requestJSON("bank/queryPayChannel",{queryType:3,clientId}).done((data)=>{
+          
+            update && update(data);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
 export function getAccounts(component, update){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");

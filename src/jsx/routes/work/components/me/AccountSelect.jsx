@@ -15,6 +15,10 @@ const ACCOUNT_MAP2 = {
 }
 class AccountSelect extends PureComponent {
 
+    static defaultProps = {
+        selectType:0,
+        showOn:true
+    }
     //构造函数
     constructor(props) {
         super(props);
@@ -38,24 +42,74 @@ class AccountSelect extends PureComponent {
     }
 
     renderAccounts() {
+        var {selectType,showOn} = this.props;//1：交易与跟单，2:跟单，3:交易
+
         var { index, accountList } = this.state;
         var curMt4Id = systemApi.getValue("mt4Id");
 
         return accountList.map((item, i) => {
             var {mt4AccType, mt4Id,mt4NickName} = item;
-            return (
-                <div className={this.mergeClassName(styles.radius_box, curMt4Id==mt4Id?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
-                    <ul>
-                        <li>
-                            <p className={"mg-bt-10"}>
-                                <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
-                                <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
-                            </p>
-                            {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
-                        </li>
-                    </ul>
-                </div>
-            )
+            if(selectType==0){
+                return (
+                    <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
+                        <ul>
+                            <li>
+                                <p className={"mg-bt-10"}>
+                                    <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
+                                    <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
+                                </p>
+                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                            </li>
+                        </ul>
+                    </div>
+                )
+            }else
+            if(selectType==1 && mt4AccType>0){
+                return (
+                    <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
+                        <ul>
+                            <li>
+                                <p className={"mg-bt-10"}>
+                                    <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
+                                    <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
+                                </p>
+                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                            </li>
+                        </ul>
+                    </div>
+                )
+            }else
+            if(selectType==2 && mt4AccType>1){
+                return (
+                    <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
+                        <ul>
+                            <li>
+                                <p className={"mg-bt-10"}>
+                                    <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
+                                    <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
+                                </p>
+                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                            </li>
+                        </ul>
+                    </div>
+                )
+            }else
+            if(selectType==3 && mt4AccType==1){
+                return (
+                    <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
+                        <ul>
+                            <li>
+                                <p className={"mg-bt-10"}>
+                                    <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
+                                    <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
+                                </p>
+                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                            </li>
+                        </ul>
+                    </div>
+                )
+            }
+            
         })
     }
 

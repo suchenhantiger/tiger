@@ -245,13 +245,13 @@ class MePage extends PageComponent {
                             {this.renderFuncItem("充值", "./images/me/icon-recharge.png", this.rechargeClick)}
                             {this.renderFuncItem("提现", "./images/me/icon-recharge.png")}
                             {this.renderFuncItem("银行卡", "./images/me/icon-recharge.png", this.bankClick)}
-                            {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")}
+                            {/* {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")} */}
                         </ul>
                     </div>
                     <div className={this.mergeClassName(styles.ht_gray, styles.mt3)}></div>
                     <div className={styles.icon_list}>
                         <ul>
-                            {this.renderListItem("我的钱包", "./images/me/icon-list01.png", true)}
+                            {this.renderListItem("我的钱包", "./images/me/icon-list01.png", false)}
                             {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false)}
                             {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.dailyReportClick)}
                             {this.renderListItem("财经日历", "./images/me/icon-list04.png", false)}
