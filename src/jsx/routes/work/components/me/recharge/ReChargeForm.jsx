@@ -1,9 +1,12 @@
 import PaySelect from './PaySelect';
 import PayDest from './PayDest';
+import RechareDialog from './RechareDialog';
 import AccountSelect from '../AccountSelect';
 import styles from './css/rechargeForm.less';
 import { connect } from 'react-redux';
 import { addAccFundRecord} from '../../../actions/trade/tradeAction';
+import { upLoadAllImage} from '../../../actions/me/meAction';
+import { showMessage} from '../../../../../store/actions';
 const PAY_MAP = [
     {id:"0",text:"电汇账户",desc:"电汇通常需要3-5个工作日到账"},
     {id:"1",text:"钱包",desc:""},
@@ -26,19 +29,29 @@ class ReChargeForm extends PureComponent {
             showPaySelect:false,
             showDestSelect:false,
             amount:"",
-            showAccount:false
+            showAccount:false,
+            showRechareDialog:false,
+            rechargeInfo:null,
+            certificateImg:""
+            
+
         }
         this.mt4NickName=null;
         this.mt4Id=null;
         this.mt4AccType=null;
+        this.payCode=null;
+        this.payName=null;
+        this.attachmentId="";
     }
 
     openPaySelect = ()=>{
         this.setState({showPaySelect:true});
     }
 
-    selectPay = (payType)=>{
-        this.setState({payType, showPaySelect:false});
+    selectPay = (payCode,payName)=>{
+        this.payCode=payCode;
+        this.payName=payName;
+        this.setState({showPaySelect:false});
     }
 
     closePaySelect = ()=>{
@@ -57,31 +70,29 @@ class ReChargeForm extends PureComponent {
         this.setState({showDestSelect:false});
     }
 
-    getPayItem(payType){
-        for(var i=0;i<PAY_MAP.length;i++){
-            var {id} = PAY_MAP[i];
-            if(payType == id) return PAY_MAP[i];
-        }
-        return {};
-    }
-
-    getDestItem(destType){
-        for(var i=0;i<DEST_MAP.length;i++){
-            var {id} = DEST_MAP[i];
-            if(destType == id) return DEST_MAP[i];
-        }
-        return {};
-    }
-
     rechargeSubmit = ()=>{
         var {amount} = this.state;
-        if((+amount)<=0) return;
+       // 
         
-        
-        var mt4Id = systemApi.getValue("mt4Id");
-        this.props.addAccFundRecord(this,{amountUSD:amount,recordType:1,mt4Id},()=>{
+        if((+amount)<=0){
+            this.props.showMessage("error","请输入充值金额");
+            return;
+        }
+        if(this.payCode=="WIRE_TRANSFER_PAY"){
+            if(this.attachmentId.length==0){
+                this.props.showMessage("error","请上传电汇凭证");
+                return;
+            }
+            this.props.addAccFundRecord(this,{attachmentId:this.attachmentId,payCode:this.payCode,amountUSD:amount,recordType:1,mt4Id:this.mt4Id},(data)=>{
+                this.setState({showRechareDialog:true,rechargeInfo:data});
+            });
+        }else{
+            this.props.addAccFundRecord(this,{payCode:this.payCode,amountUSD:amount,recordType:1,mt4Id:this.mt4Id},(data)=>{
+                this.setState({showRechareDialog:true,rechargeInfo:data});
+            });
+        }
 
-        });
+        
     }
 
     inputChange = (e)=>{
@@ -127,14 +138,32 @@ class ReChargeForm extends PureComponent {
 
     }
 
+    gotoCharge=(orderId,payUrl)=>{
+
+        Client.openUrlWithBrowser(payUrl,()=>{
+
+        });
+        this.setState({showRechareDialog:false});
+
+
+    }
+    getCertificateImg = ()=>{
+        
+        Client.getPicture((certificateImg)=>{
+            this.props.upLoadAllImage(this,certificateImg,(attachmentId)=>{
+                this.attachmentId=attachmentId;
+                this.setState({certificateImg});
+            });
+        },()=>{
+
+        });
+    }
 
     //渲染函数
     render() {
 
-        var {showDestSelect, showPaySelect, payType, amount, destType,showAccount} = this.state,
-            {text:payText, desc:payDesc} = this.getPayItem(payType)||{},
-            {text:destText, desc:destDesc} = this.getDestItem(this.mt4AccType)||{};
-
+        var {showDestSelect, showPaySelect, amount, destType,showAccount,showRechareDialog,rechargeInfo,certificateImg} = this.state;
+        
         return (
             <div>
                 <div className={this.mergeClassName("mg-lr-30", "mg-tp-42")}>
@@ -148,51 +177,59 @@ class ReChargeForm extends PureComponent {
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p>
                             <span className={styles.form_label}>支付方式</span>
-                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPaySelect}>{payText||"请选择"}</span>
-                            {payDesc?<span className={this.mergeClassName("c9", "mg-tp-10")}>({payDesc})</span>:null}
+                            <span className={this.mergeClassName("blue", "font28")} onClick={this.openPaySelect}>{this.payName||"请选择"}</span>
                         </p>
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p><span className={styles.form_label}>充值金额</span></p>
                         <input type="text" placeholder="$" value={amount} onBlur={this.numFormate } onChange={this.inputChange} />
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
-                        <span className={styles.blue}>点击查看汇款详情&gt;</span>
-                    </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
-                        <div className={styles.upload_box}>
-                            <span>点击上传电汇凭证</span>
+                    {this.payCode=="WIRE_TRANSFER_PAY"?
+                        <div>
+                            <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                                <span className={styles.blue}>点击查看汇款详情&gt;</span>
+                            </div>
+                            <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                                <div className={styles.upload_box} onClick={this.getCertificateImg}>
+                                    <span>点击上传电汇凭证</span>
+                                    {certificateImg.length>0?<img className={styles.imageFrame} src={certificateImg} />:null}
+                                </div>
+                            </div>
+                            <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                                <div className={this.mergeClassName("font_bold", "mg-bt-20")}>电汇费用</div>
+                                <div className={this.mergeClassName("c9", "line-ht-36")}>
+                                    <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
+                                </div>
+                            </div>
+                            <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                                <div className={this.mergeClassName("font_bold", "mg-bt-20")}>反洗钱政策</div>
+                                <div className={this.mergeClassName("c9", "line-ht-36")}>
+                                    <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
-                        <div className={this.mergeClassName("font_bold", "mg-bt-20")}>电汇费用</div>
-                        <div className={this.mergeClassName("c9", "line-ht-36")}>
-                            <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
-                        </div>
-                    </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
-                        <div className={this.mergeClassName("font_bold", "mg-bt-20")}>反洗钱政策</div>
-                        <div className={this.mergeClassName("c9", "line-ht-36")}>
-                            <p>**不收取电汇入金手续费，不同银行在购汇和汇款中会收取不同的手续费（一般为手续费、电报费和中转行费用），对于购汇和汇款中产生的费用由客户自行承担，**将以实际到账的金额为客服入金。</p>
-                        </div>
-                    </div>
+                        :null
+                    }
+
                 </div>
                 <div className={styles.bottom_btn_fixed}>
                     <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}>
                         <button onClick={this.rechargeSubmit}>确认充值</button>
                     </div>
                 </div>
-                {showPaySelect?<PaySelect payInfo={PAY_MAP} payType={payType} onSelect={this.selectPay} onClose={this.closePaySelect}/>:null}
+                {showPaySelect?<PaySelect  payType={this.payCode} onSelect={this.selectPay} onClose={this.closePaySelect}/>:null}
                 {showDestSelect?<PayDest destInfo={DEST_MAP} destType={destType} onSelect={this.selectDest} onClose={this.closePayDest} />:null}
                 {showAccount?<AccountSelect showOn={false} selectType={1} onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
-
+                {showRechareDialog?<RechareDialog data={rechargeInfo} onSure={this.gotoCharge} onClose={this.closeAccount}/>:null}
+                
+                
             </div>
         );
     }
 
 }
 function injectAction() {
-    return { addAccFundRecord};
+    return { addAccFundRecord,showMessage,upLoadAllImage};
 }
 
 module.exports = connect(null, injectAction(), null, {withRef:true})(ReChargeForm);

@@ -68,7 +68,7 @@ class DocumentaryPage extends PageComponent{
         return (
             <div>
                 <AppHeader headerName={this.renderHeader()} showBack={false}/>
-                <Content coverBottom={false}>
+                <Content scroll={true} coverBottom={false}>
                     <LazyLoad index={index}>
                         <ClassifyFrame mulFrame = {this.gotoMultipleFrame}/>
                         <MultipleFrame index={mulIndex}/>

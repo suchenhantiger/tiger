@@ -27,7 +27,7 @@ class CertificationPage extends PageComponent {
     }
 
 
-    submit=()=>{
+    submit=(front,back)=>{
         var {trueInfo}=this.state;
         console.log(trueInfo);
         this.props.saveRealAccMt4(this,trueInfo,()=>{

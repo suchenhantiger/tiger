@@ -15,32 +15,32 @@ class PaySelect extends PureComponent {
     }
 
     componentDidMount() {
-        this.props.getAccounts(this, this.update)
+        this.props.getPaySelect(this, this.update)
     }
 
     
     update = (data) => {
-
+        console.log(data);
         this.setState({accountList:data});
     }
 
-    itemClick = (index) => () => {
+    itemClick = (index,payname) => () => {
         var { onSelect } = this.props;
-        onSelect && onSelect(index);
+        onSelect && onSelect(index,payname);
     }
 
     renderItems( payType) {
         var {accountList} =this.state;
         return accountList.map(item => {
-            var {  payName,
-                 payCode,
+            var {  payname,
+                paycode,
                  remarks,
                  amountLimit,
                  workDayLimit,
                  hoursLimit} = item;
             return (
-                <li className={payType == id ? styles.on : ""} onClick={this.itemClick(id)}>
-                    <p className={this.mergeClassName("font30", "mg-tb-20")}><span>{payName}</span></p>
+                <li className={payType == paycode ? styles.on : ""} onClick={this.itemClick(paycode,payname)}>
+                    <p className={this.mergeClassName("font30", "mg-tb-20")}><span>{payname}</span></p>
                     {remarks?<p className={"c9"}>{remarks}</p>:null}
                 </li>
             )
@@ -50,7 +50,7 @@ class PaySelect extends PureComponent {
     //渲染函数
     render() {
 
-        var { onClose, payInfo, payType } = this.props;
+        var { onClose, payType } = this.props;
 
         return (
             <FullScreenView mask={true}>

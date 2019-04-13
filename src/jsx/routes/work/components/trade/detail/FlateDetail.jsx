@@ -3,6 +3,7 @@ import BuyDialog from './BuyDialog';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/trade/tradeAction';
 import styles from './css/flatDetail.less';
+import {formatTime} from '../../../../../utils/util';
 
 class FlateDetail extends PureComponent{
 
@@ -86,9 +87,7 @@ class FlateDetail extends PureComponent{
         if(openTime && openTime>0){
             var tmpdate = new Date();
             tmpdate.setTime(openTime * 1000);
-            openTime = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+            openTime = formatTime(tmpdate);
         }else {
             openTime="--";
         }
@@ -111,7 +110,7 @@ class FlateDetail extends PureComponent{
                           <p className={styles.c9 +" "+styles.mg_tp_10}>(包含手续费、库存费)</p>
                       </div>
                       <div className={styles.right}>
-                          <p className={styles.font32 +" "+styles.green}>${totalProfit.toFixed(2)}</p>
+                          <p className={styles.font32 +" "+(totalProfit>=0?styles.red:styles.green)}>${totalProfit.toFixed(2)}</p>
                       </div>
                   </div>
                   <div className={styles.clear}></div>

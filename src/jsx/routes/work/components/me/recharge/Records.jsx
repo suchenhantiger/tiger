@@ -2,6 +2,7 @@ import LazyLoad from '../../../../../components/common/subtabs/LazyLoad';
 import ToUploadList from './ToUploadList';
 import ApprovalList from './ApprovalList';
 import ApprovedList from './ApprovedList';
+import AddCertificatePage from '../../../pages/me/AddCertificatePage';
 import styles from './css/records.less';
 
 class Records extends PureComponent {
@@ -13,6 +14,24 @@ class Records extends PureComponent {
             subIndex:0
         }
     }
+
+
+    componentDidMount() {
+        Event.register("refresh_recordlist",this.refresh_recordlist);
+        
+    }
+
+    refresh_recordlist =()=>{
+
+        this.refs.ToUploadList.getWrappedInstance().refreshData();
+        
+    }
+
+    componentWillUnmount(){
+        Event.unregister("refresh_recordlist",this.refresh_recordlist);
+        
+    }
+
 
     exampleClick = () => {
 
@@ -32,7 +51,7 @@ class Records extends PureComponent {
                 <div className="mg-lr-30 mg-tp-42">
                     <div className="form_input mg-bt-40">
                         <div className="font_bold mg-bt-20">
-                            <span className="left font26">凭证注意事项</span>
+                            <span className="left font26" >凭证注意事项</span>
                             <span className="right blue font24 font_100" onClick={this.exampleClick}>查看凭证示例</span>
                         </div>
                         <div className="clear"></div>
@@ -53,7 +72,7 @@ class Records extends PureComponent {
                     <span className={subIndex==2?styles.on:""} onClick={this.tabChange(2)}>审核成功<i></i></span>
                 </div>
                 <LazyLoad index={subIndex}>
-                    <ToUploadList/>
+                    <ToUploadList ref="ToUploadList" />
                     <ApprovalList/>
                     <ApprovedList/>
                 </LazyLoad>

@@ -1,6 +1,7 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
-
+import { connect } from 'react-redux';
+import { queryBankCard} from '../../actions/me/meAction';
 import styles from './css/bankPage.less';
 
 /********我的主页*********/
@@ -8,7 +9,37 @@ class BankPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
+        this.state={
+            bankList:[]
+        }
     }
+
+    componentDidMount() {
+        this.queryBankCard();
+        Event.register("refresh_banklist",this.refreshBanklist);
+        
+    }
+
+    queryBankCard =()=>{
+        this.props.queryBankCard(this,{bankType:0},(bankList)=>{
+            if(bankList && bankList.length>0){
+                this.setState({bankList});
+            }
+               
+        });
+    }
+
+    componentWillUnmount(){
+        Event.unregister("refresh_banklist",this.refreshBanklist);
+        
+    }
+
+    refreshBanklist=()=>{
+        this.queryBankCard();
+    }
+
+
+
     //获取页面名称
     getPageName() { return "银行账户"; }
 
@@ -17,6 +48,43 @@ class BankPage extends PageComponent {
     }
 
     renderBankItem(){
+        var {bankList}=this.state;
+        return bankList.map((item,index)=>{
+            var {
+                bankbranch,
+                bankcountry,
+                bankid,
+                bankname,
+                banktype,
+                cardactive,
+                cardholder,
+                cardno,
+                city,
+                clientid,
+                createdate,
+                id,
+                phone,
+                province
+            } = item;
+            var bankColor = index%3;
+            console.log(bankColor);
+            var bankstyle = styles.bk_zg;
+            switch(bankColor){
+                case 1:
+                    bankstyle = styles.bk_zx;
+                    break;
+                case 2:
+                    bankstyle = styles.bk_zh;
+                    break;
+            }
+            return <li className={bankstyle}>
+            {/* <i className={styles.icon_zh}></i> */}
+            <p className={styles.bank_name}>{bankname}</p>
+            <p><span>储蓄卡</span></p>
+            <p>{cardno}</p>
+        </li>
+
+        })
         
     }
 
@@ -33,24 +101,8 @@ class BankPage extends PageComponent {
                         </div>
                         <div className={styles.bank_list}>
                             <ul>
-                                <li className={styles.bk_zg}>
-                                    <i className={styles.icon_zh}></i>
-                                    <p className={styles.bank_name}>中国银行</p>
-                                    <p><span>储蓄卡</span></p>
-                                    <p>6222 **** **** 8888</p>
-                                </li>
-                                <li className={styles.bk_zh}>
-                                    <i className={styles.icon_zh}></i>
-                                    <p className={styles.bank_name}>招商银行</p>
-                                    <p><span>储蓄卡</span></p>
-                                    <p>6222 **** **** 8888</p>
-                                </li>
-                                <li className={styles.bk_zx}>
-                                    <i className={styles.icon_zh}></i>
-                                    <p className={styles.bank_name}>中信银行</p>
-                                    <p><span>储蓄卡</span></p>
-                                    <p>6222 **** **** 8888</p>
-                                </li>
+                                {this.renderBankItem()}
+                                
                             </ul>
                         </div>
                     </div>
@@ -61,6 +113,9 @@ class BankPage extends PageComponent {
     }
 
 }
+function injectAction() {
+    return { queryBankCard};
+}
 
+module.exports = connect(null, injectAction())(BankPage);
 
-module.exports = BankPage;

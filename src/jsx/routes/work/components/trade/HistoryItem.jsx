@@ -1,5 +1,5 @@
 import styles from './css/positionItem1.less';
-
+import {formatTime} from '../../../../utils/util';
 class PositionItem1 extends PureComponent{
 
     //构造函数
@@ -47,9 +47,8 @@ class PositionItem1 extends PureComponent{
 
            var tmpdate = new Date();
            tmpdate.setTime(closeTime * 1000);
-           closeTime = tmpdate.getFullYear()+"-" +
-           (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-           tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+           closeTime = formatTime(tmpdate);
+
 
         return(
             <li className={styles.item} onClick={this.itemClick}>

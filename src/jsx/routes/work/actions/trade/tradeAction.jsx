@@ -228,10 +228,11 @@ export function addAccFundRecord(component, params, cb){
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
         component.requestJSON("bank/addAccFundRecord",params).done((data)=>{
-        dispatch(showMessage(SUCCESS, "充值申请已提交"));
-        cb && cb();
+       // dispatch(showMessage(SUCCESS, "充值申请已提交"));
+        cb && cb(data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
         });
     }
 }
+

@@ -5,10 +5,8 @@ import { scaleTime } from "d3-scale";
 import React from "react";
 import PropTypes from "prop-types";
 import { last } from "react-stockcharts/lib/utils";
-import { ChartCanvas, Chart,ZoomButtons } from "react-stockcharts";
+import { ChartCanvas, Chart } from "react-stockcharts";
 import {
-	BarSeries,
-	AreaSeries,
 	CandlestickSeries,
 	LineSeries,
 	MACDSeries,
@@ -23,11 +21,9 @@ import {
 	CurrentCoordinate,
 	MouseCoordinateX,
 	MouseCoordinateY,
-	PriceCoordinate
 } from "react-stockcharts/lib/coordinates";
 
 import { discontinuousTimeScaleProvider,discontinuousTimeScaleProviderBuilder,defaultScaleProvider } from "react-stockcharts/lib/scale";
-import { OHLCTooltip, MovingAverageTooltip, MACDTooltip } from "react-stockcharts/lib/tooltip";
 import { ema, sma, macd,rsi,stochasticOscillator,bollingerBand  } from "react-stockcharts/lib/indicator";
 import { fitWidth } from "react-stockcharts/lib/helper";
 
@@ -289,7 +285,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		};
 
 		
-		
+		//defaultFocus={false} 解决ios扩大缩小k线时的卡顿问题
 		return (
             <div style={{height:"100%"}}>
 			<ChartCanvas 
@@ -298,7 +294,9 @@ class CandleStickChartPanToLoadMore extends React.Component {
                     height={height}
 					margin={{ left: 5, right: 45, top: 5, bottom: 10 }} type={"hybrid"}
 					seriesName="MSFT"
-                    data={data}
+					data={data}
+					defaultFocus={true}
+
                     xExtents={xExtents}
                     xScale={xScale}
                     onLoadMore={this.props.loadMore}

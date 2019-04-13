@@ -2,6 +2,11 @@ import FullScreenView from '../fullscreen/FullScreenView';
 import styles from './css/confrimpopup2.css';
 
 class Confrim extends PureComponent {
+    //默认属性值
+    static defaultProps = {
+        showCancel:true
+    };
+
     //构造函数
     constructor(props) {
         super(props);
@@ -12,7 +17,7 @@ class Confrim extends PureComponent {
         //打印渲染日志，必写
         systemApi.log("Confrim render");
 
-        var {onSure,onCancel,title,sureText,cancelText} = this.props;
+        var {onSure,onCancel,title,sureText,cancelText,showCancel} = this.props;
 
         return (
             <FullScreenView mask={true}>
@@ -21,11 +26,18 @@ class Confrim extends PureComponent {
                         {title?<p className={this.mergeClassName("font36", "mg-bt-30")}>{title}</p>:null}
                         {this.props.children}
                     </div>
-                    <div className={styles.pup_bot}>
+                    {showCancel?
+                     <div className={styles.pup_bot}>
                         <div className={styles.btn_pup_cancel} onClick={onCancel}>{cancelText||"取消"}</div>
                         <div className={styles.line_01}></div>
                         <div className={styles.btn_pup_confirm} onClick={onSure}>{sureText||"确定"}</div>
                     </div>
+                    :
+                    <div className={styles.pup_bot}>
+                        <div className={styles.btn_pup_confirm2} onClick={onSure}>{sureText||"确定"}</div>
+                    </div>
+                    }
+                   
                 </div>
             </FullScreenView>
         );

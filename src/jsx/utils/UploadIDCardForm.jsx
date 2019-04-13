@@ -50,9 +50,10 @@ class UploadIDCardForm extends PureComponent {
     getFrontPicture = ()=>{
         Client.getPicture((frontPic)=>{
            console.log(frontPic);
+           this.setState({frontPic});
             this.props.upLoadImage(this,frontPic,1,()=>{
                 this.setState({frontPic});
-            });
+            }); 
         },()=>{
 
         });

@@ -5,7 +5,7 @@ import CancelDialog from '../../components/documentary/detail/CancelDialog';
 import CopyAllList from '../../components/trade/CopyAllList';
 
 import { connect } from 'react-redux';
-import { applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
+import { getMasterDetail,applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
 
 import styles from './css/currCopyDetailPage.less';
 
@@ -57,7 +57,15 @@ class CurrCopyDetailPage extends PageComponent {
     getPageName() { return "跟单详情"; }
 
     componentDidMount(){
-
+        
+        this.props.getMasterDetail(this,{followerId:this.followerId},(data)=>{
+            var {info={},fowInfo={}} =data;
+            var {starLevel,
+                maxFowBalance,
+                suggestBalance,
+                }= info;
+            this.setState({fowInfo,maxFowBalance,suggestBalance});       
+        });
     }
 
     componentWillUmount(){
@@ -164,20 +172,6 @@ class CurrCopyDetailPage extends PageComponent {
         this.setState({showDialog:false,showProtocol:false,showCancel:false});
          
      }
-
-    updateInfo=(data)=>{
-        var {starLevel,
-            maxFowBalance,
-            suggestBalance,fowInfo}=data;
-        this.setState({
-            starLevel,
-            maxFowBalance,
-            suggestBalance,fowInfo
-        });
-
-    }
-
- 
   //  
     confirmCopy = (funds)=>{
         var {fowInfo} = this.state;
@@ -336,7 +330,7 @@ function injectProps(state) {
     return { couplist};
 }
 function injectAction() {
-    return { applyFollower,openFollow ,followRelieve};
+    return { getMasterDetail,applyFollower,openFollow ,followRelieve};
 }
 
 module.exports = connect(injectProps, injectAction())(CurrCopyDetailPage);

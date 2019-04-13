@@ -1,5 +1,11 @@
 import styles from './css/withdrawal.less';
 import AccountSelect from '../AccountSelect';
+import BankSelect from './BankSelect';
+
+import WithDrawalDialog from './WithDrawalDialog';
+import { connect } from 'react-redux';
+import { getMt4Message,withdraw,queryBankCard} from '../../../actions/me/meAction';
+import {showMessage} from '../../../../../store/actions';
 class Withdrawal extends PureComponent {
 
     //构造函数
@@ -8,11 +14,18 @@ class Withdrawal extends PureComponent {
         this.state = {
             money: "",
             destType: "-1",
-            showAccount:false
+            balance:"0.00",
+            showAccount:false,
+            showBank:false,
+            showConfirm:false,
+            cardNo:null
         };
         this.mt4NickName=null;
         this.mt4Id=null;
         this.mt4AccType=null;
+        this.bankid = null;
+        this.cardno = null;
+        this.bankname  = null;
     }
 
     typeClick = (destType) => () => {
@@ -32,13 +45,43 @@ class Withdrawal extends PureComponent {
     }
 
     nextClick = ()=>{
+        var {money,cardNo} =this.state;
+        if(money.length==0){
+            this.props.showMessage("error","请输入取现金额");
+        }else if(!this.mt4Id){
+            this.props.showMessage("error","请选择取现账号");
+        }else if(!cardNo){
+            this.props.showMessage("error","请选择银行卡号");
+        }else{
+            this.setState({showConfirm:true});
+        }
+
+        
 
     }
 
     closeAccount = ()=>{
         this.setState({showAccount:false});
     }
+    closeBank = ()=>{
+        this.setState({showBank:false});
+    }
+    
+    selectBank = (bankid,cardno,bankname)=>{
+        this.bankid = bankid;
+        this.cardno = cardno;
+        this.bankname =bankname;
+        this.setState({showBank:false});
+        // this.mt4NickName=mt4NickName;
+        // this.mt4Id=mt4Id;
+        // this.mt4AccType=mt4AccType;
+        // this.setState({showAccount:false});
+        // this.props.getMt4Message(this,{mt4Id,queryType:1},(data)=>{
+        //     var {balance="0.00"} =data; 
+        //     this.setState({balance});
+        // });
 
+    }
     selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
         
         if(mt4NickName==null){
@@ -58,20 +101,55 @@ class Withdrawal extends PureComponent {
         this.mt4Id=mt4Id;
         this.mt4AccType=mt4AccType;
         this.setState({showAccount:false});
+        this.props.getMt4Message(this,{mt4Id,queryType:1},(data)=>{
+            var {balance="0.00"} =data; 
+            this.setState({balance});
+        });
 
     }
 
     openPayDest = ()=>{
         this.setState({showAccount:true})
     }
+
+    chooseBank =()=>{
+        this.props.queryBankCard(this,{bankType:0},(bankList)=>{
+            if(bankList && bankList.length>0){
+                this.setState({showBank:true,bankList});
+            }else{
+                hashHistory.push("/work/me/bank/add");
+            }
+               
+        });
+     
+    }
+
+
+
     numFormate =(e)=>{
         var { value } = e.target;
+        if(value.indexOf(".")==0){
+            value =value.slice(1);
+        }
         this.setState({money:(+value).toFixed(2)});
     }
+
+    onSure=()=>{
+        var {money} =this.state;
+        this.props.withdraw(this,{recordType:2,amountUSD:money,mt4Id:this.mt4Id,cardNo:this.bankId},()=>{
+            this.setState({showConfirm:false});
+        });
+    }
+
+    onCancel=()=>{
+        this.setState({showConfirm:false});
+    }
+
+
     //渲染函数
     render() {
 
-        var { money, destType,showAccount } = this.state;
+        var { money, destType,showAccount,showConfirm ,balance,showBank,bankList} = this.state;
 
         return (
             <div>
@@ -83,41 +161,40 @@ class Withdrawal extends PureComponent {
                             {this.typeName?<span className={"c9"}>({this.typeName})</span>:null}
                         </p>
                         <p className={this.mergeClassName("mg-lt-140", "mg-tp-10")}>
-                            <span className={"c9"}>当前交易账户余额：¥0.00</span>
+                            <span className={"c9"}>当前交易账户余额：¥{balance}</span>
                         </p>
+                    </div>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                        <p>
+                            <span className={styles.form_label}>提现到</span>
+                            <span className={this.mergeClassName("blue", "font28")} onClick={this.chooseBank}>{this.cardno||"请选择"}</span>&nbsp;
+                            {this.bankname?<span className={"c9"}>({this.bankname})</span>:null}
+                        </p>
+
                     </div>
                     <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <p><span className={styles.form_label}>提现金额</span></p>
                         <input type="text" placeholder="$" value={money}  onBlur={this.numFormate } onChange={this.inputChange} />
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    {/* <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                         <span className={"red"}>开通真实账户后未入金，无法提现&gt;</span>
-                    </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
-                        <p><span className={styles.form_label}>提现到</span></p>
-                        <div className={"clear"}></div>
-                        <div className={this.mergeClassName(styles.account_cs, "mg-tp-20")}>
-                            <ul>
-                                <li className={destType == "0" ? styles.on : ""} onClick={this.typeClick("0")}>
-                                    <p className={"mg-tb-20"}><span>银行账户</span></p>
-                                </li>
-                                <li className={destType == "1" ? styles.on : ""} onClick={this.typeClick("1")}>
-                                    <p className={"mg-tb-20"}><span>钱包</span></p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={styles.bottom_btn_fixed}>
-                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.nextClick}>下一步</button></div>
+                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.nextClick}>提现</button></div>
                 </div>
                 {showAccount?<AccountSelect showOn={false} selectType={1} onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
-
+                {showConfirm?<WithDrawalDialog onSure={this.onSure} onCancel={this.onCancel} />:null}
+                {showBank?<BankSelect bankList={bankList} bankId = {this.bankid }   onSelect={this.selectBank} onClose={this.closeBank}/>:null}
+                
             </div>
 
         );
     }
 
 }
+function injectAction() {
+    return { getMt4Message,withdraw,showMessage,queryBankCard};
+}
 
-module.exports = Withdrawal;
+module.exports = connect(null, injectAction(), null, {withRef:true})(Withdrawal);

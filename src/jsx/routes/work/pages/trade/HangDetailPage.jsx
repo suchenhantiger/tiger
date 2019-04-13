@@ -121,7 +121,7 @@ class HangDetailPage extends PageComponent {
                     <div className={styles.bottom_btn_fixed}>
 
                     <div className={styles.bt_btn_50}> <span className={styles.nowprice} > 现价:{marketPrice}</span></div>
-                    <div className={styles.bt_btn_50}><button  onClick={this.flatClick(1)} >删除</button></div>
+                    <div className={styles.bt_btn_50}><button  className={styles.btn_blue}  onClick={this.flatClick(1)} >删除</button></div>
                      
                     </div>
                 </Content>

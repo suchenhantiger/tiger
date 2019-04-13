@@ -1,5 +1,5 @@
 import styles from './css/positionItem1.less';
-
+import {formatTime} from '../../../../utils/util';
 class FundRecordItem extends PureComponent{
 
     //构造函数
@@ -36,9 +36,7 @@ class FundRecordItem extends PureComponent{
 
            var tmpdate = new Date();
            tmpdate.setTime(createDate * 1000);
-           createDate = tmpdate.getFullYear()+"-" +
-           (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-           tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+           createDate = formatTime(tmpdate);
            var recordTypeStr = "转账";//0 转账 1 充值 2 提现
            if(recordType==1 || recordType=="1") recordTypeStr="充值";
            else if(recordType==2 || recordType=="2") recordTypeStr="提现";

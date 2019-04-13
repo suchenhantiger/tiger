@@ -1,6 +1,7 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import styles from './css/historyDetailPage.less';
+import {formatTime} from '../../../../utils/util';
 /********自选-简单*********/
 class HistoryDetailPage extends PageComponent {
 
@@ -40,9 +41,7 @@ class HistoryDetailPage extends PageComponent {
         if(closeTime && closeTime>0){
             var tmpdate = new Date();
             tmpdate.setTime(closeTime * 1000);
-            closeTime = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+            closeTime = formatTime(tmpdate);
         }else {
             closeTime="--";
         }

@@ -40,6 +40,11 @@
 	float: left;
 	text-align: center;
 }
+.btn_pup_confirm2{
+	width: 100%;
+	float: left;
+	text-align: center;
+}
 .btn_pup_cancel{
 	color: #666;
 }

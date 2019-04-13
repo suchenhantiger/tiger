@@ -43,7 +43,9 @@ ReactDOM.render(
                         </Route>
                     </Route>
                     <Route path="me" getComponent={require('./routes/work/config/me/me')(store)}>
-                        <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}></Route>
+                        <Route path="recharge" getComponent={require('./routes/work/config/me/recharge')(store)}>
+                            <Route path="upload/:certificateid" getComponent={require('./routes/work/config/me/upload')(store)}></Route>
+                        </Route>
                         
                         <Route path="certification" getComponent={require('./routes/work/config/login/certification')(store)}></Route>
                         <Route path="checking" getComponent={require('./routes/work/config/me/checking')(store)}></Route> 

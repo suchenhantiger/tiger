@@ -3,7 +3,7 @@ import BuyDialog from './BuyDialog';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/trade/tradeAction';
 import styles from './css/flatDetail.less';
-
+import {formatTime} from '../../../../../utils/util';
 class FlateDetail extends PureComponent{
 
     //构造函数
@@ -34,9 +34,7 @@ class FlateDetail extends PureComponent{
         if(openTime && openTime>0){
             var tmpdate = new Date();
             tmpdate.setTime(openTime * 1000);
-            openTime = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+            openTime = formatTime(tmpdate);
         }else {
             openTime="--";
         }
@@ -44,9 +42,7 @@ class FlateDetail extends PureComponent{
         if(expireDate && expireDate>0){
             var tmpdate = new Date();
             tmpdate.setTime(expireDate * 1000);
-            expireDate = tmpdate.getFullYear()+"-" +
-            (tmpdate.getMonth()+1)+"-"+tmpdate.getDate()+" "+
-            tmpdate.getHours()+":"+tmpdate.getMinutes()+":"+tmpdate.getSeconds();
+            expireDate = formatTime(tmpdate);
         }else {
             expireDate = "--"
         }

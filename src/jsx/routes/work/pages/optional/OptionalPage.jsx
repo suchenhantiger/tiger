@@ -66,8 +66,8 @@ class OptionalPage extends PageComponent{
                         {editable?null:
                         <div className={styles.optional_price}>
                             <span className={this.mergeClassName("c9", "left")}>最新价格</span>
-                            <i className={styles.i_buy}>买</i>
-                            <i className={styles.i_sell}>卖</i>
+                            <i className={styles.i_buy}>买入</i>
+                            <i className={styles.i_sell}>卖出</i>
                         </div>
                         
                         }
