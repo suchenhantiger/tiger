@@ -45,6 +45,7 @@ class OptionalItem extends PureComponent {
     }
 
     calDiff(ask, bid, digits) {
+        if(ask==null || bid==null) return 0;
         var diff = (ask-bid).toFixed(digits);
         return diff*Math.pow(10,digits);
     }
