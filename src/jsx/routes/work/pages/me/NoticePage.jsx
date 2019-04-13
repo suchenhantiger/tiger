@@ -2,6 +2,7 @@ import FullScreenView from '../../../../components/common/fullscreen/FullScreenV
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import SysNoticeList from '../../components/me/notice/SysNoticeList';
+import TradeNoticeList from '../../components/me/notice/TradeNoticeList';
 
 import styles from './css/noticePage.less';
 
@@ -15,7 +16,6 @@ class NoticePage extends PageComponent {
         }
     }
     //获取页面名称
-    getPageName() { return "充值页面"; }
 
     tabClick = (index) => () => {
         this.setState({ index });
@@ -40,6 +40,7 @@ class NoticePage extends PageComponent {
                 <Content>
                     <LazyLoad index={index}>
                         <SysNoticeList/>
+                        <TradeNoticeList />
                     </LazyLoad>
                 </Content>
                 {this.props.children}

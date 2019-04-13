@@ -18,7 +18,7 @@ class SysNoticeList extends CursorList {
     getData(pageNo, isAppend){
 
         this.props.getSysNoticeList(this, {
-            msgType:0,
+            msgType:1,
             pageNo, pageSize
         }, isAppend, this.update);
     }

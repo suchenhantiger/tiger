@@ -2,6 +2,23 @@ import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../..
 
 import JSEncrypt from 'jsencrypt';
 
+//获取详情列表
+export function getSysNoticeList(component, params, isAppend, updateList,cb){
+    var {pageSize} = params;
+    return function(dispatch, state){
+        // params.mt4Id = systemApi.getValue("mt4Id");
+        component.requestJSON("sys/querySysMsg",params).done((data)=>{
+            var {list} = data,
+                hasMore = list.length==pageSize;
+            updateList && updateList(isAppend, list);
+            cb && cb(null, hasMore);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    }
+}
+
 export function uploadCertificate(component, params,cb){
     return function(dispatch, state){
         // dispatch(showLoading());
