@@ -43,3 +43,45 @@
 	border: none;
 	box-shadow: 0 0 0.2rem rgba(26,46,107,.2);
 }
+
+.accountName{
+	text-align: center;
+	font-size: .28rem;
+	margin-bottom: .16rem;
+}
+
+.accountType{
+	margin:.1rem 0;
+	text-align: center;
+	.text{
+		display: inline-block;
+		padding:.06rem .16rem;
+		background:#FFC125;
+		font-size: .22rem;
+		border-radius: .3rem;
+	}
+}
+
+.list{
+	margin: .16rem 0 .1rem;
+	text-align: center;
+	white-space: nowrap;
+	.listItem{
+		display: inline-block;
+		width:33%;
+		border-right: .02rem solid #eee;
+
+		&:last-child{
+			border:none;
+		}
+
+		.value{
+			font-size: .26rem;
+			margin-bottom: .1rem;
+		}
+		.text{
+			font-size: .24rem;
+			color:#999;
+		}
+	}
+}

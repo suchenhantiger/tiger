@@ -48,17 +48,30 @@ class AccountSelect extends PureComponent {
         var curMt4Id = systemApi.getValue("mt4Id");
 
         return accountList.map((item, i) => {
-            var {mt4AccType, mt4Id,mt4NickName} = item;
+            var {mt4AccType, mt4Id,mt4NickName, floatPL, equity, ratioMargin} = item;
             if(selectType==0){
                 return (
                     <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
                         <ul>
                             <li>
-                                <p className={"mg-bt-10"}>
-                                    <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
-                                    <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
-                                </p>
-                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                                <div className={styles.accountName}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</div>
+                                <div className={styles.accountType}>
+                                    <div className={styles.text}>{ACCOUNT_MAP[mt4AccType]}</div>
+                                </div>
+                                <div className={styles.list}>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${floatPL}</div>
+                                        <div className={styles.text}>浮动盈余</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${equity}</div>
+                                        <div className={styles.text}>净值</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>{ratioMargin}%</div>
+                                        <div className={styles.text}>保证金比例</div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -68,12 +81,32 @@ class AccountSelect extends PureComponent {
                 return (
                     <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <p className={"mg-bt-10"}>
                                     <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
                                     <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
                                 </p>
-                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                                <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p>
+                            </li> */}
+                            <li>
+                                <div className={styles.accountName}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</div>
+                                <div className={styles.accountType}>
+                                    <div className={styles.text}>{ACCOUNT_MAP[mt4AccType]}</div>
+                                </div>
+                                <div className={styles.list}>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${floatPL}</div>
+                                        <div className={styles.text}>浮动盈余</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${equity}</div>
+                                        <div className={styles.text}>净值</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>{ratioMargin}%</div>
+                                        <div className={styles.text}>保证金比例</div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -83,12 +116,32 @@ class AccountSelect extends PureComponent {
                 return (
                     <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <p className={"mg-bt-10"}>
                                     <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
                                     <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
                                 </p>
-                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                                <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p>
+                            </li> */}
+                            <li>
+                                <div className={styles.accountName}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</div>
+                                <div className={styles.accountType}>
+                                    <div className={styles.text}>{ACCOUNT_MAP[mt4AccType]}</div>
+                                </div>
+                                <div className={styles.list}>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${floatPL}</div>
+                                        <div className={styles.text}>浮动盈余</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${equity}</div>
+                                        <div className={styles.text}>净值</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>{ratioMargin}%</div>
+                                        <div className={styles.text}>保证金比例</div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -98,12 +151,32 @@ class AccountSelect extends PureComponent {
                 return (
                     <div className={this.mergeClassName(styles.radius_box, showOn&&(curMt4Id==mt4Id)?styles.on:"")} onClick={this.itemClick(mt4AccType, mt4Id,mt4NickName)}>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <p className={"mg-bt-10"}>
                                     <span className={"font30"}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</span>
                                     <span className={"c9"}>（{ACCOUNT_MAP[mt4AccType]}）</span>
                                 </p>
-                                {/* <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p> */}
+                                <p className={this.mergeClassName("mg-tp-20", "c9")}>账号尚未激活，请及时充值</p>
+                            </li> */}
+                            <li>
+                                <div className={styles.accountName}>{mt4NickName?mt4NickName:ACCOUNT_MAP2[mt4AccType]}</div>
+                                <div className={styles.accountType}>
+                                    <div className={styles.text}>{ACCOUNT_MAP[mt4AccType]}</div>
+                                </div>
+                                <div className={styles.list}>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${floatPL}</div>
+                                        <div className={styles.text}>浮动盈余</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>${equity}</div>
+                                        <div className={styles.text}>净值</div>
+                                    </div>
+                                    <div className={styles.listItem}>
+                                        <div className={styles.value}>{ratioMargin}%</div>
+                                        <div className={styles.text}>保证金比例</div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
