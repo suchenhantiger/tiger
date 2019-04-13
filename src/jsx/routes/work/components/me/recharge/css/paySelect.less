@@ -4,7 +4,6 @@
 	left:0;
 	right: 0;
 	bottom: 0;
-	height: 5rem;
 	box-shadow: 0 0 .35rem rgba(0,0,0,.1);
 }
 .pop_tit{
@@ -12,21 +11,59 @@
 	border-bottom:1px solid #eee;
 	padding: .3rem;
 }
-.account_cs ul{
-	padding-top: .1rem;
+// .account_cs ul{
+// 	padding-top: .1rem;
+// }
+// .account_cs li{
+//     padding-bottom: .3rem;
+//     border-bottom: 1px solid #eee;
+// 	margin-bottom: .1rem;
+// 	overflow: hidden;
+// 	padding-left: .5rem;
+// }
+// .account_cs li{
+// 	background: url(./images/me/icon-choose.png) no-repeat top .2rem left;
+// 	background-size: .32rem;
+// }
+// .account_cs li.on{
+// 	background: url(./images/me/icon-choose-on.png) no-repeat top .2rem left;
+// 	background-size: .32rem;
+// }
+
+.account_cs{
+	height:5rem;
+	overflow: auto;
 }
-.account_cs li{
-    padding-bottom: .3rem;
-    border-bottom: 1px solid #eee;
-	margin-bottom: .1rem;
-	overflow: hidden;
-	padding-left: .5rem;
-}
-.account_cs li{
-	background: url(./images/me/icon-choose.png) no-repeat top .2rem left;
-	background-size: .32rem;
-}
-.account_cs li.on{
-	background: url(./images/me/icon-choose-on.png) no-repeat top .2rem left;
-	background-size: .32rem;
+
+.item{
+	padding: .2rem 0 .3rem 30%;
+	border-bottom: .02rem solid #eee;
+	&:last-child{
+		border:none;
+	}
+	.dot{
+		display: inline-block;
+		width:.32rem;
+		height: .32rem;
+		margin-right: .3rem;
+		margin-top:.2rem;
+		vertical-align: top;
+		background: url(./images/me/icon-choose.png) no-repeat;
+		background-size: contain;
+
+		&.on{
+			background-image: url("./images/me/icon-choose-on.png");
+		}
+	}
+	.pays{
+		display: inline-block;
+		.payType{
+			font-size: .3rem;
+			margin: .2rem 0 .16rem;
+		}
+		.remarks{
+			color:#999;
+		}
+	}
+	
 }
