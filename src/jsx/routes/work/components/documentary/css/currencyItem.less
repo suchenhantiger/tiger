@@ -1,0 +1,44 @@
+.item{
+    margin:0 .1rem;
+    padding: .26rem .2rem;
+    font-size: .24rem;
+    border-bottom: .02rem solid #eee;
+    list-style: none;
+    white-space: nowrap;
+    &:last-child{
+        border:none;
+    }
+    .currency{
+        display: inline-block;
+        width:25%;
+        font-size: .26rem;
+        vertical-align: middle;
+    }
+    .ratio{
+        display: inline-block;
+        height:.16rem;
+        width:45%;
+        background-color: #00bf3f;
+        margin-right: .4rem;
+        border-radius: .2rem;
+        vertical-align: middle;
+
+        .full{
+            height:100%;
+            background-color: #ff4433;
+            border-top-left-radius: .2rem;
+            border-bottom-left-radius: .2rem;
+        }
+    }
+    .buysell{
+        vertical-align: middle;
+        display: inline-block;
+        .buy{
+            color:#ff4433;
+            margin-bottom: .1rem;
+        }
+        .sell{
+            color:#00bf3f;
+        }
+    }
+}

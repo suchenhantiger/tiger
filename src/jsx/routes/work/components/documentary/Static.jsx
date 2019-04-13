@@ -6,6 +6,7 @@ import ReactEcharts from 'echarts-for-react';
 import PieChart from './PieChart';
 import LineChart from './LineChart';
 import MonthPicker from './MonthPicker';
+import CurrencyItem from './CurrencyItem';
 
 class Static extends PureComponent {
 
@@ -206,6 +207,10 @@ class Static extends PureComponent {
                   </div>
                   <div>
                     {prodCodeList.length>0?<PieChart data={prodCodeList} />:null}
+                  </div>
+                  <div className={styles.list}>
+                    <CurrencyItem buyRatio={0.5} currName="英镑日元" buy="1天" sell="1天"/>
+                    <CurrencyItem buyRatio={0} currName="黄金" buy="无" sell="21小时"/>
                   </div>
               </div>
               {showPicker?
