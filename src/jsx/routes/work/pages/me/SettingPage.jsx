@@ -47,6 +47,13 @@ class SettingPage extends PageComponent {
         hashHistory.push("/work/me/setting/personal");
     }
 
+    modifiPwd =()=>{
+        hashHistory.push({
+            pathname:"/work/me/setting/setpwd",
+            query:{telChangePwd:true}
+        });
+    }
+
     render() {
         systemApi.log("SettingPage render");
 
@@ -75,7 +82,7 @@ class SettingPage extends PageComponent {
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>密码设置</p></div>
-                                        <div className={this.mergeClassName("right", "c9")}><p>修改密码</p></div>
+                                        <div className={this.mergeClassName("right", "c9")}  onClick={this.modifiPwd} ><p>修改密码</p></div>
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}>

@@ -100,13 +100,16 @@ export function updateAcc(component, params,cb){
 } 
 export function upLoadImage(component, file,type,cb){
     return function(dispatch, state){
+        dispatch(showLoading());
         if(!postNative){
             file = encodeURIComponent(file);
         }
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("users/uploadIdCardOrHead",{clientId,file,type}).done((data)=>{
+            dispatch(hideLoading());
          cb && cb();
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             
         });
@@ -115,14 +118,18 @@ export function upLoadImage(component, file,type,cb){
 
 export function upLoadAllImage(component, file,cb){
     return function(dispatch, state){
+        dispatch(showLoading());
+        
         if(!postNative){
             file = encodeURIComponent(file);
         }
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("sys/uploadAttachment",{clientId,file}).done((data)=>{
+            dispatch(hideLoading());
             var {attachmentId} =data;
          cb && cb(attachmentId);
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             
         });
