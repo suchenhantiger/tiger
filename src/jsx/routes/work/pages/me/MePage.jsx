@@ -5,6 +5,7 @@ import Confrim from '../../../../components/common/popup/Confirm';
 import AccountSelect from '../../components/me/AccountSelect';
 
 import {connect} from 'react-redux';
+import {showMessage, WARNING} from '../../../../store/actions';
 import {getMt4Message} from '../../actions/me/meAction';
 import {updateUserInfo} from '../../actions/login/loginAction';
 import styles from './css/mePage.less';
@@ -155,6 +156,18 @@ class MePage extends PageComponent {
         hashHistory.push("/work/me/bank");
     }
 
+    showTip = ()=>{
+        this.props.showMessage(WARNING, "敬请期待");
+    }
+
+    toHelpPage = ()=>{
+        hashHistory.push("/work/me/help");
+    }
+
+    toServerPage = ()=>{
+        hashHistory.push("/work/me/server");
+    }
+
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
@@ -250,12 +263,12 @@ class MePage extends PageComponent {
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.icon_list}>
-                            {this.renderListItem("我的钱包", "./images/me/icon-list01.png", false)}
-                            {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false)}
-                            {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.dailyReportClick)}
-                            {this.renderListItem("财经日历", "./images/me/icon-list04.png", false)}
-                            {this.renderListItem("帮助中心", "./images/me/icon-list05.png", false)}
-                            {this.renderListItem("联系客服", "./images/me/icon-list06.png", false)}
+                            {this.renderListItem("我的钱包", "./images/me/icon-list01.png", false, this.showTip)}
+                            {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false, this.showTip)}
+                            {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.showTip /*this.dailyReportClick*/)}
+                            {this.renderListItem("财经日历", "./images/me/icon-list04.png", false, this.showTip)}
+                            {this.renderListItem("帮助中心", "./images/me/icon-list05.png", false, this.toHelpPage)}
+                            {this.renderListItem("联系客服", "./images/me/icon-list06.png", false, this.toServerPage)}
                         </ul>
                     </div>
                 </Content>
@@ -270,7 +283,7 @@ class MePage extends PageComponent {
 }
 
 function injectAction(){
-    return {getMt4Message,updateUserInfo};
+    return {getMt4Message,updateUserInfo, showMessage};
 }
 
 module.exports = connect(null,injectAction())(MePage);
