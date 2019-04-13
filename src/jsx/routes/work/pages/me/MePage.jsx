@@ -85,8 +85,8 @@ class MePage extends PageComponent {
     renderListItem(text, icon, isRed, onClick) {
         return (
             <li onClick={onClick}>
-                <div className={styles.list_icon}><img src={icon} /> </div>
-                <div className={styles.list_text}>{text}{isRed ? <i className={"red"}></i> : null}</div>
+                <p className={styles.list_icon}><img src={icon}/></p>
+                <p className={styles.list_text}>{text}{isRed ? <i className={"red"}></i> : null}</p>
             </li>
         )
     }
@@ -248,9 +248,8 @@ class MePage extends PageComponent {
                             {/* {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")} */}
                         </ul>
                     </div>
-                    <div className={this.mergeClassName(styles.ht_gray, styles.mt3)}></div>
-                    <div className={styles.icon_list}>
-                        <ul>
+                    <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
+                        <ul className={styles.icon_list}>
                             {this.renderListItem("我的钱包", "./images/me/icon-list01.png", false)}
                             {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false)}
                             {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.dailyReportClick)}
