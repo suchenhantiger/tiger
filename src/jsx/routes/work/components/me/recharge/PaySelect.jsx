@@ -39,9 +39,12 @@ class PaySelect extends PureComponent {
                  workDayLimit,
                  hoursLimit} = item;
             return (
-                <li className={payType == paycode ? styles.on : ""} onClick={this.itemClick(paycode,payname)}>
-                    <p className={this.mergeClassName("font30", "mg-tb-20")}><span>{payname}</span></p>
-                    {remarks?<p className={"c9"}>{remarks}</p>:null}
+                <li className={styles.item} onClick={this.itemClick(paycode,payname)}>
+                    <span className={this.mergeClassName(styles.dot, payType == paycode ? styles.on : "")}></span>
+                    <div className={styles.pays}>
+                        <div className={styles.payType}>{payname}</div>
+                        {remarks?<div className={styles.remarks}>{remarks}</div>:null}
+                    </div>
                 </li>
             )
         })

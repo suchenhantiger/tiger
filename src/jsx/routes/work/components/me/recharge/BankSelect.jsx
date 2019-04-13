@@ -41,9 +41,12 @@ class BankSelect extends PureComponent {
                 province,
             } = item;
             return (
-                <li className={bankId == bankid ? styles.on : ""} onClick={this.itemClick(bankid,cardno,bankname)}>
-                    <p className={this.mergeClassName("font30", "mg-tb-20")}><span>{cardno}</span></p>
-                    {bankname?<p className={"c9"}>{bankname}</p>:null}
+                <li className={this.mergeClassName(styles.item, styles.short)} onClick={this.itemClick(bankid,cardno,bankname)}>
+                    <span className={this.mergeClassName(styles.dot, bankId == bankid ? styles.on : "")}></span>
+                    <div className={styles.pays}>
+                        <div className={styles.payType}>{cardno}</div>
+                        {bankname?<div className={styles.remarks}>{bankname}</div>:null}
+                    </div>
                 </li>
             )
         })
