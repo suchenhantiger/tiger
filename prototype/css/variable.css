@@ -50,7 +50,8 @@
 .optional-list li{
 	width: 100%;
 	overflow: hidden;
-	padding-top: .56rem;
+	padding-top: .28rem;
+	padding-bottom: .28rem;
 }
 .op-sort-li{
 	border-bottom: 1px solid #ededed;
@@ -77,7 +78,7 @@
 	padding-bottom: .07rem;
 	padding-top: .07rem;
 	float: left;
-	margin-left: .1rem;
+	margin-left: .5rem;
 	color: #fff;
 }
 .price-box.buy{
@@ -100,6 +101,21 @@
 	right: 0;
 	top: -.32rem;
 	font-style: normal;
+}
+.mk_center{
+	color: #333;
+	background: #fff;
+	position: absolute;
+	margin-right: -.55rem;
+	right: 50%;
+	width: .6rem;
+	top: 50%;
+	margin-top: -.18rem;
+	height: .36rem;
+	font-style: normal;
+	border-radius: .06rem;
+	line-height: .36rem;
+	text-align: center;
 }
 .list-left-icon{
 	float: left;
@@ -169,6 +185,9 @@
 }
 .optional-detail .currency-name .c3{
 	margin-bottom: .15rem;
+}
+.ht_22{
+	height: 2.2rem;
 }
 .icon-intro{
 	float: left;
@@ -777,11 +796,11 @@
 }
 .account_icons li p{
 	text-align: center;
-	font-size: .26rem;
+	font-size: .24rem;
 }
 .account_icons li img{
-	width: .56rem;
-	height: .56rem;
+	width: .48rem;
+	height: .48rem;
 	margin-bottom: .1rem;
 }
 .icon_list li{

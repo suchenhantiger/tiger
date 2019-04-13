@@ -100,7 +100,7 @@ class SettingPage extends PageComponent {
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>系统版本</p></div>
-                                        <div className={this.mergeClassName("right", "c9")}><p>3.1.1</p></div>
+                                        <div className={this.mergeClassName("right", "c9")}><p>{h5version}</p></div>
                                     </li>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>关于</p></div>
