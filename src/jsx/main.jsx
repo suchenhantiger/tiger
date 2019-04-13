@@ -51,6 +51,7 @@ ReactDOM.render(
                         <Route path="checking" getComponent={require('./routes/work/config/me/checking')(store)}></Route> 
                         <Route path="setting" getComponent={require('./routes/work/config/me/setting')(store)}>
                             <Route path="personal" getComponent={require('./routes/work/config/me/personal')(store)}></Route>
+                            <Route path="setpwd" getComponent={require('./routes/work/config/login/setpwd')(store)}></Route>
                         </Route>
                         <Route path="notice" getComponent={require('./routes/work/config/me/notice')(store)}></Route>
                         <Route path="dailyreport" getComponent={require('./routes/work/config/me/dailyreport')(store)}></Route>

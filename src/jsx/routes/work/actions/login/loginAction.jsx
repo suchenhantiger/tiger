@@ -42,11 +42,17 @@ export function updateUserInfo(component,cb){
                 systemApi.setValue("nickname",nickname);
                 systemApi.setValue("tel",tel);
                 systemApi.setValue("telActive",telActive);
+
                 if(mt4Accs && mt4Accs.length>0){
                     var currAcc = systemApi.getValue("mt4Id");
                     var isChange = true;
+                    var hasF = false;
                     for(var item in mt4Accs){
-                        if(currAcc == mt4Accs[item].mt4Id){//不需要更新
+                        var {mt4Id,mt4AccType} = mt4Accs[item];
+                        if(mt4AccType==2){//跟单账号
+                            hasF = true;
+                            systemApi.setValue("f_mt4Id",mt4Id);
+                        }else if(currAcc == mt4Id){//不需要更新
                             isChange=false;
                             break;
                         }
@@ -56,15 +62,19 @@ export function updateUserInfo(component,cb){
                         systemApi.setValue("mt4Id",mt4Accs[0].mt4Id);
                         systemApi.setValue("mt4AccType",mt4Accs[0].mt4AccType);
                         systemApi.setValue("mt4NickName",mt4Accs[0].mt4NickName);
-                        
                     }
+                    if(!hasF){
+                        systemApi.removeValue("f_mt4Id");
+                    }
+
                 }else{
                     //没有账号
                     systemApi.removeValue("mt4Id");
+                    systemApi.removeValue("f_mt4Id");
                     systemApi.removeValue("mt4AccType");
                     systemApi.removeValue("mt4NickName");
 
-                }                
+                }       
 
             cb && cb();
         }).fail((data)=>{
@@ -99,6 +109,21 @@ export function changePassword(component, newpassword,cb){
         newpassword = md5(newpassword);
         component.requestJSON("loginregister/changePasswordOrStatus",{updateType:0,clientId,newpassword}).done((data)=>{
 
+            cb && cb();
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
+export function changePasswordByold(component, params,cb){
+    return function(dispatch, state){
+        params.clientId = systemApi.getValue("clientId");
+        params.oldpassword = md5(params.oldpassword);
+        params.newpassword = md5(params.newpassword);
+        component.requestJSON("loginregister/changePasswordOrStatus",params).done((data)=>{
+            dispatch(showMessage(SUCCESS, "修改成功"));
             cb && cb();
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
