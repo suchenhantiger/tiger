@@ -8,6 +8,7 @@ class PieChart extends PureComponent {
   render(){
     systemApi.log("PieChart render");
     const {data,config} = this.props;
+    console.log(data);
     var option = {
         animation:false,
         tooltip: {
@@ -16,10 +17,22 @@ class PieChart extends PureComponent {
             // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
-            
+          
+            // type:"scroll",
             orient: 'horizontal',
             x: 'center',
             y: 160,
+            show:true,
+            selectedMode:false,
+            formatter:function (name) {
+              for(var i=0,l=data.length;i<l;i++){
+                var {prodName,prodRatio} = data[i];
+                if(prodName == name){
+                  name = name+" "+prodRatio+"%";
+                }
+              }
+              return  name;
+          },
             
             data://["邮件营销","联盟广告","视频广告","搜索引擎"]
             (function(){
@@ -43,8 +56,7 @@ class PieChart extends PureComponent {
                 center: ['50%', '30%'],
                 label: {
                     normal: {
-                        show: true,
-                        position: 'inside',
+                        show: false,
                         formatter: '{d}%'
                     }//,
                     // emphasis: {

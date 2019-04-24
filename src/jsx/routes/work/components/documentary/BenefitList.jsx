@@ -78,7 +78,7 @@ class BenefitList extends CursorList {
                 incomeRate30d,
                 lastDayPLRate,
                 signature} =item;
-                if(avatarUrl.length == 0) avatarUrl= "./images/me/img03.png" ;
+                if(avatarUrl.length == 0) avatarUrl= "./images/documentary/gs_def.png" ;
             return (
                 <tr className={styles.item} onClick={this.itemClick(item)}>
                     <td>
@@ -86,15 +86,15 @@ class BenefitList extends CursorList {
                         <p className={styles.gs_name}>{followNmae}</p>
                     </td>
                     <td>
-                        <p className={"font26"}>{accuracy30d}%</p>
+                        <p className={"font28"}>{accuracy30d}%</p>
                         <p className={"c9"}>近30日准确率</p>
                     </td>
                     <td>
-                        <p className={"font26"}>{fowwerNumHis}</p>
+                        <p className={"font28"}>{fowwerNumHis}</p>
                         <p className={"c9"}>历史跟随</p>
                     </td>
                     <td>
-                        <p className={this.mergeClassName("font26", "red")}>{incomeRate30d}%</p>
+                        <p className={this.mergeClassName("font28", "red")}>{incomeRate30d}%</p>
                         <p className={"c9"}>近30日收益率</p>
                     </td>
                 </tr>

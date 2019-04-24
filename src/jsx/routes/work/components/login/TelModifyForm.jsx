@@ -33,9 +33,11 @@ class ModifyForm extends PureComponent {
         var {pwd,conpwd,oldpwd}=this.state;
         
         if(oldpwd==null || oldpwd.length==0)
-            this.setState({errMsg:"请输入原密码"});
+            this.setState({errMsg:"请输入原密码"});     
         else if(pwd==null || pwd.length==0)
             this.setState({errMsg:"请输入密码"});
+        else if(pwd.length<6 || pwd.length>12)
+            this.setState({errMsg:"请设置6到12位密码"});
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else
@@ -56,12 +58,12 @@ class ModifyForm extends PureComponent {
 
         return (
             <div className={styles.login_form}>
-                <p style={{   color: "#666",margin: ".1rem .2rem"}}>原密码</p>
+                <p style={{   color: "#666",margin: ".2rem .2rem"}}>原密码</p>
                 <div className={styles.login_item}>
                     
                     <input type="password"  placeholder="请输入原密码" value={oldpwd} onChange={this.oldChange} />
                 </div>
-                <p style={{   color: "#666",margin: ".1rem .2rem"}}>设置新密码</p>
+                <p style={{   color: "#666",margin: ".2rem .2rem"}}>设置新密码</p>
                 <div className={styles.login_item}>
                     <input type="password"  placeholder="请输入新密码" value={pwd} onChange={this.pwdChange} />
                 </div>

@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { getSysNoticeList } from '../../../actions/me/meAction';
-
+import {formatTime} from '../../../../../utils/util';
 import styles from './css/sysNoticeList.less'
+import EmptyFrame from '../../trade/EmptyFrame';
 const pageSize = 20;
 class SysNoticeList extends CursorList {
 
@@ -15,12 +16,12 @@ class SysNoticeList extends CursorList {
         this.getData(1, false);
     }
 
-    getData(pageNo, isAppend){
+    getData(pageNo, isAppend,cb){
 
         this.props.getSysNoticeList(this, {
             msgType:0,
             pageNo, pageSize
-        }, isAppend, this.update);
+        }, isAppend, this.update,cb);
     }
 
     update = (isAppend, list)=>{
@@ -41,15 +42,43 @@ class SysNoticeList extends CursorList {
     renderList() {
         var { data } = this.state;
         return data.map((item) => {
+            var {
+                content,
+                createdate,
+                id,
+                isread,
+                msgtype,
+                title
+             } = item;
+             var tmpdate = new Date();
+             tmpdate.setTime(createdate);
+             createdate = formatTime(tmpdate);
+
+
             return (
                 <li className={styles.item}>
-                    <p className={this.mergeClassName("font30", "mg-bt-10")}><span>红包通知</span></p>
-                    <p className={"c9"}>2019-03-03 12：22：22</p>
-                    <p className={"mg-tp-30"}>您收到红包，请进入"我的红包"查看</p>
+                    <p className={this.mergeClassName("font30", "mg-bt-10")}><span>{title}</span></p>
+                    <p className={"c9"}>{createdate}</p>
+                    <div className={"mg-tp-30"} dangerouslySetInnerHTML={{__html:content} }/>
                 </li>
             )
         });
     }
+
+    //渲染函数
+    render(){
+        var { data } = this.state;
+        if(data.length==0){
+            return (
+                <div style={{marginTop:"2rem"}}>
+                    <EmptyFrame detail="暂无消息" />
+                </div >
+            )
+        }else
+            return super.render();
+    }
+
+
 }
 
 function injectAction() {

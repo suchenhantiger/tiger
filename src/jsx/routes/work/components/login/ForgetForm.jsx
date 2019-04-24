@@ -57,6 +57,8 @@ class ForgetForm extends PureComponent {
 
         if(pwd==null || pwd.length==0)
             this.setState({errMsg:"请输入密码"});
+        else if(pwd.length<6 || pwd.length>12)
+            this.setState({errMsg:"请设置6到12位密码"});
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else

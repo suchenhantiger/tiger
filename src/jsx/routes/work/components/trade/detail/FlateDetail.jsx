@@ -130,7 +130,7 @@ class FlateDetail extends PureComponent{
                           </li>
                       </ul>
                   </div>
-                  <table width="100%" cellspacing="0" cellpadding="0">
+                  <table width="100%" cellspacing="0" cellpadding="0" style={{fontSize: ".24rem", marginBottom: "2.2rem"}}>
                       <tbody>
                       <tr>
                           <td>

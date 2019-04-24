@@ -10,8 +10,12 @@ class LoginPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
+        this.logined = false;
+        
+        if(systemApi.getValue("tel")) 
+            this.logined =true;         
         this.state = {
-            index: 0,
+            index: this.logined?0:1,
             focus :false,
         }
     }
@@ -25,9 +29,31 @@ class LoginPage extends PageComponent {
         super.componentWillUnmount();
     }
 
-    onBackKeyDown=()=>{
 
-        this.setState({index:0});
+    onBackKeyDown = ()=>{
+        var hash = this.getHashPath();
+
+        if(hash != '/work/documentary'){
+            hashHistory.goBack();
+        }
+        else{
+            if(systemApi.getDeviceMessage().isAndroid){
+                Client.backForAndroid();
+            }
+        }
+    }
+
+    onBackKeyDown=()=>{
+        var {index} = this.state;
+        if(index==0){
+            if(systemApi.getDeviceMessage().isAndroid){
+                Client.backForAndroid();
+            }
+        }else{
+            this.setState({index:0});
+        }
+
+        
     
     }
 
@@ -49,10 +75,16 @@ class LoginPage extends PageComponent {
         this.setState({focus:focus_state});
    }
 
-    agreementClick = ()=>{
+    agreementClick = (title,code)=>()=>{
       
 
-        hashHistory.push("/login/agreement");
+        hashHistory.push({
+            pathname:"/login/agreement",
+            query:{
+                title,code
+            }
+
+        });
     }
 
     render() {
@@ -60,27 +92,35 @@ class LoginPage extends PageComponent {
 
         var {focus , index } = this.state;
 
-        console.log(focus);
+        //console.log(focus);
 
         return (
             <div>
-                <AppHeader showBack={false} iconRight={this.renderIcons()} />
+                <AppHeader showBack={false} />
                 <Content>
-                    <ul className={styles.login_tab}>
-                        <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>快捷登录</li>
-                        <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>密码登录</li>
-                    </ul>
+                    {this.logined?
+                        <ul className={styles.login_tab}>
+                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>密码登录</li>
+                            <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>快捷登录</li>
+                            
+                        </ul>:
+                        <ul className={styles.login_tab}>
+                           <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>快捷登录</li>
+                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>密码登录</li>
+                         
+                        </ul>
+                    }
+                    
                     <div className={styles.login_int}>未注册的用户，登录时将自动注册</div>
 
                     <LazyLoad index={index}>
-                        <MsgLogin setFocusState={this.setFocusState}/> 
                         <LoginForm setFocusState={this.setFocusState}/> 
-                      
+                        <MsgLogin setFocusState={this.setFocusState}/> 
                     </LazyLoad>
                     {focus?null:
                     <div className={styles.login_bt_text}>
                     <p className={"c9"}>提交注册代表您已阅读并同意</p>
-                    <p className={"blue"} onClick={this.agreementClick}><span>客户协议/</span><span>风险披露声明/</span><span>隐私政策及其他法律声明</span></p>
+                    <p className={"blue"} ><span onClick={this.agreementClick("客户协议","CUSTOMER_AGREEMENT")} >客户协议/</span><span onClick={this.agreementClick("风险披露声明","RISK_STATEMENT")}>风险披露声明/</span><span onClick={this.agreementClick("隐私政策","PRIVACY_POLICY")}>隐私政策及其他法律声明</span></p>
                 </div>}
                     
                 </Content>

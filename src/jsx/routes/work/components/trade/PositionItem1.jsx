@@ -45,6 +45,15 @@ class PositionItem1 extends PureComponent{
            , tradedQty} = data;
         if(!netProfit) netProfit=0;
 
+        if(bid !=null && ask!=null ){
+            if(buySell==0)
+                marketPrice =bid;
+            else
+                marketPrice =ask;
+
+        }
+            
+
         return(
             <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.left}>

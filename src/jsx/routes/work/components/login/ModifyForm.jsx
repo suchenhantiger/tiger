@@ -26,8 +26,10 @@ class ModifyForm extends PureComponent {
     saveClick = ()=>{
         var {pwd,conpwd}=this.state;
         
-        if(pwd==null || pwd.length==0)
+        if(pwd==null || pwd.length==0){
             this.setState({errMsg:"请输入密码"});
+        }else if(pwd.length<6 || pwd.length>12)
+            this.setState({errMsg:"请设置6到12位密码"});
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else
@@ -44,6 +46,7 @@ class ModifyForm extends PureComponent {
 
         return (
             <div className={styles.login_form}>
+                <p className={"c9 mg-bt-20 mg-lt-30"}>请设置6到12位密码</p>
                 <div className={styles.login_item}>
                     <input type="password"  placeholder="请输入新密码" value={pwd} onChange={this.pwdChange} />
                 </div>

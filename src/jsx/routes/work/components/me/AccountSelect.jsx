@@ -6,12 +6,15 @@ import styles from './css/accountSelect.less';
 const ACCOUNT_MAP = {
     "0":"体验账户",
     "1":"自主交易",
-    "2":"跟单账户"
+    "2":"跟单账户",
+    "3":"高手账户",
+
 }
 const ACCOUNT_MAP2 = {
     "0":"体验金账号",
     "1":"交易账号",
-    "2":"跟单账号"
+    "2":"跟单账号",
+    "3":"高手账户"
 }
 class AccountSelect extends PureComponent {
 
@@ -42,10 +45,11 @@ class AccountSelect extends PureComponent {
     }
 
     renderAccounts() {
-        var {selectType,showOn} = this.props;//1：交易与跟单，2:跟单，3:交易
+        var {selectType,showOn,curMt4Id} = this.props;//1：交易与跟单，2:跟单，3:交易
 
         var { index, accountList } = this.state;
-        var curMt4Id = systemApi.getValue("mt4Id");
+        if(!curMt4Id)
+            curMt4Id = systemApi.getValue("mt4Id");
 
         return accountList.map((item, i) => {
             var {mt4AccType, mt4Id,mt4NickName, floatPL, equity, ratioMargin} = item;
@@ -201,7 +205,7 @@ class AccountSelect extends PureComponent {
                 <div className={styles.bottom_pop}>
                     <div className={styles.pop_tit}>
                         <span className={"font36"}>切换账号</span>
-                        <span className={this.mergeClassName("right", "blue")} onClick={onClose}>取消</span>
+                        <span className={this.mergeClassName("font26","right", "blue")} onClick={onClose}>取消</span>
                     </div>
                     <div className={styles.accounts}>
                         {this.renderAccounts(accountList)}

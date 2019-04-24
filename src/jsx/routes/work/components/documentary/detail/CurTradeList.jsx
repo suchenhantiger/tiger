@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getCurTradeList } from '../../../actions/documentary/documentaryAction';
-
+import EmptyFrame from '../../trade/EmptyFrame';
 import styles from './css/curTradeList.less'
 
 const pageSize = 20;
@@ -26,10 +26,9 @@ class CurTradeList extends PureComponent {
     }
 
     getData(pageNo, isAppend){
-        var {followerId} = this.props,
-            clientId = systemApi.getValue("clientId");
+        var {followerId} = this.props;
         this.props.getCurTradeList(this, {
-            pageNo, followerId, clientId, pageSize
+            pageNo, followerId, pageSize
         }, isAppend, this.update);
     }
 
@@ -50,7 +49,7 @@ class CurTradeList extends PureComponent {
     }
 
     reloadData(){
-        this.state.nextPage = 1;
+        // this.state.nextPage = 1;
         this.getData(1, false);
     }
 
@@ -84,11 +83,15 @@ class CurTradeList extends PureComponent {
     }
 
     render() {
+        var { data } = this.state;
         return (
             <div className={styles.home_frame}>
+                {data.length==0?
+                <EmptyFrame detail="高手当前没有交易"  />:
                 <table className={styles.table}>
-                    {this.renderList()}
-                </table>
+                {this.renderList()}
+            </table>}
+                
             </div>
         )
     }

@@ -49,9 +49,11 @@ class AddList extends PureComponent{
     //渲染函数
     render(){
 
-        var {type} = this.props;        
+        var {type} = this.props;
+        var listClass = styles.optional_list;
+        if(type=="99") listClass = styles.optional_list2;
         return (
-            <ul className={styles.optional_list}>
+            <ul className={listClass}>
                 {this.renderList()}
             </ul>
         );

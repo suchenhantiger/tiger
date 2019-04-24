@@ -59,7 +59,7 @@ class CopyItem extends PureComponent{
             totalPL} = data;
 
            if(avatarUrl.length == 0)
-           avatarUrl = "./images/me/img03.png";
+           avatarUrl = "./images/documentary/gs_def.png";
         
 
 
@@ -70,9 +70,9 @@ class CopyItem extends PureComponent{
                     <p className={styles.gs_name}>{followNmae}</p>
                 </div>
                 <div className={styles.right}>
-                    <div className={styles.mg_tp_10} style={{float:"right"}}>
+                    <div  style={{float:"right"}}>
                         <p className={styles.valueStyR +" " +(pl>=0?styles.red:styles.green)}>${type==2?totalPL:pl.toFixed(2)}</p>
-                        <p className={styles.keyStyR}>{type==2?"收益":"浮动盈亏"}</p>
+                        <p className={"mg-tp-10 "+styles.keyStyR}>{type==2?"收益":"浮动盈亏"}</p>
                     </div>
 
                     

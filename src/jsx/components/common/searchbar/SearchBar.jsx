@@ -15,8 +15,10 @@ class SearchBar extends PureComponent {
     }
 
     inputChange = (e)=>{
+        var {onSearch} = this.props;
         var {value} = e.target;
         this.setState({value});
+        onSearch && onSearch(value);
     }
 
     keydown = (e)=>{

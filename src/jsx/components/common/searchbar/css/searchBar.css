@@ -1,20 +1,22 @@
 .search_inner{
 	padding-left: .5rem;
-	border:1px solid #ddd;
+	border:1px solid #eee;
 	border-radius: .5rem;
 	height: .72rem;
 	line-height: .72rem;
 	margin: 0 .3rem;
 	position: relative;
+	margin-top: .1rem;
 }
 .search_inner input{
 	height: .72rem;
+	width: 90%;
 	line-height: .72rem;
 	padding: 0;
 	margin: 0;
 	border:none;
 	background:none;
-	font-size: .28rem;
+	font-size: .24rem;
 	float: left;
 }
 .search_delete{

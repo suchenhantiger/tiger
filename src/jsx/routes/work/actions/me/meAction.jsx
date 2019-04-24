@@ -6,13 +6,16 @@ import JSEncrypt from 'jsencrypt';
 export function getSysNoticeList(component, params, isAppend, updateList,cb){
     var {pageSize} = params;
     return function(dispatch, state){
-        // params.mt4Id = systemApi.getValue("mt4Id");
+        params.clientId = systemApi.getValue("clientId");
+        // dispatch(showLoading());
         component.requestJSON("sys/querySysMsg",params).done((data)=>{
+            // dispatch(hideLoading());
             var {list} = data,
                 hasMore = list.length==pageSize;
             updateList && updateList(isAppend, list);
             cb && cb(null, hasMore);
         }).fail((data)=>{
+            // dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             cb && cb();
         });
@@ -201,11 +204,14 @@ export function getPaySelect(component, update){
 
 export function getAccounts(component, update){
     return function(dispatch, state){
+        dispatch(showLoading()); 
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("users/getMt4Message",{queryType:3,clientId}).done((data)=>{
+            dispatch(hideLoading());
             var {mt4Info} = data;
             update && update(mt4Info);
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
         });
     }

@@ -12,6 +12,9 @@ function baseReducer(state,action){
     var {type} = action;
     state = state || {
         loading:false,
+        complete:false,
+        completeMsg:"",
+        certification:false,
         messageshow:false,
         message:"",
         msgType:"",
@@ -23,9 +26,9 @@ function baseReducer(state,action){
         incomeDate:[],
         steadyDate:[],
         hanglist: [], couplist : [], orderlist :[],
-        infoEquity: {}
-
-
+        infoEquity: {},
+        floatPL:0,
+        f_floatPL:0
     };
 
     if(type == SHOW_LOADING){
@@ -33,6 +36,17 @@ function baseReducer(state,action){
     }
     else if(type == HIDE_LOADING){
         return Object.assign({}, state, {loading:false});
+    }else if(type == "show_certification"){
+        return Object.assign({}, state, {certification:true});
+    }
+    else if(type == "hide_certification"){
+        return Object.assign({}, state, {certification:false});
+    }else if(type == "show_complete"){
+        var {completeMsg} = action;
+        return Object.assign({}, state, {complete:true,completeMsg});
+    }
+    else if(type == "hide_complete"){
+        return Object.assign({}, state, {complete:false});
     }
     else if(type == SHOW_MESSAGE){
         var {message,msgType} = action;
@@ -148,7 +162,7 @@ function baseReducer(state,action){
     }else if(type == "UPDATE_ALL_LIST"){
         var {hanglist=[], couplist =[], orderlist =[]} =action.data;
         return Object.assign({}, state, {
-            hanglist,couplist,orderlist
+            hanglist,couplist,orderlist,floatPL:0,f_floatPL:0
         });
     }else if(type == "UPDATE_COUPLIST"){
         var {couplist =[]} =action.data;
@@ -156,7 +170,7 @@ function baseReducer(state,action){
            couplist
         });
     }else if(type == "QUERY_POSITION_DATA"){
-        console.log(action.data);
+       // console.log(action.data);
         return Object.assign({},state,{
             infoEquity:action.data
         });
@@ -164,6 +178,7 @@ function baseReducer(state,action){
       }else if(type == "QUERY_POSITION_LIST_DATA"){
         var floatTrade = action.data;
         var {hanglist,couplist,orderlist}=state;
+        
         for(var i=0,l=hanglist.length;i<l;i++){
             var prodCode = hanglist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
@@ -176,8 +191,9 @@ function baseReducer(state,action){
             }
 
         }
-
-        for(var i=0,l=couplist.length;i<l;i++){
+        var f_floatPL = 0;
+        let l=couplist.length;
+        for(var i=0;i<l;i++){
             var prodCode = couplist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
 
@@ -192,14 +208,15 @@ function baseReducer(state,action){
                         marketPrice = buySell==1?ask:bid;
                         var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
                         netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
+                        couplist[i].marketPrice = marketPrice;
                     }
                     couplist[i].netProfit=netProfit;
                     break;
                 }
             }
-
+            f_floatPL +=couplist[i].netProfit;
         }
-
+        var floatPL = 0;
         for(var i=0,l=orderlist.length;i<l;i++){
             var prodCode = orderlist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
@@ -219,6 +236,8 @@ function baseReducer(state,action){
                     break;
                 }
             }
+            if(orderlist[i].netProfit!=null)
+            floatPL += orderlist[i].netProfit;
 
         }
 
@@ -228,7 +247,9 @@ function baseReducer(state,action){
         return Object.assign({},state,{
             hanglist:hanglist.slice(),
             couplist:couplist.slice(),
-            orderlist:orderlist.slice()
+            orderlist:orderlist.slice(),
+            floatPL:floatPL,
+            f_floatPL:f_floatPL
         });
 
       }

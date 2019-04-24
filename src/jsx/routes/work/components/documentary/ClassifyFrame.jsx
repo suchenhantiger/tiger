@@ -68,7 +68,7 @@ class ClassifyFrame extends PureComponent {
                 <div className={styles.home_list}>
                     <div className={this.mergeClassName("mg-bt-20")}>
                         <div className={styles.list_tit} onClick={this.gotoBentfit}>
-                            <span className={this.mergeClassName("font32", "left")} >收益高手</span>
+                            <span className={this.mergeClassName("font26", "left")} >收益高手</span>
                             <span className={this.mergeClassName("c9", "right", "pd-rt-30")}>收益领先，表现突出</span>
                         </div>
                         <ul className={styles.list}>
@@ -80,7 +80,7 @@ class ClassifyFrame extends PureComponent {
                 <div className={styles.home_list}>
                     <div className={this.mergeClassName("mg-bt-20")}>
                         <div className={styles.list_tit} onClick={this.gotoSteady}>
-                            <span className={this.mergeClassName("font32", "left")}>稳健高手</span>
+                            <span className={this.mergeClassName("font26", "left")}>稳健高手</span>
                             <span className={this.mergeClassName("c9", "right", "pd-rt-30")}>收益稳定，回撤率小</span>
                         </div>
                         <ul className={styles.list}>
@@ -91,7 +91,7 @@ class ClassifyFrame extends PureComponent {
                 <div className={styles.home_list}>
                     <div className={this.mergeClassName("mg-bt-20")} >
                         <div className={styles.list_tit} onClick={this.gotoAccurate}>
-                            <span className={this.mergeClassName("font32", "left")}>常胜高手</span>
+                            <span className={this.mergeClassName("font26", "left")}>常胜高手</span>
                             <span className={this.mergeClassName("c9", "right", "pd-rt-30")}>交易稳定，准确率高</span>
                         </div>
                         <ul className={styles.list}>

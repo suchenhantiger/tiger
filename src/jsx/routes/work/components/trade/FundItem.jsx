@@ -9,12 +9,12 @@ class PositionItem1 extends PureComponent{
 
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
-        var {data}= this.props;
-        console.log(data);
-        hashHistory.push({
-            pathname:"/work/trade/historydetail",
-            query:{historyInfo:JSON.stringify(data)}
-        })
+        // var {data}= this.props;
+        // console.log(data);
+        // hashHistory.push({
+        //     pathname:"/work/trade/historydetail",
+        //     query:{historyInfo:JSON.stringify(data)}
+        // })
         
     }
 
@@ -40,7 +40,7 @@ class PositionItem1 extends PureComponent{
                 <div className={styles.left}>
                     <p><span className={styles.name}>{remarks}</span></p>
                     <div className={styles.mg_tp_10} style={{float:"left"}}>
-                        <p className={styles.valueSty}>{createDate}</p>
+                        <p className={styles.fundtime}>{createDate}</p>
                     </div>
                 </div>
                 <div className={styles.right}>

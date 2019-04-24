@@ -16,7 +16,21 @@ class LineChart extends PureComponent {
         sd.push(data[i].ratioPL);
     }
     var option = {
+        animation:false,
+        tooltip: {
+            trigger: 'item',
+            formatter: "{c}%"
+            // formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        dataZoom:[
 
+            {
+                type: 'inside',
+                xAxisIndex: [0],
+                start: 1,
+                end: 35
+            }
+        ],
         xAxis: {
             axisLine: {show: true,//x轴的线
                 lineStyle:{
@@ -55,7 +69,7 @@ class LineChart extends PureComponent {
         series: [{
             data: sd,
             type: 'line',
-            smooth: true,
+            smooth: false,
             color:['#647dce']
         }]
     };

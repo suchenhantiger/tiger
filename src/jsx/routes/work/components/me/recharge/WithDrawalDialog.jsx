@@ -39,7 +39,7 @@ class CopyDialog extends PureComponent{
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
 
                     <div className={styles.item}>
-                        <span className={"left mg-bt-10"+" " +styles.tip}>如果您还有持仓，提现会造成保证金减少，请您控制好自己到风险与仓位，避免造成不必要到资金损失。如造成资金损失，MakeCaptial概不负责。</span>
+                        <span className={"mg-bt-10"+" " +styles.tip}>如果您还有持仓，提现会造成保证金减少，请您控制好自己到风险与仓位，避免造成不必要到资金损失。如造成资金损失，MakeCaptial概不负责。</span>
 
                     </div>
                 

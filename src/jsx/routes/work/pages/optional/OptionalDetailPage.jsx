@@ -112,7 +112,7 @@ class OptionalDetailPage extends PageComponent{
             <FullScreenView>
                 {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="optial"/>}
                 <Content coverHeader={true}>
-                    {fullscreen?<ProdInfoFullscreen price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
+                    {fullscreen?<ProdInfoFullscreen prodName={this._prodName} prodCode={this._prodCode}  price={price} onClose={this.closeFullScreen}/>:<ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
                         <K_Chart
                         chartWidth = {chartWidth}

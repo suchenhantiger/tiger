@@ -32,17 +32,17 @@ class PaySelect extends PureComponent {
     renderItems( payType) {
         var {accountList} =this.state;
         return accountList.map(item => {
-            var {  payname,
-                paycode,
+            var {  payName,
+                payCode,
                  remarks,
                  amountLimit,
                  workDayLimit,
                  hoursLimit} = item;
             return (
-                <li className={styles.item} onClick={this.itemClick(paycode,payname)}>
-                    <span className={this.mergeClassName(styles.dot, payType == paycode ? styles.on : "")}></span>
+                <li className={styles.item} onClick={this.itemClick(payCode,payName)}>
+                    <span className={this.mergeClassName(styles.dot, payType == payCode ? styles.on : "")}></span>
                     <div className={styles.pays}>
-                        <div className={styles.payType}>{payname}</div>
+                        <div className={styles.payType}>{payName}</div>
                         {remarks?<div className={styles.remarks}>{remarks}</div>:null}
                     </div>
                 </li>
@@ -59,7 +59,7 @@ class PaySelect extends PureComponent {
             <FullScreenView mask={true}>
                 <div className={styles.bottom_pop}>
                     <div className={styles.pop_tit}>
-                        <span className={"font36"}>支付方式</span>
+                        <span className={"font30"}>支付方式</span>
                         <span className={this.mergeClassName("right", "blue")} onClick={onClose}>取消</span>
                     </div>
                     <div className={this.mergeClassName(styles.account_cs, "mg-lr-30")}>

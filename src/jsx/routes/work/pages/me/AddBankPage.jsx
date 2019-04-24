@@ -41,6 +41,7 @@ class AddBankPage extends PageComponent {
             cardNo:account, 
             bankName, province, city, 
             bankBranch:branchName, phone:telephone},()=>{
+                hashHistory.goBack();
 
         });
     }

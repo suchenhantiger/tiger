@@ -33,7 +33,7 @@ function getMaxUndefined(calculators) {
 
 const macdAppearance = {
 	stroke: {
-		macd: "#FF0000",
+		macd: "#ff2222",
 		signal: "#00F300",
 	},
 	fill: {
@@ -295,7 +295,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					margin={{ left: 5, right: 45, top: 5, bottom: 10 }} type={"hybrid"}
 					seriesName="MSFT"
 					data={data}
-					defaultFocus={true}
+					defaultFocus={false}
 
                     xExtents={xExtents}
                     xScale={xScale}
@@ -305,11 +305,14 @@ class CandleStickChartPanToLoadMore extends React.Component {
 				<Chart id={1} height={170}
 						yExtents={[d => [d.high, d.low], this.ema20.accessor(), this.ema10.accessor(), this.ema5.accessor()]}
 						padding={{ top: 0, bottom: 10 ,left:10}}>
-					<XAxis fontSize={10} stroke="#999"   tickStroke="#999"  {...this.xGrid} axisAt="bottom" orient="bottom" showTicks={true} ticks={8} />
+					<XAxis fontSize={10} stroke="#999999"   tickStroke="#999"  {...this.xGrid} axisAt="bottom" orient="bottom" showTicks={true} ticks={8} />
 					<YAxis tickFormat={format("."+this._digits+"f")} fontSize={10} tickStroke="#999"  zoomEnabled={false} {...this.yGrid} axisAt="right" orient="right" showTicks={true} ticks={5}  />
 
 					<CandlestickSeries 
-							fill={(d)=>{return d.close > d.open ? "#FF0000"  :"#6BA583" ;}}
+					opacity={1}
+						wickStroke={d => d.close > d.open ? "#ff2222" : "#00b333"}
+						stroke={d => d.close > d.open ? "#ff2222" : "#00b333"}
+						fill={(d)=>{return d.close > d.open ? "#ff2222"  :"#00b333" ;}}
 					/>
 					{index1==0?
 					<LineSeries yAccessor={this.ema20.accessor()} stroke={this.ema20.stroke()}/>
@@ -350,7 +353,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					rectWidth= {30}
 					arrowWidth= {1}
 					displayFormat={format("."+this._digits+"f")}
-						yAccessor={d => d.close} fill={d => d.close > d.open ? "#FF0000"  : "#6BA583"}/>
+						yAccessor={d => d.close} fill={d => d.close > d.open ? "#ff2222"  : "#00b333"}/>
 
 					{fullscreen? <MouseCoordinateX
 						at="top"

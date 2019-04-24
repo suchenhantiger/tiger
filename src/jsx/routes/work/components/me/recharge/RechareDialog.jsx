@@ -41,15 +41,15 @@ class CopyDialog extends PureComponent{
                 <div>
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
                     <p className="font48 mg-bt-20 mg-tp-30 center">¥{amountCNY}</p>
-                    <div className={styles.item}>
+                    <div className={styles.item2}>
                         <span className={"left"}>充值金额:</span>
                         <span className={"right"}>${amountUSD}</span>
                     </div>
-                    <div className={styles.item}>
+                    <div className={styles.item2}>
                         <span className={"left"}>折合人民币</span>
                         <span className={"right"}>¥{amountCNY}</span>
                     </div>
-                    <div className={styles.item}>
+                    <div className={styles.item2}>
                         <span className={"left"}>手续费</span>
                         <span className={"right"}>¥{commission}</span>
                     </div>

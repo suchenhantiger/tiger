@@ -5,7 +5,7 @@ import InputFormate from './InputFormate';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
-import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
+import {showMessage,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
 class SimpleDetail extends PureComponent{
 
     //构造函数
@@ -73,12 +73,39 @@ class SimpleDetail extends PureComponent{
         this.setState({num:num.toFixed(this._volumeDigits)});
     }
 
+    checkComplete=(cb)=>{
+        let emailIsActive = systemApi.getValue("emailIsActive");
+      //  let isReal = systemApi.getValue("isReal");
+        if(emailIsActive==0){
+            this.props.showComplete("完善资料后可开通体验账号");
+        }else{
+            cb && cb();
+        }
+        
+    }
+
+    checkIsReal=(cb)=>{
+       // let emailIsActive = systemApi.getValue("emailIsActive");
+        let isReal = systemApi.getValue("isReal");
+        if(emailIsActive==0){
+
+        }else{
+            cb && cb();
+        }
+        
+    }
     buyClick = ()=>{
-        this.setState({tradeDirect:0, showBuyDialog:true});
+        this.checkComplete(()=>{
+            this.setState({tradeDirect:0, showBuyDialog:true});
+        });
+        
     }
 
     sellClick = ()=>{
-        this.setState({tradeDirect:1, showBuyDialog:true});
+        this.checkComplete(()=>{
+            this.setState({tradeDirect:1, showBuyDialog:true});
+        });
+        
     }
 
     tradeSubmit = (direction,isChoose)=>{
@@ -159,6 +186,7 @@ class SimpleDetail extends PureComponent{
                             <div className={styles.icon_num}>
                                 {/* <input type="text"  className={styles.input}  value={num} onChange={this.numChange} onBlur={this.numFormate }/> */}
                                 <InputFormate 
+                                big={true}
                                 valueChange={this.numChange}
                                 value={num} 
                                 minValue={this._minVolume} 
@@ -216,7 +244,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder,showMessage};
+    return {openOrder,showMessage,showComplete,showCertification};
 }
 
 module.exports = connect(injectProps,injectAction())(SimpleDetail);

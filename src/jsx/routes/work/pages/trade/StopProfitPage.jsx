@@ -297,7 +297,7 @@ class StopProfitPage extends PageComponent {
                         </div>
                         <div className={this.mergeClassName("mg-lr-30", "mg-tp-30")}>
                             <p className={"font28"}>注意事项</p>
-                            <p className={this.mergeClassName("c9", "mg-tp-10")}>修改止盈、止损价格，参考范围已现在的价格为准</p>
+                            <p className={this.mergeClassName("c9", "mg-tp-10")}>修改止盈、止损价格，参考范围以现在的价格为准</p>
                         </div>
                     </div>
                     <div className={styles.bottom_btn_fixed}>

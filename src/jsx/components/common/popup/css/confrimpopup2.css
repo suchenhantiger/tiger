@@ -27,9 +27,9 @@
 .pup_bot{
 	height: .88rem;
 	line-height: .88rem;
-	font-size: .32rem;
+	font-size: .28rem;
 	position: relative;
-	border-top:1px solid #ddd;
+	border-top:1px solid #eee;
 }
 .btn_pup_center{
 	text-align: center;

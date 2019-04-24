@@ -10,7 +10,7 @@ html {
 body {
     color: #333;
     font-family: Microsoft Yahei, tahoma, arial, 宋体;
-    font-size: .24rem;
+    font-size: .2rem !important;
     background-color: #fff;
     height: 100%;
     width: 100%;
@@ -272,8 +272,14 @@ body.hidden {
 .mg-rt-10{
 	margin-right:.1rem;
 }
+.mg-rt-30{
+	margin-right:.3rem;
+}
 .mg-tp-10{
 	margin-top: .1rem;
+}
+.mg-tp-15{
+	margin-top: .15rem;
 }
 .mg-tp-0{
 	margin-top: 0;
@@ -286,6 +292,9 @@ body.hidden {
 }
 .mg-tp-42{
 	margin-top: .42rem;
+}
+.mg-tp-56{
+	margin-top: .56rem;
 }
 .mg-tb-42{
 	margin: .42rem 0;
@@ -302,11 +311,20 @@ body.hidden {
 .mg-bt-40{
 	margin-bottom: .4rem;
 }
+.mg-bt-56{
+	margin-bottom: .56rem;
+}
+.mg-bt-64{
+	margin-bottom: .64rem;
+}
 .mg-tb-56{
 	margin: .56rem 0;
 }
 .mg-lt-0{
 	margin-left: 0;
+}
+.mg-lt-30{
+	margin-left: .3rem;
 }
 .mg-rt-0{
 	margin-right: 0;
@@ -355,4 +373,13 @@ body.hidden {
 }
 .text-al-center {
     text-align: center;
+}
+.pd-lt-50{
+    padding-left: .5rem;
+}
+.pd-rt-50{
+    padding-right: .5rem;
+}
+.pd-tp-20{
+    padding-top: .2rem;
 }

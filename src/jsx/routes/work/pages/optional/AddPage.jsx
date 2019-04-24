@@ -36,6 +36,10 @@ class AddPage extends PageComponent {
         this.setState({index});
     }
 
+    gotoSearch=()=>{
+        hashHistory.push("/work/optional/add/search");
+    }
+
     render() {
         systemApi.log("AddPage render");
 
@@ -45,7 +49,10 @@ class AddPage extends PageComponent {
             <FullScreenView>
                 <AppHeader headerName="添加交易品种" />
                 <Content>
-                    <SearchBar onSearch={this.searchChange}/>
+                    {/* <SearchBar onSearch={this.searchChange}/> */}
+                    <div className={styles.searchBar} onClick={this.gotoSearch}>
+                        <div className={styles.input}> 搜索</div>
+                    </div>
                     <SubTabs index={index} onTabChange={this.tabChange}>
                         <UlineTab text="外汇"/>
                         <UlineTab text="贵金属"/>

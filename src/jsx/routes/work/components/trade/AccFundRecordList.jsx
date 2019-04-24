@@ -3,6 +3,7 @@ import { getFundRecordList } from '../../actions/trade/tradeAction';
 
 import styles from './css/historyList.less';
 import FundItem from './FundItem';
+import EmptyFrame from './EmptyFrame';
 
 const pageSize = 20;
 
@@ -21,9 +22,14 @@ class AccFundRecordList extends PureComponent {
         this.getData(1, false);
     }
 
+    componentWillReceiveProps(nextProps){
+        this.getData(1, false);
+    }
+
     getData(pageNo, isAppend){
         var mt4Id = systemApi.getValue("mt4Id"),
             clientId = systemApi.getValue("clientId");
+            if(mt4Id==null || mt4Id.length==0) return;
         this.props.getFundRecordList(this, {
             pageNo, mt4Id, clientId, pageSize
         }, isAppend, this.update);
@@ -38,11 +44,26 @@ class AccFundRecordList extends PureComponent {
             data = list;
         }
         this.setState({data:data.slice(), nextPage:nextPage+1});
+        
+        this.refreshScroll();
+    }
+
+    refreshScroll=()=>{
+        var {refreshScroll} =this.props;
+        refreshScroll && refreshScroll();
+    }
+
+    reload =()=>{
+        this.getData(1, false);
     }
 
     getNextPage(){
         var {nextPage} = this.state;
         this.getData(nextPage, true);
+    }
+
+    gotoRecharge=()=>{
+        hashHistory.push("/work/me/recharge");
     }
 
     renderList() {
@@ -55,7 +76,10 @@ class AccFundRecordList extends PureComponent {
     }
 
     render() {
+        var { data = [] } = this.state;
         return (
+            data.length==0?
+            <EmptyFrame detail="没有资金记录" btnText="立即充值" btnClick={this.gotoRecharge} />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>
@@ -67,4 +91,4 @@ function injectAction() {
     return { getFundRecordList };
 }
 
-module.exports = connect(null, injectAction())(AccFundRecordList);
+module.exports = connect(null, injectAction(),null,{withRef:true})(AccFundRecordList);

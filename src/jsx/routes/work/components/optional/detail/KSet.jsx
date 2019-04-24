@@ -52,7 +52,7 @@ class KSet extends PureComponent{
                         <li className={index2==1?styles.on:null} onClick={this.itemClick(3)} >RSI</li>
                         <li className={index2==2?styles.on:null} onClick={this.itemClick(4)} >KDJ</li>
                     </ul>
-                    <div className={styles.btn_quick}>快速<br></br>下单</div>
+                    {/* <div className={styles.btn_quick}>快速<br></br>下单</div> */}
                 </div> 
 
         );

@@ -38,6 +38,8 @@ class TradePage extends PageComponent {
         systemApi.log("TradePage render");
 
         var {index} = this.state;
+        var emailIsActive = systemApi.getValue("emailIsActive");
+        var isReal = systemApi.getValue("isReal"); 
 
         return (
             <div>
@@ -45,9 +47,9 @@ class TradePage extends PageComponent {
                 <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                      <LazyLoad index={index}>
-                        <Position/>
-                        <TradeHistory/>
-                        <TradeFee/> 
+                        <Position emailIsActive={emailIsActive} isReal={isReal}/>
+                        <TradeHistory emailIsActive={emailIsActive} isReal={isReal}/>
+                        <TradeFee emailIsActive={emailIsActive} isReal={isReal}/> 
                     </LazyLoad> 
                     {/* {index==0? <Position/>:null}
                     {index==1? <TradeHistory/>:null} */}

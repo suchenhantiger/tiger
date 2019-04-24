@@ -36,7 +36,6 @@ class SettingPage extends PageComponent {
         systemApi.removeValue("isPushMsg");
         systemApi.removeValue("isReal");
         systemApi.removeValue("nickname");
-        systemApi.removeValue("tel");
         systemApi.removeValue("telActive");
         systemApi.removeValue("mt4Id");
         systemApi.removeValue("mt4AccType");
@@ -54,11 +53,22 @@ class SettingPage extends PageComponent {
         });
     }
 
+    gotoAbout=()=>{
+
+        hashHistory.push({
+            pathname:"/work/me/setting/about",
+            query:{
+                title:"关于我们",
+                code:"ABOUT"
+            }
+
+        });
+    }
     render() {
         systemApi.log("SettingPage render");
 
         var {tipFlag, fingerFlag} = this.state;
-
+        var clientId =systemApi.getValue("clientId"); 
         return (
             <FullScreenView>
                 <AppHeader headerName="" />
@@ -74,17 +84,17 @@ class SettingPage extends PageComponent {
                                 <ul>
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>通行证账号</p></div>
-                                        <div className={this.mergeClassName("right", "c9")}><p>3009000</p></div>
+                                        <div className={this.mergeClassName("right", "c9")}><p>{clientId}</p></div>
                                     </li>
-                                    <li>
+                                    <li onClick={this.personalClick}>
                                         <div className={this.mergeClassName("left", "font30")}><p>个人资料设置</p></div>
-                                        <div className={this.mergeClassName("right", "c9")} onClick={this.personalClick}><p>头像、联系方式等设置</p></div>
+                                        <div className={this.mergeClassName("right", "c9")} ><p>头像、联系方式等设置</p></div>
                                     </li>
-                                    <li>
+                                    <li onClick={this.modifiPwd} >
                                         <div className={this.mergeClassName("left", "font30")}><p>密码设置</p></div>
-                                        <div className={this.mergeClassName("right", "c9")}  onClick={this.modifiPwd} ><p>修改密码</p></div>
+                                        <div className={this.mergeClassName("right", "c9")}  ><p>修改密码</p></div>
                                     </li>
-                                    <li>
+                                    {/* <li>
                                         <div className={this.mergeClassName("left", "font30")}>
                                             <p>开仓弹窗提醒</p>
                                             <p className={this.mergeClassName("c9", "font24", "mg-tp-10")}>每次下单开仓时，系统弹窗提醒</p>
@@ -92,24 +102,24 @@ class SettingPage extends PageComponent {
                                         <div className={this.mergeClassName("right", "c9")}>
                                             <i className={this.mergeClassName(styles.icon_switch, tipFlag?styles.on:"")} onClick={this.tipChange}></i>
                                         </div>
-                                    </li>
-                                    <li>
+                                    </li> */}
+                                    {/* <li>
                                         <div className={this.mergeClassName("left", "font30")}>
                                             <p>指纹解锁</p>
                                         </div>
                                         <div className={this.mergeClassName("right", "c9")}>
                                             <i className={this.mergeClassName(styles.icon_switch, fingerFlag?styles.on:"")} onClick={this.fingerChange}></i>
                                         </div>
-                                    </li>
-                                    <li>
+                                    </li> */}
+                                    {/* <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>多语言</p></div>
                                         <div className={this.mergeClassName("right", "c9")}><p></p></div>
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <div className={this.mergeClassName("left", "font30")}><p>系统版本</p></div>
                                         <div className={this.mergeClassName("right", "c9")}><p>{h5version}</p></div>
                                     </li>
-                                    <li>
+                                    <li onClick={this.gotoAbout}>
                                         <div className={this.mergeClassName("left", "font30")}><p>关于</p></div>
                                         <div className={this.mergeClassName("right", "c9")}><p>了解我们</p></div>
                                     </li>

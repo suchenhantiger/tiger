@@ -4,6 +4,7 @@ import CopyDialog from '../../components/documentary/detail/CopyDialog';
 import CancelDialog from '../../components/documentary/detail/CancelDialog';
 import CopyAllList from '../../components/trade/CopyAllList';
 
+import ProcotolDialog from '../../components/documentary/detail/ProcotolDialog';
 import { connect } from 'react-redux';
 import { getMasterDetail,applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
 
@@ -25,7 +26,7 @@ class CurrCopyDetailPage extends PageComponent {
             suggestBalance,
             totalPL} = this.props.location.query;
         if(avatarUrl.length==0) 
-            this.avatarUrl ="./images/documentary/img03.png";
+            this.avatarUrl = "./images/documentary/gs_def.png";
         else
             this.avatarUrl = avatarUrl;
         this.balance = balance;
@@ -233,7 +234,7 @@ class CurrCopyDetailPage extends PageComponent {
     }
 
     renderRight=()=>{
-        return <span style={{color:"white"}}onClick={this.gotoMaster}>高手主页</span>
+        return <span style={{color:"white",padding: ".1rem .2rem"}}onClick={this.gotoMaster}>高手主页</span>
     }
 
     render() {
@@ -276,7 +277,7 @@ class CurrCopyDetailPage extends PageComponent {
                             <div className={styles.head_portrait}><img src={this.avatarUrl} alt="" /></div>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName("c3", styles.c3)}>
-                                    <span >{this.followNmae}</span>
+                                    <span className={"left"}>{this.followNmae}</span>
                                     {this.starLevel?<i className={styles.icon_grade}>{this.starLevel}</i>:null}
                                 </p>
                             </div>
@@ -308,17 +309,30 @@ class CurrCopyDetailPage extends PageComponent {
 
                 </IScrollView>
                 
-                    <div className={styles.bottomBtn}>
-                        <div className={styles.btn2Frame}>
-                            <div className={styles.btn2} onClick={this.changeCopy}>修改复制金额</div>
-                        </div>
-                        <div className={styles.btn2Frame}>
-                            <div className={styles.btn2} onClick={this.cancelCopy}>解除跟随关系</div>
-                        </div>
+                <div className={styles.bottomBtn}>
+                {fowStatus==null?<div className={styles.btn} onClick={this.copyClick}>复制</div>:null}
+                {fowStatus==0?<div className={styles.btn} onClick={this.copyClick}>复制</div>:null}
 
-                    </div>
+                {fowStatus==1?<div className={styles.btn2Frame}>
+                    <div className={styles.btn2} onClick={this.changeCopy}>修改复制金额</div>
+                    </div>:null}
+                {fowStatus==1?
+                    <div className={styles.btn2Frame}>
+                        <div className={styles.btn2} onClick={this.cancelCopy}>解除跟随关系</div>
+                    </div>:null}
+                {fowStatus==2?<div className={styles.btn2Frame}>
+                    <div className={styles.btn2} onClick={this.recover}>恢复复制</div>
+                    </div>:null}
+                {fowStatus==2?
+                    <div className={styles.btn2Frame}>
+                        <div className={styles.btn2} onClick={this.flate}>立即平仓</div>
+                    </div>:null}
+
+            </div>
                 {showDialog? <CopyDialog suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
                 {showCancel? <CancelDialog   onCancel={this.closeDialog} onSure={this.confirmCancelCopy} />:null}
+                {showProtocol? <ProcotolDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmProcotol} />:null}
+
                 {this.props.children}
             </div>
         );

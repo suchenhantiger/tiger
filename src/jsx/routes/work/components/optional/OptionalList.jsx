@@ -94,9 +94,14 @@ class OptionalList extends PureComponent{
         }
        // 
      }
-    // componentDidUpdate(){
+    
+     componentDidUpdate() {
+        var { iscroll } = this.refs;
 
-    // }
+            iscroll && iscroll.refresh()
+ 
+    }
+
     iscollUpfresh=()=>{
 
          this.sendWS(this.props);
@@ -130,7 +135,7 @@ class OptionalList extends PureComponent{
                   className={this.getScrollStyle()}
                   canUpFresh={true}
                   upFresh={this.iscollUpfresh}
-                  ref="scroll"
+                  ref="iscroll"
                 >
                 <ul>
                 {this.renderList()}

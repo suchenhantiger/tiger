@@ -1,6 +1,19 @@
 import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
 
+export function querySinglePage(component, params,cb){
+    return function(dispatch, state){
+
+        component.requestJSON("external/querySinglePage",params,).done((data)=>{
+            cb && cb(data);
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            
+        });
+    }
+}
+
 export function queryFollReportProd(component, params,cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
@@ -19,11 +32,17 @@ export function followRelieve(component, params,cb){
     return function(dispatch, state){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
+        var {fowType} = params;
         params.clientId=clientId;
         component.requestJSON("follower/followRelieve",params).done((data)=>{
             dispatch(hideLoading());
             cb && cb(data);
-            dispatch(showMessage(SUCCESS, "解除跟随关系成功"));
+            if(fowType==3){
+                dispatch(showMessage(SUCCESS, "恢复跟随关系成功"));
+            }else{
+                dispatch(showMessage(SUCCESS, "解除跟随关系成功"));
+            }
+            
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
@@ -54,6 +73,7 @@ export function openFollow(component,cb){
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("users/openMt4Acc",{clientId,mt4AccType:2}).done((data)=>{
             dispatch(hideLoading());
+            dispatch(showMessage(SUCCESS, "已为您开通跟单账号"));
             cb && cb(data);
         }).fail((data)=>{
             dispatch(hideLoading());
@@ -171,6 +191,7 @@ export function getCurTradeList(component, params, isAppend, updateList ){
         component.requestJSON("follower/queryFollowerPositionList",params).done((data)=>{
             // var {accuracyDate={}} = data,
             //     {list=[]} = accuracyDate;
+            console.log("sch  queryFollowerPositionList");
             updateList && updateList(isAppend, data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

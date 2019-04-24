@@ -65,24 +65,20 @@ class InputFormate extends PureComponent{
 
     //渲染函数
     render(){
-        var {value} =this.props;
+        var {value,big} =this.props;
+        if(value==null) value="";
 
         return(
-           
-                
-                
+
                     <input 
                     type="text"  
-                    className={styles.input} 
+                    className={styles.input + " " +(big?styles.big:"")} 
                     placeholder="未设置"
                     value={value} 
                     onChange={this.numChange}
                     onFocus = {this.getDefault}
                     onBlur={this.numFormate } />
                 
-                
-            
-            
         );
     }
 

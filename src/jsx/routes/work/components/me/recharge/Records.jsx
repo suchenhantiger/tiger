@@ -34,7 +34,7 @@ class Records extends PureComponent {
 
 
     exampleClick = () => {
-
+        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/certificateRecord");
     }
 
     tabChange = (subIndex)=>()=>{
@@ -57,11 +57,11 @@ class Records extends PureComponent {
                         <div className="clear"></div>
                         <div className="c9 line-ht-36 mg-tp-20">
                             <p>1.凭证信息必须显示姓名、银行卡好、支付金额等内容；</p>
-                            <p>2.凭证信息必须显示姓名、银行卡好、支付金额等内容；</p>
-                            <p>3.凭证信息必须显示姓名、银行卡好、支付金额等内容；</p>
-                            <p>4.凭证信息必须显示姓名、银行卡好、支付金额等内容；</p>
-                            <p className="red">注意：充值成功后请及时上传凭证，若超过两周未上传，将无法进行交易操作</p>
-                            <p className="red">*代表必须上传入金凭证</p>
+                            <p>2.凭证信息必须为实名认证本人银行账户；</p>
+                            <p>3.未满足条件1或条件2，审核将被驳回；</p>
+                            <p>4.若多次上传凭证不符合条件1或条件2,支付金额将原路退还,产生2%手续费由您自行承担；</p>
+                            <p className="red">注意：充值成功后请及时上传凭证，若超过两周未上传，将无法进行交易操作。</p>
+                            {/* <p className="red">*代表必须上传入金凭证</p> */}
                         </div>
                     </div>
                 </div>

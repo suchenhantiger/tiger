@@ -10,7 +10,7 @@ class PositionItem1 extends PureComponent{
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
         var {data}= this.props;
-        console.log(data);
+        //console.log(data);
         hashHistory.push({
             pathname:"/work/trade/historydetail",
             query:{historyInfo:JSON.stringify(data)}
@@ -54,18 +54,18 @@ class PositionItem1 extends PureComponent{
             <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.left}>
                     <p><span className={styles.name}>{prodName+" "+prodCode}</span>&nbsp;<span className={buySell==0?styles.red:styles.green}>{buySell==0?"买入":"卖出"}</span></p>
-                    <div className={styles.mg_tp_10} style={{float:"left"}}>
+                    <div className={"mg-tp-20"} style={{float:"left"}}>
                         <p className={styles.valueSty}>{openPrice}</p>
                         <p className={styles.keySty}>开仓价</p>
                     </div>
-                    <div className={styles.mg_tp_10} style={{float:"left",marginLeft:"0.3rem"}}>
+                    <div className={"mg-tp-20"} style={{float:"left",marginLeft:"0.3rem"}}>
                         <p className={styles.valueSty}>{closePrice}</p>
                         <p className={styles.keySty}>平仓价</p>
                     </div>
                 </div>
                 <div className={styles.right}>
-                    <p><span className={styles.right +" " +styles.font30}>{closeTime}</span></p>
-                    <div className={styles.mg_tp_10} style={{float:"right"}}>
+                    <p><span className={"right c6"}>{closeTime}</span></p>
+                    <div className={"mg-tp-15"} style={{float:"right"}}>
                         {/* <p><span className={styles.left +" " +styles.font30 +" " +styles.green}>{netProfit}</span></p>
                         <p className={styles.mg_tp_42}><span className={styles.c9}>收益</span></p> */}
 

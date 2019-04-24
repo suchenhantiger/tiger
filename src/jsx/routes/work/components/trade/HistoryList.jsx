@@ -3,7 +3,7 @@ import { getHistoryList } from '../../actions/trade/tradeAction';
 
 import styles from './css/historyList.less';
 import HistoryItem from './HistoryItem';
-
+import EmptyFrame from './EmptyFrame';
 const pageSize = 20;
 
 class HistoryList extends PureComponent {
@@ -21,15 +21,20 @@ class HistoryList extends PureComponent {
         this.getData(1, false);
     }
 
+    componentWillReceiveProps(nextProps){
+        this.getData(1, false);
+    }
+
     getData(pageNo, isAppend){
         var mt4Id = systemApi.getValue("mt4Id"),
             clientId = systemApi.getValue("clientId");
+            if(mt4Id==null || mt4Id.length==0) return;
         this.props.getHistoryList(this, {
             pageNo, mt4Id, clientId, pageSize
         }, isAppend, this.update);
     }
 
-    update = (isAppend, list)=>{
+    update = (isAppend, list, hasMore)=>{
         var {data, nextPage} = this.state;
         if(isAppend){
             data = data.concat(list);
@@ -37,14 +42,30 @@ class HistoryList extends PureComponent {
         else {
             data = list;
         }
+        console.log(nextPage);
         this.setState({data:data.slice(), nextPage:nextPage+1});
+        this.refreshScroll(hasMore);
+    }
+
+    refreshScroll=(hasMore)=>{
+        var {refreshScroll} =this.props;
+        refreshScroll && refreshScroll(hasMore);
+    }
+
+    reload =()=>{
+        this.getData(1, false);
     }
 
     getNextPage(){
         var {nextPage} = this.state;
+        console.log(nextPage);
         this.getData(nextPage, true);
     }
 
+    gotoOptional =()=>{
+        hashHistory.push("/work/optional");
+    }
+    
     renderList() {
         var { data } = this.state;
         return data.map((item) => {
@@ -64,7 +85,11 @@ class HistoryList extends PureComponent {
     }
 
     render() {
+        var { data } = this.state;
+        
         return (
+            data.length==0?
+            <EmptyFrame detail="没有订单" btnText="去下个单" btnClick={this.gotoOptional} />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>
@@ -76,4 +101,4 @@ function injectAction() {
     return { getHistoryList };
 }
 
-module.exports = connect(null, injectAction())(HistoryList);
+module.exports = connect(null, injectAction(),null,{withRef:true})(HistoryList);

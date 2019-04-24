@@ -34,7 +34,7 @@ class ProductItem extends PureComponent {
         var {incomeRate30d="--",followNmae,avatarUrl=""} = this.props.data;
         // 
         if(avatarUrl.length == 0)
-            avatarUrl = "./images/me/img03.png";
+            avatarUrl = "./images/documentary/gs_def.png";
 
         return (
             <li className={styles.item} onClick={this.itemClick}>

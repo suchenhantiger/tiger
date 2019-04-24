@@ -32,7 +32,7 @@ class BuyDialog extends PureComponent{
         return(
             <Confirm onSure={this.onSure} onCancel={onCancel}>
                 <div>
-                    <p className="font30 mg-bt-30">您确定要{direction==0?"买入":"卖出"}{num}手吗？</p>
+                    <p className="font30 mg-bt-30 center">您确定要{direction==0?"买入":"卖出"}{num}手吗？</p>
                     {/* <p className={this.mergeClassName("coffee", styles.coffee)} onClick={this.toggleChoose}><i className={this.mergeClassName(styles.icon_choose, choose?styles.on:"", "mg-rt-10")}></i>不再提醒</p> */}
                 </div>
             </Confirm>

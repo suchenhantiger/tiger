@@ -114,12 +114,12 @@ class CertificationForm extends PureComponent {
                     <input placeholder="姓名" value={name} onChange={this.nicknameChange} />
                 </div>
 
-                <div className={styles.login_item}>
+                {/* <div className={styles.login_item}>
                     <input placeholder="证件类型" value={"身份证"} disabled="disabled" />
-                </div>
+                </div> */}
 
                 <div className={styles.login_item}>
-                    <input  placeholder="请输入证件号码" value={idNO} onChange={this.idNOChange} />
+                    <input  placeholder="身份证" value={idNO} onChange={this.idNOChange} />
                 </div>
 
                 <div className={styles.login_item}>

@@ -58,7 +58,7 @@ class CancelDialog extends PureComponent{
                     </div>
                     
                     
-                    <p className="font20 mg-bt-20 c9">解除跟随关系解除跟随关系解除跟随关系解除跟随关系</p>
+                    <p className="font20 mg-bt-20 c9">若取消复制关系，您复制此高手的订单可以选择跟随高手平仓或立即强行平仓</p>
                     
                 </div>
             </Confirm>

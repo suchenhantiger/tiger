@@ -1,6 +1,6 @@
 import HangItem from './HangItem';
 import styles from './css/positionList.less'
-
+import EmptyFrame from './EmptyFrame';
 
 class HangList extends PureComponent{
 
@@ -17,6 +17,10 @@ class HangList extends PureComponent{
         onItemClick && onItemClick(data);
     }
 
+    gotoOptional =()=>{
+        hashHistory.push("/work/optional");
+    }
+
     renderList(){
         var { data = [] } = this.props;
         return data.map(item=>{
@@ -25,7 +29,10 @@ class HangList extends PureComponent{
         })
     }
     render(){
+        var { data = [] } = this.props;
         return (
+            data.length==0?
+            <EmptyFrame detail="没有订单" btnText="去下个单" btnClick={this.gotoOptional} />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>

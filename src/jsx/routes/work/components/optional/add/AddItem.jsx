@@ -20,8 +20,8 @@ class AddItem extends PureComponent {
         return (
             <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.currency_name}>
-                    <p className={this.mergeClassName("c3", styles.c3)}>{item.prodName}</p>
-                    <p className={this.mergeClassName("c9", "font-arial")}>{item.prodCode}</p>
+                    <p className={this.mergeClassName("font26 c3", styles.c3)}>{item.prodName}</p>
+                    <p className={this.mergeClassName("font24 c9", "font-arial")}>{item.prodCode}</p>
                 </div>
                 <div className={styles.list_right_icon}>
                     <dl className={styles.choose_dl}>

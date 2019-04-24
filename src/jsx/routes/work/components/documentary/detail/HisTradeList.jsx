@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getHisTradeList } from '../../../actions/documentary/documentaryAction';
-
+import EmptyFrame from '../../trade/EmptyFrame';
 import styles from './css/curTradeList.less'
 
 const pageSize = 20;
@@ -11,7 +11,8 @@ class HisTradeList extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            nextPage:1
         }
     }
 
@@ -33,6 +34,7 @@ class HisTradeList extends PureComponent {
     }
 
     update = (isAppend, list)=>{
+        
         var {data, nextPage} = this.state;
         if(isAppend){
             data = data.concat(list);
@@ -83,11 +85,14 @@ class HisTradeList extends PureComponent {
     }
 
     render() {
+        var { data } = this.state;
         return (
             <div className={styles.home_frame}>
+            {data.length==0?
+                <EmptyFrame detail="高手没有交易交易"  />:
                 <table className={styles.table}>
                     {this.renderList()}
-                </table>
+                </table>}
             </div>
         )
     }

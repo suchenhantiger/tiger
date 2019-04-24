@@ -54,6 +54,13 @@ var Client = {
         }
         cordova.InAppBrowser.open(url, '_system', 'location=no,toolbar=yes,toolbarposition=top,closebuttoncaption=关闭');
      },
+     openUrlInapp: function(url,success,fail) {
+        if(isDebug){        
+            window.open(url);
+            return;
+        }
+        cordova.InAppBrowser.open(url, '_blank', 'location=yes,toolbar=yes,toolbarposition=top,hidenavigationbuttons=yes,hideurlbar=yes,closebuttoncaption=关闭');
+     },
     sendRequestWS: function(functionname,param,callback){//走原生webservice接口
         param.serverName = "attendance";
         Bridge.sendRequestWithCallback(param, (resultJson)=>{
@@ -202,8 +209,8 @@ var Client = {
 
     },
     backForAndroid:function(calltype){
-        if(Bridge){
-            Bridge.call("androidBack",{}, doNothing, calltype);
+        if(!isDebug){
+            window.plugins.TigerPlugin.androidBack(doNothing, doNothing);
         }
         else{
             console.log("backForAndroid click");

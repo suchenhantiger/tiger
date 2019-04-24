@@ -65,7 +65,7 @@ class OptionalEditList extends PureComponent {
                         <div className={styles.icon_delete_red}></div>
                     </div>
                     <div className={styles.currency_name}>
-                        <p className={this.mergeClassName("c3", styles.c3)}>{prodName}</p>
+                        <p className={this.mergeClassName("font30 c3", styles.c3)}>{prodName}</p>
                         <p className={this.mergeClassName("c9", "font-arial")}>{prodCode}</p>
                     </div>
                     <div className={styles.list_right_icon}>

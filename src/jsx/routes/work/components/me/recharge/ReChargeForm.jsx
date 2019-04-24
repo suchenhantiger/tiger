@@ -70,6 +70,11 @@ class ReChargeForm extends PureComponent {
         this.setState({showDestSelect:false});
     }
 
+    rechargeConfirm=()=>{
+        hashHistory.goBack();
+        //this.setState({showRechareDialog:false});
+    }
+
     rechargeSubmit = ()=>{
         var {amount} = this.state;
        // 
@@ -166,26 +171,41 @@ class ReChargeForm extends PureComponent {
         
         return (
             <div>
+                {showRechareDialog && this.payCode=="WIRE_TRANSFER_PAY"?
+
+                <div>
+                    <p className={styles.text1} >电汇凭证已提交</p>
+                    <p className={styles.text2} >大概需要3-5个工作日到账</p>
+                    <div className={styles.bottom_btn_fixed}>
+                        <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}>
+                            <button onClick={this.rechargeConfirm}>确认</button>
+                        </div>
+                    </div>
+                </div>
+                :
+                <div>
+                
+                
                 <div className={this.mergeClassName("mg-lr-30", "mg-tp-42")}>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p>
                             <span className={styles.form_label}>充值到</span>
                             <span className={this.mergeClassName("blue", "font28")} onClick={this.openPayDest}>{this.mt4NickName||"请选择"}</span>&nbsp;
                             {this.typeName?<span className={"c9"}>({this.typeName})</span>:null}
                         </p>
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p>
                             <span className={styles.form_label}>支付方式</span>
                             <span className={this.mergeClassName("blue", "font28")} onClick={this.openPaySelect}>{this.payName||"请选择"}</span>
                         </p>
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p><span className={styles.form_label}>充值金额</span></p>
                         <input type="text" placeholder="$" value={amount} onBlur={this.numFormate } onChange={this.inputChange} />
                     </div>
                     {this.payCode=="WIRE_TRANSFER_PAY"?
-                        <div>
+                        <div style={{paddingBottom:"1rem"}}>
                             <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
                                 <span className={styles.blue}>点击查看汇款详情&gt;</span>
                             </div>
@@ -223,6 +243,11 @@ class ReChargeForm extends PureComponent {
                 {showRechareDialog?<RechareDialog data={rechargeInfo} onSure={this.gotoCharge} onClose={this.closeAccount}/>:null}
                 
                 
+            </div>
+            
+            
+            }
+            
             </div>
         );
     }

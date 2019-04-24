@@ -13,7 +13,7 @@ import CurTradeList from '../../components/documentary/detail/CurTradeList';
 import HisTradeList from '../../components/documentary/detail/HisTradeList';
 import { connect } from 'react-redux';
 import { applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
-
+import {showComplete,showCertification} from '../../../../store/actions';
 import styles from './css/documentarDetailPage.less';
 
 /********跟单主页*********/
@@ -38,6 +38,7 @@ class DocumentaryDetailPage extends PageComponent {
             showCancel:false,
 
             starLevel:null,
+            avatarUrl:"",
             maxFowBalance:null,
             suggestBalance:null,
             fowInfo:null,
@@ -65,7 +66,8 @@ class DocumentaryDetailPage extends PageComponent {
         if(iscroll){
             var {y} = iscroll.wrapper,
                 yRem = this.calculateRem(0, y);
-            this.setState({ fixTabs: yRem < -3.34 });;
+                // console.log(yRem);
+            this.setState({ fixTabs: yRem < -3.8 });;
         }
     }
 
@@ -98,7 +100,7 @@ class DocumentaryDetailPage extends PageComponent {
         setTimeout(()=>{
             var {iscroll} = this.refs,
                 yRem = this.calculateRem(0, iscroll.wrapper.y);
-            this.setState({ fixTabs: yRem < -3.34 });
+            this.setState({ fixTabs: yRem < -3.8 });
         },50);
     }
 
@@ -107,7 +109,17 @@ class DocumentaryDetailPage extends PageComponent {
     }
 
     reloadData = () => {
-        console.log("reload");
+        var {index} = this.state,
+            {curtrade, history} = this.refs;
+        if(index ==0){
+
+        }else
+        if(index == 1){
+            curtrade && curtrade.getWrappedInstance().reloadData();
+        }
+        else if(index == 2){
+            history && history.getWrappedInstance().reloadData();
+        }
     }
 
     renderTabs() {
@@ -125,21 +137,42 @@ class DocumentaryDetailPage extends PageComponent {
         var {index} = this.state,
             {curtrade, history} = this.refs;
         if(index == 1){
-            curtrade && curtrade.getWrappedInstance().getNextPage();
+           // curtrade && curtrade.getWrappedInstance().getNextPage();
         }
         else if(index == 2){
             history && history.getWrappedInstance().getNextPage();
         }
     }
 
+    checkIsReal=(cb)=>{
+        // let emailIsActive = systemApi.getValue("emailIsActive");
+         let isReal = systemApi.getValue("isReal");
+         if(isReal==3){
+             cb && cb();
+         }else if(isReal==2){
+             hashHistory.push("/work/me/certification");
+         }else 
+             this.props.showCertification();
+         
+     }
+
     copyClick = ()=>{
-        this._fowType=0;
-        var f_mt4Id = systemApi.getValue("f_mt4Id");
-        if(f_mt4Id && f_mt4Id.length>0){
-            this.setState({showDialog:true});   
-        }else{//展示协议
-            this.setState({showProtocol:true});   
+
+        var emailIsActive = systemApi.getValue("emailIsActive");
+        if(emailIsActive==0){
+            this.props.showComplete("完善信息后可开通跟单账号");
+            return;
         }
+        this.checkIsReal(()=>{
+            this._fowType=0;
+            var f_mt4Id = systemApi.getValue("f_mt4Id");
+            if(f_mt4Id && f_mt4Id.length>0){
+                this.setState({showDialog:true});   
+            }else{//展示协议
+                this.setState({showProtocol:true});   
+            }
+        });
+        
        
     }
 
@@ -185,12 +218,13 @@ class DocumentaryDetailPage extends PageComponent {
      }
 
     updateInfo=(data)=>{
-        var {starLevel,
+        var {starLevel,avatarUrl,
             maxFowBalance,signature,
             incomeRate30d,downRate30d,lastDayPLRate,
             suggestBalance,fowInfo}=data;
 
         this.setState({
+            avatarUrl,
             starLevel,
             maxFowBalance,
             suggestBalance,fowInfo,signature,
@@ -257,7 +291,7 @@ class DocumentaryDetailPage extends PageComponent {
         systemApi.log("DocumentaryDetailPage render");
 
         var { index, fixTabs,showDialog,showProtocol,showCancel,
-            starLevel,
+            starLevel,avatarUrl,
             maxFowBalance,
             suggestBalance,
             fowInfo,
@@ -266,26 +300,30 @@ class DocumentaryDetailPage extends PageComponent {
          } = this.state;
          var fowStatus =null;
          var canFowBalance = null;
+         var fowBalance = null;
 
          
          if(fowInfo){
              fowStatus = fowInfo.fowStatus;
              canFowBalance = fowInfo.canFowBalance;
-         } 
+             fowBalance = fowInfo.fowBalance;
+         }
+         if(avatarUrl.length==0) 
+            avatarUrl = "./images/documentary/gs_def.png";
 
         return (
 
             <div className={styles.main}>
                 <AppHeader headerName={this._followNmae} theme="transparent" />
                 <div className={styles.header}></div>
-                <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()} canUpFresh={true} canDownFresh={true}
+                <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()} canUpFresh={true} canDownFresh={index==2}
                     upFresh={this.reloadData} downFresh={this.getNextPage} ref="iscroll">
                     <div className={styles.box}>
                         <div className={styles.optional_detail}>
-                            <div className={styles.head_portrait}><img src="./images/documentary/img03.png" alt="" /></div>
+                            <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
                             <div className={styles.currency_name}>
                                 <p className={this.mergeClassName("c3", styles.c3)}>
-                                    <span >{this._followNmae}</span>
+                                    <span className={"left"} >{this._followNmae}</span>
                                     {starLevel?<i className={styles.icon_grade}>{starLevel}</i>:null}
                                 </p>
                                 <p><span className={this.mergeClassName("c9", "left")}>{signature}</span></p>
@@ -294,15 +332,15 @@ class DocumentaryDetailPage extends PageComponent {
                             <div className={styles.account_dt}>
                                 <ul>
                                     <li>
-                                        <p className={this.mergeClassName("font32", "red")}>{incomeRate30d}%</p>
+                                        <p className={this.mergeClassName("font32", ((+incomeRate30d)>=0)?"red":"green")}>{incomeRate30d}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日收益率</p>
                                     </li>
                                     <li>
-                                        <p className={this.mergeClassName("font32", "green")}>{downRate30d}%</p>
+                                        <p className={this.mergeClassName("font32", ((+downRate30d)>=0)?"red":"green")}>{downRate30d}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>近30日最大跌幅</p>
                                     </li>
                                     <li>
-                                        <p className={"font32"}>{lastDayPLRate}%</p>
+                                        <p className={this.mergeClassName("font32", ((+lastDayPLRate)>=0)?"red":"green")}>{lastDayPLRate}%</p>
                                         <p className={this.mergeClassName("c9", "mg-tp-10")}>上一交易日</p>
                                     </li>
                                 </ul>
@@ -312,7 +350,7 @@ class DocumentaryDetailPage extends PageComponent {
                         <div className={styles.bg}>
                             {this.renderTabs()}
                             <LazyLoad index={index}>
-                                <Static updateInfo={this.updateInfo} onDidUpdate={this.didUpdate} followerId={this._followerId}/>
+                                <Static ref="static" updateInfo={this.updateInfo} onDidUpdate={this.didUpdate} followerId={this._followerId}/>
                                 <CurTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="curtrade"/>
                                 <HisTradeList followerId={this._followerId} onDidUpdate={this.didUpdate} ref="history" />
                             </LazyLoad>
@@ -333,7 +371,7 @@ class DocumentaryDetailPage extends PageComponent {
                                 <div className={styles.btn2} onClick={this.cancelCopy}>解除跟随关系</div>
                             </div>:null}
                         {fowStatus==2?<div className={styles.btn2Frame}>
-                            <div className={styles.btn2} onClick={this.recover}>复制</div>
+                            <div className={styles.btn2} onClick={this.recover}>恢复复制</div>
                             </div>:null}
                         {fowStatus==2?
                             <div className={styles.btn2Frame}>
@@ -346,7 +384,7 @@ class DocumentaryDetailPage extends PageComponent {
                     <div className={styles.fixed}>{this.renderTabs()}</div>
                 ) : null}
             
-                {showDialog? <CopyDialog suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
+                {showDialog? <CopyDialog fowBalance={fowBalance} suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
                 {showCancel? <CancelDialog   onCancel={this.closeDialog} onSure={this.confirmCancelCopy} />:null}
                 {showProtocol? <ProcotolDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmProcotol} />:null}
                 
@@ -357,7 +395,7 @@ class DocumentaryDetailPage extends PageComponent {
 
 }
 function injectAction() {
-    return { applyFollower,openFollow ,followRelieve};
+    return { showComplete,showCertification,applyFollower,openFollow ,followRelieve};
 }
 
 module.exports = connect(null, injectAction())(DocumentaryDetailPage);

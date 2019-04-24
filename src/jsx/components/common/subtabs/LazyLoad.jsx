@@ -26,6 +26,10 @@ class LazyLoad extends PureComponent{
         )
     }
 
+    resetChild=()=>{
+
+    }
+
     //渲染函数
     render(){
         //打印渲染日志，必写
@@ -34,7 +38,9 @@ class LazyLoad extends PureComponent{
         var {index,children,...other} = this.props,
             curChildren = this.getChildren(),
             length = curChildren.length;
-
+        if(index>=length){
+            index = length-1;
+        }
         this._children[index] = this.wrapperChild(curChildren[index]);
 
         for(var i=0;i<length;i++){

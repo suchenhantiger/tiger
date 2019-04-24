@@ -43,7 +43,8 @@ class TradeDetailPage extends PageComponent {
     }
 
     closeOpenSucc = ()=>{
-        this.setState({showOpenSucc:false});
+        Event.fire("refresh_order_list");
+        hashHistory.goBack();
     }
     tabChange = (index) => () => {
         this.setState({ index });
@@ -66,6 +67,11 @@ class TradeDetailPage extends PageComponent {
         });
     }
 
+    flateSure=()=>{
+        Event.fire("refresh_order_list");
+        hashHistory.goBack();
+    }
+
     flatClick=(tradeType)=>()=>{
 
         var {orderId,
@@ -74,9 +80,8 @@ class TradeDetailPage extends PageComponent {
             marketTime
             } =this._prodInfo ;
         this.props.flatOrder(this,{tradeType,mt4Id,orderId,tradeTime:marketTime,tradePrice:marketPrice},()=>{
-            //this.setState({showOpenSucc:true});
-            Event.fire("refresh_order_list");
-            hashHistory.goBack();
+            this.setState({showOpenSucc:true});
+            
         });
 
     }
@@ -141,7 +146,7 @@ class TradeDetailPage extends PageComponent {
             <FullScreenView>
                 {fullscreen ? null : <AppHeader headerName={(buySell==0?"买 ":"卖 ")+prodName + " " + prodCode} theme="white" />}
                 <Content >
-                    <div className={fullscreen ? styles.kchatFull : styles.kchat}>
+                    <div className={fullscreen ? styles.kchatFull : styles.kchat} style={{marginTop:".2rem"}}>
                         <K_Chart 
                         chartWidth = {chartWidth}
                         chartHeight = {chartHeight}
@@ -159,7 +164,7 @@ class TradeDetailPage extends PageComponent {
                 </Content>
 
                 {showOpenSucc?(
-                    <FlateDialog onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>
+                    <FlateDialog onClose={this.closeOpenSucc} onSure={this.flateSure} data={this._prodInfo}/>
                 ):null}
 
                 {editProfit?(

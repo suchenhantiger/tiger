@@ -1,7 +1,7 @@
 import styles from './css/complexDetail.less';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
-import {showMessage, ERROR, SUCCESS} from '../../../../../store/actions';
+import {showMessage,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
 import OpenSuccComplex from './OpenSuccComplex';
 import BuyDialog from './BuyDialog';
 import DatePicker from './DatePicker';
@@ -367,17 +367,40 @@ class ComplexDetail extends PureComponent{
         }
     }
 
+    checkComplete=(cb)=>{
+        let emailIsActive = systemApi.getValue("emailIsActive");
+      //  let isReal = systemApi.getValue("isReal");
+        if(emailIsActive==0){
+            this.props.showComplete("完善资料后可开通体验账号");
+        }else{
+            cb && cb();
+        }
+        
+    }
 
+    checkIsReal=(cb)=>{
+        // let emailIsActive = systemApi.getValue("emailIsActive");
+         let isReal = systemApi.getValue("isReal");
+         if(emailIsActive==0){
+ 
+         }else{
+             cb && cb();
+         }
+         
+     }
 
     buyClick = ()=>{
-        var {trantype} =this.state;
-        if(trantype){
-             this.setState({showBuyDialog:true});
-            
-        }else{
-            this.confirmSubmit();
-        }
-       
+        this.checkComplete(()=>{
+            var {trantype} =this.state;
+            if(trantype){
+                 this.setState({showBuyDialog:true});
+                
+            }else{
+                this.confirmSubmit();
+            }
+           
+        });
+    
       
     }
 
@@ -497,6 +520,8 @@ class ComplexDetail extends PureComponent{
             }
             
         }
+
+      
         
         return(
             <div>
@@ -655,7 +680,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder,showMessage};
+    return {openOrder,showComplete,showCertification,showMessage};
 }
 
 module.exports = connect(null,injectAction())(ComplexDetail);

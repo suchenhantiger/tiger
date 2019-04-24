@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { myfollowers} from "../../actions/trade/tradeAction";
 import CopyItem from './CopyItem';
 import styles from './css/positionList.less'
-
+import EmptyFrame from './EmptyFrame';
 class CurrFowList extends PureComponent {
 
     //构造函数
@@ -48,9 +48,19 @@ class CurrFowList extends PureComponent {
             return <CopyItem pl={pl} type={1} data={item} onChoose={this.onItemclick} />
         })
     }
-    render() {
 
+    gotoDocumentary =()=>{
+        setTimeout(()=>{
+            hashHistory.push("/work/documentary");
+        },50);
+    }
+
+
+    render() {
+        var {allList=[]} = this.state;
         return (
+            allList.length==0?
+            <EmptyFrame detail="没有跟随高手" btnText="逛逛高手榜" btnClick={this.gotoDocumentary} />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>

@@ -64,7 +64,6 @@ export function getPositionAllOrder(component, showload,params, update){
         params.clientId =clientId;
         component.requestJSON("users/queryPositionList",params).done((data)=>{
             if(showload) dispatch(hideLoading());
-            console.log(data);
             var {hanglist = [], couplist = [], orderlist = [] } = data;
             var prodList=[];
             for(var i=0,l=orderlist.length;i<l;i++){
@@ -125,6 +124,27 @@ export function getOnwayList(component, params, update){
     }
 }
 
+
+//获取详情列表
+export function getCommissionList(component, params, isAppend, updateList,cb){
+    var {pageSize} = params;
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("follower/commission",params).done((data)=>{
+            var {list} = data,
+                hasMore = list.length==pageSize;
+            updateList && updateList(isAppend, list,hasMore);
+            cb && cb(null, hasMore);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+            cb && cb();
+        });
+    }
+}
+
+
+
 //获取历史信息
 export function getHistoryInfo(component, params, update){
     return function(dispatch, state){
@@ -149,7 +169,7 @@ export function getHistoryList(component, params, isAppend, updateList,cb){
         component.requestJSON("users/queryTradeList",params).done((data)=>{
             var {list} = data,
                 hasMore = list.length==pageSize;
-            updateList && updateList(isAppend, list);
+            updateList && updateList(isAppend, list,hasMore);
             cb && cb(null, hasMore);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
@@ -181,15 +201,13 @@ export function flatOrder(component,params,cb ){
         params.clientId =clientId;
         component.requestJSON("deal/flatOrder",params).done((data)=>{
             dispatch(hideLoading());
-            if(tradeType==0)
-                dispatch(showMessage(SUCCESS, "平仓成功"));
-            else 
+            if(tradeType!=0)
                 dispatch(showMessage(SUCCESS, "删除成功"));
-                cb && cb();
+            cb && cb();
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
-            cb && cb();
+            //cb && cb();
         });
     
     }

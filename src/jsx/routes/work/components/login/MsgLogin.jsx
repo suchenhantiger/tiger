@@ -6,7 +6,7 @@ class MsgLogin extends PureComponent {
     //构造函数
     constructor(props) {
         super(props);
-        var phone = systemApi.getValue("phone");
+        var phone = systemApi.getValue("tel");
         var canSend = false;
         if(phone && phone.length==11) canSend = true;
         this.state = {
@@ -22,8 +22,8 @@ class MsgLogin extends PureComponent {
 
     phoneChange = (e)=>{
         var {value} = e.target;
-        if(value.length==11)
-            this.setState({phone:value,canSend:true});
+        if(value.length>=11)
+            this.setState({phone:value.substring(0,11),canSend:true});
         else
             this.setState({phone:value,canSend:false});
     }

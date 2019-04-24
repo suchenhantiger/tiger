@@ -38,7 +38,7 @@ class AccountManagePage extends PageComponent {
 
         let isReal = systemApi.getValue("isReal"); 
        if(isReal ==2){
-            hashHistory.push("/work/me/checking");
+            hashHistory.push("/work/me/certification");
        }else
             this.setState({showReal:true});
         //hashHistory.push();
@@ -130,6 +130,9 @@ class AccountManagePage extends PageComponent {
             }else if(mt4AccType==2){
                 accName ="跟单账户";
                 typeName="跟随账户";
+            }else if(mt4AccType==3){
+                accName ="高手账户";
+                typeName="高手账户";
             }
             return (//    icon-instruction-black
                 <div className={this.mergeClassName(styles.optional_detail, curMt4Id==mt4Id?styles.on:"")} onClick={this.changeMt4(mt4Id,mt4AccType,mt4NickName)}>

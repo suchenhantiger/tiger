@@ -27,7 +27,10 @@
 	width:100%;
 	text-align:center;
 	margin-top:.06rem;
-	color:#666;
+	color:#999;
+}
+.fticon .link.on span{
+	color: #333;
 }
 .fticon.theme_blue .link.on span{
 	color: #2da8e1;

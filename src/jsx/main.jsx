@@ -24,7 +24,9 @@ ReactDOM.render(
                 <Route path="/work" getComponent={require('./routes/work/work')(store)}>
                     <IndexRedirect to="documentary"/>
                     <Route path="optional" getComponent={require('./routes/work/config/optional/optional')(store)}>
-                        <Route path="add" getComponent={require('./routes/work/config/optional/add')(store)}></Route>
+                        <Route path="add" getComponent={require('./routes/work/config/optional/add')(store)}>
+                            <Route path="search" getComponent={require('./routes/work/config/optional/search')(store)}></Route>
+                        </Route>
                         <Route path="detail" getComponent={require('./routes/work/config/optional/optionaldetail')(store)}>
                             <Route path="intro" getComponent={require('./routes/work/config/optional/intro')(store)}></Route>
                         </Route>
@@ -52,16 +54,17 @@ ReactDOM.render(
                         <Route path="setting" getComponent={require('./routes/work/config/me/setting')(store)}>
                             <Route path="personal" getComponent={require('./routes/work/config/me/personal')(store)}></Route>
                             <Route path="setpwd" getComponent={require('./routes/work/config/login/setpwd')(store)}></Route>
+                            <Route path="about"  getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
                         </Route>
                         <Route path="notice" getComponent={require('./routes/work/config/me/notice')(store)}></Route>
                         <Route path="dailyreport" getComponent={require('./routes/work/config/me/dailyreport')(store)}></Route>
-                        <Route path="manageacc" getComponent={require('./routes/work/config/me/manageacc')(store)}></Route>
                         <Route path="bank" getComponent={require('./routes/work/config/me/bank')(store)}>
                             <Route path="add" getComponent={require('./routes/work/config/me/addbank')(store)}></Route>
                         </Route>
-                        <Route path="server" getComponent={require('./routes/work/config/me/server')(store)}></Route>
-                        <Route path="help" getComponent={require('./routes/work/config/me/help')(store)}></Route>
+                        <Route path="server" getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
+                        <Route path="help" getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
                     </Route>
+                    <Route path="manageacc" getComponent={require('./routes/work/config/me/manageacc')(store)}></Route>
                     <Route path="improve" getComponent={require('./routes/work/config/login/improve')(store)}></Route>
 
                 </Route>

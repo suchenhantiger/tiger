@@ -46,8 +46,9 @@ class OptionalItem extends PureComponent {
 
     calDiff(ask, bid, digits) {
         if(ask==null || bid==null) return 0;
+       
         var diff = (ask-bid).toFixed(digits);
-        return diff*Math.pow(10,digits);
+        return Math.round(diff*Math.pow(10,digits));
     }
 
     //渲染函数
@@ -61,8 +62,8 @@ class OptionalItem extends PureComponent {
             ask2 = "--";
             bid2 = "--"
         } else {
-            ask += "";
-            bid += "";
+            ask = ask.toFixed(digits);
+            bid = bid.toFixed(digits);
             var tmpDig = 0;
             if (ask.indexOf(".") > -1)
                 tmpDig = ask.split(".")[1].length;
@@ -102,7 +103,7 @@ class OptionalItem extends PureComponent {
         return (
             <li className={itembg} onClick={this.itemClick}>
                 <div className={styles.currency_name}>
-                    <p className={this.mergeClassName("c3", styles.c3)}>{name}</p>
+                    <p className={this.mergeClassName("font30 c3", styles.c3)}>{name}</p>
                     <p className={this.mergeClassName("c9", "font-arial")}>{code}</p>
                 </div>
                 <div className={styles.currency_price}>

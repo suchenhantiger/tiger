@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { myfollowers} from "../../actions/trade/tradeAction";
 import CopyItem from './CopyItem';
 import styles from './css/positionList.less'
-
+import EmptyFrame from './EmptyFrame';
 class HistoryCopyList extends PureComponent {
 
     //构造函数
@@ -15,10 +15,12 @@ class HistoryCopyList extends PureComponent {
     
     componentDidMount(){
 
-        var {fowMt4Id} =this.props;
+        var {fowMt4Id,refreshScroll} =this.props;
         if(fowMt4Id && fowMt4Id.length>0){
             this.props.myfollowers(this,false, { fowMt4Id,fowType:1 }, (data) => {
-                this.setState({ allList: data });
+                this.setState({ allList: data },()=>{
+                    refreshScroll && refreshScroll();
+                });
             });
                 
 
@@ -39,9 +41,16 @@ class HistoryCopyList extends PureComponent {
             return <CopyItem type={2} data={item} onChoose={this.onItemclick} />
         })
     }
-    render() {
 
+    gotoDocumentary =()=>{
+        hashHistory.push("/work/documentary");
+    }
+
+    render() {
+        var {allList=[]} = this.state;
         return (
+            allList.length==0?
+            <EmptyFrame detail="没有跟随高手" btnText="逛逛高手榜单" btnClick={this.gotoDocumentary} />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>

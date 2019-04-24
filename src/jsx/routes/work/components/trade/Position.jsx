@@ -8,6 +8,9 @@ import HangList from "./HangList";
 import AccountSelect from '../../components/me/AccountSelect';
 import CopyAllList from "./CopyAllList";
 import CurrFowList from "./CurrFowList";
+import NoMt4Frame from "../me/NoMt4Frame";
+
+
 import styles from './css/position.less';
 
 class Position extends PureComponent {
@@ -23,6 +26,8 @@ class Position extends PureComponent {
         this.shouldFresh = false;
         this._mt4Id = systemApi.getValue("mt4Id");
         this._mt4AccType = systemApi.getValue("mt4AccType");
+        this._mt4NickName = systemApi.getValue("mt4NickName");
+       
         this._prodsStr = "";
     }
 
@@ -34,6 +39,7 @@ class Position extends PureComponent {
        
         Event.register("refresh_order_list",this.refreshOrderList);
         Event.register("ws_trade_list",this.wsPush);
+        Event.register("chanege_mt4id",this.refreshAllData);
         // this._interval1 = setInterval(()=>{
         //     var {iscroll} = this.refs;
         //     if(iscroll){
@@ -44,14 +50,16 @@ class Position extends PureComponent {
         // }, 50);
     }
 
+    
+
     scrolling=()=>{
         
         var {iscroll} = this.refs;
         if(iscroll){
             var {y} = iscroll.wrapper,
                 yRem = this.calculateRem(0, y);
-                console.log(yRem);
-            this.setState({ fixTabs: yRem < -4.5 });;
+                // console.log(yRem);
+            this.setState({ fixTabs: yRem < -5.2 });;
         }
     }
 
@@ -106,19 +114,20 @@ class Position extends PureComponent {
     }
 
     refreshAllData =()=>{
-
-         //持仓详情
-         var mt4Id = this._mt4Id;
-         if (mt4Id == null || mt4Id.length == 0) {
+        
+        
+        this._mt4Id = systemApi.getValue("mt4Id");
+        this._mt4AccType = systemApi.getValue("mt4AccType");
+        this._mt4NickName = systemApi.getValue("mt4NickName");
+         if (this._mt4Id  == null || this._mt4Id .length == 0) {
              //没有账号或者账号异常
  
              return;
          }
  
-         this.props.getPositionInfo(this, { mt4Id, queryType: 2 ,floatTrade:1,force:1}, false, () => {
- 
+         this.props.getPositionInfo(this, { mt4Id:this._mt4Id , queryType: 2 ,floatTrade:1,force:0}, false, () => {
             // this.beginPolling();
-             this.props.getPositionAllOrder(this,false, { mt4Id }, (prodList) => {
+             this.props.getPositionAllOrder(this,false, { mt4Id:this._mt4Id }, (prodList) => {
                 this._prodsStr = prodList.join(",");
                 this.startWs();
         });
@@ -149,6 +158,7 @@ class Position extends PureComponent {
         //clearInterval(this._interval1);
         Event.unregister("refresh_order_list",this.refreshOrderList);
         Event.unregister("ws_trade_list",this.wsPush);
+        Event.unregister("chanege_mt4id",this.refreshAllData);
     }
 
     wsPush = ()=>{
@@ -219,7 +229,7 @@ class Position extends PureComponent {
     }
 
     reloadData = () => {
-        console.log("reload");
+        this.refreshAllData();
     }
 
     renderTabs() {
@@ -259,84 +269,110 @@ class Position extends PureComponent {
         systemApi.setValue("mt4NickName",mt4NickName);
         this._mt4Id =mt4Id;
         this._mt4AccType = mt4AccType;
-        this.setState({showAccount:false});
-        this.refreshAllData();
+        this._mt4NickName = mt4NickName;
+        this.setState({showAccount:false,subIndex:0});
+       // this.refreshAllData();
+        Event.fire("chanege_mt4id");
     }
 
+
     gotoCharge =()=>{
+
         hashHistory.push("/work/me/recharge");
     }
 
     //渲染函数
     render() {
-        var {hanglist,couplist,orderlist} = this.props;
+
+        var {hanglist,couplist,orderlist,emailIsActive,isReal,
+            infoEquity={},floatPL,f_floatPL} = this.props;
         var { subIndex, fixTabs ,showAccount} = this.state;
-        var {infoEquity={}} =this.props;
 
         var { equity = "--",
-            floatPL = "--",
             freeMargin = "--",
             ratioMargin = "--",
             usedMargin = "--" } = infoEquity;
     
         
         var accName = "--";
+        var typeName = "";
         if(this._mt4Id ==null || this._mt4Id.length==0 ){
             //没有账号或者账号异常
 
-        }else if(this._mt4AccType =="0"){
+        }else if(this._mt4AccType ==0){
             accName ="体验金账户";
-        }else if(this._mt4AccType=="1"){
+            typeName = "体验账户"
+        }else if(this._mt4AccType==1){
             accName ="交易账户";
-        }else if(this._mt4AccType=="2"){
+            typeName = "自主交易"
+        }else if(this._mt4AccType==2){
             accName ="跟单账户";
+            typeName = "跟随账户"
+        }else if(this._mt4AccType==3){
+            accName ="高手账户";
+            typeName = "高手账户"
+        }
+        if(this._mt4NickName!="" && this._mt4NickName!=null && this._mt4NickName!=undefined && this._mt4NickName !="null" && this._mt4NickName !="undefined"){
+            
+
+            accName =this._mt4NickName;
         }
 
-
+        var tmpfloatPL = floatPL;
+        if(this._mt4AccType==2)
+            tmpfloatPL = f_floatPL
+        tmpfloatPL =(+tmpfloatPL).toFixed(2);
+    //    console.log("sch "+this._mt4AccType+" "+accName);
         return (
             <div>
                 <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()}
-                    canUpFresh={true} upFresh={this.reloadData} ref="iscroll">
+                // upFresh={this.reloadData}
+                    canUpFresh={false}  ref="iscroll">
                     <div>
+                        {emailIsActive==0?
+                        <NoMt4Frame />:
                         <div className={styles.optional_detail}>
-                            <div className={styles.currency_name}>
-                                <p onClick={this.showAccount}>
-                                    <span className={this.mergeClassName("blue", "left")} >{accName}</span>
-                                    <span className={this.mergeClassName("c9", "left")}>({this._mt4Id?this._mt4Id:"--"})</span>
-                                    <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
-                                </p>
-                                <p className={this.mergeClassName("c3", "font48", "mg-tp-42", styles.c3)}>${floatPL}</p>
-                            </div>
-                            <div className={"right"}>
-                                <div className={styles.icon_account} onClick={this.showAccount}>切换</div>
-                            </div>
-                            <div className={"clear"}></div>
-                            <div className={"mg-lr-30"}>
-                                <span className={this.mergeClassName("left", "c9")}>浮动盈亏</span>
-                                <span className={this.mergeClassName("right", "blue")} onClick={this.gotoCharge}>充值/提现</span>
-                            </div>
-                            <div className={"clear"}></div>
-                            <div className={styles.account_dt}>
-                                <ul>
-                                    <li>
-                                        <p className={"font32"}>${freeMargin}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>可用保证金</p>
-                                    </li>
-                                    <li>
-                                        <p className={"font32"}>${usedMargin}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>已用保证金</p>
-                                    </li>
-                                    <li>
-                                        <p className={"font32"}>{ratioMargin}%</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>保证金比例</p>
-                                    </li>
-                                    <li>
-                                        <p className={"font32"}>{equity}</p>
-                                        <p className={this.mergeClassName("c9", "mg-tp-10")}>账户净值</p>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div className={styles.currency_name}>
+                            <p onClick={this.showAccount}>
+                                <span className={this.mergeClassName("blue", "left","font26","font_bold")} >{accName}</span>
+                                <span className={this.mergeClassName("c9", "left")}>({typeName})</span>
+                                <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
+                            </p>
+                            <p className={this.mergeClassName("c3", "font48", "mg-tp-56", styles.c3)}>${tmpfloatPL}</p>
                         </div>
+                        <div className={"right"}>
+                            <div className={styles.icon_account} onClick={this.showAccount}>切换</div>
+                        </div>
+                        <div className={"clear"}></div>
+                        <div className={"mg-lr-30"}>
+                            <span className={"left c9 pd-tp-20"}>浮动盈亏</span>
+                            {isReal==3?<span className={"right pd-tp-20 pd-lt-50"} onClick={this.gotoCharge}>充值/提现</span>:null}
+                        </div>
+                        <div className={"clear"}></div>
+                        <div className={styles.account_dt}>
+                            <ul>
+                                <li>
+                                    <p className={"font32"}>${freeMargin}</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>可用保证金</p>
+                                </li>
+                                <li>
+                                    <p className={"font32"}>${usedMargin}</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>已用保证金</p>
+                                </li>
+                                <li>
+                                    <p className={"font32"}>{ratioMargin}%</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>保证金比例</p>
+                                </li>
+                                <li>
+                                    <p className={"font32"}>{equity}</p>
+                                    <p className={this.mergeClassName("c9", "mg-tp-10")}>账户净值</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                        
+                    }
+                        
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
@@ -360,8 +396,8 @@ class Position extends PureComponent {
 
 }
 function injectProps(state) {
-    var {infoEquity ,hanglist,couplist,orderlist} = state.base || {};
-    return { infoEquity,hanglist,couplist,orderlist };
+    var {infoEquity,floatPL,f_floatPL ,hanglist,couplist,orderlist} = state.base || {};
+    return { infoEquity,floatPL,f_floatPL,hanglist,couplist,orderlist };
 }
 function injectAction() {
     return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder ,updatePositionInfo,updatePositionList}

@@ -6,7 +6,7 @@ class LoginForm extends PureComponent {
     //构造函数
     constructor(props) {
         super(props);
-        var phone = systemApi.getValue("phone");
+        var phone = systemApi.getValue("tel");
         this.state = {
             phone:phone?phone:"",
             validCode:"",
@@ -16,10 +16,49 @@ class LoginForm extends PureComponent {
             showBtn:true
         }
     }
+
+    componentDidMount(){
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount(){
+        
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.removeEventListener("resize", this.onResize);
+        super.componentWillUnmount();
+    }
+
+
+    //界面尺寸变化回调
+    onResize = ()=>{
+        var   {setFocusState}=this.props;
+        this.refs.login_btn.scrollIntoViewIfNeeded(true);
+        var {activeElement} = document,
+            {tagName} = activeElement,
+            {availHeight} = screen,
+            {innerHeight} = window;
+
+        if(availHeight-innerHeight > 100)
+            setFocusState(true);
+        else
+            setFocusState(false);
+
+        if(tagName=="INPUT" || tagName=="TEXTAREA") {
+           window.setTimeout(function() {
+               activeElement.scrollIntoViewIfNeeded(true);
+           },0);
+        }
+    }
+
+
+
     phoneChange = (e)=>{
         var {value} = e.target;
-        if(value.length==11)
-            this.setState({phone:value,canSend:true});
+        if(value.length>=11)
+            this.setState({phone:value.substring(0,11),canSend:true});
         else
             this.setState({phone:value,canSend:false});
     }
@@ -78,7 +117,7 @@ class LoginForm extends PureComponent {
                 <div className={styles.login_pro}>
                     <div className={this.mergeClassName(styles.pro_forget, "blue")} onClick={this.forgetClick}>忘记密码？</div>
                 </div>
-                <div className={styles.login_btn} onClick={this.loginfunc}><button>登 录</button></div>
+                <div ref="login_btn"  className={styles.login_btn} onClick={this.loginfunc}><button>登 录</button></div>
             </div>
         );
     }

@@ -46,9 +46,9 @@ class Static extends PureComponent {
                 maxFowBalance,
                 suggestBalance,
                 signature,
-                incomeRate30d,downRate30d,lastDayPLRate,
+                incomeRate30d,downRate30d,lastDayPLRate,avatarUrl
                 }= info;
-                updateInfo && updateInfo({starLevel,signature,
+                updateInfo && updateInfo({starLevel,signature,avatarUrl,
                     incomeRate30d,downRate30d,lastDayPLRate,
                     maxFowBalance,
                     suggestBalance,fowInfo});
@@ -80,6 +80,24 @@ class Static extends PureComponent {
         }
         this.setState({showPicker:false,currMonth:newMonth});
     }
+    renderCurrList=(prodCodeList)=>{
+        return prodCodeList.map((item)=>{
+            var {longTime,
+                longTimeStr,
+                prodCode,
+                prodName,
+                prodRatio,
+                shortTime,
+                shortTimeStr} =item;
+                var buyRatio=0;
+                if(shortTime==0){
+                    buyRatio=1;
+                }else{
+                    buyRatio = longTime/(shortTime+longTime);
+                }
+            return <CurrencyItem buyRatio={buyRatio} currName={prodName} buy={longTimeStr} sell={shortTimeStr}/>
+        })
+    }
 
     //渲染函数
     render() {
@@ -99,11 +117,10 @@ class Static extends PureComponent {
             profitShort="--",
             avgMonthlyCount="--"} =info;
 
-        var month=[{label:"201911",value:"201911"},{label:"201912",value:"201912"},{label:"201913",value:"201913"}]
 
         return (
             <div>
-                <div className={"mg-lr-30"+" mg-tp-30"}>
+                <div className={"mg-lr-30"+" mg-tp-42"}>
                   <div className={"mg-bt-20"+" overf-hid"}>
                       <span className={"left" +" font32"}>表现</span>
                       <span className={"right" +" "+"c9"}>数据将于每日北京时间00：00更新</span>
@@ -113,7 +130,7 @@ class Static extends PureComponent {
                     <LineChart data={report}/>
                     </div>
                     <div className={"clear"}></div>
-                    <div className={"c9" +" "+"mg-tp-20"}>*过往表现并不代表未来交易的成功率，您需要理智地做出判断</div>
+                    <div className={"c9" +" "+"mg-tp-20"} style={{lineHeight:".3rem"}}>*过往表现并不代表未来交易的成功率，您需要理智地做出判断</div>
                 </div>
         
 
@@ -162,7 +179,7 @@ class Static extends PureComponent {
                                   <p className={"c9"}>成功做空交易</p>
                               </td>
                               <td>
-                                  <p className={"font26"}>{profitShort}%</p>
+                                  <p className={"font26"}>{lastDayPLRate}%</p>
                                   <p className={"c9"}>上一日交易</p>
                               </td>
                           </tr>
@@ -197,7 +214,7 @@ class Static extends PureComponent {
 
               </div>
 
-              <div className={"mg-lr-30"+" mg-tp-30"}>
+              <div className={"mg-lr-30"+" mg-tp-56"}>
                   <div className={"mg-bt-20"+" overf-hid"}>
                       <span className={"left" +" "+"font32"}>月交易品种</span>
                       <div className={"right"}>
@@ -209,8 +226,8 @@ class Static extends PureComponent {
                     {prodCodeList.length>0?<PieChart data={prodCodeList} />:null}
                   </div>
                   <div className={styles.list}>
-                    <CurrencyItem buyRatio={0.5} currName="英镑日元" buy="1天" sell="1天"/>
-                    <CurrencyItem buyRatio={0} currName="黄金" buy="无" sell="21小时"/>
+                    {this.renderCurrList(prodCodeList)}
+                    
                   </div>
               </div>
               {showPicker?

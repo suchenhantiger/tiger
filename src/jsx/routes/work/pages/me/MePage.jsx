@@ -1,11 +1,10 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import HeaderIcon from '../../../../components/common/appheader/HeaderIcon';
-import Confrim from '../../../../components/common/popup/Confirm';
 
 import AccountSelect from '../../components/me/AccountSelect';
-
+import NoMt4Frame from '../../components/me/NoMt4Frame';
 import {connect} from 'react-redux';
-import {showMessage, WARNING} from '../../../../store/actions';
+import {showMessage,showComplete,showCertification, WARNING, SUCCESS} from '../../../../store/actions';
 import {getMt4Message} from '../../actions/me/meAction';
 import {updateUserInfo} from '../../actions/login/loginAction';
 import styles from './css/mePage.less';
@@ -16,13 +15,11 @@ class MePage extends PageComponent {
     constructor(props, context) {
         super(props, context);
         this.state={
-            showConfirm:false,
-            showReal:false,
             showAccount:false,
             infoEquity:{}
         }
 
-        this._nickname = systemApi.getValue("nickname") || "--";
+        this._nickname = systemApi.getValue("nickname") || "";
     }
     //获取页面名称
     getPageName() { return "我的主页"; }
@@ -41,17 +38,22 @@ class MePage extends PageComponent {
                     this.setState({infoEquity});
                 });
             }
-            
-
         });
 
-     
-        
         
     }
 
     msgClick = () => {
         hashHistory.push("/work/me/notice");
+    }
+
+    renderLeft() {
+        var avatarUrl = systemApi.getValue("avatarUrl");
+        if(avatarUrl == null ||avatarUrl.length==0) avatarUrl= "./images/me/img03.png" ;
+        return <div>
+                <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
+                <span  className={styles.head_name} >{this._nickname}</span>
+                </div>
     }
 
     renderIcons() {
@@ -80,7 +82,7 @@ class MePage extends PageComponent {
     }
 
     manageAcc=()=>{
-        hashHistory.push("/work/me/manageacc");
+        hashHistory.push("/work/manageacc");
     }
 
     renderListItem(text, icon, isRed, onClick) {
@@ -91,48 +93,60 @@ class MePage extends PageComponent {
             </li>
         )
     }
+    checkComplete=(msg,cb)=>{
+        let emailIsActive = systemApi.getValue("emailIsActive");
+      //  let isReal = systemApi.getValue("isReal");
+        if(emailIsActive==0){
+            this.props.showComplete(msg);
+        }else{
+            cb && cb();
+        }
+        
+    }
+
+    checkIsReal=(cb)=>{
+       // let emailIsActive = systemApi.getValue("emailIsActive");
+        let isReal = systemApi.getValue("isReal");
+        if(isReal==3){
+            cb && cb();
+        }else if(isReal==2){
+            hashHistory.push("/work/me/certification");
+        }else 
+            this.props.showCertification();
+        
+    }
 
     rechargeClick = ()=>{
-        hashHistory.push("/work/me/recharge");
+        this.checkComplete("请先完善用户信息",()=>{
+            this.checkIsReal(()=>{
+                hashHistory.push("/work/me/recharge");
+            });
+         
+        });
+       
     }
 
-    addAccount=()=>{
-        this.setState({showConfirm:true});
-    }
 
     addRealAccount=()=>{
-       // hashHistory.push("/work/me/certification");
-       let isReal = systemApi.getValue("isReal"); 
-       if(isReal ==2){
-            hashHistory.push("/work/me/checking");
-       }else
-            this.setState({showReal:true});
-    }
-
-    gotoReal=()=>{
-         hashHistory.push("/work/me/certification");
-         this.setState({showReal:false});
-     }
-
-    closeRealConfirm =()=>{
-        this.setState({showReal:false});
+       this.checkIsReal();
+            
     }
 
 
-    gotoImprove=()=>{
-        this.setState({showConfirm:false});
-        hashHistory.push("/work/improve");
-    }
 
-    closeConfirm =()=>{
-        this.setState({showConfirm:false});
-    }
+
 
 
     dailyReportClick = ()=>{
-        hashHistory.push("/work/me/dailyreport");
+       // http://47.101.164.147:8089/jeeplus/mcapp/external/marketNews
+        // hashHistory.push("/work/me/dailyreport");
+        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/marketNews");
     }
-
+    financialCalendar = ()=>{
+        
+        // hashHistory.push("/work/me/dailyreport");
+        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/financialCalendar");
+    }
     showAccount = ()=>{
         this.setState({showAccount:true});
     }
@@ -153,28 +167,49 @@ class MePage extends PageComponent {
     }
 
     bankClick = ()=>{
-        hashHistory.push("/work/me/bank");
+        this.checkComplete("请先完善用户信息",()=>{
+            hashHistory.push("/work/me/bank");
+        });
+       
     }
 
     showTip = ()=>{
-        this.props.showMessage(WARNING, "敬请期待");
+        this.props.showMessage(SUCCESS, "敬请期待");
     }
 
     toHelpPage = ()=>{
-        hashHistory.push("/work/me/help");
+        hashHistory.push({
+            pathname:"/work/me/help",
+            query:{
+                title:"帮助中心",
+                code:"HELP_CENTER"
+            }
+
+        });
     }
 
     toServerPage = ()=>{
-        hashHistory.push("/work/me/server");
+
+        hashHistory.push({
+            pathname:"/work/me/server",
+            query:{
+                title:"联系客服",
+                code:"CUSTOMER_SERVICE"
+            }
+
+        });
+    }
+    addAccount=()=>{
+        this.props.showComplete("完善资料后可开通体验账号");
     }
 
     render() {
         systemApi.log("MePage render");
         var accountLength = 0;
-        var {showConfirm,showReal,showAccount,infoEquity={}}=this.state;
+        var {showAccount,infoEquity={}}=this.state;
         var {floatPL="--",ratioMargin="--",equity="--"}=infoEquity;
         let mt4Id = systemApi.getValue("mt4Id");
-        var avatarUrl = systemApi.getValue("avatarUrl");
+        
         let mt4AccType = systemApi.getValue("mt4AccType");
         let mt4NickName = systemApi.getValue("mt4NickName");
         let emailIsActive = systemApi.getValue("emailIsActive");
@@ -193,43 +228,37 @@ class MePage extends PageComponent {
         }else if(mt4AccType==2){
             accName ="跟单账户";
             typeName = "跟随账户"
+        }else if(mt4AccType==3){
+            accName ="高手账户";
+            typeName = "高手账户"
         }
-        console.log(mt4NickName);
-        console.log(typeof(mt4NickName));
-        if(mt4NickName!=null && mt4NickName!=undefined && mt4NickName !="null" && mt4NickName !="undefined"){
+
+        if(mt4NickName!="" && mt4NickName!=null && mt4NickName!=undefined && mt4NickName !="null" && mt4NickName !="undefined"){
             
 
             accName =mt4NickName;
         }
-        if(avatarUrl == null ||avatarUrl.length==0) avatarUrl= "./images/me/img03.png" ;
+        
 
 
         return (
             <div>
-                <AppHeader headerName="我的" theme="makecaptail" iconRight={this.renderIcons()} />
+                <AppHeader showBack={false}  iconLeft={this.renderLeft()}  theme="makecaptail" iconRight={this.renderIcons()} />
                 <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                     <div>
                         <div className={styles.blank}></div>
                             {emailIsActive==0?
-                            <div className={styles.optional_detail}>
-                                <div className={styles.currency_name}>
-                                    <p className={this.mergeClassName(styles.c3, styles.text)}>交易账户</p>
-                                </div>
-                                <div className={"clear"}></div>
-                                <div className={styles.account_dt}>
-                                    <div style={{textAlign:"center",fontSize:".8rem",paddingTop: ".2rem",paddingBottom: ".2rem",color: "blue"}} onClick={this.addAccount}> +</div>
-                                    <div style={{textAlign:"center",paddingTop: ".1rem",color: "blue"}}  onClick={this.addAccount} >添加账户</div>
-                                </div>
-                            </div>
+                                <NoMt4Frame />
                             :<div className={styles.optional_detail}>
-                                <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
-                                <div className={styles.currency_name}>
-                                    <p className={this.mergeClassName(styles.c3, styles.text)}>{this._nickname}</p>
-                                    <p onClick={this.showAccount}>
-                                        <span className={this.mergeClassName("blue", "left")} >{accName}</span>
+                                
+                                <div className={styles.currency_name} onClick={this.showAccount} >
+                                    <p className={this.mergeClassName("blue","left", styles.text)}>{accName}</p>
+                                    <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
+                                    <p >
+                                        {/* <span className={this.mergeClassName("blue", "left")} >{accName}</span> */}
                                         <span className={this.mergeClassName("c9", "left")}>({typeName})</span>
-                                        <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
+                                        
                                     </p>
                                 </div>
                                 <div className={"right"}>
@@ -245,7 +274,8 @@ class MePage extends PageComponent {
                                 </ul>:
                                     <div style={{textAlign:"center",color: "blue"}} onClick={this.addAccount}>+添加账户</div>
                                     }
-                                    {emailIsActive==1 && isReal==0 ? <div style={{textAlign:"center",paddingTop: "1.0rem",color: "blue"}} onClick={this.addRealAccount}>+添加交易账户</div>:null}
+                                    <div className={"clear"}/>
+                                    {emailIsActive==1 && isReal==0 ? <div className={styles.addBtn}  onClick={this.addRealAccount}>添加交易账户</div>:null}
                                 </div>
 
                             </div>
@@ -256,24 +286,22 @@ class MePage extends PageComponent {
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.account_icons}>
                             {this.renderFuncItem("充值", "./images/me/icon-recharge.png", this.rechargeClick)}
-                            {this.renderFuncItem("提现", "./images/me/icon-recharge.png")}
-                            {this.renderFuncItem("银行卡", "./images/me/icon-recharge.png", this.bankClick)}
+                            {this.renderFuncItem("提现", "./images/me/icon-withdrawal.png",this.rechargeClick)}
+                            {this.renderFuncItem("银行卡", "./images/me/icon-bank-card.png", this.bankClick)}
                             {/* {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")} */}
                         </ul>
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.icon_list}>
-                            {this.renderListItem("我的钱包", "./images/me/icon-list01.png", false, this.showTip)}
+                            {this.renderListItem("我的红包", "./images/me/icon-list01.png", false, this.showTip)}
                             {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false, this.showTip)}
-                            {this.renderListItem("每日汇评", "./images/me/icon-list03.png", false, this.showTip /*this.dailyReportClick*/)}
-                            {this.renderListItem("财经日历", "./images/me/icon-list04.png", false, this.showTip)}
+                            {this.renderListItem("市场快讯", "./images/me/icon-list03.png", false, this.dailyReportClick /*this.dailyReportClick*/)}
+                            {this.renderListItem("财经日历", "./images/me/icon-list04.png", false, this.financialCalendar)}
                             {this.renderListItem("帮助中心", "./images/me/icon-list05.png", false, this.toHelpPage)}
                             {this.renderListItem("联系客服", "./images/me/icon-list06.png", false, this.toServerPage)}
                         </ul>
                     </div>
                 </Content>
-                {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
-                {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="根据监管要求，请先实名认证" />:null}
                 {showAccount?<AccountSelect onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
                 {this.props.children}
             </div>
@@ -283,7 +311,7 @@ class MePage extends PageComponent {
 }
 
 function injectAction(){
-    return {getMt4Message,updateUserInfo, showMessage};
+    return {showComplete,showCertification,getMt4Message,updateUserInfo, showMessage};
 }
 
 module.exports = connect(null,injectAction())(MePage);

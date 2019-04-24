@@ -25,7 +25,9 @@ class HistoryDetailPage extends PageComponent {
             ,netProfit
             ,marketPrice
             ,orderId
-            ,openPrice
+            ,openPrice,
+            openTime
+
             ,prodName
             ,prodCode
             ,profitPrice
@@ -34,10 +36,10 @@ class HistoryDetailPage extends PageComponent {
            , stopPrice
             ,swaps
             ,ticket
-           , tradeNo
+           , tradeNo,grossprofit="0.00"
            , tradedQty} = this._historyInfo;
        
-        var thisProfit = (netProfit + swaps + commission).toFixed(2);
+        var thisProfit = grossprofit;// (netProfit + swaps + commission).toFixed(2);
         if(closeTime && closeTime>0){
             var tmpdate = new Date();
             tmpdate.setTime(closeTime * 1000);
@@ -45,11 +47,19 @@ class HistoryDetailPage extends PageComponent {
         }else {
             closeTime="--";
         }
+        if(openTime && openTime>0){
+            var tmpdate = new Date();
+            tmpdate.setTime(openTime * 1000);
+            openTime = formatTime(tmpdate);
+        }else {
+            openTime="--";
+        }
+        
         return (
             <FullScreenView>
                 <AppHeader headerName={(buySell==0?"买 ":"卖 ")+prodName + " " + prodCode} theme="white" />
                 <Content >
-                <div className={styles.mg_lr_30}>
+                <div className={"mg-lr-30 mg-tp-20"}>
                       <div className={styles.left}>
                           <p className={styles.font32}>浮动盈亏</p>
                           <p className={styles.c9 +" "+styles.mg_tp_10}>(包含手续费、库存费)</p>
@@ -105,6 +115,10 @@ class HistoryDetailPage extends PageComponent {
                             <li>
                                 <div className={this.mergeClassName("left", "font20")}><p>止盈价格</p></div>
                                 <div className={this.mergeClassName("right")}><p>{profitPrice?profitPrice:"未设置"}</p></div>
+                            </li>
+                            <li>
+                                <div className={this.mergeClassName("left", "font20")}><p>开仓时间</p></div>
+                                <div className={this.mergeClassName("right")}><p>{openTime}</p></div>
                             </li>
                             <li>
                                 <div className={this.mergeClassName("left", "font20")}><p>平仓时间</p></div>

@@ -34,10 +34,10 @@ class OpenSucc extends PureComponent{
                         <td className="c6">交易手数</td>
                         <td className="text-al-right">{totalQty}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td className="c6">占用资金</td>
                         <td className="text-al-right">${money}</td>
-                    </tr>
+                    </tr> */}
                 </table>
             </Alert>
         );

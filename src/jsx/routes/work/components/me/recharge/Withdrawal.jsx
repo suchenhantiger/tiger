@@ -14,7 +14,7 @@ class Withdrawal extends PureComponent {
         this.state = {
             money: "",
             destType: "-1",
-            balance:"0.00",
+            fowbalance:0,
             showAccount:false,
             showBank:false,
             showConfirm:false,
@@ -45,12 +45,15 @@ class Withdrawal extends PureComponent {
     }
 
     nextClick = ()=>{
-        var {money,cardNo} =this.state;
-        if(money.length==0){
+        var {money,fowbalance} =this.state;
+        if(money==0){
             this.props.showMessage("error","请输入取现金额");
-        }else if(!this.mt4Id){
+        }else if(money>fowbalance){
+            this.props.showMessage("error","可提现金额不足");
+        }
+        else if(!this.mt4Id){
             this.props.showMessage("error","请选择取现账号");
-        }else if(!cardNo){
+        }else if(!this.cardno){
             this.props.showMessage("error","请选择银行卡号");
         }else{
             this.setState({showConfirm:true});
@@ -68,6 +71,7 @@ class Withdrawal extends PureComponent {
     }
     
     selectBank = (bankid,cardno,bankname)=>{
+  
         this.bankid = bankid;
         this.cardno = cardno;
         this.bankname =bankname;
@@ -101,9 +105,9 @@ class Withdrawal extends PureComponent {
         this.mt4Id=mt4Id;
         this.mt4AccType=mt4AccType;
         this.setState({showAccount:false});
-        this.props.getMt4Message(this,{mt4Id,queryType:1},(data)=>{
-            var {balance="0.00"} =data; 
-            this.setState({balance});
+        this.props.getMt4Message(this,{mt4Id,queryType:2},(data)=>{
+            var {fowbalance=0} =data; 
+            this.setState({fowbalance});
         });
 
     }
@@ -135,8 +139,12 @@ class Withdrawal extends PureComponent {
     }
 
     onSure=()=>{
-        var {money} =this.state;
-        this.props.withdraw(this,{recordType:2,amountUSD:money,mt4Id:this.mt4Id,cardNo:this.bankId},()=>{
+        var {money,fowbalance} =this.state;
+        if(money>fowbalance){
+            this.props.showMessage("ERROR","可提现金额不足");
+            return;
+        }
+        this.props.withdraw(this,{recordType:2,amountUSD:money,mt4Id:this.mt4Id,bankId:this.bankid,payCode: "BANK_TRANSFER_PAY"},()=>{
             this.setState({showConfirm:false});
         });
     }
@@ -149,22 +157,22 @@ class Withdrawal extends PureComponent {
     //渲染函数
     render() {
 
-        var { money, destType,showAccount,showConfirm ,balance,showBank,bankList} = this.state;
+        var { money, destType,showAccount,showConfirm ,fowbalance,showBank,bankList} = this.state;
 
         return (
             <div>
                 <div className={this.mergeClassName("mg-lr-30", "mg-tp-42")}>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p>
                             <span className={styles.form_label}>提现账户</span>
                             <span className={this.mergeClassName("blue", "font28")} onClick={this.openPayDest}>{this.mt4NickName||"请选择"}</span>&nbsp;
                             {this.typeName?<span className={"c9"}>({this.typeName})</span>:null}
                         </p>
-                        <p className={this.mergeClassName("mg-lt-140", "mg-tp-10")}>
-                            <span className={"c9"}>当前交易账户余额：¥{balance}</span>
+                        <p className={this.mergeClassName("mg-lt-140", "mg-tp-20")}>
+                            <span className={"c9"}>当前账户可提现金额：${fowbalance.toFixed(2)}</span>
                         </p>
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p>
                             <span className={styles.form_label}>提现到</span>
                             <span className={this.mergeClassName("blue", "font28")} onClick={this.chooseBank}>{this.cardno||"请选择"}</span>&nbsp;
@@ -172,7 +180,7 @@ class Withdrawal extends PureComponent {
                         </p>
 
                     </div>
-                    <div className={this.mergeClassName(styles.form_input, "mg-bt-40")}>
+                    <div className={this.mergeClassName(styles.form_input, "mg-bt-64")}>
                         <p><span className={styles.form_label}>提现金额</span></p>
                         <input type="text" placeholder="$" value={money}  onBlur={this.numFormate } onChange={this.inputChange} />
                     </div>
