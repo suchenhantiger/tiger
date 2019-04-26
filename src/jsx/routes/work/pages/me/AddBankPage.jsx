@@ -3,7 +3,8 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import { connect } from 'react-redux';
 import { addBankCard} from '../../actions/me/meAction';
 import InputItem from '../../components/me/bank/InputItem';
-
+import Confirm from '../../../../components/common/popup/Confirm2';
+import { showMessage} from '../../../../store/actions';
 import styles from './css/addBankPage.less';
 
 /********我的主页*********/
@@ -11,7 +12,9 @@ class AddBankPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {}
+        this.state = {
+            showConfirm:false
+        }
     }
     //获取页面名称
     getPageName() { return "添加银行账户"; }
@@ -31,8 +34,7 @@ class AddBankPage extends PageComponent {
     // cardholderEN
     // bankNameEN
     // swiftCode
-    
-    submit = ()=>{
+    confirmSubmit=()=>{
         var {name, country, account, bankName, province, city, branchName, telephone} = this.state;
         this.props.addBankCard(this,{
             bankType:0,
@@ -46,10 +48,37 @@ class AddBankPage extends PageComponent {
         });
     }
 
+    submit = ()=>{
+        var {name, country, account, bankName, province, city, branchName, telephone} = this.state;
+        if(name==null || name.length==0){
+            this.props.showMessage("error","请输入持卡人");
+        }else if(country==null || country.length==0){
+            this.props.showMessage("error","请输入持卡人所在国家");
+        }else if(account==null || account.length==0){
+            this.props.showMessage("error","请输入卡号");
+        }else if(province==null || province.length==0){
+            this.props.showMessage("error","请输入持卡人所在省份");
+        }else if(bankName==null || bankName.length==0){
+            this.props.showMessage("error","请输入银行名称");
+        }else if(city==null || city.length==0){
+            this.props.showMessage("error","请输入持卡人所在城市");
+        }else if(branchName==null || branchName.length==0){
+            this.props.showMessage("error","请输入开户支行");
+        }else if(telephone==null || telephone.length==0){
+            this.props.showMessage("error","请输入银行预留手机号");
+        }else
+        this.setState({showConfirm:true});
+      
+    }
+
+    closeConfirm=()=>{
+        this.setState({showConfirm:false});
+    }
+
     render() {
         systemApi.log("AddBankPage render");
 
-        var {name, country, account, bankName, province, city, branchName, telephone} = this.state;
+        var {name, showConfirm, country, account, bankName, province, city, branchName, telephone} = this.state;
 
         return (
             <FullScreenView>
@@ -69,6 +98,18 @@ class AddBankPage extends PageComponent {
                     </div>
                     <div className={styles.btnFrame}><div className={styles.btn} onClick={this.submit}>提交</div></div>
                 </Content>
+                {showConfirm?
+                <Confirm   onSure={this.confirmSubmit} onCancel={this.closeConfirm}>
+                <div>
+                    <p className="font30 mg-bt-10 font_bold center">提示</p>
+             
+                    <div className={"mg-tp-20"}>
+                        <span style={{lineHeight: ".4rem",fontSize: ".24rem"}}>为了您的账号资金安全，请绑定您本人的银行卡，如有其他问题，请联系MakeCapital客服。</span>
+
+                    </div>
+                
+                </div>
+            </Confirm>:null}
                 {this.props.children}
             </FullScreenView>
         );
@@ -77,7 +118,7 @@ class AddBankPage extends PageComponent {
 }
 
 function injectAction() {
-    return { addBankCard};
+    return { addBankCard,showMessage};
 }
 
 module.exports = connect(null, injectAction())(AddBankPage);

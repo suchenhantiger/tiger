@@ -1,7 +1,7 @@
 import Confirm from '../../../../../components/common/popup/Confirm2';
 import styles from './css/rechargeDialog.less';
 
-class CopyDialog extends PureComponent{
+class RechareDialog extends PureComponent{
 
     //构造函数
     constructor(props) {
@@ -62,4 +62,4 @@ class CopyDialog extends PureComponent{
 
 }
 
-module.exports = CopyDialog;
+module.exports = RechareDialog;

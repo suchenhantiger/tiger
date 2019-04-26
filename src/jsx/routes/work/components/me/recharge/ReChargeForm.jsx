@@ -1,6 +1,7 @@
 import PaySelect from './PaySelect';
 import PayDest from './PayDest';
 import RechareDialog from './RechareDialog';
+import RechareSuccessDialog from './RechareSuccessDialog';
 import AccountSelect from '../AccountSelect';
 import styles from './css/rechargeForm.less';
 import { connect } from 'react-redux';
@@ -31,6 +32,7 @@ class ReChargeForm extends PureComponent {
             amount:"",
             showAccount:false,
             showRechareDialog:false,
+            showConfirmSuccess:false,
             rechargeInfo:null,
             certificateImg:""
             
@@ -145,10 +147,12 @@ class ReChargeForm extends PureComponent {
 
     gotoCharge=(orderId,payUrl)=>{
 
-        Client.openUrlWithBrowser(payUrl,()=>{
-
+       
+        this.setState({showRechareDialog:false,showConfirmSuccess:true},()=>{
+            Client.openUrlWithBrowser(payUrl,()=>{
+                
+                        });
         });
-        this.setState({showRechareDialog:false});
 
 
     }
@@ -164,10 +168,19 @@ class ReChargeForm extends PureComponent {
         });
     }
 
+    closeSuccess =()=>{
+        this.setState({showConfirmSuccess:false});
+    }
+
+    sureSuccess =()=>{
+        this.setState({showConfirmSuccess:false});
+        hashHistory.goBack();
+    }
+
     //渲染函数
     render() {
 
-        var {showDestSelect, showPaySelect, amount, destType,showAccount,showRechareDialog,rechargeInfo,certificateImg} = this.state;
+        var {showDestSelect, showConfirmSuccess, showPaySelect, amount, destType,showAccount,showRechareDialog,rechargeInfo,certificateImg} = this.state;
         
         return (
             <div>
@@ -241,7 +254,7 @@ class ReChargeForm extends PureComponent {
                 {showDestSelect?<PayDest destInfo={DEST_MAP} destType={destType} onSelect={this.selectDest} onClose={this.closePayDest} />:null}
                 {showAccount?<AccountSelect showOn={false} selectType={1} onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
                 {showRechareDialog?<RechareDialog data={rechargeInfo} onSure={this.gotoCharge} onClose={this.closeAccount}/>:null}
-                
+                {showConfirmSuccess?<RechareSuccessDialog  onSure={this.sureSuccess} onClose={this.closeSuccess}/>:null}
                 
             </div>
             

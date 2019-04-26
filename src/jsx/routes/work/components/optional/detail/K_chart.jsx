@@ -53,7 +53,7 @@ class K_chart extends PureComponent{
             case 8:
                 this._period=10080;
                 break;
-            case 8:
+            case 9:
                this._period=43200;
                 break;
             default:
@@ -87,7 +87,6 @@ class K_chart extends PureComponent{
 
 
         if(recentBars.length==2){
-
             var newone = recentBars[1];
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
@@ -100,12 +99,14 @@ class K_chart extends PureComponent{
                         //有一个不同就需要更新
                         newone.date= new Date(newone.opentime*1000);
                         this._kdata[this._kdata.length-1] = newone;
+                        if(this.refs.chart)
                         this.refs.chart.getWrappedInstance().updateOne(newone);
                 }
              }else{
 
                newone.date= new Date(newone.opentime*1000);
                this._kdata.push(newone);
+               if(this.refs.chart)
                this.refs.chart.getWrappedInstance().addOne(newone);
              }             
         }
@@ -180,6 +181,7 @@ class K_chart extends PureComponent{
                   if(data.length>0){
                       this._kdata = data.concat(this._kdata);
                       this._openTime=data[0].opentime;
+                      if(this.refs.chart)
                       this.refs.chart.getWrappedInstance().handleDownloadMore(start,end,this._kdata);
                   }
               });

@@ -179,9 +179,12 @@ module.exports = {
             //遍历参数生成参数串
             for (var key in params) {
                 if(params[key]==null) continue;
-                paramStr.push(key+"="+params[key]);
+                if(key == "prodCode"){
+                    paramStr.push(key+"="+encodeURIComponent(params[key]));
+                }else
+                    paramStr.push(key+"="+params[key]);
                 //console.log(key+"="+params[key]);
-                if(key == "kick")  iskick = value;
+                
             }
             //添加签名sign
             paramStr.push("sign=" + genSignStr(params,needToken));

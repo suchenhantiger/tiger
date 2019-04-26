@@ -18,7 +18,7 @@ class OptionalDetailPage extends PageComponent{
             digits,maxVolume,minVolume,minstDec,volumeStep,prodSize,marginPercentage,
             ask="--",bid="--",status=true} = this.props.location.query; 
         this._prodName = prodName;
-        this._prodCode = prodCode;
+        this._prodCode = prodCode;//encodeURIComponent(
         this._digits = digits;
         this.state = {
             index:0,

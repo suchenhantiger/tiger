@@ -6,8 +6,8 @@ class IScrollView extends PureComponent{
 
     //默认属性值
     static defaultProps={
-        upFreshText:"下拉刷新",
-        upWaitingText:"松手更新",
+        upFreshText:"",
+        upWaitingText:"",
         upLoadingText:"",
         downFreshText:"上拉加载更多",
         downWaitingText:"松手加载更多",
@@ -276,18 +276,18 @@ class IScrollView extends PureComponent{
         return (
             <div ref="main" className={this.mergeClassName(className, styles.frame)}>
                 <div className={styles.div} ref="frame">
-                    {canUpFresh?(
+                  
                         <div className={upClass}>
-                            <span className={upImgClass}></span>
+                            <div style={{    margin: "0 auto",position: "relative",width: ".4rem"}}><div className={upImgClass}></div></div>
                             <span className={styles.vmid}>{upText}</span>
                         </div>
-                    ):null}
+                   
 
                     <div className={this.mergeClassName(styles.statusBar, showStatus?styles.show:"")}>{statusText}</div>
                     {children}
                     {hasMore?(
                         <div className={downClass}>
-                            <span className={downImgClass}></span>
+                            {/* <span className={downImgClass}></span> */}
                             <span className={styles.vmid}>{downText}</span>
                         </div>
                     ):null}

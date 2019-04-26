@@ -57,6 +57,8 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.2",
     "less-loader": "~2.2.2",
+    "react-fastclick": "^3.0.2",
+    "react-fastclick-alt": "^2.0.1",
     "react-router-loader": "^0.5.4",
     "style-loader": "^0.13.1",
     "uglify-js": "^3.3.15",

@@ -127,14 +127,19 @@ class CandleStickChartPanToLoadMore extends React.Component {
 			.options({windowSize:20,multiplier:2})
 			.merge((d, c) => {d.bb = c;})
 			.accessor(d => d.bb);
-		this._maxWindowSize = getMaxUndefined([
-			this.ema20,
-			this.ema10,this.ema5,
-			this.macdCalculator,
-			this.rsiCalculator6,this.rsiCalculator12,this.rsiCalculator24,this.fullSTO
-		]);
+		
 
 		const dataToCalculate = inputData;
+		if(dataToCalculate.length<140){
+			this._maxWindowSize=0;
+		}else {
+			this._maxWindowSize = getMaxUndefined([
+				this.ema20,
+				this.ema10,this.ema5,
+				this.macdCalculator,
+				this.rsiCalculator6,this.rsiCalculator12,this.rsiCalculator24,this.fullSTO
+			]);
+		}
 		const calculatedData = this.ema20(this.ema10(this.ema5(
 			this.macdCalculator(this.bb(this.rsiCalculator12(this.rsiCalculator24(
 				this.rsiCalculator6(this.fullSTO(dataToCalculate)))))))));

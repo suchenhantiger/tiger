@@ -111,7 +111,7 @@ class LoginPage extends PageComponent {
                         </ul>
                     }
                     
-                    <div className={styles.login_int}>未注册的用户，登录时将自动注册</div>
+                    <div className={styles.login_int}>未注册的用户，请使用短信登录。登录后由系统自动注册。</div>
 
                     <LazyLoad index={index}>
                         <LoginForm setFocusState={this.setFocusState}/> 

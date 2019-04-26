@@ -182,7 +182,7 @@ class AccountManagePage extends PageComponent {
         return (
             <FullScreenView>
                 <AppHeader headerName="交易账户管理" theme="makecaptail" />
-                <Content coverHeader={true} coverBottom={false}>
+                <Content coverHeader={true} coverBottom={true}>
                     <div className={styles.header}></div>
                     <div className={styles.account_manage}>
                         <div className={"white"}>
@@ -206,8 +206,12 @@ class AccountManagePage extends PageComponent {
                             </ul>
                         </div>
                     </div>
-                    
                     {this.renderAccounts()}
+                  
+
+                    
+                </Content>
+                
                     {(emailIsActive ==0 || mt4Id==null || mt4Id.length==0)?
                     <div className={styles.bottom_btn_fixed}>
                         <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.addAccount} >+添加账户</button></div>
@@ -220,9 +224,6 @@ class AccountManagePage extends PageComponent {
                     <div className={styles.bottom_btn_fixed}>
                         <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.addNewAccount} >添加交易账户</button></div>
                     </div>:null}
-
-                    
-                </Content>
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
                 {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="根据监管要求，请先实名认证" />:null}
                 {newAccConfirm?<NewAccDialog onSure={this.newAcc} onCancel={this.closeNewAcc} title="根据监管要求，请先实名认证" />:null}

@@ -20,7 +20,7 @@ class OptionalItem extends PureComponent {
         hashHistory.push({
             pathname: "/work/optional/detail",
             query: {
-                prodName: name, prodCode: code, ask, bid, isClose, prodSize, marginPercentage,
+                prodName:name, prodCode: code, ask, bid, isClose, prodSize, marginPercentage,
                 digits, maxVolume, minVolume, minstDec, volumeStep
             }
         });

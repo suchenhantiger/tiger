@@ -1,10 +1,11 @@
 import {Route,Router,hashHistory,IndexRedirect} from 'react-router';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Provider } from 'react-redux'
 import {getStoreConfig} from './store/storeConfig';
 
-injectTapEventPlugin();
-
+// injectTapEventPlugin();
+import initReactFastclick from 'react-fastclick';
+initReactFastclick();
 const store = getStoreConfig();
 
 //动态路由

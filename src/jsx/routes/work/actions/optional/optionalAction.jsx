@@ -86,6 +86,7 @@ export function getHistoryKList(component,params,cb ){
         var {pageSize} = params;
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+
         component.requestJSON("optionalstock/historyMarket",params).done((data)=>{
             var {list} = data;
             for(var i=0;i<list.length;i++){
