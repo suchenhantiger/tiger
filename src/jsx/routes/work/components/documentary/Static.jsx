@@ -130,7 +130,7 @@ class Static extends PureComponent {
                     <LineChart data={report}/>
                     </div>
                     <div className={"clear"}></div>
-                    <div className={"c9" +" "+"mg-tp-20"} style={{lineHeight:".3rem"}}>*过往表现并不代表未来交易的成功率，您需要理智地做出判断</div>
+                    <div className={"c9" +" "+"mg-tp-30"} style={{lineHeight:".3rem"}}>*过往表现并不代表未来交易的成功率，您需要理智地做出判断</div>
                 </div>
         
 

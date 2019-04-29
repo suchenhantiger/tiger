@@ -32,8 +32,8 @@ class LoginPage extends PageComponent {
 
     onBackKeyDown = ()=>{
         var hash = this.getHashPath();
-
-        if(hash != '/work/documentary'){
+        
+        if(hash != '/login'){
             hashHistory.goBack();
         }
         else{
@@ -111,7 +111,7 @@ class LoginPage extends PageComponent {
                         </ul>
                     }
                     
-                    <div className={styles.login_int}>未注册的用户，请使用短信登录。登录后由系统自动注册。</div>
+                    <div className={styles.login_int}><p >未注册的用户，请使用短信登录。</p><p>登录后由系统自动注册。</p></div>
 
                     <LazyLoad index={index}>
                         <LoginForm setFocusState={this.setFocusState}/> 

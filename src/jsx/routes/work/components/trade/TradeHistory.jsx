@@ -107,6 +107,7 @@ class TradeHistory extends PureComponent {
             }
 
         }
+        this.refreshAllData();
         
     }
 
@@ -238,14 +239,14 @@ class TradeHistory extends PureComponent {
                         <NoMt4Frame />:
                         <div className={styles.optional_detail}>
                             <div className={styles.currency_name}>
-                                <p onClick={this.showAccount}>
+                                <p style={{height:".26rem"}} onClick={this.showAccount}>
                                     <span className={this.mergeClassName("blue", "left","font26","font_bold")}>{accName}</span>
                                     {/* <span className={this.mergeClassName("c9", "left")}>(自主交易)</span> */}
                                     <span className={this.mergeClassName("c9", "left")}>({typeName})</span>
 
                                     <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                                 </p>
-                                <p className={this.mergeClassName("c3", "font48", "mg-tp-56", styles.c3)}>${balance}</p>
+                                <p className={this.mergeClassName("c3", "font48", "mg-tp-30", styles.c3)}>${balance}</p>
                             </div>
                             <div className={"right"} onClick={this.showAccount}>
                                 <div className={styles.icon_account}>切换</div>

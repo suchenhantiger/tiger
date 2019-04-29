@@ -85,9 +85,15 @@ class K_chart extends PureComponent{
         var {quotedUD={},recentBars=[]} = data;
         updatePrice && updatePrice(quotedUD);
 
-
-        if(recentBars.length==2){
-            var newone = recentBars[1];
+        if(typeof(recentBars)=="string")
+            recentBars = JSON.parse(recentBars);
+        if(recentBars.length>0){
+            if(recentBars.length==1){
+                var newone = recentBars[0];
+            }else
+                var newone = recentBars[1];
+            
+            
             //判断是否要更新
              var oldone = this._kdata[this._kdata.length-1];
              if(oldone.opentime == newone.opentime ){

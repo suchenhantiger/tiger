@@ -2,6 +2,7 @@ import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../..
 
 import JSEncrypt from 'jsencrypt';
 import * as CryptoJS from 'crypto-js';
+var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ5bl4BX70dt6X0mH1nN4Od4mZgYOaq7Zzlz3c8Au/Jiar3nP7NRetI5UP8mHxn5xhbjM9sOD0dbr2j1TjV/6sa8xlHLYN8QMjc1SU3wskMYUEup+OT7+w01IHeN1hxCcSZ3mMOEV5nHiJw6nn7yXvox7G48SRLwsgOOPXFm/C7QIDAQAB';
 
 export function getMt4Message(component, params,cb){
     return function(dispatch, state){
@@ -116,7 +117,14 @@ export function saveAccMt4(component, params,cb){
 export function changePassword(component, newpassword,cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
-        newpassword = md5(newpassword);
+        //newpassword = md5(newpassword);
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(PUBLIC_KEY);
+       
+        if(newpassword)
+        {
+            newpassword=  encrypt.encrypt(newpassword);
+        }
         component.requestJSON("users/changePasswordOrStatus",{updateType:0,clientId,newpassword}).done((data)=>{
 
             cb && cb();
@@ -130,8 +138,19 @@ export function changePassword(component, newpassword,cb){
 export function changePasswordByold(component, params,cb){
     return function(dispatch, state){
         params.clientId = systemApi.getValue("clientId");
-        params.oldpassword = md5(params.oldpassword);
-        params.newpassword = md5(params.newpassword);
+       
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(PUBLIC_KEY);
+       console.log(params.oldpassword);
+        if(params.oldpassword)
+        {
+            params.oldpassword =  encrypt.encrypt(params.oldpassword);
+        }
+        console.log(params.oldpassword);
+        if(params.newpassword){
+            params.newpassword =  encrypt.encrypt(params.newpassword);
+        }
+
         component.requestJSON("users/changePasswordOrStatus",params).done((data)=>{
             dispatch(showMessage(SUCCESS, "修改成功"));
             cb && cb();
@@ -144,12 +163,24 @@ export function changePasswordByold(component, params,cb){
 
 export function changePasswordByCode(component, phone,newpassword,validCode,cb){
     return function(dispatch, state){
-        newpassword = md5(newpassword);
+       
+        //newpassword = md5(newpassword);
         var time =  (new Date()).getTime();
+        if(newpassword)
+        {
+            var encrypt = new JSEncrypt();
+            encrypt.setPublicKey(PUBLIC_KEY);
+            newpassword =  encrypt.encrypt(newpassword);
+            //newpassword = encodeURIComponent(newpassword);
+           // console.log(newpassword);
+        }
+        dispatch(showLoading());
         component.requestJSON("loginregister/findPassword",{time,phone,updateType:0,securityCode:validCode,newpassword},null,{needToken:false}).done((data)=>{
-
+            dispatch(hideLoading());
             cb && cb();
+            dispatch(showMessage(SUCCESS, "密码重置成功"));
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             
         });
@@ -218,8 +249,11 @@ export function getChangeEmailPwd(component, email,cb){
 
 //loginregister/
 function Decrypt(data,AuthTokenKey,AuthTokenIv) {
+    console.log(AuthTokenKey+"  "+AuthTokenIv);
     let data2 = data.replace(/\n/gm, "");
-    let decrypted = CryptoJS.AES.decrypt(data2, CryptoJS.enc.Latin1.parse(AuthTokenKey), {
+    let decrypted = CryptoJS.AES.decrypt(data2, 
+        CryptoJS.enc.Latin1.parse(AuthTokenKey), 
+        {
         iv: CryptoJS.enc.Latin1.parse(AuthTokenIv),
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
@@ -227,12 +261,24 @@ function Decrypt(data,AuthTokenKey,AuthTokenIv) {
     return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
+function mcEncrypt(data,AuthTokenKey,AuthTokenIv) {
+    //let data2 = data.replace(/\n/gm, "");
+  //  data= CryptoJS.enc.Latin1.parse(data);
+
+    let encrypted = CryptoJS.AES.encrypt(data, 
+        CryptoJS.enc.Latin1.parse(AuthTokenKey), 
+        { iv: CryptoJS.enc.Latin1.parse(AuthTokenIv), 
+            mode: CryptoJS.mode.CBC, 
+            padding: CryptoJS.pad.Pkcs7 });
+    return encrypted.toString();
+}
+
+
 
 export function updateToken(component,cb,failCb){
     return function(dispatch, state){
         var params = {};
         var key=""+Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,15));
-        var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ5bl4BX70dt6X0mH1nN4Od4mZgYOaq7Zzlz3c8Au/Jiar3nP7NRetI5UP8mHxn5xhbjM9sOD0dbr2j1TjV/6sa8xlHLYN8QMjc1SU3wskMYUEup+OT7+w01IHeN1hxCcSZ3mMOEV5nHiJw6nn7yXvox7G48SRLwsgOOPXFm/C7QIDAQAB';
         var encrypt = new JSEncrypt();
         // console.log(key);
         encrypt.setPublicKey(PUBLIC_KEY);
@@ -328,13 +374,11 @@ export function login(component, params,logintype,cb){
         var {phone} =params;
         params.time = (new Date()).getTime();
         var key=""+Math.floor((Math.random()+Math.floor(Math.random()*9+1))*Math.pow(10,15));
-        var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ5bl4BX70dt6X0mH1nN4Od4mZgYOaq7Zzlz3c8Au/Jiar3nP7NRetI5UP8mHxn5xhbjM9sOD0dbr2j1TjV/6sa8xlHLYN8QMjc1SU3wskMYUEup+OT7+w01IHeN1hxCcSZ3mMOEV5nHiJw6nn7yXvox7G48SRLwsgOOPXFm/C7QIDAQAB';
         var encrypt = new JSEncrypt();
-        // console.log(key);
         encrypt.setPublicKey(PUBLIC_KEY);
         params.token =  encrypt.encrypt(key);
-        // console.log('加密后数据:%o',params.token);
-
+        if(params.password)
+            params.password = mcEncrypt(params.password,key,"20190315mcappaes");
         component.requestJSON("loginregister/login",params,null,{needToken:false}).done((data)=>{
             dispatch(hideLoading());
             var { avatarUrl,clientId,tokenVersion,

@@ -2,6 +2,7 @@ import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../..
 
 export function updatePrice(newPrice){
     return function(dispatch, state){
+       
        dispatch({type:"UPDATE_PRICE",data:newPrice});
         
     }

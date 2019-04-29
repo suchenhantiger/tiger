@@ -276,11 +276,11 @@ class IScrollView extends PureComponent{
         return (
             <div ref="main" className={this.mergeClassName(className, styles.frame)}>
                 <div className={styles.div} ref="frame">
-                  
+                    {canUpFresh?(
                         <div className={upClass}>
-                            <div style={{    margin: "0 auto",position: "relative",width: ".4rem"}}><div className={upImgClass}></div></div>
+                            <div style={{    margin: "5px auto",position: "relative",width: ".4rem"}}><div className={upImgClass}></div></div>
                             <span className={styles.vmid}>{upText}</span>
-                        </div>
+                        </div>):null}
                    
 
                     <div className={this.mergeClassName(styles.statusBar, showStatus?styles.show:"")}>{statusText}</div>

@@ -126,8 +126,13 @@ function baseReducer(state,action){
         var updateflag = false;
       
         for(var i=0;i<newPrice.length;i++){
+            var tmpObj = newPrice[i];
+            if(typeof(tmpObj)=="string")
+            {
+                tmpObj = JSON.parse(tmpObj);
+            }
 
-            let prodCode = newPrice[i].symbol;
+            let prodCode = tmpObj.symbol;
             let index = OptionalList.indexOf(prodCode);
             // console.log(OptionalListData);
             if(index!=-1){
@@ -135,7 +140,7 @@ function baseReducer(state,action){
                 // console.log(OptionalListData[index]);
                 updateflag = true;
                
-                var tmp = newPrice[i];
+                var tmp = tmpObj;
                 OptionalListData[index].ask = tmp.ask;
                 OptionalListData[index].bid = tmp.bid;
                 OptionalListData[index].isClose = tmp.isClose;
@@ -178,13 +183,13 @@ function baseReducer(state,action){
       }else if(type == "QUERY_POSITION_LIST_DATA"){
         var floatTrade = action.data;
         var {hanglist,couplist,orderlist}=state;
-        
         for(var i=0,l=hanglist.length;i<l;i++){
             var prodCode = hanglist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
-
-                if(prodCode == floatTrade[j].symbol){
-                    hanglist[i] = Object.assign({}, hanglist[i],floatTrade[j]);
+                var tmpO = floatTrade[j];
+                if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
+                if(prodCode == tmpO.symbol){
+                    hanglist[i] = Object.assign({}, hanglist[i],tmpO);
                     
                     break;
                 }
@@ -196,10 +201,11 @@ function baseReducer(state,action){
         for(var i=0;i<l;i++){
             var prodCode = couplist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
+                var tmpO = floatTrade[j];
+                if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
+                if(prodCode == tmpO.symbol){
 
-                if(prodCode == floatTrade[j].symbol){
-
-                    couplist[i] = Object.assign({}, couplist[i],floatTrade[j]);
+                    couplist[i] = Object.assign({}, couplist[i],tmpO);
                     var {ask,bid,marketPrice,buySell,
                         openPrice,prodSize,exchangeRate,
                         tradedQty,swaps,commission} = couplist[i] ;
@@ -220,9 +226,10 @@ function baseReducer(state,action){
         for(var i=0,l=orderlist.length;i<l;i++){
             var prodCode = orderlist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
-
-                if(prodCode == floatTrade[j].symbol){
-                    orderlist[i] = Object.assign({}, orderlist[i],floatTrade[j]);
+                var tmpO = floatTrade[j];
+                if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
+                if(prodCode == tmpO.symbol){
+                    orderlist[i] = Object.assign({}, orderlist[i],tmpO);
                     var {ask,bid,marketPrice,buySell,
                         openPrice,prodSize,exchangeRate,
                         tradedQty,swaps,commission} = orderlist[i] ;
@@ -240,10 +247,6 @@ function baseReducer(state,action){
             floatPL += orderlist[i].netProfit;
 
         }
-
-
-
-
         return Object.assign({},state,{
             hanglist:hanglist.slice(),
             couplist:couplist.slice(),

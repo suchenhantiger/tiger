@@ -34,7 +34,7 @@ class Records extends PureComponent {
 
 
     exampleClick = () => {
-        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/certificateRecord");
+        Client.openUrlInapp("http://47.101.164.147:8088/mcAppServer/mcapp/external/certificateRecord");
     }
 
     tabChange = (subIndex)=>()=>{

@@ -318,6 +318,9 @@ class Position extends PureComponent {
             accName =this._mt4NickName;
         }
 
+        if(orderlist[0])
+        console.log("sch :"+JSON.stringify(orderlist[0].ask));
+
         var tmpfloatPL = floatPL;
         if(this._mt4AccType==2)
             tmpfloatPL = f_floatPL
@@ -333,12 +336,12 @@ class Position extends PureComponent {
                         <NoMt4Frame />:
                         <div className={styles.optional_detail}>
                         <div className={styles.currency_name}>
-                            <p onClick={this.showAccount}>
+                            <p style={{height:".26rem"}} onClick={this.showAccount}>
                                 <span className={this.mergeClassName("blue", "left","font26","font_bold")} >{accName}</span>
                                 <span className={this.mergeClassName("c9", "left")}>({typeName})</span>
                                 <i className={this.mergeClassName(styles.icon_select, "mg-tp-0")}></i>
                             </p>
-                            <p className={this.mergeClassName("c3", "font48", "mg-tp-56", styles.c3)}>${tmpfloatPL}</p>
+                            <p className={this.mergeClassName("c3", "font48", "mg-tp-30", styles.c3)}>${tmpfloatPL}</p>
                         </div>
                         <div className={"right"}>
                             <div className={styles.icon_account} onClick={this.showAccount}>切换</div>

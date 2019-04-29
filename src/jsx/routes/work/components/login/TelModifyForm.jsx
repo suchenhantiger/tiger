@@ -57,7 +57,7 @@ class ModifyForm extends PureComponent {
         var { pwd, conpwd ,oldpwd,errMsg} = this.state;
 
         return (
-            <div className={styles.login_form}>
+            <div className={styles.login_form2}>
                 <p style={{   color: "#666",margin: ".2rem .2rem"}}>原密码</p>
                 <div className={styles.login_item}>
                     
@@ -75,9 +75,9 @@ class ModifyForm extends PureComponent {
                         <div className={this.mergeClassName(styles.pro_error, "red")} >{errMsg}</div>
                     </div>
                 ):null}
-                <div className={styles.login_bt_text}>
+            
                     <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.saveClick}>修改</button></div>
-                </div>
+               
             </div>
         );
     }

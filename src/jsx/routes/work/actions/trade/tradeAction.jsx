@@ -50,6 +50,7 @@ export function updatePositionInfo(data){
 export function updatePositionList(data){
     return function(dispatch, state){
 
+
         dispatch({type:"QUERY_POSITION_LIST_DATA",data});
 
     }
@@ -247,6 +248,18 @@ export function addAccFundRecord(component, params, cb){
         params.clientId =clientId;
         component.requestJSON("bank/addAccFundRecord",params).done((data)=>{
        // dispatch(showMessage(SUCCESS, "充值申请已提交"));
+        cb && cb(data);
+        }).fail((data)=>{
+            dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
+export function confirmRecharge(component, params, cb){
+    return function(dispatch, state){
+        var clientId=systemApi.getValue("clientId");
+        params.clientId =clientId;
+        component.requestJSON("bank/confirmRecharge",params).done((data)=>{
         cb && cb(data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));

@@ -88,7 +88,7 @@ class LoginForm extends PureComponent {
         }
         this.setState({errMsg:""})
         
-        this.props.login(this,{phone,password:md5(validCode)},2,()=>{
+        this.props.login(this,{phone,password:validCode},2,()=>{
         });
 
     }
@@ -98,16 +98,19 @@ class LoginForm extends PureComponent {
         var {phone, validCode, errMsg,canSend,showBtn,restTime} = this.state;
         return (
             <div className={styles.login_form}>
-                <div className={styles.login_item}>
-                    <span className={styles.area_code}>+86</span>
-                    <i className={styles.arrow_select}></i>
-                    <div className={styles.line_02}></div>
-                    <input placeholder="请输入手机号" value={phone} onChange={this.phoneChange}/>
-                    {phone.length?<i className={styles.search_delete} onClick={this.deleteClick}></i>:null}
-
+                <div className={styles.login_item} >
+                    <div className={styles.phoneFrame} >
+                        <span className={styles.area_code}>+86</span>
+                        <i className={styles.arrow_select}></i>
+                        <div className={styles.line_02}></div>
+                    </div >
+                    <div className={styles.phoneFrame2} >
+                        <input className={styles.phoneInput} ref="phone_input" placeholder="请输入手机号" value={phone} onChange={this.phoneChange}/>
+                        {phone.length?<i className={styles.search_delete} onClick={this.deleteClick}></i>:null}
+                    </div>
                 </div>
                 <div className={styles.login_item}>
-                    <input type="password" placeholder="请输入密码" value={validCode} onChange={this.codeChange}/>
+                    <input  type="password" placeholder="请输入密码" style={{width:"90%"}} value={validCode} onChange={this.codeChange}/>
                 </div>
                 {errMsg.length?(
                     <div className={styles.login_pro}>

@@ -188,6 +188,9 @@ body.hidden {
 .c9 {
 	color:#999;
 }
+.c10 {
+	color:#aaa;
+}
 .c6{
 	color:#666
 }
@@ -382,4 +385,16 @@ body.hidden {
 }
 .pd-tp-20{
     padding-top: .2rem;
+}
+.pd-tb-30{
+    padding-top:.3rem;
+    padding-bottom:.3rem;
+}
+.mg-lr-50{
+    padding-left:.5rem;
+    padding-right:.5rem;
+}
+
+.bb-dd{
+    border-bottom: 1px dotted #999;
 }

@@ -5,7 +5,7 @@ import RechareSuccessDialog from './RechareSuccessDialog';
 import AccountSelect from '../AccountSelect';
 import styles from './css/rechargeForm.less';
 import { connect } from 'react-redux';
-import { addAccFundRecord} from '../../../actions/trade/tradeAction';
+import { addAccFundRecord,confirmRecharge} from '../../../actions/trade/tradeAction';
 import { upLoadAllImage} from '../../../actions/me/meAction';
 import { showMessage} from '../../../../../store/actions';
 const PAY_MAP = [
@@ -147,7 +147,7 @@ class ReChargeForm extends PureComponent {
 
     gotoCharge=(orderId,payUrl)=>{
 
-       
+       this.orderId=orderId;
         this.setState({showRechareDialog:false,showConfirmSuccess:true},()=>{
             Client.openUrlWithBrowser(payUrl,()=>{
                 
@@ -173,6 +173,9 @@ class ReChargeForm extends PureComponent {
     }
 
     sureSuccess =()=>{
+        this.props.confirmRecharge(this,{orderId:this.orderId},()=>{
+
+        });
         this.setState({showConfirmSuccess:false});
         hashHistory.goBack();
     }
@@ -267,7 +270,7 @@ class ReChargeForm extends PureComponent {
 
 }
 function injectAction() {
-    return { addAccFundRecord,showMessage,upLoadAllImage};
+    return { addAccFundRecord,showMessage,upLoadAllImage,confirmRecharge};
 }
 
 module.exports = connect(null, injectAction(), null, {withRef:true})(ReChargeForm);

@@ -4,7 +4,7 @@ import {getOptionalList,updatePrice} from '../../actions/optional/optionalAction
 import OptionalItem from './OptionalItem';
 import styles from './css/optionalList.less'
 import IScrollView from '../../../../components/common/iscroll/IScrollView.jsx'
-
+import EmptyFrame from '../trade/EmptyFrame';
 
 class OptionalList extends PureComponent{
 
@@ -111,6 +111,11 @@ class OptionalList extends PureComponent{
         return styles.frame;
     }
 
+    addClick = ()=>{
+        hashHistory.push("/work/optional/add");
+        
+    }
+
     renderList(){
         var  {editable,OptionalListData,ProductList} = this.props;
          //   console.log("sch renderlist");
@@ -128,7 +133,7 @@ class OptionalList extends PureComponent{
         })
     }
     render(){
-       
+        var  {OptionalListData} = this.props;
         return (
 
                 <IScrollView
@@ -137,9 +142,16 @@ class OptionalList extends PureComponent{
                   upFresh={this.iscollUpfresh}
                   ref="iscroll"
                 >
-                <ul>
-                {this.renderList()}
-                </ul>
+                {OptionalListData.length==0?
+                <div style={{paddingTop:"2rem"}}>
+                <EmptyFrame detail="没有自选股" btnText="添加自选" btnClick={this.addClick} />
+                </div>
+                    :
+                    <ul>
+                    {this.renderList()}
+                    </ul>
+                    }
+                
                 
                 </IScrollView>
    

@@ -53,13 +53,11 @@ class SysNoticeList extends CursorList {
              var tmpdate = new Date();
              tmpdate.setTime(createdate);
              createdate = formatTime(tmpdate);
-
-
             return (
                 <li className={styles.item}>
                     <p className={this.mergeClassName("font30", "mg-bt-10")}><span>{title}</span></p>
                     <p className={"c9"}>{createdate}</p>
-                    <div className={"mg-tp-30"} dangerouslySetInnerHTML={{__html:content} }/>
+                    <div className={"mg-tp-42"} dangerouslySetInnerHTML={{__html:content} }/>
                 </li>
             )
         });

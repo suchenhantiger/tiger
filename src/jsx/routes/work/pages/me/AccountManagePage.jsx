@@ -182,7 +182,7 @@ class AccountManagePage extends PageComponent {
         return (
             <FullScreenView>
                 <AppHeader headerName="交易账户管理" theme="makecaptail" />
-                <Content coverHeader={true} coverBottom={true}>
+                <Content coverHeader={true} coverBottom={false}>
                     <div className={styles.header}></div>
                     <div className={styles.account_manage}>
                         <div className={"white"}>

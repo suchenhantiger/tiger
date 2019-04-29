@@ -140,12 +140,12 @@ class MePage extends PageComponent {
     dailyReportClick = ()=>{
        // http://47.101.164.147:8089/jeeplus/mcapp/external/marketNews
         // hashHistory.push("/work/me/dailyreport");
-        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/marketNews");
+        Client.openUrlInapp("http://47.101.164.147:8088/mcAppServer/mcapp/external/marketNews");
     }
     financialCalendar = ()=>{
         
         // hashHistory.push("/work/me/dailyreport");
-        Client.openUrlInapp("http://47.101.164.147:8089/jeeplus/mcapp/external/financialCalendar");
+        Client.openUrlInapp("http://47.101.164.147:8088/mcAppServer/mcapp/external/financialCalendar");
     }
     showAccount = ()=>{
         this.setState({showAccount:true});
