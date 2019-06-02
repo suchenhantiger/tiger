@@ -22,6 +22,7 @@ var webpack = require("webpack"),
             systemApi:path.resolve(__dirname,"src/jsx/utils/systemApi"),
             NetWork:path.resolve(__dirname,"src/jsx/utils/NetWork"),
             Client:path.resolve(__dirname,"src/jsx/utils/Client"),
+            McIntl:path.resolve(__dirname,"src/jsx/utils/McIntl"),
             Base64:path.resolve(__dirname,"src/jsx/utils/Base64"),
             WebSocketUtil:path.resolve(__dirname,"src/jsx/utils/WebSocket"),
             Cache:path.resolve(__dirname,"src/jsx/utils/Cache"),
@@ -47,9 +48,13 @@ var webpack = require("webpack"),
         },{
             from: './src/font',
             to: 'font'
-        },{
-            from: './src/index.html'
-        },{
+        },(isProduction()?{
+            from: './src/index.html',
+            to: 'index.html'
+        }:{
+            from: './src/main.html',
+            to: 'index.html'
+        }),{
             from: './common',
             to: 'js'
         }])

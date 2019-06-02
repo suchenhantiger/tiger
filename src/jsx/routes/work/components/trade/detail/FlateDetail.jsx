@@ -70,6 +70,18 @@ class FlateDetail extends PureComponent{
         this.setState({showBuyDialog:false});
     }
 
+    gotoMaster =(followName,followerId)=>()=>{
+        if(followerId && followerId!=""){
+              hashHistory.push({
+            pathname:"/work/trade/currcopydetail/master",
+            query:{
+                followNmae:followName,
+                followerId:followerId}
+        })
+        }
+      
+    }
+
     //渲染函数
     render(){
 
@@ -77,13 +89,14 @@ class FlateDetail extends PureComponent{
         var {price} = this.props;
 
         var {
-            buySell, clientId,margin,
-            commission,hangType,marketPrice="--",
+            buySell, clientId,margin,followName,grossProfit,
+            commission,hangType,marketPrice="--",marketTime,
             marketTime,mt4Id,openPrice="--",
             openTime,orderId,prodSize,
             prodCode,prodName,profitPrice,stopPrice,
-            swaps,ticket,tradeNo,followerId="--",tradedQty
+            swaps,ticket,tradeNo,followerId,tradedQty,netProfit
         } = this.props.data;
+
         if(openTime && openTime>0){
             var tmpdate = new Date();
             tmpdate.setTime(openTime * 1000);
@@ -91,15 +104,21 @@ class FlateDetail extends PureComponent{
         }else {
             openTime="--";
         }
-        var {ask,bid,exchangeRate} =price;
-        var netProfit=0;
+     
+        var {ask,bid,exchangeRate,ctm} =price;
         var totalProfit = 0;
-        if(ask && bid){
+        if(ask && bid && ctm>marketTime){
             marketPrice = buySell==1?ask:bid;
             var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
             netProfit = (pl)*exchangeRate*prodSize*tradedQty;
+            netProfit= Math.round(netProfit * 100)/ 100;
             totalProfit = netProfit +swaps+commission;
+       }else{
+            totalProfit= netProfit;
+            netProfit = grossProfit;
        }
+
+     //  console.log("sch netProfit  : "+netProfit);
 
         return(
             <div>
@@ -137,9 +156,9 @@ class FlateDetail extends PureComponent{
                               <span className={styles.fl_label}>订单号</span>
                               <span >{ticket}</span>
                           </td>
-                          <td>
+                          <td onClick={ this.gotoMaster(followName,followerId)}>
                               <span className={styles.fl_label}>跟随高手</span>
-                              <span >{followerId}</span>
+                              <span style={followName?{color:"blue"}:null}>{followName} </span>
                           </td>
                       </tr>
                       <tr>

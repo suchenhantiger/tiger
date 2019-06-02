@@ -4,7 +4,8 @@ import styles from './css/confrimpopup2.css';
 class Confrim extends PureComponent {
     //默认属性值
     static defaultProps = {
-        showCancel:true
+        showCancel:true,
+        heightType:0
     };
 
     //构造函数
@@ -17,13 +18,13 @@ class Confrim extends PureComponent {
         //打印渲染日志，必写
         systemApi.log("Confrim render");
 
-        var {onSure,onCancel,title,sureText,cancelText,showCancel} = this.props;
-
+        var {onSure,onCancel,title,titleCenter,sureText,cancelText,showCancel,heightType} = this.props;
         return (
             <FullScreenView mask={true}>
+            <div className={styles.pop_outer} style={heightType==1?{top:"20%"}:null}>
                 <div className={styles.pop_inner}>
                     <div className={styles.pup_content}>
-                        {title?<p className={this.mergeClassName("font36", "mg-bt-30")}>{title}</p>:null}
+                        {title?<p className={"font36 mg-bt-30 "+(titleCenter?"center":"")}>{title}</p>:null}
                         {this.props.children}
                     </div>
                     {showCancel?
@@ -38,6 +39,7 @@ class Confrim extends PureComponent {
                     </div>
                     }
                    
+                </div>
                 </div>
             </FullScreenView>
         );

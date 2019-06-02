@@ -30,8 +30,11 @@ export function updateProduct(component, cb){
     return function(dispatch, state){
 
         cb && cb();
+        if(systemApi.hasLoadPro)
+            return;
         var clientId=systemApi.getValue("clientId");
         component.requestJSON("optionalstock/getProduct",{clientId}).done((data)=>{
+            systemApi.hasLoadPro=true;
             // console.log(data);
             if(data["1"] || data["2"] || data["3"] ||data["4"]){
                 dispatch({type:"INIT_PRODUCT_LIST",data});
@@ -60,8 +63,6 @@ export function getProdInfo(component,params, cb){
     }
 }
 
-
-//获取客户列表
 export function getOptionalList(component, params,updateList, cb){
     return function(dispatch, state){
         updateList(false, []);
@@ -113,6 +114,7 @@ export function openOrder(component,params,cb ){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+        params.syntoken = systemApi.getValue("syntoken");
         component.requestJSON("deal/openOrder",params).done((data)=>{
             dispatch(hideLoading());
             //dispatch(showMessage(SUCCESS, "下单成功"));

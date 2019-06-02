@@ -19,6 +19,7 @@ var KEY = {
 
 };
 var systemApi = {
+	hasLoadPro:false,
 	getValue : function(name) {
 		return storage.getItem(name);
 	},
@@ -38,7 +39,7 @@ var systemApi = {
 		return (process.env["NODE_ENV"] || "") != "develop";
  	},
 	log:function(text){
-		if((process.env["NODE_ENV"] || "") != "production" && console && console.log){
+		if( (isDebug || vconsole) && console && console.log){
 			console.log(text);
 		}
 	}
@@ -124,9 +125,10 @@ systemApi.overrideES6JS();
 if(TestEnvironment){
 	//http://192.168.103.112:8080/jeeplus/mcapp/optionalstock/getOptionalStock
 	//http://192.168.103.108:8080/jeeplus/mcapp/optionalstock/getOptionalStock
-	// "192.168.103.108"mcAppServer
-	//47.101.164.147    8089
-	var rootIP = "47.101.164.147";
+	// "192.168.103.108"mcAppServer http://192.168.103.108:8010/mcAppServer/mcapp
+	//47.101.164.147    8089    http://127.0.0.1/ 8010    180.235.132.36 180.235.135.206
+	//var rootIP = "180.235.135.206";
+	var rootIP = "47.101.164.147";//192.168.103.108:8010
 	systemApi.setValue("rootUrl","http://"+rootIP+":8088/mcAppServer/mcapp/");
 	systemApi.setValue("websocketUrl","ws://"+rootIP+":8086"); 
 }

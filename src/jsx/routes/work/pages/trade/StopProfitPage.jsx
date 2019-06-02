@@ -4,27 +4,83 @@ import FullScreenView from '../../../../components/common/fullscreen/FullScreenV
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import InputFormate from '../../components/optional/detail/InputFormate';
 import styles from './css/stopProfitPage.less';
-
+import Confirm from '../../../../components/common/popup/Confirm';
 /********交易主页*********/
 class StopProfitPage extends PageComponent {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            stopPrice:null,
-            profitPrice:null
-        }
-
+     
         var { 
-            digits,minstDec,buySell
+            digits,minstDec,buySell,profitPrice,stopPrice
          }=this.props.prodInfo;
          this._buySell = buySell;
-
          this._digits = +digits;
          this._valueStep = Math.pow(10,-this._digits);
          this._minDis = (+minstDec) * this._valueStep;
 
+         if(profitPrice==null|| profitPrice==0){
+            profitPrice=null;
+         }else{
+            profitPrice= profitPrice.toFixed(this._digits);
+         }
+         if(stopPrice==null || stopPrice==0){
+            stopPrice=null;
+         }else{
+            stopPrice =stopPrice.toFixed(this._digits);
+         }
+
+         
+
+
+         this.state = {
+            stopPrice,
+            profitPrice,
+            keyBoard:false,
+            showConfirm:false
+        }
+
+
+
+
+
     }
+
+    componentDidMount(){
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.removeEventListener("resize", this.onResize);
+     
+    }
+
+
+    //界面尺寸变化回调
+    onResize = ()=>{
+        var {activeElement} = document,
+            {tagName} = activeElement,
+            {availHeight} = screen,
+            {innerHeight} = window;
+
+        if(availHeight-innerHeight > 100)
+            this.setState({keyBoard:true});
+        else
+            this.setState({keyBoard:false});
+        if(tagName=="INPUT" || tagName=="TEXTAREA") {
+           window.setTimeout(function() {
+               activeElement.scrollIntoViewIfNeeded(true);
+           },0);
+        }
+    }
+
+
+
     //获取页面名称
     getPageName() { return "交易_止盈止损"; }
 
@@ -185,13 +241,7 @@ class StopProfitPage extends PageComponent {
     }
 
     onCommit =()=>{
-        var {stopPrice,profitPrice} = this.state;
-        var {onSure}=this.props;
-        var tmpLoss = null;
-        if(stopPrice!=0)  tmpLoss=stopPrice;
-        var tmpProfit = null;
-        if(profitPrice!=0)  tmpProfit=profitPrice;
-        onSure && onSure(tmpLoss,tmpProfit);
+        this.setState({showConfirm:true});
 
     }
 
@@ -212,12 +262,27 @@ class StopProfitPage extends PageComponent {
         this.plusClick(2)();
     }
 
+    onSureConfirm =()=>{
+        this.setState({showConfirm:false});
+        var {stopPrice,profitPrice} = this.state;
+        var {onSure}=this.props;
+        var tmpLoss = null;
+        if(stopPrice!=0)  tmpLoss=stopPrice;
+        var tmpProfit = null;
+        if(profitPrice!=0)  tmpProfit=profitPrice;
+        onSure && onSure(tmpLoss,tmpProfit);
+  
+    } 
+    onCancelConfirm =()=>{
+        this.setState({showConfirm:false});
+    }
+
 
 
     render() {
         systemApi.log("StopProfitPage render");
 
-        var {stopPrice, profitPrice} = this.state;
+        var {stopPrice, showConfirm,profitPrice,keyBoard} = this.state;
 
         var {prodInfo,price}=this.props;
         var { 
@@ -300,9 +365,19 @@ class StopProfitPage extends PageComponent {
                             <p className={this.mergeClassName("c9", "mg-tp-10")}>修改止盈、止损价格，参考范围以现在的价格为准</p>
                         </div>
                     </div>
+                    {keyBoard?null:
                     <div className={styles.bottom_btn_fixed}>
                         <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.onCommit}>确认修改</button></div>
                     </div>
+                    
+                    }
+                    {showConfirm?
+                    <Confirm onSure={this.onSureConfirm} onCancel={this.onCancelConfirm}>
+                        <div>
+                            <p className="font30 mg-bt-30 center">您确定要修改止盈止损价格吗？</p>
+                        </div>
+                    </Confirm>:null}
+                    
                 </Content>
                 {this.props.children}
             </FullScreenView>

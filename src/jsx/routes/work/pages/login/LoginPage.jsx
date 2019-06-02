@@ -100,13 +100,13 @@ class LoginPage extends PageComponent {
                 <Content>
                     {this.logined?
                         <ul className={styles.login_tab}>
-                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>密码登录</li>
-                            <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>快捷登录</li>
+                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>{McIntl.message("pwd_login")}</li>
+                            <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>{McIntl.message("fast_login")}</li>
                             
                         </ul>:
                         <ul className={styles.login_tab}>
-                           <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>快捷登录</li>
-                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>密码登录</li>
+                           <li className={index == 1 ? styles.on : ""} onClick={this.tabClick(1)}>{McIntl.message("fast_login")}</li>
+                            <li className={index == 0 ? styles.on : ""} onClick={this.tabClick(0)}>{McIntl.message("pwd_login")}</li>
                          
                         </ul>
                     }

@@ -8,7 +8,7 @@ class HistoryDetailPage extends PageComponent {
     constructor(props, context) {
         super(props, context);
         var { historyInfo } = this.props.location.query;
-        console.log(this.props.location.query);
+       // console.log(this.props.location.query);
         this._historyInfo = JSON.parse(historyInfo);
         this.state = {
             

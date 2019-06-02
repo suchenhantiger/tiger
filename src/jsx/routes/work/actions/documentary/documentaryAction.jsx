@@ -32,7 +32,7 @@ export function followRelieve(component, params,cb){
     return function(dispatch, state){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
-        var {fowType} = params;
+        var {fowType,noMsg} = params;
         params.clientId=clientId;
         component.requestJSON("follower/followRelieve",params).done((data)=>{
             dispatch(hideLoading());
@@ -40,7 +40,10 @@ export function followRelieve(component, params,cb){
             if(fowType==3){
                 dispatch(showMessage(SUCCESS, "恢复跟随关系成功"));
             }else{
-                dispatch(showMessage(SUCCESS, "解除跟随关系成功"));
+                if(noMsg==true){
+
+                }else
+                    dispatch(showMessage(SUCCESS, "解除跟随关系成功"));
             }
             
         }).fail((data)=>{
@@ -56,6 +59,7 @@ export function applyFollower(component, params,cb){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken = systemApi.getValue("syntoken");
         component.requestJSON("follower/applyFollower",params).done((data)=>{
             dispatch(hideLoading());
             cb && cb(data);
@@ -71,7 +75,7 @@ export function openFollow(component,cb){
     return function(dispatch, state){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("users/openMt4Acc",{clientId,mt4AccType:2}).done((data)=>{
+        component.requestJSON("users/openMt4Acc",{clientId,mt4AccType:2,syntoken:systemApi.getValue("syntoken")}).done((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(SUCCESS, "已为您开通跟单账号"));
             cb && cb(data);

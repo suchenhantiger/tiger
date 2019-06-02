@@ -26,7 +26,9 @@ function genSignStr(params, needToken) {
     for (var i = 0; i < paramList.length; i++) {
         var item = paramList[i];
         if(null!=params[item]){
-            if(item=="file" || item=="address" ) continue;
+            if(item=="file" || item=="address" 
+            // || item=="syntoken"   
+            ) continue;
             list.push(item + "=" + params[item]);
         }
             
@@ -38,14 +40,17 @@ function genSignStr(params, needToken) {
         list.push("token=65928a6dfca54365a0353a2b1aad4f47");
     }
 
-    console.log(list);
-    console.log(list.join("&"));
+  //  console.log(list);
+   // console.log(list.join("&"));
     return mad5(list.join("&"));
     // return md5(list.join("&")).toUpperCase();
 }
 
 //请求成功回调
 function requestSuccess(ver, deferred, iskick, data){
+    var {syntoken}=data;
+    if(syntoken) 
+        systemApi.setValue("syntoken",syntoken);
     if (ajaxQueue[ver]) {
         delete ajaxQueue[ver];
 
@@ -72,6 +77,9 @@ function requestSuccess(ver, deferred, iskick, data){
 }
 
 function requestError(ver, deferred, data){
+    var {syntoken}=data;
+    if(syntoken) 
+        systemApi.setValue("syntoken",syntoken);
     
     if (ajaxQueue[ver]) {
         delete ajaxQueue[ver];

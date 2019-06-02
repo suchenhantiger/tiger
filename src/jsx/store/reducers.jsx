@@ -28,7 +28,11 @@ function baseReducer(state,action){
         hanglist: [], couplist : [], orderlist :[],
         infoEquity: {},
         floatPL:0,
-        f_floatPL:0
+        f_floatPL:0,
+        showUpdate:false,  //0:不暂时，1:展示，2强制更新
+        showfresh:1,
+        confirming:false,
+        confirmCb:null
     };
 
     if(type == SHOW_LOADING){
@@ -55,6 +59,24 @@ function baseReducer(state,action){
     else if(type == HIDE_MESSAGE){
         var {message} = action;
         return Object.assign({}, state, {messageshow:false});
+    }else if(type == "show_update_dialog"){
+        var {data} = action;
+        //"vsRemark":"222","downUrl":"222","appType":2,"serverUrl":"11","version":"22222"
+        var {vsRemark,downUrl,serverUrl,version,appType} = data;
+        var showUpdate = false;
+        if(appType>0) showUpdate =true;
+        return Object.assign({}, state, {vsRemark,downUrl,serverUrl,version,appType,showUpdate});
+
+    }else if(type == "close_update_dialog"){
+      
+        return Object.assign({}, state, {showUpdate:false});
+    }else if(type == "close_confirm"){
+          return Object.assign({}, state, {confirming:false,confirmCb:null});
+          
+    }else if(type == "show_confirm"){
+        var {message,confirmCb} = action;
+        return Object.assign({}, state, {confirming:true,message,confirmCb});
+          
     }else if(type == "INIT_OPTIONAL_LIST"){
         var {ProductList}=state;
         var tmpOptionalList= action.data.slice();
@@ -158,7 +180,6 @@ function baseReducer(state,action){
         var {accuracyDate,
             incomeDate,
             steadyDate} = action.data;
-            console.log(accuracyDate);
         return Object.assign({}, state, {
             accuracyDate:accuracyDate.list,
             incomeDate:incomeDate.list,
@@ -166,31 +187,71 @@ function baseReducer(state,action){
         });
     }else if(type == "UPDATE_ALL_LIST"){
         var {hanglist=[], couplist =[], orderlist =[]} =action.data;
+        var {showfresh} = state;
+       // couplist.push.apply(couplist,orderlist);
+     //   orderlist.push.apply(orderlist,couplist);
+        var {couplist:oldCoup, orderlist:oldOrder} =state;
+        var floatPL = 0;
+        for(var i=0,l1=orderlist.length;i<l1;i++){//保留orderlist的浮动盈亏
+            var {ticket} = orderlist[i];
+            for(var j=0,l2=oldOrder.length;j<l2;j++){
+                var {ticket:oldT,netProfit=0} = oldOrder[j];
+                if(ticket==oldT){
+                    orderlist[i].netProfit = netProfit;
+                    
+                    break;
+                }
+            }
+            floatPL+=orderlist[i].netProfit;
+        }
+        var f_floatPL = 0;
+        for(var i=0,l1=couplist.length;i<l1;i++){//保留couplist的浮动盈亏
+            var {ticket} = couplist[i];
+            for(var j=0,l2=oldCoup.length;j<l2;j++){
+                var {ticket:oldT,netProfit=0} = oldCoup[j];
+                if(ticket==oldT){
+                    couplist[i].netProfit = netProfit;
+                   
+                    break;
+                }
+            }
+            f_floatPL+=couplist[i].netProfit;
+        }
+        showfresh=  showfresh+1;
         return Object.assign({}, state, {
-            hanglist,couplist,orderlist,floatPL:0,f_floatPL:0
+            hanglist,couplist,orderlist,floatPL,f_floatPL,showfresh
         });
     }else if(type == "UPDATE_COUPLIST"){
         var {couplist =[]} =action.data;
         return Object.assign({}, state, {
            couplist
         });
-    }else if(type == "QUERY_POSITION_DATA"){
-       // console.log(action.data);
-        return Object.assign({},state,{
-            infoEquity:action.data
+    }else if(type == "clear_store"){
+        return Object.assign({}, state, {
+            hanglist: [], couplist : [], orderlist :[],
+            infoEquity: {},
+            floatPL:0,
+            f_floatPL:0,
         });
+    }else if(type == "QUERY_POSITION_DATA"){
+
+  
+            return Object.assign({},state,{
+                infoEquity:action.data
+            });
         
       }else if(type == "QUERY_POSITION_LIST_DATA"){
         var floatTrade = action.data;
+     
         var {hanglist,couplist,orderlist}=state;
+
         for(var i=0,l=hanglist.length;i<l;i++){
             var prodCode = hanglist[i].prodCode;
             for(var j=0,l2=floatTrade.length;j<l2;j++){
                 var tmpO = floatTrade[j];
                 if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
                 if(prodCode == tmpO.symbol){
-                    hanglist[i] = Object.assign({}, hanglist[i],tmpO);
-                    
+                    hanglist[i] = Object.assign({}, hanglist[i],tmpO);     
                     break;
                 }
             }
@@ -203,20 +264,25 @@ function baseReducer(state,action){
             for(var j=0,l2=floatTrade.length;j<l2;j++){
                 var tmpO = floatTrade[j];
                 if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
-                if(prodCode == tmpO.symbol){
-
+                let {marketTime} = couplist[i];
+                let {ctm} = tmpO;
+                if(prodCode == tmpO.symbol && ctm > marketTime){
+                    systemApi.log("sch prodCode:"+prodCode+"ctm :"+ ctm+" markettime: "+ marketTime);
                     couplist[i] = Object.assign({}, couplist[i],tmpO);
                     var {ask,bid,marketPrice,buySell,
-                        openPrice,prodSize,exchangeRate,
+                        openPrice,prodSize,exchangeRate,grossProfit,
                         tradedQty,swaps,commission} = couplist[i] ;
                     var netProfit = 0;
                     if(ask && bid){
                         marketPrice = buySell==1?ask:bid;
                         var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
-                        netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
+                        grossProfit =(pl)*exchangeRate*prodSize*tradedQty;
+                        netProfit = grossProfit+swaps+commission;
                         couplist[i].marketPrice = marketPrice;
                     }
-                    couplist[i].netProfit=netProfit;
+                    couplist[i].netProfit=Math.round(netProfit * 100)/ 100;
+                    couplist[i].grossProfit= Math.round(grossProfit * 100)/ 100;
+
                     break;
                 }
             }
@@ -228,18 +294,27 @@ function baseReducer(state,action){
             for(var j=0,l2=floatTrade.length;j<l2;j++){
                 var tmpO = floatTrade[j];
                 if(typeof(tmpO)=='string') tmpO = JSON.parse(tmpO);
-                if(prodCode == tmpO.symbol){
+                let {marketTime} = orderlist[i];
+                let {ctm} = tmpO;
+                if(prodCode == tmpO.symbol && ctm > marketTime){
+                   // systemApi.log("sch prodCode:"+prodCode+"ctm :"+ ctm+" markettime: "+ marketTime);
                     orderlist[i] = Object.assign({}, orderlist[i],tmpO);
+
                     var {ask,bid,marketPrice,buySell,
-                        openPrice,prodSize,exchangeRate,
+                        openPrice,prodSize,exchangeRate,grossProfit,
                         tradedQty,swaps,commission} = orderlist[i] ;
                     var netProfit = 0;
+                  
                     if(ask && bid){
                         marketPrice = buySell==1?ask:bid;
                         var pl = buySell==0?(marketPrice-openPrice):(openPrice-marketPrice);
-                        netProfit = (pl)*exchangeRate*prodSize*tradedQty+swaps+commission;
+                        grossProfit= (pl)*exchangeRate*prodSize*tradedQty;
+                        netProfit = grossProfit+swaps+commission;
+                    
                     }
-                    orderlist[i].netProfit=netProfit;
+                  //  console.log("sch 1111 netProfit:"+netProfit+"   grossProfit:"+grossProfit+"swaps:"+swaps+"commission:"+commission);
+                    orderlist[i].grossProfit= Math.round(grossProfit * 100)/ 100;
+                    orderlist[i].netProfit= Math.round(netProfit * 100)/ 100;
                     break;
                 }
             }
@@ -247,6 +322,7 @@ function baseReducer(state,action){
             floatPL += orderlist[i].netProfit;
 
         }
+
         return Object.assign({},state,{
             hanglist:hanglist.slice(),
             couplist:couplist.slice(),

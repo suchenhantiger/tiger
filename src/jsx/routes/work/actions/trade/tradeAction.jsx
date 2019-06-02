@@ -1,4 +1,4 @@
-import {showLoading, hideLoading, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
+import {showLoading, hideLoading,showConfirm, showMessage, ERROR, SUCCESS} from '../../../../store/actions';
 
 //获取跟随列表
 export function myfollowers(component, showload,params, update){
@@ -200,6 +200,7 @@ export function flatOrder(component,params,cb ){
         var {tradeType} =params; 
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+        params.syntoken = systemApi.getValue("syntoken");
         component.requestJSON("deal/flatOrder",params).done((data)=>{
             dispatch(hideLoading());
             if(tradeType!=0)
@@ -221,13 +222,15 @@ export function updateOrder(component,params,cb ){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+        params.syntoken = systemApi.getValue("syntoken");
         component.requestJSON("deal/updateOrder",params).done((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(SUCCESS, "修改成功"));
+            cb && cb();
         }).fail((data)=>{
             dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
-            cb && cb();
+          //  cb && cb();
         });
     
     }
@@ -246,11 +249,13 @@ export function addAccFundRecord(component, params, cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("bank/addAccFundRecord",params).done((data)=>{
        // dispatch(showMessage(SUCCESS, "充值申请已提交"));
         cb && cb(data);
         }).fail((data)=>{
-            dispatch(showMessage(ERROR, data.message));
+          //  dispatch(showMessage(ERROR, data.message));
+          dispatch(showConfirm(data.message));
         });
     }
 }

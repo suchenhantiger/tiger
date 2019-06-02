@@ -1,6 +1,7 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
-
+import {connect} from 'react-redux';
+import {clearStore} from '../../../../store/actions';
 import styles from './css/settingPage.less';
 
 /********我的主页*********/
@@ -39,6 +40,7 @@ class SettingPage extends PageComponent {
         systemApi.removeValue("telActive");
         systemApi.removeValue("mt4Id");
         systemApi.removeValue("mt4AccType");
+        this.props.clearStore();
         hashHistory.replace("/login");
     }
 
@@ -138,5 +140,9 @@ class SettingPage extends PageComponent {
 
 }
 
+function injectAction(){
+    return {clearStore};
+}
 
-module.exports = SettingPage;
+module.exports = connect(null,injectAction())(SettingPage);
+

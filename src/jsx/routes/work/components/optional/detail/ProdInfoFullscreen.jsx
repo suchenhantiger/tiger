@@ -15,9 +15,39 @@ class ProdInfo extends PureComponent{
     //渲染函数
     render(){
 
-        var {prodName,prodCode,price} = this.props;
-        var {bid="--",updowndiff="--",updownratio="--",
-        tdhigh="--",tdlow="--",tdopen="--",ydclose="--"} = price;
+        var {prodName,prodCode,price,digit} = this.props;
+        var {bid,updowndiff,updownratio,
+        tdhigh,tdlow,tdopen,ydclose} = price;
+
+
+
+        if(bid){
+            bid = bid.toFixed(digit);
+        }else bid = "--";
+
+        if(updowndiff){
+            updowndiff = updowndiff.toFixed(digit);
+        }else updowndiff = "--";
+
+        if(updownratio){
+           // updownratio = updownratio.toFixed(digit);
+        }else updownratio = "--";
+
+        if(tdhigh){
+            tdhigh = tdhigh.toFixed(digit);
+        }else tdhigh = "--";
+
+        if(tdlow){
+            tdlow = tdlow.toFixed(digit);
+        }else tdlow = "--";
+
+        if(tdopen){
+            tdopen = tdopen.toFixed(digit);
+        }else tdopen = "--";
+
+        if(ydclose){
+            ydclose = ydclose.toFixed(digit);
+        }else ydclose = "--";
 
         return(
             <div className={styles.floor}>

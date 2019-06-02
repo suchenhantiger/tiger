@@ -22,16 +22,16 @@ class RechareSuccessDialog extends PureComponent{
     //渲染函数
     render(){
         //suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance
-        var {onCancel} = this.props;
+        var {onClose} = this.props;
 
 
         return(
-            <Confirm  sureText={"确认充值成功"} onSure={this.onSure} showCancel={false}>
+            <Confirm  sureText={"确认"} onSure={this.onSure} onCancel={onClose}>
                 <div>
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
              
                     <div className={styles.item2}>
-                        <span className={"center"}>充值成功后，请耐心等待客服审核。如有疑问，请联系客服。</span>
+                        <span className={"center line-ht-36"}>充值成功后，请点击确认。请耐心等待客服审核，如有疑问，请联系客服。</span>
 
                     </div>
                 

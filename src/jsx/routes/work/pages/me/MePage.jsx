@@ -31,14 +31,19 @@ class MePage extends PageComponent {
 
 
     componentDidMount(){
+        var avatarUrl = systemApi.getValue("avatarUrl");
+        let status = 1;
+        if(avatarUrl == null ||avatarUrl.length==0) status=0 ;
         this.props.updateUserInfo(this,()=>{
-            var mt4Id = systemApi.getValue("mt4Id");
-            if(mt4Id && mt4Id.length>0){
-                this.props.getMt4Message(this,{queryType:2,mt4Id},(infoEquity)=>{
-                    this.setState({infoEquity});
-                });
-            }
-        });
+           
+        },status);
+
+        var mt4Id = systemApi.getValue("mt4Id");
+        if(mt4Id && mt4Id.length>0){
+            this.props.getMt4Message(this,{queryType:4,mt4Id},(infoEquity)=>{
+                this.setState({infoEquity});
+            });
+        }
 
         
     }
@@ -140,12 +145,12 @@ class MePage extends PageComponent {
     dailyReportClick = ()=>{
        // http://47.101.164.147:8089/jeeplus/mcapp/external/marketNews
         // hashHistory.push("/work/me/dailyreport");
-        Client.openUrlInapp("http://47.101.164.147:8088/mcAppServer/mcapp/external/marketNews");
+        Client.openUrlInapp(systemApi.getValue("rootUrl")+"external/marketNews");
     }
     financialCalendar = ()=>{
         
         // hashHistory.push("/work/me/dailyreport");
-        Client.openUrlInapp("http://47.101.164.147:8088/mcAppServer/mcapp/external/financialCalendar");
+        Client.openUrlInapp(systemApi.getValue("rootUrl")+"external/financialCalendar");
     }
     showAccount = ()=>{
         this.setState({showAccount:true});
@@ -161,7 +166,7 @@ class MePage extends PageComponent {
         systemApi.setValue("mt4NickName", mt4NickName);
         
         this.setState({showAccount:false});
-        this.props.getMt4Message(this,{queryType:2,mt4Id},(infoEquity)=>{
+        this.props.getMt4Message(this,{queryType:4,mt4Id},(infoEquity)=>{
             this.setState({infoEquity});
         });
     }
@@ -199,6 +204,17 @@ class MePage extends PageComponent {
 
         });
     }
+    redPocket  = ()=>{
+        hashHistory.push({
+            pathname:"/work/me/server",
+            query:{
+                title:"红包",
+                code:"RED_POCKET"
+            }
+
+        });
+    }
+    
     addAccount=()=>{
         this.props.showComplete("完善资料后可开通体验账号");
     }
@@ -262,7 +278,7 @@ class MePage extends PageComponent {
                                     </p>
                                 </div>
                                 <div className={"right"}>
-                                    <div className={styles.icon_account} onClick={this.manageAcc} >账号管理</div>
+                                    <div className={styles.icon_account} onClick={this.manageAcc} >{McIntl.message("manage")}</div>
                                 </div>
                                 <div className={"clear"}></div>
                                 <div className={styles.account_dt}>
@@ -285,15 +301,15 @@ class MePage extends PageComponent {
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.account_icons}>
-                            {this.renderFuncItem("充值", "./images/me/icon-recharge.png", this.rechargeClick)}
-                            {this.renderFuncItem("提现", "./images/me/icon-withdrawal.png",this.rechargeClick)}
-                            {this.renderFuncItem("银行卡", "./images/me/icon-bank-card.png", this.bankClick)}
+                            {this.renderFuncItem(McIntl.message("deposit"), "./images/me/icon-recharge.png", this.rechargeClick)}
+                            {this.renderFuncItem(McIntl.message("withdraw"), "./images/me/icon-withdrawal.png",this.rechargeClick)}
+                            {this.renderFuncItem(McIntl.message("bank_cards"), "./images/me/icon-bank-card.png", this.bankClick)}
                             {/* {this.renderFuncItem("钱包", "./images/me/icon-recharge.png")} */}
                         </ul>
                     </div>
                     <div className={this.mergeClassName(styles.optional_detail, styles.mt3)}>
                         <ul className={styles.icon_list}>
-                            {this.renderListItem("我的红包", "./images/me/icon-list01.png", false, this.showTip)}
+                            {this.renderListItem("我的红包", "./images/me/icon-list01.png", false, this.redPocket)}
                             {this.renderListItem("邀请好友", "./images/me/icon-list02.png", false, this.showTip)}
                             {this.renderListItem("市场快讯", "./images/me/icon-list03.png", false, this.dailyReportClick /*this.dailyReportClick*/)}
                             {this.renderListItem("财经日历", "./images/me/icon-list04.png", false, this.financialCalendar)}

@@ -49,8 +49,8 @@ class DocumentaryPage extends PageComponent{
         var { index } = this.state;
         return (
             <div className={styles.tabs}>
-                <span className={this.mergeClassName(styles.item, index == 0 ? styles.on : "")} onClick={this.tabChange(0)}>分类高手<i></i></span>
-                <span className={this.mergeClassName(styles.item, index == 1 ? styles.on : "")} onClick={this.tabChange(1)}>综合高手<i></i></span>
+                <span className={this.mergeClassName(styles.item, index == 0 ? styles.on : "")} onClick={this.tabChange(0)}>{McIntl.message("top")} <i></i></span>
+                <span className={this.mergeClassName(styles.item, index == 1 ? styles.on : "")} onClick={this.tabChange(1)}>{McIntl.message("all")} <i></i></span>
             </div>
         )
     }

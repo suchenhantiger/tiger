@@ -16,16 +16,26 @@ class ModifyPwdPage extends PageComponent {
     //获取页面名称
     getPageName() { return "我的主页"; }
 
+    backFunc=()=>{
+        if(this.telChangePwd){
+            hashHistory.goBack();
+        }else{
+            hashHistory.replace("/work");
+        }
+        
+    }
+
 
     render() {
         systemApi.log("ModifyPwdPage render");
 
+
         return (
             <FullScreenView>
-                <AppHeader showBack={true} backHash="/work"  />
+                <AppHeader showBack={true} onBackClick={this.backFunc} />
                 <Content>
                     <ul className={styles.login_tab}>
-                        <li className={styles.on}>修改密码</li>
+                        <li className={styles.on}>{McIntl.message("set_pwd")}</li>
                     </ul>
                     {this.telChangePwd?<TelModifyForm />:<ModifyForm/>
                     }

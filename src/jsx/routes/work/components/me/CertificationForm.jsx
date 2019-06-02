@@ -2,7 +2,7 @@ import styles from './css/certificationForm.less';
 import {connect} from 'react-redux';
 import {getEmailPwd} from '../../actions/login/loginAction';
 import { DatePicker } from 'antd-mobile';
-
+import {checkIDNO} from '../../../../utils/util';
 Date.prototype.Format = function(fmt)   
 { //author: meizz   
   var o = {   
@@ -33,7 +33,7 @@ class CertificationForm extends PureComponent {
             femail:0,
             idType: "",
             idNO:"",
-            birthday:new Date(),
+            birthday:null,
             errMsg:""
 
            
@@ -65,8 +65,10 @@ class CertificationForm extends PureComponent {
 
         if(name.length==0){
             this.setState({errMsg:"请输入姓名"});
-        }else if( idNO.length==0){
-            this.setState({errMsg:"请输入证件号码"});
+        }else if( checkIDNO(idNO)==false){
+            this.setState({errMsg:"请输入正确的证件号码"});
+        }else if(birthday==null){
+            this.setState({errMsg:"请选择出生日期"});
         }else{
             next && next({trueName:name,sex:femail,cardType:0,cardNO:idNO,birthday:birthday.Format('yyyy-MM-dd')});
         }
@@ -92,26 +94,28 @@ class CertificationForm extends PureComponent {
         idNO=""} = this.state;
 
         var {birthday}=this.state;
-        var selectdate = birthday.Format('yyyy-MM-dd');
+        var selectdate = null;
+        if(birthday!=null)
+            selectdate = birthday.Format('yyyy-MM-dd');
       
-
+//placeholder="请选择出生日期" value=  
         return (
             <div>
         
 
-                <div className={styles.form_tabs}>
+                {/* <div className={styles.form_tabs}>
                     <ul>
                         <li className={femail==0?styles.on:null} onClick={this.clickFemail(0)}><span>男</span></li>
                         <li className={femail==1?styles.on:null} onClick={this.clickFemail(1)}><span>女</span></li>
                     </ul>
-                </div>
+                </div> */}
             <div style={{height:"0.2rem"}}/>
            
             <div className={styles.login_form}>
                  
 
                 <div className={styles.login_item}>
-                    <input placeholder="姓名" value={name} onChange={this.nicknameChange} />
+                    <input className={styles.phoneInput} placeholder="姓名" value={name} onChange={this.nicknameChange} />
                 </div>
 
                 {/* <div className={styles.login_item}>
@@ -119,7 +123,7 @@ class CertificationForm extends PureComponent {
                 </div> */}
 
                 <div className={styles.login_item}>
-                    <input  placeholder="身份证" value={idNO} onChange={this.idNOChange} />
+                    <input  className={styles.phoneInput} placeholder="身份证" value={idNO} onChange={this.idNOChange} />
                 </div>
 
                 <div className={styles.login_item}>
@@ -130,7 +134,7 @@ class CertificationForm extends PureComponent {
                             maxDate={new Date()}
                             mode="date">
                    
-                              <input placeholder="请选择出生日期" value={selectdate}  ref='bdateBtn' />
+                              <div  className={selectdate?"":"c9"} >{selectdate?selectdate:"请选择出生日期"}</div>
                 </DatePicker>
                     
                 </div>
@@ -141,9 +145,9 @@ class CertificationForm extends PureComponent {
                         <div className={this.mergeClassName(styles.pro_error, "red")} >{errMsg}</div>
                     </div>
                 ):null}
-                <div className={styles.login_bt_text} onClick={this.nextClick}>
-                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button >下一步</button></div>
-                </div>
+   
+                    <div onClick={this.nextClick} className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button >下一步</button></div>
+
             </div>
             </div>
         );

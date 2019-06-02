@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { getPositionInfo, updatePositionInfo,
     updatePositionList,getPositionAllOrder,
-     flatOrder, updateOrder } from "../../actions/trade/tradeAction";
+     flatOrder } from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
 import PositionAllList from "./PositionAllList";
 import HangList from "./HangList";
@@ -29,6 +29,7 @@ class Position extends PureComponent {
         this._mt4NickName = systemApi.getValue("mt4NickName");
        
         this._prodsStr = "";
+        this._ver=0;
     }
 
 
@@ -48,6 +49,9 @@ class Position extends PureComponent {
         //         this.setState({ fixTabs: yRem < -3.34 });;
         //     }
         // }, 50);
+
+
+        
     }
 
     
@@ -65,23 +69,41 @@ class Position extends PureComponent {
 
 
 
-    startWs =()=>{
+    startWs =(str)=>{
+        //测试代码
+        this._interval1 = setInterval(()=>{
+            var ttt={"symbol":"XAUUSD.","ask":1285.14,"bid":1284.74,"ctm":1558706099,"exchangeRate":1.0,"isClose":true};
+            this.updateFloat(ttt);
+        }, 1000);
 
-        var reqStr = JSON.stringify({"funCode":"301003","mt4Id":this._mt4Id,prodCode:this._prodsStr});
+
+        if(str)
+            var reqStr = str;
+        else
+            var reqStr = JSON.stringify({"funCode":"301003","mt4Id":this._mt4Id,prodCode:this._prodsStr,"ver":this._ver});
+
+        // if(!WebSocketUtil.isValid()){
+
+
+        //     return;
+        // }
         //重置回调函数
         WebSocketUtil.onClose=()=>{
-            console.log("301003 close");
+          //  console.log("301003 close");
             };
         WebSocketUtil.onMessage=(wsData)=>{
-            //    console.log("---onmessage");
             wsData = JSON.parse(wsData);
             // console.log(wsData);
             for(var i=0,l=wsData.length;i<l;i++){
-                var {funCode,data} = wsData[i];
+                var {funCode,data,ver} = wsData[i];
                 if(funCode=="301003"){
                     this.updateFloat(data);
                 }else if(funCode=="301002"){
-                    this.updatePosition(data);
+                    if(ver && ver>=this._ver){
+                         this.updatePosition(data);
+                    }
+                   
+
                 }else if(funCode=="3010031"){
                     this.refreshOrderList();
                 }
@@ -89,13 +111,11 @@ class Position extends PureComponent {
 
         };
         WebSocketUtil.onError=(evt)=>{
-            console.log("301003 Error");
         };
 
         if(!WebSocketUtil.send(reqStr)){
             //发送失败就重新创建一个
             WebSocketUtil.onOpen=()=>{
-                console.log("301003 open ");
                 WebSocketUtil.send(reqStr)
             };
             WebSocketUtil.creatWebSocket(systemApi.getValue("websocketUrl"));
@@ -104,8 +124,8 @@ class Position extends PureComponent {
     
     }
 
-    updatePosition = (data)=>{
-        this.props.updatePositionInfo(data);
+    updatePosition = (ver,data)=>{
+        this.props.updatePositionInfo(ver,data);
     }
 
     updateFloat = (data)=>{
@@ -114,8 +134,12 @@ class Position extends PureComponent {
     }
 
     refreshAllData =()=>{
+        var {infoEquity}=this.props,
+        {balance}=infoEquity;
         
-        
+        var showloading = false;
+        if(balance ==null)
+            showloading=true;
         this._mt4Id = systemApi.getValue("mt4Id");
         this._mt4AccType = systemApi.getValue("mt4AccType");
         this._mt4NickName = systemApi.getValue("mt4NickName");
@@ -124,17 +148,19 @@ class Position extends PureComponent {
  
              return;
          }
- 
+         this._ver++;
          this.props.getPositionInfo(this, { mt4Id:this._mt4Id , queryType: 2 ,floatTrade:1,force:0}, false, () => {
             // this.beginPolling();
-             this.props.getPositionAllOrder(this,false, { mt4Id:this._mt4Id }, (prodList) => {
-                this._prodsStr = prodList.join(",");
-                this.startWs();
-        });
+
          },()=>{
              //失败回调，也需要轮巡
           //   this.beginPolling();
          });
+
+         this.props.getPositionAllOrder(this,showloading, { mt4Id:this._mt4Id }, (prodList) => {
+            this._prodsStr = prodList.join(",");
+            this.startWs();
+        });
 
     }
 
@@ -159,6 +185,8 @@ class Position extends PureComponent {
         Event.unregister("refresh_order_list",this.refreshOrderList);
         Event.unregister("ws_trade_list",this.wsPush);
         Event.unregister("chanege_mt4id",this.refreshAllData);
+
+        this.startWs("0");
     }
 
     wsPush = ()=>{
@@ -190,7 +218,15 @@ class Position extends PureComponent {
     componentDidUpdate() {
         var { iscroll } = this.refs;
         if(this.shouldFresh){
-            iscroll && iscroll.refresh()
+            var {y} = iscroll.wrapper;
+            var {showfresh} = this.props;
+            systemApi.log("sch up 1 : "+this.oldShowfresh);
+            systemApi.log("sch up 2 : "+showfresh);
+            if(this.oldShowfresh != showfresh){
+                iscroll && iscroll.refresh();
+            //    console.log("sch refresh:");
+            }
+          
         }
         this.shouldFresh = false;
     }
@@ -263,6 +299,12 @@ class Position extends PureComponent {
         this.setState({showAccount:false});
     }
 
+    refreshScroll=()=>{
+        var { iscroll } = this.refs;
+        iscroll && iscroll.refresh()
+        
+    }
+
     selectAccount = (mt4AccType, mt4Id,mt4NickName)=>{
         systemApi.setValue("mt4AccType", mt4AccType);
         systemApi.setValue("mt4Id", mt4Id);
@@ -279,6 +321,12 @@ class Position extends PureComponent {
     gotoCharge =()=>{
 
         hashHistory.push("/work/me/recharge");
+    }
+
+
+    componentWillReceiveProps(nextProps){
+        this.oldShowfresh =this.props.showfresh;
+        systemApi.log("sch oldShowfresh : "+this.oldShowfresh);
     }
 
     //渲染函数
@@ -318,8 +366,8 @@ class Position extends PureComponent {
             accName =this._mt4NickName;
         }
 
-        if(orderlist[0])
-        console.log("sch :"+JSON.stringify(orderlist[0].ask));
+        // if(orderlist[0])
+        // console.log("sch :"+JSON.stringify(orderlist[0].ask));
 
         var tmpfloatPL = floatPL;
         if(this._mt4AccType==2)
@@ -329,8 +377,8 @@ class Position extends PureComponent {
         return (
             <div>
                 <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()}
-                // upFresh={this.reloadData}
-                    canUpFresh={false}  ref="iscroll">
+                upFresh={this.reloadData}
+                    canUpFresh={true}  ref="iscroll">
                     <div>
                         {emailIsActive==0?
                         <NoMt4Frame />:
@@ -344,7 +392,7 @@ class Position extends PureComponent {
                             <p className={this.mergeClassName("c3", "font48", "mg-tp-30", styles.c3)}>${tmpfloatPL}</p>
                         </div>
                         <div className={"right"}>
-                            <div className={styles.icon_account} onClick={this.showAccount}>切换</div>
+                            <div className={styles.icon_account} onClick={this.showAccount}>{McIntl.message("switch")}</div>
                         </div>
                         <div className={"clear"}></div>
                         <div className={"mg-lr-30"}>
@@ -380,7 +428,7 @@ class Position extends PureComponent {
                             {this.renderTabs()}
                             <LazyLoad index={subIndex}>
                                 {this._mt4AccType==2?<CopyAllList  data={couplist} onItemClick={this.clickOrder} />:null}
-                                {this._mt4AccType==2?<CurrFowList couplist={couplist} fowMt4Id={this._mt4Id}   onItemClick={this.clickOrder} />:null}
+                                {this._mt4AccType==2?<CurrFowList refreshScroll={this.refreshScroll} couplist={couplist} fowMt4Id={this._mt4Id}   onItemClick={this.clickOrder} />:null}
                                 {this._mt4AccType==2?null:<PositionAllList  data={orderlist} onItemClick={this.clickOrder} />}
                                 {this._mt4AccType==2?null:<HangList  data={hanglist} onItemClick={this.clickHang} />}
                             </LazyLoad>
@@ -399,11 +447,11 @@ class Position extends PureComponent {
 
 }
 function injectProps(state) {
-    var {infoEquity,floatPL,f_floatPL ,hanglist,couplist,orderlist} = state.base || {};
-    return { infoEquity,floatPL,f_floatPL,hanglist,couplist,orderlist };
+    var {infoEquity,floatPL,f_floatPL ,hanglist,couplist,orderlist,showfresh} = state.base || {};
+    return { infoEquity,floatPL,f_floatPL,hanglist,couplist,orderlist,showfresh };
 }
 function injectAction() {
-    return { getPositionInfo, getPositionAllOrder, flatOrder, updateOrder ,updatePositionInfo,updatePositionList}
+    return { getPositionInfo, getPositionAllOrder, flatOrder ,updatePositionInfo,updatePositionList}
 }
 
 module.exports = connect(injectProps, injectAction())(Position);

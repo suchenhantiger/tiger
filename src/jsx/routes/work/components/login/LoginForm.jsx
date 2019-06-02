@@ -1,6 +1,7 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {login} from '../../actions/login/loginAction';
+import {checkPhone} from '../../../../utils/util';
 class LoginForm extends PureComponent {
 
     //构造函数
@@ -78,7 +79,7 @@ class LoginForm extends PureComponent {
     loginfunc=()=>{
         
         var {phone="",validCode=""} =this.state;
-        if(phone.length != 11 ){
+        if(checkPhone(phone)==false){
             this.setState({errMsg:"手机号格式错误"});
             return;
         }
@@ -105,12 +106,12 @@ class LoginForm extends PureComponent {
                         <div className={styles.line_02}></div>
                     </div >
                     <div className={styles.phoneFrame2} >
-                        <input className={styles.phoneInput} ref="phone_input" placeholder="请输入手机号" value={phone} onChange={this.phoneChange}/>
+                        <input className={styles.phoneInput} ref="phone_input" placeholder={McIntl.message("phone_no")} value={phone} onChange={this.phoneChange}/>
                         {phone.length?<i className={styles.search_delete} onClick={this.deleteClick}></i>:null}
                     </div>
                 </div>
                 <div className={styles.login_item}>
-                    <input  type="password" placeholder="请输入密码" style={{width:"90%"}} value={validCode} onChange={this.codeChange}/>
+                    <input  type="password" placeholder={McIntl.message("enter_pwd")} style={{width:"90%"}} value={validCode} onChange={this.codeChange}/>
                 </div>
                 {errMsg.length?(
                     <div className={styles.login_pro}>
@@ -118,9 +119,9 @@ class LoginForm extends PureComponent {
                     </div>
                 ):null}
                 <div className={styles.login_pro}>
-                    <div className={this.mergeClassName(styles.pro_forget, "blue")} onClick={this.forgetClick}>忘记密码？</div>
+                    <div className={this.mergeClassName(styles.pro_forget, "blue")} onClick={this.forgetClick}>{McIntl.message("foget_pwd")}</div>
                 </div>
-                <div ref="login_btn"  className={styles.login_btn} onClick={this.loginfunc}><button>登 录</button></div>
+                <div ref="login_btn"  className={styles.login_btn} onClick={this.loginfunc}><button>{McIntl.message("login")}</button></div>
             </div>
         );
     }

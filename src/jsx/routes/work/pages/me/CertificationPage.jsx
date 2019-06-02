@@ -22,14 +22,14 @@ class CertificationPage extends PageComponent {
     }
 
     next=(trueInfo)=>{
-        console.log(trueInfo);
+       // console.log(trueInfo);
         this.setState({currPage:1,trueInfo});
     }
 
 
     submit=(front,back)=>{
         var {trueInfo}=this.state;
-        console.log(trueInfo);
+       // console.log(trueInfo);
         this.props.saveRealAccMt4(this,trueInfo,()=>{
             systemApi.setValue("isReal",2);//预置为2
         });
@@ -71,7 +71,7 @@ class CertificationPage extends PageComponent {
                             工作日18:00以后，将在21:00、23:00统一审核；23:00后认证的将在次日审核<br/>
                             非工作日时间：将在10:00、16:00、22:00统一审核；22:00
                             后认证的将在次日审核<br/>
-                            请留意查询牛奶的审核状态
+                            请留意查询您的审核状态
                         </div>
                         {/* <div className={styles.bottom_btn_fixed}>
                             <div className={styles.login_btn}><button>确 定</button></div>

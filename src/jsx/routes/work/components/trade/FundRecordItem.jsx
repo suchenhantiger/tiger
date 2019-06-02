@@ -10,7 +10,7 @@ class FundRecordItem extends PureComponent{
     itemClick = ()=>{
        // hashHistory.push("/work/optional/detail");
         var {data}= this.props;
-        console.log(data);
+       // console.log(data);
         // hashHistory.push({
         //     pathname:"/work/trade/historydetail",
         //     query:{historyInfo:JSON.stringify(data)}

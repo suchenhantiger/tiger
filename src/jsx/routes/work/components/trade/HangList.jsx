@@ -24,7 +24,6 @@ class HangList extends PureComponent{
     renderList(){
         var { data = [] } = this.props;
         return data.map(item=>{
-            // console.log(item);
             return <HangItem data = {item} onChoose={this.onItemclick}/>
         })
     }

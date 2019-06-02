@@ -278,7 +278,7 @@ class IScrollView extends PureComponent{
                 <div className={styles.div} ref="frame">
                     {canUpFresh?(
                         <div className={upClass}>
-                            <div style={{    margin: "5px auto",position: "relative",width: ".4rem"}}><div className={upImgClass}></div></div>
+                            <div style={{    margin: "8px auto",position: "relative",width: ".4rem"}}><div className={upImgClass}></div></div>
                             <span className={styles.vmid}>{upText}</span>
                         </div>):null}
                    

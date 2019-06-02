@@ -105,6 +105,70 @@ function formatDate(date) {
 
   return date.substr(0, 4) + "-" + date.substr(4, 2) + "-" + date.substr(6, 2);
 }
+function checkPhone(phone){ 
+ 
+  if(!(/^1[34578]\d{9}$/.test(phone))){ 
+      return false; 
+  }else{
+    return true; 
+  }
+}
+
+function checkEmail(email){ 
+  
+   if(!(/^[A-Za-z0-9._%-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/.test(email))){ 
+       return false; 
+   }else{
+     return true; 
+   }
+ }
+
+ function checkIDNO(email){ 
+   var reg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/;
+  
+   if(!(reg.test(email) ) ){ 
+       return false; 
+   }else{
+     return true; 
+   }
+ }
+
+ function checkPassword(pwd){
+  var str = pwd;
+  if (str == null || str.length <6  || str.length >15) {
+      return false;
+  }
+
+  var reg1 = new RegExp(/^[0-9A-Za-z]+$/);
+  if (!reg1.test(str)) {
+      return false;
+  }
+  var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
+  if (reg.test(str)) {
+      return true;
+  } else {
+      return false;
+  }
+ }
+
+ function getBankCode(str) {
+  if(str.length<8)
+      return str;
+  else
+      return str.replace(/\s/g,'').replace(/(\d{4})(?=\d)/g,"$1 ");;
+}
+ 
+// $("#AccountNum").keydown(function(e) {  
+//   if(!isNaN(this.value.replace(/[ ]/g,""))){  
+//       this.value =this.value.replace(/\s/g,'').replace(/(\d{4})(?=\d)/g,"$1 ");//四位数字一组，以空格分割  
+//   }else{  
+//       if(e.keyCode==8){//当输入非法字符时，禁止除退格键以外的按键输入  
+//           return true;  
+//       }else{  
+//           return false  
+//       }  
+//   }  
+// });  
 
 module.exports = {
   red: redColor,
@@ -119,4 +183,10 @@ module.exports = {
   inTradeTime: inTradeTime,
   formatDate: formatDate,
   zsArr: ['1A0001', '399001', '399005', '399006', '399300', '399905'],
+  checkPhone:checkPhone,
+  checkEmail:checkEmail,
+  checkIDNO:checkIDNO,
+  checkPassword:checkPassword,
+  getBankCode:getBankCode 
+
 }

@@ -39,13 +39,13 @@ class FlateDetail extends PureComponent{
             openTime="--";
         }
 
-        if(expireDate && expireDate>0){
-            var tmpdate = new Date();
-            tmpdate.setTime(expireDate * 1000);
-            expireDate = formatTime(tmpdate);
-        }else {
-            expireDate = "--"
-        }
+        // if(expireDate && expireDate>0){
+        //     var tmpdate = new Date();
+        //     tmpdate.setTime(expireDate * 1000);
+        //     expireDate = formatTime(tmpdate);
+        // }else {
+        //     expireDate = "--"
+        // }
 
 
 
@@ -92,12 +92,12 @@ class FlateDetail extends PureComponent{
                               <span >{openTime}</span>
                           </td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                           <td colSpan="2">
                               <span className={styles.fl_label}>截止时间</span>
                               <span >{expireDate}</span>
                           </td>
-                      </tr>
+                      </tr> */}
                       </tbody>
                   </table>
               </div>

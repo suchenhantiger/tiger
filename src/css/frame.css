@@ -380,6 +380,9 @@ body.hidden {
 .pd-lt-50{
     padding-left: .5rem;
 }
+.pd-lt-10{
+    padding-left: .1rem;
+}
 .pd-rt-50{
     padding-right: .5rem;
 }

@@ -18,16 +18,20 @@ export function getMt4Message(component, params,cb){
 }
 
 
-export function updateUserInfo(component,cb){
+export function updateUserInfo(component,cb,status){
     return function(dispatch, state){
-        var clientId=systemApi.getValue("clientId");
-        component.requestJSON("users/getUserMessage",{clientId}).done((data)=>{
+        var params ={};
+        params.clientId = systemApi.getValue("clientId");
+        if(status==1) 
+            params.status=1;
+        component.requestJSON("users/getUserMessage",params).done((data)=>{
             var { avatarUrl,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
                 nickname,tel,telActive,mt4Accs=[]
                 } = data;
-                systemApi.setValue("avatarUrl",avatarUrl);
+                if(status!=1)
+                    systemApi.setValue("avatarUrl",avatarUrl);
                 systemApi.setValue("email",email);
                 systemApi.setValue("emailIsActive",emailIsActive);
                 systemApi.setValue("freeze",freeze);
@@ -98,6 +102,7 @@ export function saveAccMt4(component, params,cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         dispatch(showLoading());
         component.requestJSON("users/saveAccMt4",params).done((data)=>{
             // var {mt4Id,mt4AccType} = data;
@@ -125,7 +130,7 @@ export function changePassword(component, newpassword,cb){
         {
             newpassword=  encrypt.encrypt(newpassword);
         }
-        component.requestJSON("users/changePasswordOrStatus",{updateType:0,clientId,newpassword}).done((data)=>{
+        component.requestJSON("users/changePasswordOrStatus",{updateType:0,clientId,newpassword,syntoken:systemApi.getValue("syntoken")}).done((data)=>{
 
             cb && cb();
         }).fail((data)=>{
@@ -141,16 +146,15 @@ export function changePasswordByold(component, params,cb){
        
         var encrypt = new JSEncrypt();
         encrypt.setPublicKey(PUBLIC_KEY);
-       console.log(params.oldpassword);
+      
         if(params.oldpassword)
         {
             params.oldpassword =  encrypt.encrypt(params.oldpassword);
         }
-        console.log(params.oldpassword);
         if(params.newpassword){
             params.newpassword =  encrypt.encrypt(params.newpassword);
         }
-
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("users/changePasswordOrStatus",params).done((data)=>{
             dispatch(showMessage(SUCCESS, "修改成功"));
             cb && cb();
@@ -205,42 +209,51 @@ export function verification(component, params,cb){
 }
 
 
-export function getMessagePwd(component, phone,type,cb){
+export function getMessagePwd(component, phone,type,cb,failCb){
     return function(dispatch, state){
+        dispatch(showLoading());
         var time =  (new Date()).getTime();
         component.requestJSON("loginregister/sendCode",{phone,time,type},null,{needToken:false}).done((data)=>{
-            console.log(data);
+            dispatch(hideLoading());
             cb && cb();
         }).fail((data)=>{
+           
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
+            failCb && failCb();
+        });
+    }
+}
+
+//websocket 异常时采用轮训方式而使用的接口
+export function getEmailPwd(component, email,cb,failCb){
+    return function(dispatch, state){
+        dispatch(showLoading());
+        var time =  (new Date()).getTime();
+        component.requestJSON("loginregister/sendCode",{email,time},null,{needToken:false}).done((data)=>{
+            dispatch(hideLoading());
+            cb && cb();
+        }).fail((data)=>{
+            dispatch(hideLoading());
+            dispatch(showMessage(ERROR, data.message));
+            failCb && failCb();
             
         });
     }
 }
 
 //websocket 异常时采用轮训方式而使用的接口
-export function getEmailPwd(component, email,cb){
+export function getChangeEmailPwd(component, email,cb,failCb){
     return function(dispatch, state){
+        dispatch(showLoading());
         var time =  (new Date()).getTime();
         component.requestJSON("loginregister/sendCode",{email,time},null,{needToken:false}).done((data)=>{
-            console.log(data);
+            dispatch(hideLoading());
             cb && cb();
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
-            
-        });
-    }
-}
-
-//websocket 异常时采用轮训方式而使用的接口
-export function getChangeEmailPwd(component, email,cb){
-    return function(dispatch, state){
-        var time =  (new Date()).getTime();
-        component.requestJSON("loginregister/sendCode",{email,time},null,{needToken:false}).done((data)=>{
-            console.log(data);
-            cb && cb();
-        }).fail((data)=>{
-            dispatch(showMessage(ERROR, data.message));
+            failCb && failCb();
             
         });
     }
@@ -288,7 +301,9 @@ export function updateToken(component,cb,failCb){
 
         component.requestJSON("users/updateToken",params).done((data)=>{
             // dispatch(hideLoading());
-            var { avatarUrl,clientId,tokenVersion,
+            var { 
+                //avatarUrl,
+                clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
                 nickname,tel,telActive,syntoken,
@@ -297,7 +312,7 @@ export function updateToken(component,cb,failCb){
                 token = Decrypt(token,key,"20190315mcappaes");
                 systemApi.setValue("tigertoken",token);
                 systemApi.setValue("signVersion",tokenVersion);
-                systemApi.setValue("avatarUrl",avatarUrl);
+               // systemApi.setValue("avatarUrl","");
                 systemApi.setValue("clientId",clientId);
                 systemApi.setValue("email",email);
                 systemApi.setValue("emailIsActive",emailIsActive);
@@ -381,7 +396,8 @@ export function login(component, params,logintype,cb){
             params.password = mcEncrypt(params.password,key,"20190315mcappaes");
         component.requestJSON("loginregister/login",params,null,{needToken:false}).done((data)=>{
             dispatch(hideLoading());
-            var { avatarUrl,clientId,tokenVersion,
+            var { 
+                clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
                 nickname,tel,telActive,syntoken,
@@ -389,7 +405,7 @@ export function login(component, params,logintype,cb){
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
                 systemApi.setValue("signVersion",tokenVersion);
-                systemApi.setValue("avatarUrl",avatarUrl);
+                systemApi.setValue("avatarUrl","");
                 systemApi.setValue("clientId",clientId);
                 systemApi.setValue("email",email);
                 systemApi.setValue("emailIsActive",emailIsActive);

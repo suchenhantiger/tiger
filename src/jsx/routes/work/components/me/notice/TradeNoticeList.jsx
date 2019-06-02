@@ -39,6 +39,7 @@ class SysNoticeList extends CursorList {
         return styles.frame;
     }
 
+
     renderList() {
         var { data } = this.state;
         return data.map((item) => {
@@ -53,8 +54,6 @@ class SysNoticeList extends CursorList {
              var tmpdate = new Date();
              tmpdate.setTime(createdate);
              createdate = formatTime(tmpdate);
-
-
             return (
                 <li className={styles.item}>
                     <p className={this.mergeClassName("font30", "mg-bt-10")}><span>{title}</span></p>

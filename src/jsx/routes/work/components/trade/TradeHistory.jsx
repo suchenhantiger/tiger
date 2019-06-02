@@ -249,7 +249,7 @@ class TradeHistory extends PureComponent {
                                 <p className={this.mergeClassName("c3", "font48", "mg-tp-30", styles.c3)}>${balance}</p>
                             </div>
                             <div className={"right"} onClick={this.showAccount}>
-                                <div className={styles.icon_account}>切换</div>
+                                <div className={styles.icon_account}>{McIntl.message("switch")}</div>
                             </div>
                             
                             <div className={"clear"}></div>

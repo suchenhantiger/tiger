@@ -21,7 +21,7 @@ class AddBankPage extends PageComponent {
 
     inputChange = (key)=>(e)=>{
         var {value} = e.target;
-        console.log(value);
+   //    console.log(value);
         this.setState({[key]:value});
     }
 
@@ -104,7 +104,7 @@ class AddBankPage extends PageComponent {
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
              
                     <div className={"mg-tp-20"}>
-                        <span style={{lineHeight: ".4rem",fontSize: ".24rem"}}>为了您的账号资金安全，请绑定您本人的银行卡，如有其他问题，请联系MakeCapital客服。</span>
+                        <span style={{lineHeight: ".4rem",fontSize: ".24rem"}}>为了您的账号资金安全，请绑定您本人的银行卡，如有其他问题，请联系大家汇客服。</span>
 
                     </div>
                 

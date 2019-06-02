@@ -87,8 +87,8 @@ class OptionalDetailPage extends PageComponent{
         var {index} = this.state;
         return (
             <div className={styles.tabs}>
-                <span className={this.mergeClassName(styles.item, index==0?styles.on:"")} onClick={this.tabChange(0)}>简单<i></i></span>
-                <span className={this.mergeClassName(styles.item, index==1?styles.on:"")} onClick={this.tabChange(1)}>高级<i></i></span>
+                <span className={this.mergeClassName(styles.item, index==0?styles.on:"")} onClick={this.tabChange(0)}>{McIntl.message("fast_trade")}<i></i></span>
+                <span className={this.mergeClassName(styles.item, index==1?styles.on:"")} onClick={this.tabChange(1)}>{McIntl.message("advanced")}<i></i></span>
             </div>
         )
     }
@@ -116,8 +116,8 @@ class OptionalDetailPage extends PageComponent{
                 {fullscreen?null:<AppHeader headerName={this.renderHeader()} theme="optial"/>}
                 <Content coverHeader={true}>
                     {fullscreen?
-                    <ProdInfoFullscreen prodName={this._prodName} prodCode={this._prodCode}  price={price} onClose={this.closeFullScreen}/>:
-                    <ProdInfo price={price} prodName={this._prodName} prodCode={this._prodCode} />}
+                    <ProdInfoFullscreen digit={this._digits} prodName={this._prodName} prodCode={this._prodCode}  price={price} onClose={this.closeFullScreen}/>:
+                    <ProdInfo digit={this._digits} price={price} prodName={this._prodName} prodCode={this._prodCode} />}
                     <div className={fullscreen?styles.kchatFull:styles.kchat}>
                         <K_Chart
                         chartWidth = {chartWidth}
@@ -132,10 +132,10 @@ class OptionalDetailPage extends PageComponent{
                     </div>}
                     {fullscreen?null:
                     <LazyLoad index={index} >
-                        <SimpleDetail price={price} 
+                        <SimpleDetail price={price} digit={this._digits}
                         proInfo={this._proInfo}
                         prodName={this._prodName} prodCode={this._prodCode} />
-                        <ComplexDetail price={price} 
+                        <ComplexDetail price={price} digit={this._digits}
                         proInfo={this._proInfo}
                         prodName={this._prodName} prodCode={this._prodCode} />
                     </LazyLoad>}

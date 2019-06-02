@@ -82,9 +82,11 @@ class AccountManagePage extends PageComponent {
         this.setState({showConfirm:false});
     }
 
-    showUndateAcc =(mt4Id,accName)=>()=>{
+    showUndateAcc =(mt4Id,accName,mt4AccType)=>()=>{
         this._mt4Id=mt4Id;
         this._accName = accName;
+        this._mt4AccType = mt4AccType;
+
         this.setState({showUpdate:true});
     }
     
@@ -137,7 +139,7 @@ class AccountManagePage extends PageComponent {
             return (//    icon-instruction-black
                 <div className={this.mergeClassName(styles.optional_detail, curMt4Id==mt4Id?styles.on:"")} onClick={this.changeMt4(mt4Id,mt4AccType,mt4NickName)}>
                         <div className={this.mergeClassName("font30","pd-tp-20", "mg-lr-30")}>
-                            {accName}<span className={styles.acctype}>{typeName}</span><i className={styles.write} onClick={this.showUndateAcc(mt4Id,accName)} />
+                            {accName}<span className={styles.acctype}>{typeName}</span><i className={styles.write} onClick={this.showUndateAcc(mt4Id,accName,mt4AccType)} />
                             
                         </div>
                         <div className={this.mergeClassName(styles.account_dt, "mg-tp-20")}>
@@ -227,7 +229,7 @@ class AccountManagePage extends PageComponent {
                 {showConfirm?<Confrim onSure={this.gotoImprove} onCancel={this.closeConfirm} title="完善资料后可开通体验账号" />:null}
                 {showReal?<Confrim onSure={this.gotoReal} onCancel={this.closeRealConfirm} title="根据监管要求，请先实名认证" />:null}
                 {newAccConfirm?<NewAccDialog onSure={this.newAcc} onCancel={this.closeNewAcc} title="根据监管要求，请先实名认证" />:null}
-                {showUpdate?<ChangeAccDialog      mt4Id= {this._mt4Id}
+                {showUpdate?<ChangeAccDialog      mt4Id= {this._mt4Id} accType={this._mt4AccType}
                                 accName={this._accName} onSure={this.updateAcc} onCancel={this.hideUndateAcc} title="" />:null}
                 
             </FullScreenView>

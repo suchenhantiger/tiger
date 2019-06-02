@@ -39,7 +39,7 @@ class ModifyDialog extends PureComponent{
             
         return(
             <Confirm sureText={"保存"} onSure={this.onSure} cancelText="取消" onCancel={onCancel}>
-                <p className={"font24 mg-tp-20 mg-lt-30 mg-bt-20"}>{modifyTitle}</p>
+                <p className={"font24 mg-tp-20 mg-lt-30 mg-bt-40"}>{modifyTitle}</p>
                 <input className={styles.input} value={inputeValue} onChange={this.inputChange} placeholder="请输入新昵称" />
                 {errMsg.length?(
                     <div className={styles.login_pro}>

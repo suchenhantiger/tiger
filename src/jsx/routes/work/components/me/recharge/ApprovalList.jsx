@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getToUploadList } from '../../../actions/me/rechargeAction';
-
+import EmptyFrame from '../../trade/EmptyFrame';
 import styles from './css/rechargeList.less'
 
 class ApprovalList extends CursorList {
@@ -77,6 +77,19 @@ class ApprovalList extends CursorList {
                 </li>
             )
         });
+    }
+
+      //渲染函数
+      render(){
+        var { data } = this.state;
+        if(data.length==0){
+            return (
+                <div style={{marginTop:".2rem"}}>
+                    <EmptyFrame detail="暂无记录" />
+                </div >
+            )
+        }else
+            return super.render();
     }
 }
 

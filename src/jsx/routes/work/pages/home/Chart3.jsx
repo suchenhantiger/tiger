@@ -91,10 +91,10 @@ class K_Chart extends React.Component {
 		// console.log(inputData.length, dataToCalculate.length, maxWindowSize)
 		const { index } = indexCalculator(calculatedData);
         /* SERVER - END */
-        console.log(calculatedData);
-        console.log(index);
-        console.log(LENGTH_TO_SHOW);
-        console.log(maxWindowSize);
+     //   console.log(calculatedData);
+     //   console.log(index);
+      //  console.log(LENGTH_TO_SHOW);
+      //  console.log(maxWindowSize);
 		const xScaleProvider = discontinuousTimeScaleProviderBuilder()
             .withIndex(index);
      

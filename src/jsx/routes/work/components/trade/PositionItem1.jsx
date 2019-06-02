@@ -38,18 +38,25 @@ class PositionItem1 extends PureComponent{
             ,prodName
             ,prodCode
             ,profitPrice
+            ,digits
            , stopPrice
             ,swaps
             ,ticket
-           , tradeNo,netProfit=0
+           , tradeNo,netProfit
            , tradedQty} = data;
-        if(!netProfit) netProfit=0;
+        var netProfitColor = "red";
+        if(netProfit==null){
+            netProfit="--";
+        }else{
+            netProfitColor = netProfit>=0?"red":"green";
+            netProfit= netProfit.toFixed(2);
+        } 
 
         if(bid !=null && ask!=null ){
             if(buySell==0)
-                marketPrice =bid;
+                marketPrice =bid.toFixed(digits);
             else
-                marketPrice =ask;
+                marketPrice =ask.toFixed(digits);
 
         }
             
@@ -61,7 +68,7 @@ class PositionItem1 extends PureComponent{
                     <p className={styles.mg_tp_10}><span className={styles.c9}>开仓价：</span><span className={styles.c9}>{openPrice}</span>&nbsp;<span class="c9">现价：</span><span class="c9">{marketPrice}</span></p>
                 </div>
                 <div className={styles.right}>
-                    <p><span className={styles.left +" " +styles.font30 +" " +(netProfit>=0?styles.red:styles.green)}>${netProfit.toFixed(2)}</span></p>
+                    <p><span className={styles.left +" " +styles.font30 +" " +netProfitColor}>${netProfit}</span></p>
                     <p className={styles.right +" "+styles.mg_tp_10}><span className={styles.c9}>浮动盈亏</span></p>
                 </div>
             </li>

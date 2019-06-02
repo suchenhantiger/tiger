@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Confirm from '../../../../components/common/popup/Confirm2';
 import styles from './css/modifyDialog.less';
 import {getMessagePwd,getChangeEmailPwd,verification} from '../../actions/login/loginAction';
+import {checkPhone,checkEmail} from '../../../../utils/util';
 class ModifyDialog extends PureComponent{
 
     //构造函数
@@ -44,8 +45,8 @@ class ModifyDialog extends PureComponent{
                 var email=  this.email ;
                 var {index,inputeValue} =this.state;
                 if(index ==1){
-                    if(inputeValue.length==0){
-                        this.setState({errMsg:"请输入新邮箱"});
+                    if(checkEmail(inputeValue)==false){
+                        this.setState({errMsg:"请输入正确邮箱"});
                         return;
                     }
                     email =inputeValue;
@@ -70,7 +71,7 @@ class ModifyDialog extends PureComponent{
                         }
         
                     },300);
-                }, this,(msg)=>{
+                },(msg)=>{
                     this.setState({
                       messageInfo:msg
                     })
@@ -80,8 +81,8 @@ class ModifyDialog extends PureComponent{
                 var phone = this.telephone;
                 var {index,inputeValue} =this.state;
                 if(index ==1){
-                    if(inputeValue.length==0){
-                        this.setState({errMsg:"请输入新手机号"});
+                    if(checkPhone(inputeValue)){
+                        this.setState({errMsg:"请输入正确手机号"});
                         return;
                     }
                     phone =inputeValue;
@@ -107,7 +108,7 @@ class ModifyDialog extends PureComponent{
                         }
         
                     },300);
-                }, this,(msg)=>{
+                },(msg)=>{
                     this.setState({
                       messageInfo:msg
                     })
@@ -129,10 +130,14 @@ class ModifyDialog extends PureComponent{
         var {inputeValue,validCode,index} = this.state;
         var {modifyKey} =this.props;
         if(index==0){
-            if(validCode.length==0){
-                this.setState({errMsg:"验证码不能为空"});
-            }else{
+            
                 if(modifyKey == "email"){
+
+                    if(validCode.length==0){
+                        this.setState({errMsg:"验证码不能为空"});
+                        return;
+                    }
+                    
                     this.props.verification(this,{email:this.email,securityCode:validCode},()=>{
                         this.oldSecurityCode = validCode;
                         this.setState({
@@ -150,6 +155,15 @@ class ModifyDialog extends PureComponent{
                     });
 
                 }else{
+       
+                    if(checkPhone(this.telephone) == false){
+                        this.setState({errMsg:"请输入正确手机号"});
+                        return;
+                    }
+                    if(validCode.length==0){
+                        this.setState({errMsg:"验证码不能为空"});
+                        return;
+                    }
                     this.props.verification(this,{phone:this.telephone,securityCode:validCode},()=>{
                         this.oldSecurityCode = validCode;
                         this.setState({
@@ -169,27 +183,27 @@ class ModifyDialog extends PureComponent{
                 }
                 
 
-            }
+            
                 
         }else{
+            if(modifyKey == "email"){
+                if(checkEmail(inputeValue)==false){
+                    this.setState({errMsg:"请输入正确邮箱"});
+                    return;
+                }
+
+            }else {
+                if(checkPhone(inputeValue) ==false){
+                    this.setState({errMsg:"请输入正确手机号"});
+                    return;
+                }
+
+            }
             if(validCode.length==0){
                 this.setState({errMsg:"验证码不能为空"});
                 return;
             }
 
-            if(modifyKey == "email"){
-                if(inputeValue.length==0){
-                    this.setState({errMsg:"请输入新邮箱"});
-                    return;
-                }
-
-            }else {
-                if(inputeValue.length==0){
-                    this.setState({errMsg:"请输入新手机号"});
-                    return;
-                }
-
-            }
             var {onSure,modifyKey} = this.props;
             onSure && onSure({value:inputeValue,modifyKey,
                 oldSecurityCode:this.oldSecurityCode,newSecurityCode:validCode});

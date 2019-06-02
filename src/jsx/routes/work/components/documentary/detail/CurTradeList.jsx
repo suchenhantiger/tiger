@@ -58,7 +58,7 @@ class CurTradeList extends PureComponent {
         
         return data.map((item) => {
             var {buySell=0,closePrice="--",netProfit="--",prodName="--",timeStr="--",openPrice="--"} = item;
-            var nameStr = buySell==0?("买入"+prodName):("卖出"+prodName);
+            var nameStr = buySell==0?(McIntl.message("buy")+" "+prodName):(McIntl.message("sell")+" "+prodName);
             return (
                 <tr className={styles.item}>
                     <td>

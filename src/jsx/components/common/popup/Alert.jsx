@@ -17,7 +17,8 @@ class Alert extends PureComponent {
 
         return (
             <FullScreenView mask={true}>
-                <div className={styles.pop_inner}>
+                <div className={styles.pop_outer}>
+                <div className={styles.pop_inner2}>
                     <div className={styles.icon_pup_close} onClick={onClose}></div>
                     <div className={styles.pup_content}>
                         {title?<p className={this.mergeClassName("font36", "mg-bt-30")}>{title}</p>:null}
@@ -26,6 +27,7 @@ class Alert extends PureComponent {
                     <div className={styles.pup_bot}>
                         <div className={styles.btn_pup_center} onClick={onSure}>{text}</div>
                     </div>
+                </div>
                 </div>
             </FullScreenView>
         );

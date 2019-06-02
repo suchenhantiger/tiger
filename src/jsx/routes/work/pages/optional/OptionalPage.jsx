@@ -1,11 +1,11 @@
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import HeaderText from '../../../../components/common/appheader/HeaderText';
-
+import {connect} from 'react-redux';
 import OptionalList from '../../components/optional/OptionalList';
 import OptionalEditList from '../../components/optional/OptionalEditList';
-
+import {updateProduct} from '../../actions/optional/optionalAction';
 import styles from './css/optionalPage.less';
-
+import VConsole from 'vconsole';
 /********自选主页*********/
 class OptionalPage extends PageComponent{
 
@@ -14,10 +14,12 @@ class OptionalPage extends PageComponent{
         this.state = {
             editable:false
         }
-        
+        this._secret=0;
     }
 
     componentDidMount(){
+
+        this.props.updateProduct(this);
       
     }
       //获取页面名称
@@ -41,14 +43,28 @@ class OptionalPage extends PageComponent{
         var {editable} = this.state;
         if(!editable)
         return [
-            <HeaderText text="添加" onClick={this.addClick}/>
+            <HeaderText text={McIntl.message("add")} onClick={this.addClick}/>
         ]
+    }
+
+    secretFunc=()=>{
+        
+        if(this._secret<10){
+            this._secret++
+        }else{
+            vconsole = true;
+            let vConsole = new VConsole() ;
+        }
+    }
+
+    rendertitle=()=>{
+        return <span onClick={this.secretFunc}>{McIntl.message("trade")}</span>
     }
 
     renderLeftIcons(){
         var {editable} = this.state;
         return [
-            !editable?<HeaderText text="编辑" onClick={this.editClick}/>:<HeaderText text="完成" onClick={this.submitClick}/>
+            !editable?<HeaderText text={McIntl.message("edit")} onClick={this.editClick}/>:<HeaderText text="完成" onClick={this.submitClick}/>
         ]
     }
 
@@ -59,15 +75,15 @@ class OptionalPage extends PageComponent{
 
         return (
             <div>
-                <AppHeader headerName="自选" showBack={false} iconLeft={this.renderLeftIcons()} iconRight={this.renderIcons()}/>
+                <AppHeader headerName={this.rendertitle()} showBack={false} iconLeft={this.renderLeftIcons()} iconRight={this.renderIcons()}/>
                 <Content coverBottom={false}>
                     <div className={styles.optional_tit}>
-                        <div className={this.mergeClassName(styles.optional_name, "c6")}>交易品种</div>
+                        <div className={this.mergeClassName(styles.optional_name, "c6")}>{McIntl.message("product")}</div>
                         {editable?null:
                         <div className={styles.optional_price}>
-                            <span className={this.mergeClassName("c9", "left")}>最新价格</span>
-                            <i className={styles.i_buy}>买入</i>
-                            <i className={styles.i_sell}>卖出</i>
+                            <span className={this.mergeClassName("c9", "left")}>{McIntl.message("new_price")}</span>
+                            <i className={styles.i_buy}>{McIntl.message("buy")}</i>
+                            <i className={styles.i_sell}>{McIntl.message("sell")}</i>
                         </div>
                         
                         }
@@ -86,5 +102,7 @@ class OptionalPage extends PageComponent{
 
 }
 
-
-module.exports = OptionalPage;
+function injectAction(){
+    return {updateProduct};
+}
+module.exports = connect(null,injectAction())(OptionalPage);

@@ -67,7 +67,7 @@ class BankPage extends PageComponent {
                 province
             } = item;
             var bankColor = index%3;
-            console.log(bankColor);
+          //  console.log(bankColor);
             var bankstyle = styles.bk_zg;
             switch(bankColor){
                 case 1:

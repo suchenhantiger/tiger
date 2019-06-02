@@ -71,7 +71,7 @@ class CopyItem extends PureComponent{
                 </div>
                 <div className={styles.right}>
                     <div  style={{float:"right"}}>
-                        <p className={styles.valueStyR +" " +(pl>=0?styles.red:styles.green)}>${type==2?totalPL:pl.toFixed(2)}</p>
+                        <p className={styles.valueStyR +" " +(((type==2 && totalPL>=0) || (type!=2 && pl>=0))?styles.red:styles.green)}>${type==2?totalPL:pl.toFixed(2)}</p>
                         <p className={"mg-tp-10 "+styles.keyStyR}>{type==2?"收益":"浮动盈亏"}</p>
                     </div>
 

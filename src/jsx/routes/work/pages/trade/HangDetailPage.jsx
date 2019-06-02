@@ -83,8 +83,7 @@ class HangDetailPage extends PageComponent {
         systemApi.log("OptionalDetailPage render");
 
         var { index, fullscreen, price ,showOpenSucc} = this.state;
-        var {prodName,prodCode,buySell,hangType,marketPrice} =this._prodInfo;
-
+        var {prodName,prodCode,buySell,hangType,marketPrice,digits} =this._prodInfo;
         var {ask,bid} = price;
         if(ask && bid ){
             marketPrice = buySell==0?ask:bid;
@@ -101,8 +100,8 @@ class HangDetailPage extends PageComponent {
             chartWidth = screenHeight -this._widthCut;
             chartHeight = screenWidth - this._heightCut ;
         }
-        console.log("sch chartWidth:"+chartWidth);
-        console.log("sch chartHeight:"+chartHeight);
+        //console.log("sch chartWidth:"+chartWidth);
+       // console.log("sch chartHeight:"+chartHeight);
 
         return (
             <FullScreenView>
@@ -110,6 +109,7 @@ class HangDetailPage extends PageComponent {
                 <Content >
                     <div className={fullscreen ? styles.kchatFull : styles.kchat}>
                         <K_Chart 
+                        digits={digits}
                         chartWidth = {chartWidth}
                         chartHeight = {chartHeight}
                         updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={prodCode} />

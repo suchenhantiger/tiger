@@ -27,8 +27,9 @@ export function uploadCertificate(component, params,cb){
         // dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("bank/uploadCertificate",params).done((data)=>{
-
+            dispatch(showMessage(SUCCESS, "凭证上传成功"));
             cb && cb(data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
@@ -41,6 +42,7 @@ export function addBankCard(component, params,cb){
         // dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("bank/addBankCard",params).done((data)=>{
 
             cb && cb(data);
@@ -92,6 +94,7 @@ export function openMt4Acc(component,nickName,cb){
         dispatch(showLoading());
         var params={};
         params.clientId=systemApi.getValue("clientId");
+        params.syntoken= systemApi.getValue("syntoken");
         params.mt4AccType=1;
         if(nickName) params.nickName = nickName;
         component.requestJSON("users/openMt4Acc",params).done((data)=>{
@@ -110,6 +113,7 @@ export function updateAcc(component, params,cb){
         // dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("users/updateAcc",params).done((data)=>{
          cb && cb();
         }).fail((data)=>{
@@ -117,7 +121,10 @@ export function updateAcc(component, params,cb){
             
         });
     }
-} 
+}
+function getImgSize(imgBase64){
+
+}
 export function upLoadImage(component, file,type,cb){
     return function(dispatch, state){
         dispatch(showLoading());
@@ -125,7 +132,8 @@ export function upLoadImage(component, file,type,cb){
             file = encodeURIComponent(file);
         }
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("users/uploadIdCardOrHead",{clientId,file,type}).done((data)=>{
+        
+        component.requestJSON("users/uploadIdCardOrHead",{clientId,file,type,syntoken:systemApi.getValue("syntoken")}).done((data)=>{
             dispatch(hideLoading());
          cb && cb();
         }).fail((data)=>{
@@ -139,12 +147,14 @@ export function upLoadImage(component, file,type,cb){
 export function upLoadAllImage(component, file,cb){
     return function(dispatch, state){
         dispatch(showLoading());
-        
+        // alert(file.length);
+        // var fileLength=parseInt(file.length-(file.length/8)*2);
+        // alert(fileLength/1024);
         if(!postNative){
             file = encodeURIComponent(file);
         }
         var clientId=systemApi.getValue("clientId");
-        component.requestJSON("sys/uploadAttachment",{clientId,file}).done((data)=>{
+        component.requestJSON("sys/uploadAttachment",{clientId,file,syntoken:systemApi.getValue("syntoken")}).done((data)=>{
             dispatch(hideLoading());
             var {attachmentId} =data;
          cb && cb(attachmentId);
@@ -162,8 +172,9 @@ export function saveRealAccMt4(component, params,cb){
 
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("users/saveRealAccMt4",params).done((data)=>{
-         console.log(data);
+      //   console.log(data);
          dispatch(showMessage(SUCCESS, "实名认证信息已提交"));
          hashHistory.goBack();
          cb && cb();
@@ -232,9 +243,10 @@ export function withdraw(component, params, cb){
     return function(dispatch, state){
         var clientId=systemApi.getValue("clientId");
         params.clientId =clientId;
+        params.syntoken= systemApi.getValue("syntoken");
         component.requestJSON("bank/addAccFundRecord",params).done((data)=>{
         dispatch(showMessage(SUCCESS, "提现申请已提交"));
-        cb && cb();
+        cb && cb(data);
         }).fail((data)=>{
             dispatch(showMessage(ERROR, data.message));
         });

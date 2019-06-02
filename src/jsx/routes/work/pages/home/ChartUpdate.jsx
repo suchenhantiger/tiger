@@ -91,10 +91,10 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		// console.log(inputData.length, dataToCalculate.length, maxWindowSize)
 		const { index } = indexCalculator(calculatedData);
         /* SERVER - END */
-        console.log(calculatedData);
-        console.log(index);
-        console.log(LENGTH_TO_SHOW);
-        console.log(maxWindowSize);
+    //    console.log(calculatedData);
+      //  console.log(index);
+      //  console.log(LENGTH_TO_SHOW);
+      //  console.log(maxWindowSize);
 		const xScaleProvider = discontinuousTimeScaleProviderBuilder()
             .withIndex(index);
      
@@ -124,7 +124,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
         this._addtime=1;
 	}
 	handleDownloadMore(start, end) {
-        console.log("loadmore "+start+" "+end);
+     //   console.log("loadmore "+start+" "+end);
 		if (Math.ceil(start) === end) return;
 		// console.log("rows to download", rowsToDownload, start, end)
 		const { data: prevData, ema26, ema12, macdCalculator, smaVolume50 } = this.state;

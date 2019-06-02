@@ -24,29 +24,34 @@ class PositionItem1 extends PureComponent{
         var {data} = this.props;
         var {
             amountUSD,
-            createDate,
+            closeTime,
             id,
             recordType,
-            remarks,
+            remarks,status,
             sourceType,
             status} = data;
 
-           var tmpdate = new Date();
-           tmpdate.setTime(createDate);
-           createDate = formatTime(tmpdate);
+            var tmpdate = new Date();
+            tmpdate.setTime(closeTime*1000);
+            closeTime = formatTime(tmpdate);
+            var statusStr="";
+            if(status==7)
+                statusStr="审核中";
+            else if(status==3 || status==5)
+                statusStr="提现审核中";
 
         return(
             <li className={styles.item} onClick={this.itemClick}>
                 <div className={styles.left}>
                     <p><span className={styles.name}>{remarks}</span></p>
                     <div className={styles.mg_tp_10} style={{float:"left"}}>
-                        <p className={styles.fundtime}>{createDate}</p>
+                        <p className={styles.fundtime}>{closeTime}</p>
                     </div>
                 </div>
                 <div className={styles.right}>
-                    <div className={styles.mg_tp_10} style={{float:"right"}}>
-                        <p className={styles.valueStyR }>${amountUSD}</p>
-
+                    <div  style={{float:"right"}}>
+                        <p  className={styles.valueStyR }>${amountUSD}</p>
+                        <p  className={"right mg-tp-10"}>{statusStr}</p>
                     </div>
 
                     

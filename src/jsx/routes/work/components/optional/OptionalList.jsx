@@ -26,6 +26,8 @@ class OptionalList extends PureComponent{
 
     componentWillUnmount(){
         Event.unregister("ws_optional_list",this.eventSendWS);
+        clearInterval(this._interval);
+        //this.sendWS("0");
         
     }
 
@@ -38,50 +40,63 @@ class OptionalList extends PureComponent{
 
 
     sendWS=(curProps)=>{
+
         var {OptionalList=[]}=curProps;
-          //进入自选股开始推送，离开时关闭推送
-          var reqStr = JSON.stringify(
-            {"funCode":"301001",
-            "prodCode":OptionalList.join(','),
-            "clientId":systemApi.getValue("clientId"),
-            "agentId":"",
-            "sign":""});
-        WebSocketUtil.onOpen=()=>{
-            console.log("----open-----");
+        if(!WebSocketUtil.isValid()){
+                //进入自选股开始推送，离开时关闭推送
+                var reqStr = JSON.stringify(
+                    {"funCode":"301001",
+                    "prodCode":OptionalList.join(','),
+                    "clientId":systemApi.getValue("clientId"),
+                    "agentId":"",
+                    "sign":""});
+                WebSocketUtil.onOpen=()=>{
+                    console.log("----open-----");
 
-            WebSocketUtil.send(reqStr)            
-        };
-        
-        WebSocketUtil.onClose=()=>{
-         console.log("WebSocketClosed!");
-        };
-        WebSocketUtil.onMessage=(wsData)=>{
-         //   console.log("sch optList ws new data");
+                    WebSocketUtil.send(reqStr)            
+                };
+                
+                WebSocketUtil.onClose=()=>{
+                console.log("WebSocketClosed!");
+                };
+                WebSocketUtil.onMessage=(wsData)=>{
+                //   console.log("sch optList ws new data");
 
-            wsData = JSON.parse(wsData);
-            // console.log(wsData);
-            for(var i=0,l=wsData.length;i<l;i++){
-                var {funCode,data} = wsData[i];
-                if(funCode=="301001"){
-                    this.props.updatePrice(data);
-                    break;
-                }
-            }
-      
-        };
-        WebSocketUtil.onError=(evt)=>{
-         console.log("WebSocketError!");
-         };
-         if(!WebSocketUtil.send(reqStr)){
-            //发送失败就重新创建一个
-            WebSocketUtil.onOpen=()=>{
-                console.log("----open kline-----");
-                WebSocketUtil.send(reqStr)
-            };
+                    wsData = JSON.parse(wsData);
+                    // console.log(wsData);
+                    for(var i=0,l=wsData.length;i<l;i++){
+                        var {funCode,data} = wsData[i];
+                        if(funCode=="301001"){
+                            this.props.updatePrice(data);
+                            break;
+                        }
+                    }
             
-            WebSocketUtil.creatWebSocket(systemApi.getValue("websocketUrl"));
+                };
+                WebSocketUtil.onError=(evt)=>{
+                console.log("WebSocketError!");
+                };
+                if(!WebSocketUtil.send(reqStr)){
+                    //发送失败就重新创建一个
+                    WebSocketUtil.onOpen=()=>{
+                        console.log("----open kline-----");
+                        WebSocketUtil.send(reqStr)
+                    };
+                    
+                    WebSocketUtil.creatWebSocket(systemApi.getValue("websocketUrl"));
+                }
+        }else{
+
         }
+
     }
+
+    beginPolling = ()=>{
+        
+               
+    }
+
+
 
     componentWillReceiveProps(nextProps){
         // 自选股更新的时候重新发一次

@@ -13,7 +13,7 @@ import CurTradeList from '../../components/documentary/detail/CurTradeList';
 import HisTradeList from '../../components/documentary/detail/HisTradeList';
 import { connect } from 'react-redux';
 import { applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
-import {showComplete,showCertification} from '../../../../store/actions';
+import {showComplete,showCertification,showMessage} from '../../../../store/actions';
 import styles from './css/documentarDetailPage.less';
 
 /********跟单主页*********/
@@ -243,7 +243,13 @@ class DocumentaryDetailPage extends PageComponent {
             hashHistory.push("/work/me/recharge");
             return;
         }
-        if(funds<200 || funds>canFowBalance) return;
+        if(funds<200){
+            this.props.showMessage("error","复制金额不得低于$200");
+            return;
+        }else if(funds>canFowBalance){
+            this.props.showMessage("error","复制金额不得高于可用金额");
+            return;
+        } 
         
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
@@ -395,7 +401,7 @@ class DocumentaryDetailPage extends PageComponent {
 
 }
 function injectAction() {
-    return { showComplete,showCertification,applyFollower,openFollow ,followRelieve};
+    return { showComplete,showCertification,applyFollower,openFollow ,followRelieve,showMessage};
 }
 
 module.exports = connect(null, injectAction())(DocumentaryDetailPage);

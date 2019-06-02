@@ -14,18 +14,24 @@ class CurrFowList extends PureComponent {
     }
     
     componentDidMount(){
+        this.getMyfollowers();
+        Event.register("refresh_CurrFowList",this.getMyfollowers);
+    }
+    componentWillUnmount(){
+        Event.unregister("refresh_CurrFowList",this.getMyfollowers);
+        
+    }
 
-        var {fowMt4Id} =this.props;
+    getMyfollowers=()=>{
+        var {fowMt4Id,refreshScroll} =this.props;
         if(fowMt4Id && fowMt4Id.length>0){
             this.props.myfollowers(this,false, { fowMt4Id,fowType:0 }, (data) => {
-                this.setState({ allList: data });
-            });
+                this.setState({ allList: data },()=>{
+                    refreshScroll && refreshScroll();
+                });
                 
-
+            });
         }
-
-        
-        
     }
     
     onItemclick = (data) => {

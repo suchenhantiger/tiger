@@ -1,6 +1,7 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {getMessagePwd,changePasswordByCode} from '../../actions/login/loginAction';
+import {checkPhone,checkPassword} from '../../../../utils/util';
 class ForgetForm extends PureComponent {
 
     //构造函数
@@ -46,8 +47,8 @@ class ForgetForm extends PureComponent {
     nextClick = ()=>{
 
         var {phone="",validCode="",pwd,conpwd} =this.state;
-        if(phone.length != 11 ){
-            this.setState({errMsg:"手机号格式不对"});
+        if(checkPhone(phone)==false ){
+            this.setState({errMsg:"手机号格式错误"});
             return;
         }
         if(validCode.length==0){
@@ -57,8 +58,8 @@ class ForgetForm extends PureComponent {
 
         if(pwd==null || pwd.length==0)
             this.setState({errMsg:"请输入密码"});
-        else if(pwd.length<6 || pwd.length>12)
-            this.setState({errMsg:"请设置6到12位密码"});
+        else if(checkPassword(pwd)==false)
+            this.setState({errMsg:"密码必须由字母和数字组成，且长度为6到15位"});
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else
@@ -97,7 +98,7 @@ class ForgetForm extends PureComponent {
                 }
 
             },300);
-        }, this,(msg)=>{
+        },(msg)=>{
             this.setState({
               messageInfo:msg
             })

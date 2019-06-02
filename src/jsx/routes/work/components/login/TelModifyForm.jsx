@@ -1,6 +1,8 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
+import CheckBox from '../../../../components/common/form/CheckBox';
 import {changePasswordByold} from '../../actions/login/loginAction';
+import {checkPassword} from '../../../../utils/util';
 class ModifyForm extends PureComponent {
 
     //构造函数
@@ -10,7 +12,8 @@ class ModifyForm extends PureComponent {
             pwd: "",
             oldpwd:"",
             conpwd: "",
-            errMsg:""
+            errMsg:"",
+            isSyn:false
         }
     }
 
@@ -30,31 +33,40 @@ class ModifyForm extends PureComponent {
     }
 
     saveClick = ()=>{
-        var {pwd,conpwd,oldpwd}=this.state;
+        var {pwd,conpwd,oldpwd,isSyn}=this.state;
         
         if(oldpwd==null || oldpwd.length==0)
             this.setState({errMsg:"请输入原密码"});     
         else if(pwd==null || pwd.length==0)
             this.setState({errMsg:"请输入密码"});
-        else if(pwd.length<6 || pwd.length>12)
-            this.setState({errMsg:"请设置6到12位密码"});
+        else if(checkPassword(pwd)==false)
+            this.setState({errMsg:"密码必须由字母和数字组成，且长度为6到15位"});
         else if(pwd!=conpwd)
             this.setState({errMsg:"两次输入的密码不一致"});
         else
             this.props.changePasswordByold(this,{
                 updateType:0,
                 oldpassword:oldpwd,
-                newpassword:pwd
+                newpassword:pwd,
+                isSynMt4:isSyn?1:0
                 },()=>{
                 hashHistory.goBack();
 
             });
     }
+
+    isSyn =()=>{
+        this.setState({isSyn:!this.state.isSyn});
+    }
+
+    onChange=()=>{
+        
+    }
         
     //渲染函数
     render() {
 
-        var { pwd, conpwd ,oldpwd,errMsg} = this.state;
+        var { pwd, conpwd ,oldpwd,errMsg,isSyn} = this.state;
 
         return (
             <div className={styles.login_form2}>
@@ -69,6 +81,10 @@ class ModifyForm extends PureComponent {
                 </div>
                 <div className={styles.login_item}>
                     <input type="password" placeholder="确认密码" value={conpwd} onChange={this.conpwdChange} />
+                </div>
+                <div className={styles.checkFrame}  onClick={this.isSyn}>
+                    <CheckBox align="right" checked={isSyn} onChange={this.onChange}/>
+                     <span className={"right"}>修改所有交易密码</span>
                 </div>
                 {errMsg.length?(
                     <div className={styles.login_pro}>

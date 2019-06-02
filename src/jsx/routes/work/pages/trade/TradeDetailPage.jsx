@@ -5,7 +5,10 @@ import FlateDetail from '../../components/trade/detail/FlateDetail';
 import styles from './css/tradeDetailPage.less';
 import { connect } from 'react-redux';
 import { flatOrder,updateOrder } from '../../actions/trade/tradeAction';
+import { showMessage} from '../../../../store/actions';
 import FlateDialog from './../../components/trade/detail/FlateDialog';
+import ConfirmFlate from './../../components/trade/detail/ConfirmFlate';
+
 import StopProfitPage from './StopProfitPage'
 /********自选-简单*********/
 class TradeDetailPage extends PageComponent {
@@ -19,6 +22,7 @@ class TradeDetailPage extends PageComponent {
             fullscreen: false,
             showOpenSucc:false,
             editProfit:false,
+            showConfirm:false,
             price:{}
 
         }
@@ -51,7 +55,11 @@ class TradeDetailPage extends PageComponent {
     }
 
     updatePrice = (price) => {
-
+      //  console.log("sch********************");
+        if(typeof(price)=="string")
+        {
+            price = JSON.parse(price);
+        }
         this.setState({ price });
     }
 
@@ -72,8 +80,22 @@ class TradeDetailPage extends PageComponent {
         hashHistory.goBack();
     }
 
-    flatClick=(tradeType)=>()=>{
+    showConfirm = ()=>{
+        var { price } = this.state;
+        var {isClose=false}=price;
+        if(isClose){
+            this.props.showMessage("error","闭市中");
+            return;
+        }
+        this.setState({showConfirm:true});
+    }
 
+    closeConfirm = ()=>{
+        this.setState({showConfirm:false});
+    }
+
+    flatClick=(tradeType)=>()=>{
+        this.setState({showConfirm:false});
         var {orderId,
             marketPrice,
             mt4Id,
@@ -88,7 +110,12 @@ class TradeDetailPage extends PageComponent {
 
 
     stopClick = ()=>{
-
+        var { price } = this.state;
+        var {isClose=false}=price;
+        if(isClose){
+            this.props.showMessage("error","闭市中");
+            return;
+        }
         this.setState({editProfit:true});
         // hashHistory.push({
         //     pathname:"/work/trade/flatdetail/stopprofit",
@@ -114,6 +141,7 @@ class TradeDetailPage extends PageComponent {
         if(stopPrice) params.stopPrice =stopPrice;
         this.props.updateOrder(this,params,()=>{
            // this.setState({editProfit:false});
+            Event.fire("refresh_order_list");
             hashHistory.goBack();
 
         });
@@ -125,8 +153,8 @@ class TradeDetailPage extends PageComponent {
     render() {
         systemApi.log("OptionalDetailPage render");
 
-        var { index, fullscreen, price ,showOpenSucc,editProfit} = this.state;
-        var {prodName,prodCode,buySell,hangType,marketPrice,mt4Type} =this._prodInfo;
+        var { index, fullscreen, price ,showOpenSucc,editProfit,showConfirm} = this.state;
+        var {prodName,prodCode,buySell,hangType,marketPrice,mt4Type,digits} =this._prodInfo;
         var devinfo = systemApi.getDeviceMessage();
         var {screenHeight,
             screenWidth} = devinfo;
@@ -141,6 +169,8 @@ class TradeDetailPage extends PageComponent {
         // console.log("sch chartWidth:"+chartWidth);
         // console.log("sch chartHeight:"+chartHeight);
 
+        var {isClose=false}=price;
+
 
         return (
             <FullScreenView>
@@ -150,6 +180,7 @@ class TradeDetailPage extends PageComponent {
                         <K_Chart 
                         chartWidth = {chartWidth}
                         chartHeight = {chartHeight}
+                        digits={digits}
                         updatePrice={this.updatePrice} fullscreen={fullscreen} prodCode={prodCode} />
                     </div>
                     {true  || fullscreen ? null : <div style={{ margin: "0.3rem", overflow: "hidden" }}>
@@ -157,14 +188,17 @@ class TradeDetailPage extends PageComponent {
                     </div>}
                     <FlateDetail price={price} data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.bt_btn_50}><button  className={mt4Type==2?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.stopClick}>止损/止盈</button></div>
-                    <div className={styles.bt_btn_50}><button  className={mt4Type==2?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.flatClick(0)} >平仓</button></div>
+                    <div className={styles.bt_btn_50}><button  className={mt4Type==2||isClose?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.stopClick}>止损/止盈</button></div>
+                    <div className={styles.bt_btn_50}><button  className={mt4Type==2||isClose?styles.btn_grey:styles.btn_blue} onClick={mt4Type==2?null:this.showConfirm} >平仓</button></div>
                        
                     </div>
                 </Content>
 
                 {showOpenSucc?(
                     <FlateDialog onClose={this.closeOpenSucc} onSure={this.flateSure} data={this._prodInfo}/>
+                ):null}
+                {showConfirm?(
+                    <ConfirmFlate onCancel={this.closeConfirm} onSure={this.flatClick(0)} />
                 ):null}
 
                 {editProfit?(
@@ -183,7 +217,7 @@ function injectProps(state) {
     return { OptionalListData, ProductList };
 }
 function injectAction() {
-    return { flatOrder,updateOrder};
+    return { flatOrder,updateOrder,showMessage};
 }
 
 module.exports = connect(null, injectAction())(TradeDetailPage);

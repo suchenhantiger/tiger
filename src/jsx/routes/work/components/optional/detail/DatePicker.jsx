@@ -84,7 +84,7 @@ class MyDatePicker extends PureComponent{
                             minDate={this._minDate}
                             mode="datetime">
                    
-                              <div >{selectdate.length>0?selectdate:"未设置"}</div>
+                              <div >{selectdate.length>0?selectdate:McIntl.message("not_set")}</div>
                             </DatePicker>
         );
     }

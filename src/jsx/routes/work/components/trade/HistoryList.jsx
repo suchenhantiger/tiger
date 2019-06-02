@@ -42,7 +42,7 @@ class HistoryList extends PureComponent {
         else {
             data = list;
         }
-        console.log(nextPage);
+      //  console.log(nextPage);
         this.setState({data:data.slice(), nextPage:nextPage+1});
         this.refreshScroll(hasMore);
     }
@@ -58,7 +58,7 @@ class HistoryList extends PureComponent {
 
     getNextPage(){
         var {nextPage} = this.state;
-        console.log(nextPage);
+     //   console.log(nextPage);
         this.getData(nextPage, true);
     }
 

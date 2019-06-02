@@ -16,15 +16,17 @@ class Confrim extends PureComponent {
 
         return (
             <FullScreenView mask={true}>
-                <div className={styles.pop_inner}>
-                    <div className={styles.pup_content}>
-                        {title?<p className={this.mergeClassName("font36", "mg-bt-30")}>{title}</p>:null}
-                        {this.props.children}
-                    </div>
-                    <div className={styles.pup_bot}>
-                        <div className={styles.btn_pup_cancel} onClick={onCancel}>{cancelText||"取消"}</div>
-                        <div className={styles.line_01}></div>
-                        <div className={styles.btn_pup_confirm} onClick={onSure}>{sureText||"确定"}</div>
+                <div className={styles.pop_outer}>
+                    <div className={styles.pop_inner}>
+                        <div className={styles.pup_content}>
+                            {title?<p className={this.mergeClassName("font36", "mg-bt-30")}>{title}</p>:null}
+                            {this.props.children}
+                        </div>
+                        <div className={styles.pup_bot}>
+                            <div className={styles.btn_pup_cancel} onClick={onCancel}>{cancelText||"取消"}</div>
+                            <div className={styles.line_01}></div>
+                            <div className={styles.btn_pup_confirm} onClick={onSure}>{sureText||"确定"}</div>
+                        </div>
                     </div>
                 </div>
             </FullScreenView>

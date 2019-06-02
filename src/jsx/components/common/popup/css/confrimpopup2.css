@@ -1,5 +1,8 @@
-.pop_inner{
-	width: 6.5rem;
+.pop_outer{
+	width: 100%;
+    position: absolute;
+    top: 35%;
+	/* width: 6.5rem;
 	position: relative;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -10,7 +13,15 @@
 	border-radius: .3rem;
 	margin-left: auto;
 	margin-right: auto;
-	background: #fff;
+	background: #fff; */
+}
+.pop_inner{
+	width: 6.5rem;
+    border-radius: .3rem;
+    margin-right: auto;
+    margin-left: auto;
+    background: #fff;
+
 }
 .pup_content{
 	padding: .25rem;

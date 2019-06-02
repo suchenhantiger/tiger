@@ -17,10 +17,10 @@ class IndexFrame extends PureComponent{
                     {this.props.children}
                 </div>
                 <BottomTabs>
-                    <TabItem hash="/work/documentary" iconClass="documentary" text="跟单"/>
-                    <TabItem hash="/work/optional" iconClass="optional" text="自选"/>
-                    <TabItem hash="/work/trade" iconClass="trade" text="交易"/>
-                    <TabItem hash="/work/me" iconClass="me" text="我的"/>
+                    <TabItem hash="/work/documentary" iconClass="documentary" text={McIntl.message("export")}/>
+                    <TabItem hash="/work/optional" iconClass="optional" text={McIntl.message("trade")}/>
+                    <TabItem hash="/work/trade" iconClass="trade" text={McIntl.message("pos")}/>
+                    <TabItem hash="/work/me" iconClass="me" text={McIntl.message("mine")}/>
                 </BottomTabs>
             </div>
         );

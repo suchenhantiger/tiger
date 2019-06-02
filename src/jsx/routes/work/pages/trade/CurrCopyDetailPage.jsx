@@ -1,13 +1,14 @@
 import FullScreenView from '../../../../components/common/fullscreen/FullScreenView';
 import AppHeader from '../../../../components/common/appheader/AppHeader';
 import CopyDialog from '../../components/documentary/detail/CopyDialog';
+import SuccessDialog from '../../components/documentary/detail/SuccessDialog';
 import CancelDialog from '../../components/documentary/detail/CancelDialog';
 import CopyAllList from '../../components/trade/CopyAllList';
 
 import ProcotolDialog from '../../components/documentary/detail/ProcotolDialog';
 import { connect } from 'react-redux';
 import { getMasterDetail,applyFollower,openFollow ,followRelieve} from '../../actions/documentary/documentaryAction';
-
+import {showMessage} from '../../../../store/actions';
 import styles from './css/currCopyDetailPage.less';
 
 /********跟单主页*********/
@@ -46,11 +47,12 @@ class CurrCopyDetailPage extends PageComponent {
             showDialog:false,
             showProtocol:false,
             showCancel:false,
-
+            showSuccess:false,
             starLevel:null,
             maxFowBalance:null,
             suggestBalance:null,
-            fowInfo:null
+            fowInfo:null,
+            cancelType:null
             
         }
     }
@@ -59,6 +61,10 @@ class CurrCopyDetailPage extends PageComponent {
 
     componentDidMount(){
         
+      this.getMasterDetailInfo();
+    }
+
+    getMasterDetailInfo=()=>{
         this.props.getMasterDetail(this,{followerId:this.followerId},(data)=>{
             var {info={},fowInfo={}} =data;
             var {starLevel,
@@ -151,8 +157,8 @@ class CurrCopyDetailPage extends PageComponent {
  
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.followRelieve(this,{followerId:this.followerId,fowType,fowMt4Id:f_mt4Id},(data)=>{
-            this.setState({fowInfo:data,showCancel:false});
+        this.props.followRelieve(this,{followerId:this.followerId,fowType,fowMt4Id:f_mt4Id,noMsg:true},(data)=>{
+            this.setState({fowInfo:data,showCancel:false,showSuccess:true,cancelType});
 
         });
     }
@@ -182,12 +188,22 @@ class CurrCopyDetailPage extends PageComponent {
             hashHistory.push("/work/me/recharge");
             return;
         }
-        if(funds<200 || funds>canFowBalance) return;
+        if(funds<200){
+            this.props.showMessage("error","复制金额不得低于$200");
+            return;
+        }else if(funds>canFowBalance){
+            this.props.showMessage("error","复制金额不得高于可用金额");
+            return;
+        } 
         
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
         this.props.applyFollower(this,{followerId:this.followerId,funds,fowType:this._fowType,fowMt4Id:f_mt4Id},(data)=>{
+            
+            var {fowBalance}=data;
+            this.balance =fowBalance;
             this.setState({fowInfo:data});
+            Event.fire("refresh_CurrFowList");
         });
 
     }
@@ -222,6 +238,13 @@ class CurrCopyDetailPage extends PageComponent {
 
     }
 
+    successSure=()=>{
+        this.setState({showSuccess:false});
+        Event.fire("refresh_CurrFowList");
+        Event.fire("refresh_order_list");
+        this.getMasterDetailInfo();
+    }
+
     gotoMaster=()=>{
 
         hashHistory.push({
@@ -249,19 +272,20 @@ class CurrCopyDetailPage extends PageComponent {
             }
             
         }
-        var {showDialog,showProtocol,showCancel,
-            starLevel,
+        var {showDialog,showProtocol,showCancel,showSuccess,
+            starLevel,cancelType,
             maxFowBalance,
             suggestBalance,
             fowInfo
          } = this.state;
          var fowStatus =null;
          var canFowBalance = null;
-
+         var fowBalance = null;
          
          if(fowInfo){
              fowStatus = fowInfo.fowStatus;
              canFowBalance = fowInfo.canFowBalance;
+             fowBalance = fowInfo.fowBalance;
          }
 
 
@@ -329,9 +353,17 @@ class CurrCopyDetailPage extends PageComponent {
                     </div>:null}
 
             </div>
-                {showDialog? <CopyDialog suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance={canFowBalance}  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmCopy} />:null}
+                {showDialog? <CopyDialog 
+                                fowBalance={fowBalance} 
+                                suggestBalance={suggestBalance} 
+                                 maxFowBalance={maxFowBalance} 
+                                 canFowBalance={canFowBalance}  
+                                 followName = {this._followNmae} 
+                                 onCancel={this.closeDialog} 
+                                 onSure={this.confirmCopy} />:null}
                 {showCancel? <CancelDialog   onCancel={this.closeDialog} onSure={this.confirmCancelCopy} />:null}
                 {showProtocol? <ProcotolDialog  followName = {this._followNmae} onCancel={this.closeDialog} onSure={this.confirmProcotol} />:null}
+                {showSuccess? <SuccessDialog  type={cancelType}  onSure={this.successSure} />:null}
 
                 {this.props.children}
             </div>
@@ -344,7 +376,7 @@ function injectProps(state) {
     return { couplist};
 }
 function injectAction() {
-    return { getMasterDetail,applyFollower,openFollow ,followRelieve};
+    return { getMasterDetail,applyFollower,openFollow ,followRelieve,showMessage};
 }
 
 module.exports = connect(injectProps, injectAction())(CurrCopyDetailPage);

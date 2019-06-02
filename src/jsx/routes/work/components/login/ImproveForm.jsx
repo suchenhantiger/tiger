@@ -1,7 +1,7 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {saveAccMt4,getEmailPwd,updateUserInfo} from '../../actions/login/loginAction';
-
+import {checkEmail} from '../../../../utils/util';
 class ImproveForm extends PureComponent {
 
     //构造函数
@@ -59,13 +59,15 @@ class ImproveForm extends PureComponent {
 
         if(nickname.length==0){
             this.setState({errMsg:"请输入昵称"});
-        }else if( email.length==0){
-            this.setState({errMsg:"请输入邮箱"});
+        }else if( checkEmail(email)==false){
+            this.setState({errMsg:"请输入正确的邮箱"});
         }else if( emailCode.length==0){
             this.setState({errMsg:"请输入邮箱验证码"});
-        }else if( address.length==0){
-            this.setState({errMsg:"请输入地址信息"});
-        }else{
+        }
+        // else if( address.length==0){
+        //     this.setState({errMsg:"请输入地址信息"});
+        // }
+        else{
           //  console.log(encodeURIComponent(encodeURIComponent(nickname)));
             this.props.saveAccMt4(this,{nickname:nickname,email,emailCode,country:"china",address:address},()=>{
                 this.props.updateUserInfo(this,()=>{
@@ -85,7 +87,10 @@ class ImproveForm extends PureComponent {
 
     getMessage=()=>{
         var {email}=this.state;
-        if(email.length>0)
+        if(checkEmail(email)==false){
+            this.setState({errMsg:"请输入正确的邮箱"});
+            return ;
+        }
         this.props.getEmailPwd(this,this.state.email,(msg)=>{
             this.setState({showBtn:false});
             var start = new Date().getTime();
@@ -121,6 +126,11 @@ class ImproveForm extends PureComponent {
     nextClick = ()=>{
         
     }
+
+    uploadAddress=()=>{
+       var {uploadAddress} = this.props;
+       uploadAddress && uploadAddress();
+    }
         
     //渲染函数
     render() {
@@ -137,11 +147,11 @@ class ImproveForm extends PureComponent {
         return (
             <div className={styles.login_form}>
                 <div className={styles.login_item}>
-                    <input placeholder="请设置账户昵称" value={nickname} onChange={this.nicknameChange} />
+                    <input className={styles.phoneInput} placeholder="请设置账户昵称" value={nickname} onChange={this.nicknameChange} />
                 </div>
 
                 <div className={styles.login_item}>
-                    <input placeholder="请输入您的邮箱" value={email} onChange={this.emailChange} />
+                    <input className={styles.phoneInput} placeholder="请输入您的邮箱" value={email} onChange={this.emailChange} />
                 </div>
 
 
@@ -161,16 +171,17 @@ class ImproveForm extends PureComponent {
                           <input type="text" value={country} onChange={this.countryChange} placeholder="请输入您的国家" />
                 </div> */}
                 <div className={styles.form_input}>
-                          <input type="text" value={address} onChange={this.addressChange} placeholder="请输入您的地址"/>
+                          <input type="text" value={address} onChange={this.addressChange} placeholder={McIntl.message("address")}/>
                 </div>
+                {/* <p className={"right pd-tp-20 pd-bt-20 blue"} onClick={this.uploadAddress}>上传地址凭证</p> */}
                 {errMsg.length?(
                     <div style={{marginTop:"0.1rem"}}>
                         <div className={this.mergeClassName(styles.pro_error, "red")} >{errMsg}</div>
                     </div>
                 ):null}
-                <div className={styles.login_bt_text} onClick={this.submit}>
-                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.nextClick}>保存</button></div>
-                </div>
+ 
+                    <div className={this.mergeClassName(styles.login_btn, "mg-lr-30")}><button onClick={this.submit}>{McIntl.message("save")}</button></div>
+        
             </div>
         );
     }

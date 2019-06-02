@@ -73,7 +73,7 @@ class InputFormate extends PureComponent{
                     <input 
                     type="text"  
                     className={styles.input + " " +(big?styles.big:"")} 
-                    placeholder="未设置"
+                    placeholder={McIntl.message("not_set")}
                     value={value} 
                     onChange={this.numChange}
                     onFocus = {this.getDefault}

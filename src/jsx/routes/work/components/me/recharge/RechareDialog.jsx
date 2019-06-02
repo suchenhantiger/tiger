@@ -28,7 +28,7 @@ class RechareDialog extends PureComponent{
     //渲染函数
     render(){
         //suggestBalance={suggestBalance} maxFowBalance={maxFowBalance} canFowBalance
-        var {onCancel,data={}} = this.props;
+        var {onClose,data={}} = this.props;
         var {amountCNY,
             amountRate,
             amountUSD,
@@ -37,16 +37,16 @@ class RechareDialog extends PureComponent{
             payUrl} = data;
 
         return(
-            <Confirm  onSure={this.onSure} showCancel={false}>
+            <Confirm  onSure={this.onSure} onCancel={onClose} >
                 <div>
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
                     <p className="font48 mg-bt-20 mg-tp-30 center">¥{amountCNY}</p>
                     <div className={styles.item2}>
-                        <span className={"left"}>充值金额:</span>
+                        <span className={"left"}>预计到账金额:</span>
                         <span className={"right"}>${amountUSD}</span>
                     </div>
                     <div className={styles.item2}>
-                        <span className={"left"}>折合人民币</span>
+                        <span className={"left"}>充值金额</span>
                         <span className={"right"}>¥{amountCNY}</span>
                     </div>
                     <div className={styles.item2}>

@@ -42,7 +42,7 @@ var Client = {
             (message)=>{
                 fail('Failed because: ' + message);
             }, 
-            {   quality: 10,
+            {   quality: 30,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,//指定图片来自相册
             });

@@ -1,6 +1,7 @@
 import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {getMessagePwd,login} from '../../actions/login/loginAction';
+import {checkPhone} from '../../../../utils/util';
 class MsgLogin extends PureComponent {
 
     //构造函数
@@ -18,6 +19,7 @@ class MsgLogin extends PureComponent {
             showBtn:true
         }
         this._interval;
+        this.sendFlag=false;
     }
 
     phoneChange = (e)=>{
@@ -39,8 +41,8 @@ class MsgLogin extends PureComponent {
 
     loginClick = ()=>{
         var {phone="",validCode=""} =this.state;
-        if(phone.length != 11 ){
-            this.setState({errMsg:"手机号格式不对"});
+        if(checkPhone(phone) ==false){
+            this.setState({errMsg:"手机号格式错误"});
             return;
         }
         if(validCode.length==0){
@@ -89,8 +91,20 @@ class MsgLogin extends PureComponent {
     }
 
     getMessage=()=>{
-        if(this.state.canSend)
-        this.props.getMessagePwd(this,this.state.phone,0,(msg)=>{
+        var {phone} =this.state;
+        if(checkPhone(phone) ==false){
+            this.setState({errMsg:"手机号格式错误"});
+            return;
+        }
+
+
+        if(this.sendFlag==true)
+            return;
+        this.sendFlag =true;
+        if(this.state.canSend ){
+            
+             this.props.getMessagePwd(this,phone,0,(msg)=>{
+            this.sendFlag=false;
             this.setState({showBtn:false});
             var start = new Date().getTime();
             var {restTime} = this.state;
@@ -110,11 +124,14 @@ class MsgLogin extends PureComponent {
                 }
 
             },300);
-        }, this,(msg)=>{
+        },(msg)=>{
+            this.sendFlag = false;
             this.setState({
               messageInfo:msg
             })
         });
+        }
+       
 
 
 
@@ -141,13 +158,13 @@ class MsgLogin extends PureComponent {
                         <div className={styles.line_02}></div>
                     </div >
                     <div className={styles.phoneFrame2} >
-                        <input className={styles.phoneInput} ref="phone_input" placeholder="请输入手机号" value={phone} onChange={this.phoneChange}/>
+                        <input className={styles.phoneInput} ref="phone_input" placeholder={McIntl.message("phone_no")} value={phone} onChange={this.phoneChange}/>
                         {phone.length?<i className={styles.search_delete} onClick={this.deleteClick}></i>:null}
                     </div>
                 </div>
                 <div className={styles.login_item}>
-                    <input placeholder="请输入验证码" value={validCode} onChange={this.codeChange}/>
-                    {showBtn?<div className={styles.text_code} style={canSend?{color:"#333"}:{color:"#aaa"}} onClick={this.getMessage}>获取验证码</div>
+                    <input placeholder={McIntl.message("enter_vcode")} value={validCode} onChange={this.codeChange}/>
+                    {showBtn?<div className={styles.text_code} style={canSend?{color:"#333"}:{color:"#aaa"}} onClick={this.getMessage}>{McIntl.message("send_code")}</div>
                     :<div className={styles.text_code} >{restTime}</div>}
                     
                 </div>
@@ -157,7 +174,7 @@ class MsgLogin extends PureComponent {
                     </div>
                 ):null}
                 
-                <div ref="login_btn" className={styles.login_btn}><button onClick={this.loginClick}>登 录</button></div>
+                <div ref="login_btn" className={styles.login_btn}><button onClick={this.loginClick}>{McIntl.message("login")}</button></div>
             </div>
         );
     }

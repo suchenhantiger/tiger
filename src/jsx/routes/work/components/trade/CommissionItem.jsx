@@ -8,13 +8,13 @@ class CommissionItem extends PureComponent{
     }
 
     itemClick = ()=>{
-       // hashHistory.push("/work/optional/detail");
-        var {data}= this.props;
-        console.log(data);
-        hashHistory.push({
-            pathname:"/work/trade/historydetail",
-            query:{historyInfo:JSON.stringify(data)}
-        })
+    //    // hashHistory.push("/work/optional/detail");
+    //     var {data}= this.props;
+    //     console.log(data);
+    //     hashHistory.push({
+    //         pathname:"/work/trade/historydetail",
+    //         query:{historyInfo:JSON.stringify(data)}
+    //     })
         
     }
 
@@ -41,7 +41,7 @@ class CommissionItem extends PureComponent{
             
 
         return(
-            <li className={styles.item} onClick={this.itemClick}>
+            <li className={styles.item} >
                 <div className={styles.left}>
                     <p><span className={styles.name}>{tmpName}</span></p>
                     <p><span className={"left c6"}>{closeTime}</span></p>
@@ -57,10 +57,6 @@ class CommissionItem extends PureComponent{
                         <p className={styles.valueSty}>${totalPL}</p>
                         <p className={styles.keySty}>总收益</p>
                     </div>
-                   
-
-
-                    
                 </div>
             </li>
         );

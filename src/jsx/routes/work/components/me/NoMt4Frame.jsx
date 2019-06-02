@@ -29,12 +29,12 @@ class NoMt4Frame extends PureComponent {
 
             <div className={styles.optional_detail}>
                 <div className={styles.currency_name}>
-                    <p className={"c3 font32"}>交易账户</p>
+                    <p className={"c3 font32"}>{McIntl.message("trade_acc")}</p>
                 </div>
                 <div className={"clear"}></div>
                 <div className={styles.account_dt2}>
                     <div style={{textAlign:"center",fontSize:".8rem",paddingTop: ".1rem",paddingBottom: ".1rem",color: "#999"}} onClick={this.addAccount}> +</div>
-                    <div style={{textAlign:"center",color: "#999"}}  onClick={this.addAccount} >添加账户</div>
+                    <div style={{textAlign:"center",color: "#999"}}  onClick={this.addAccount} >{McIntl.message("creat_sub_acc")}</div>
                 </div>
             </div>
         );

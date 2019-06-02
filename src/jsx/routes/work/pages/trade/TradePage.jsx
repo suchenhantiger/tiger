@@ -21,11 +21,17 @@ class TradePage extends PageComponent {
 
     renderHeader() {
         var { index } = this.state;
+        var tmpComssion = McIntl.message("commission");
+        var itemClass = styles.item;
+        if(tmpComssion.length>4){
+            itemClass = styles.item2;
+        }
+        
         return (
             <div className={styles.tabs}>
-                <span className={this.mergeClassName(styles.item, index == 0 ? styles.on : "")} onClick={this.tabChange(0)}>持仓<i></i></span>
-                <span className={this.mergeClassName(styles.item, index == 1 ? styles.on : "")} onClick={this.tabChange(1)}>历史<i></i></span>
-                <span className={this.mergeClassName(styles.item, index == 2 ? styles.on : "")} onClick={this.tabChange(2)}>佣金<i></i></span>
+                <span className={this.mergeClassName(itemClass, index == 0 ? styles.on : "")} onClick={this.tabChange(0)}>{McIntl.message("position")}<i></i></span>
+                <span className={this.mergeClassName(itemClass, index == 1 ? styles.on : "")} onClick={this.tabChange(1)}>{McIntl.message("history")}<i></i></span>
+                <span className={this.mergeClassName(itemClass, index == 2 ? styles.on : "")} onClick={this.tabChange(2)}>{tmpComssion}<i></i></span>
             </div>
         )
     }

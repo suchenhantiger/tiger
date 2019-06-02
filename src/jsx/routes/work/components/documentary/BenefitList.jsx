@@ -94,7 +94,7 @@ class BenefitList extends CursorList {
                         <p className={"c9"}>历史跟随</p>
                     </td>
                     <td>
-                        <p className={this.mergeClassName("font28", "red")}>{incomeRate30d}%</p>
+                        <p className={"font28 "+(incomeRate30d>=0?"red":"green")}>{incomeRate30d}%</p>
                         <p className={"c9"}>近30日收益率</p>
                     </td>
                 </tr>

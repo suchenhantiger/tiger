@@ -51,13 +51,13 @@ class AddPage extends PageComponent {
                 <Content>
                     {/* <SearchBar onSearch={this.searchChange}/> */}
                     <div className={styles.searchBar} onClick={this.gotoSearch}>
-                        <div className={styles.input}> 搜索</div>
+                        <div className={styles.input}> {McIntl.message("search")} </div>
                     </div>
                     <SubTabs index={index} onTabChange={this.tabChange}>
-                        <UlineTab text="外汇"/>
-                        <UlineTab text="贵金属"/>
-                        <UlineTab text="能源"/>
-                        <UlineTab text="差价合约"/>
+                        <UlineTab text={McIntl.message("forex")}/>
+                        <UlineTab text={McIntl.message("metals")}/>
+                        <UlineTab text={McIntl.message("energy")} />
+                        <UlineTab text={McIntl.message("CFD")}/>
                     </SubTabs>
                     {ProductList["1"] || ProductList["2"] || ProductList["3"] ||ProductList["4"] ?
                     <LazyLoad index={index}>

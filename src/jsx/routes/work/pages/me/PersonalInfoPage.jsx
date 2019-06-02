@@ -75,7 +75,6 @@ class PersonalInfoPage extends PageComponent {
 
     verifyClick = ()=>{
         var isReal = systemApi.getValue("isReal");
-        console.log(isReal);
         if(isReal==0){
             hashHistory.push("/work/me/certification");
         }else if(isReal==1){
@@ -107,6 +106,10 @@ class PersonalInfoPage extends PageComponent {
 
         });
     } 
+
+    uploadAddressImg =()=>{
+        hashHistory.push("/work/me/setting/personal/address");
+    }
 
     cancelPhoto =()=>{
         this.setState({showModifyPhoto:false});
@@ -153,6 +156,10 @@ class PersonalInfoPage extends PageComponent {
                                 <li className={styles.item} onClick={this.verifyClick}>
                                     <div className={this.mergeClassName("left", "font26")}><p>实名认证</p></div>
                                     <div className={this.mergeClassName("right", "c9")} ><p>{verify}</p></div>
+                                </li>
+                                <li className={styles.item} onClick={this.uploadAddressImg}>
+                                    <div className={this.mergeClassName("left", "font26")}><p>地址认证</p></div>
+                                    <div className={this.mergeClassName("right", "c9")} ><p>上传地址凭证</p></div>
                                 </li>
                                 <li className={styles.item} onClick={this.modify("telephone", "修改手机号")}>
                                     <div className={this.mergeClassName("left", "font26")}><p>绑定手机</p></div>

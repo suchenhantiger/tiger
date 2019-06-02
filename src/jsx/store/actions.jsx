@@ -27,6 +27,25 @@ export function hideLoading(){
     }
 }
 
+export function showConfirm(message){
+    return function(dispatch){
+        dispatch({type:"show_confirm",message,confirmCb:null});
+    }
+}
+
+export function showConfirmWithCb(message,confirmCb){
+    return function(dispatch){
+        dispatch({type:"show_confirm",message,confirmCb});
+    }
+}
+
+export function hideConfirm(confirmCb){
+    return function(dispatch){
+        confirmCb && confirmCb();
+        dispatch({type:"close_confirm"});
+    }
+}
+
 export function showComplete(completeMsg){
     return function(dispatch){
         dispatch({type:"show_complete",completeMsg});
@@ -54,7 +73,7 @@ export function hideCertification(){
 
 export function initOptionalList(){
     return function(dispatch){
-        var optionalList_local = systemApi.getValue("optional_list") || "[\"XAUUSD\",\"EURUSD\",\"USDJPY\",\"GBPUSD\",\"AUDUSD\",\"USDCAD\",\"USDCHF\"]";
+        var optionalList_local = systemApi.getValue("optional_list") || "[\"XAUUSD.\",\"EURUSD.\",\"USDJPY.\",\"GBPUSD.\",\"AUDUSD.\",\"USDCAD.\",\"USDCHF.\"]";
         
         optionalList_local = JSON.parse(optionalList_local);
         dispatch({type:"INIT_OPTIONAL_LIST",data:optionalList_local });
@@ -71,7 +90,7 @@ export function updateOptionalList(optList){
 
 export function initProductList(callback){
     return function(dispatch){
-        var productList_local = systemApi.getValue("product_list") || "{\"1\":[{\"volumeStep\":0.01,\"prodName\":\"黄金美元\",\"prodSize\":100,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"XAUUSD\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":2},{\"volumeStep\":0.01,\"prodName\":\"美日\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"USDJPY\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":3},{\"volumeStep\":0.01,\"prodName\":\"澳美\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"AUDUSD\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"美加\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"USDCAD\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"美瑞\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"USDCHF\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"镑美\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"GBPUSD\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"欧美\",\"prodSize\":100000,\"minstDec\":5,\"maxVolume\":50,\"prodCode\":\"EURUSD\",\"categoryId\":\"1\",\"marginPercentage\":0.01,\"minVolume\":0.01,\"digits\":5}],\"2\":[],\"3\":[],\"4\":[]}";
+        var productList_local = systemApi.getValue("product_list") || "{\"1\":[{\"volumeStep\":0.01,\"prodName\":\"美日\",\"prodSize\":100000,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"USDJPY.\",\"categoryId\":\"1\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":3},{\"volumeStep\":0.01,\"prodName\":\"美加\",\"prodSize\":100000,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"USDCAD.\",\"categoryId\":\"1\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"美瑞\",\"prodSize\":100000,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"USDCHF.\",\"categoryId\":\"1\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"镑美\",\"prodSize\":100000,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"GBPUSD.\",\"categoryId\":\"1\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":5},{\"volumeStep\":0.01,\"prodName\":\"欧美\",\"prodSize\":100000,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"EURUSD.\",\"categoryId\":\"1\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":5}],\"2\":[{\"volumeStep\":0.01,\"prodName\":\"黄金美元\",\"prodSize\":100,\"minstDec\":0,\"maxVolume\":50,\"prodCode\":\"XAUUSD.\",\"categoryId\":\"2\",\"marginPercentage\":0.005,\"minVolume\":0.01,\"digits\":2}],\"3\":[],\"4\":[]}";
         productList_local = JSON.parse(productList_local);
         dispatch({type:"INIT_PRODUCT_LIST",data:productList_local });
 
@@ -109,3 +128,34 @@ export function showMessage(type, message, duration){
         },duration);
     }
 }
+
+
+export function getAppConfig(component,cb){
+    return function(dispatch, state){
+        var time =  (new Date()).getTime();
+        component.requestJSON("loginregister/version",{time,version:h5version,phoneType:systemApi.isAndroid?0:1},null,{needToken:false}).done((data)=>{
+           
+            dispatch({type:"show_update_dialog",data:data});
+        }).fail((data)=>{
+           // dispatch(showMessage(ERROR, data.message));
+        });
+    }
+}
+
+export function closeUpdateDialog(component,cb){
+    return function(dispatch, state){
+       
+        dispatch({type:"close_update_dialog"});
+       
+    }
+}
+
+
+export function clearStore(){
+    return function(dispatch, state){
+       
+        dispatch({type:"clear_store"});
+       
+    }
+}
+

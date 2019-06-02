@@ -8,13 +8,26 @@ class LineChart extends PureComponent {
   render(){
     systemApi.log("PieChart render");
     const {data,config} = this.props;
-    console.log(data);
+    
     var xd=[],
         sd=[];
-    for(var i=0,l=data.length;i<l;i++){
+    var l=data.length;
+    for(var i=0;i<l;i++){
         xd.push(data[i].reportDate);
         sd.push(data[i].ratioPL);
     }
+
+    // var l=7;
+    // var xd=[201801,201802,201803,201804,201805,201806,201807];
+    // var sd=[0.3,0.1,1.2,0.7,0.2,0.4,0.36];
+    var end=100;
+    var start=0;
+    if(l>5){
+        var winsize = 5*100/l;
+        start=100-winsize;
+    }
+
+
     var option = {
         animation:false,
         tooltip: {
@@ -25,10 +38,11 @@ class LineChart extends PureComponent {
         dataZoom:[
 
             {
+                zoomLock:true,
                 type: 'inside',
                 xAxisIndex: [0],
-                start: 1,
-                end: 35
+                start: start,
+                end: end,
             }
         ],
         xAxis: {

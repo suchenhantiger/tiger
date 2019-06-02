@@ -8,7 +8,6 @@ class CopyDialog extends PureComponent{
     constructor(props) {
         super(props);
         var {fowBalance}=props;
-        console.log(fowBalance);
         this.state = {
             num:fowBalance
         }
@@ -42,7 +41,7 @@ class CopyDialog extends PureComponent{
             }
 
         return(
-            <Confirm sureText={sureText} onSure={this.onSure} onCancel={onCancel}>
+            <Confirm heightType={1} sureText={sureText} onSure={this.onSure} onCancel={onCancel}>
                 <div>
                     <p className="font30 mg-bt-10 mg-tp-10 font_bold">复制</p>
                     <p className="font30 mg-bt-20 font_bold">{followName}</p>
@@ -50,7 +49,7 @@ class CopyDialog extends PureComponent{
                     <p className="font20 mg-bt-20 c9 line-ht-36">若复制金额低于建议复制金额，可能会导致跟单失败。</p>
                     <div className={styles.login_item}>
                         <span className={"left"}>$</span>
-                        <div className={"left"} style={{width:"60%",marginLeft:"0.2rem"}}>
+                        <div className={"left"} style={{width:"90%",marginLeft:"0.2rem"}}>
                             <InputFormate2 
                             valueChange={this.numChange}
                             value={num} 

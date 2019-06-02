@@ -23,6 +23,8 @@ class ComplexDetail extends PureComponent{
         this._maxVolume =+maxVolume;
         this._marginRate = prodSize*marginPercentage;
         this._volumeDigits=0;
+        this._mt4Id = systemApi.getValue("mt4Id");
+        this._mt4AccType = systemApi.getValue("mt4AccType");
         if(volumeStep.indexOf(".")>-1)
             this._volumeDigits = volumeStep.split(".")[1].length;
 
@@ -37,11 +39,46 @@ class ComplexDetail extends PureComponent{
             deadline:null,
             trantype:true,
             tranDire:true,
-            openInfo:{}
+            openInfo:{},
+            keyBoard:false
         }
 
     
     }
+
+    componentDidMount(){
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.removeEventListener("resize", this.onResize);
+     
+    }
+
+
+    //界面尺寸变化回调
+    onResize = ()=>{
+        var {activeElement} = document,
+            {tagName} = activeElement,
+            {availHeight} = screen,
+            {innerHeight} = window;
+
+        if(availHeight-innerHeight > 100)
+            this.setState({keyBoard:true});
+        else
+            this.setState({keyBoard:false});
+        if(tagName=="INPUT" || tagName=="TEXTAREA") {
+           window.setTimeout(function() {
+               activeElement.scrollIntoViewIfNeeded(true);
+           },0);
+        }
+    }
+
 
 
     introClick = ()=>{
@@ -390,7 +427,18 @@ class ComplexDetail extends PureComponent{
      }
 
     buyClick = ()=>{
+        var {price} =this.props;
+        var {isClose=false}=price;
         this.checkComplete(()=>{
+            if(isClose){
+                this.props.showMessage("error","闭市中");
+                return;
+            }
+            if(this._mt4AccType==2){
+                this.props.showMessage("error","请使用交易账户下单");
+                return;
+            }
+
             var {trantype} =this.state;
             if(trantype){
                  this.setState({showBuyDialog:true});
@@ -425,7 +473,7 @@ class ComplexDetail extends PureComponent{
         var tradePrice = tranDire?ask:bid;
         var expireTime = null;
         if(trantype==false){
-            expireTime =  this.refs.timePicker.getTimeStamp();
+          //  expireTime =  this.refs.timePicker.getTimeStamp();
             tradePrice = actualPrice;
             if(actualPrice == null){
                 this.props.showMessage(ERROR,"请设置成交价格");
@@ -500,7 +548,7 @@ class ComplexDetail extends PureComponent{
     //渲染函数
     render(){
         systemApi.log("ComplexDetail render");
-        var {showIntro, showOpenSucc, num, showBuyDialog,
+        var {showIntro, showOpenSucc, num, showBuyDialog,keyBoard,
              trantype,tranDire,
              actualPrice,
              stopPrice,
@@ -508,7 +556,7 @@ class ComplexDetail extends PureComponent{
             } = this.state;
 
         var {price} =this.props;
-        var {ask="--",bid="--",ctm,isClose=false,exchangeRate=0}=price;
+        var {ask=0,bid=0,ctm,isClose=false,exchangeRate=0}=price;
         var totalMoney=0;
         if(trantype){
             totalMoney = num*exchangeRate*ask*this._marginRate;
@@ -520,28 +568,27 @@ class ComplexDetail extends PureComponent{
             }
             
         }
-
-      
+   
         
         return(
             <div>
                 <div className="mg-lr-30">
                     <div className={styles.centerTab}>
                         <ul>
-                            <li className={trantype?styles.on:""} onClick={this.chooseTranType(true)}>市价交易</li>
-                            <li className={trantype?"":styles.on}onClick={this.chooseTranType(false)} >挂单交易</li>
+                            <li className={trantype?styles.on:""} onClick={this.chooseTranType(true)}>{McIntl.message("market")}</li>
+                            <li className={trantype?"":styles.on}onClick={this.chooseTranType(false)} >{McIntl.message("pending")}</li>
                         </ul>
                     </div>
                     <div style={{clear:"both"}}></div>
                     <div className={styles.tran_type}>
-                      <div className={styles.hq_label}>{trantype?"交易类型":"挂单类型"} </div>
+                      <div className={styles.hq_label}>{trantype?McIntl.message("trade_action"):McIntl.message("pending_action")} </div>
                       <div className={styles.btn_buy_bottom +" "+styles.btn_buy_sm+" "+(tranDire?styles.on:"")} onClick={this.chooseTranDir(true)}>
-                          <span>买</span>
-                          <span className={styles.font_arial}>{ask}</span>
+                          <span>{McIntl.message("buy")+" "}</span>
+                          <span className={styles.font_arial}>{ask.toFixed(this._digits)}</span>
                       </div>
                       <div className={styles.btn_sell_bottom +" "+styles.btn_sell_sm+" "+(tranDire?"":styles.on)} onClick={this.chooseTranDir(false)}>
-                          <span>卖</span>
-                          <span className={styles.font_arial}>{bid}</span>
+                          <span>{McIntl.message("sell")+" "}</span>
+                          <span className={styles.font_arial}>{bid.toFixed(this._digits)}</span>
                       </div>
                   </div>
 
@@ -571,7 +618,7 @@ class ComplexDetail extends PureComponent{
                    
 
                     <div className={styles.tran_panel}>
-                        <h1>交易手数</h1>
+                        <h1>{McIntl.message("lots")}</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(2)}></div>
                             <div className={styles.icon_num}>
@@ -595,7 +642,7 @@ class ComplexDetail extends PureComponent{
                         </div>
                     </div>
                     <div className={styles.tran_panel}>
-                        <h1>止损价格</h1>
+                        <h1>{McIntl.message("slp")}</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(3)}></div>
                             <div className={styles.icon_num}>
@@ -619,7 +666,7 @@ class ComplexDetail extends PureComponent{
                         </div>
                     </div>
                     <div className={styles.tran_panel}>
-                        <h1>止盈价格</h1>
+                        <h1>{McIntl.message("tpp")}</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick(4)}></div>
                             <div className={styles.icon_num}>
@@ -641,26 +688,29 @@ class ComplexDetail extends PureComponent{
                             </span>
                         </div>
                     </div>
-                    {trantype?
+                    {/* {trantype?
                     null:
                     <div className={styles.tran_panel}>
-                        <h1>截止时间</h1>
+                        <h1>{McIntl.message("deadline")}</h1>
                         <div className={styles.tran_time}>
                             <DatePicker ref="timePicker" minTime={ctm} />  
                         
                         </div>
                     </div>
-                    }
+                    } */}
                     
                     <div style={{height:"1.5rem"}}>
                     </div>
                 </div>
 
+                {keyBoard?null:
                 <div className={styles.bottom_btn_fixed}>
                     <div className={styles.mybtn_buy_bottom}  onClick={this.buyClick}>
-                        <div className={styles.confirm} style={isClose?{backgroundColor:"#b6b6b6"}:null}>{trantype?"确认交易":"确认挂单"}</div>
+                        <div className={styles.confirm} style={isClose || this._mt4AccType==2?{backgroundColor:"#b6b6b6"}:null}>{trantype?McIntl.message("confirm_trade"):McIntl.message("confirm_hang")}</div>
                     </div>
                 </div>
+                }
+                
 
                 {showOpenSucc?(
                     <OpenSuccComplex data={openInfo} onClose={this.closeOpenSucc} onSure={this.tradeDetail}/>

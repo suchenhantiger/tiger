@@ -2,7 +2,7 @@ import FullScreenView from '../../../../../components/common/fullscreen/FullScre
 import { connect } from 'react-redux';
 import { getPaySelect } from '../../../actions/me/meAction';
 import styles from './css/paySelect.less';
-
+import {getBankCode} from '../../../../../utils/util';
 class BankSelect extends PureComponent {
 
     //构造函数
@@ -40,11 +40,13 @@ class BankSelect extends PureComponent {
                 phone,
                 province,
             } = item;
+            var cardnoStr=getBankCode(cardno);
+
             return (
                 <li className={this.mergeClassName(styles.item, styles.short)} onClick={this.itemClick(bankid,cardno,bankname)}>
                     <span className={this.mergeClassName(styles.dot, bankId == bankid ? styles.on : "")}></span>
                     <div className={styles.pays}>
-                        <div className={styles.payType}>{cardno}</div>
+                        <div className={styles.payType}>{cardnoStr}</div>
                         {bankname?<div className={styles.remarks}>{bankname}</div>:null}
                     </div>
                 </li>

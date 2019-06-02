@@ -56,6 +56,8 @@ class IntroPage extends PageComponent {
         tradeStatus,
         updateDate,
         volumeStep} = prodInfo;
+       // quotesDate= "<p class='font20' >周天：23:5-24:0</p><p class='font20 mg-tp-10'>周一：0:0-21:59|23:0-24:0</p><p class='font20 mg-tp-10'>周二：0:0-21:59|23:0-24:0</p><p class='font20 mg-tp-10'>周三：0:0-21:59|23:0-24:0</p> <p class='font20 mg-tp-10'>周四：0:0-21:59|23:0-24:0</p> <p class='font20 mg-tp-10'>周五：0:0-21:55</p> <p class='font20 mg-tp-10'>周六：</p> ";
+        
         return (
             <FullScreenView>
                 <AppHeader headerName="交易品种简介" />
@@ -71,12 +73,12 @@ class IntroPage extends PageComponent {
                                 </div>
                             </li>
                             <li>
-                                <div className={this.mergeClassName("left", "font20")}><p>交易时间</p></div>
-                                <div className={this.mergeClassName("right")}><p>{tradeDate}</p></div>
+                                <div className={"font20 left"}><p>交易时间</p></div>
+                                <div  className={"right"} dangerouslySetInnerHTML={{__html:tradeDate} }></div>
                             </li>
                             <li>
-                                <div className={this.mergeClassName("left", "font20")}><p>报价时间</p></div>
-                                <div className={this.mergeClassName("right")}><p>{quotesDate}</p></div>
+                                <div className={"font20 left"}><p>报价时间</p></div>
+                                <div className={"right"} dangerouslySetInnerHTML={{__html:quotesDate} } ></div>
                             </li>
                             <li>
                                 <div className={this.mergeClassName("left", "font20")}><p>点差</p></div>

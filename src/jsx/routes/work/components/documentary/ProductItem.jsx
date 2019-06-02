@@ -42,7 +42,7 @@ class ProductItem extends PureComponent {
                 <div className={styles.blank}></div>
                 <div className={styles.cont}>
                     <div className={styles.bk_name}>{followNmae}</div>
-                    <div className={this.mergeClassName(styles.bk_num, "red")}>{incomeRate30d}%</div>
+                    <div className={styles.bk_num+" "+(incomeRate30d>=0?"red":"green")}>{incomeRate30d}%</div>
                     <div className={styles.bk_text}>近30日收益率</div>
                 </div>
             </li>

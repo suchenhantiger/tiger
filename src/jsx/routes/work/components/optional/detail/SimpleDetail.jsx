@@ -28,10 +28,49 @@ class SimpleDetail extends PureComponent{
             showIntro:false,
             showOpenSucc:false,
             showBuyDialog:false,
-            openInfo:{}
+            openInfo:{},
+            keyBoard:false
         }
+
+        this._mt4Id = systemApi.getValue("mt4Id");
+        this._mt4AccType = systemApi.getValue("mt4AccType");
        
     }
+
+    componentDidMount(){
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.addEventListener("resize", this.onResize);
+    }
+
+    componentWillUnmount(){
+        super.componentWillUnmount();
+        var g_deviceMessage=systemApi.getDeviceMessage();
+        if(g_deviceMessage.isAndroid)
+            window.removeEventListener("resize", this.onResize);
+     
+    }
+
+
+    //界面尺寸变化回调
+    onResize = ()=>{
+        var {activeElement} = document,
+            {tagName} = activeElement,
+            {availHeight} = screen,
+            {innerHeight} = window;
+
+        if(availHeight-innerHeight > 100)
+            this.setState({keyBoard:true});
+        else
+            this.setState({keyBoard:false});
+        if(tagName=="INPUT" || tagName=="TEXTAREA") {
+           window.setTimeout(function() {
+               activeElement.scrollIntoViewIfNeeded(true);
+           },0);
+        }
+    }
+
+
 
     countClick = (index,level)=>()=>{
 
@@ -95,14 +134,34 @@ class SimpleDetail extends PureComponent{
         
     }
     buyClick = ()=>{
+        var {price} =this.props;
+        var {isClose=false}=price;
         this.checkComplete(()=>{
+            if(isClose){
+                this.props.showMessage("error","闭市中");
+                return;
+            }
+            if(this._mt4AccType==2){
+                this.props.showMessage("error","请使用交易账户下单");
+                return;
+            }
             this.setState({tradeDirect:0, showBuyDialog:true});
         });
         
     }
 
     sellClick = ()=>{
+        var {price} =this.props;
+        var {isClose=false}=price;
         this.checkComplete(()=>{
+            if(isClose){
+                this.props.showMessage("error","闭市中");
+                return;
+            }
+            if(this._mt4AccType==2){
+                this.props.showMessage("error","请使用交易账户下单");
+                return;
+            }
             this.setState({tradeDirect:1, showBuyDialog:true});
         });
         
@@ -153,9 +212,9 @@ class SimpleDetail extends PureComponent{
     //渲染函数
     render(){
 
-        var {index, showIntro, showOpenSucc, num, showBuyDialog, tradeDirect,openInfo} = this.state;
-        var {price} =this.props;
-        var {ask="--",bid="--",isClose=false,exchangeRate=0}=price;
+        var {index, keyBoard,showIntro, showOpenSucc, num, showBuyDialog, tradeDirect,openInfo} = this.state;
+        var {price,digit} =this.props;
+        var {ask=0,bid=0,isClose=false,exchangeRate=0}=price;
         var level1 = 1.0,
             level2 = 2.0,
             level3 = 3.0,
@@ -173,14 +232,25 @@ class SimpleDetail extends PureComponent{
         }
       //  console.log("sch 3:"+num);
        // var totalMoney = num*exchangeRate*(tradeDirect==0?ask:bid)*this._marginRate;
+
        var totalMoney = (+num)*exchangeRate*ask*this._marginRate;
+
+       if(ask){
+            ask = ask.toFixed(digit);
+        }else ask = "--";
+
+        if(bid){
+            bid= bid.toFixed(digit);
+        }else bid = "--";
+
+        
       
         return(
             <div>
 
                 <div className="mg-lr-30">
                     <div className={styles.tran_panel}>
-                        <h1>交易手数</h1>
+                        <h1>{McIntl.message("lots")}</h1>
                         <div className={styles.tran_icon}>
                             <div className={styles.icon_minus} onClick={this.minusClick}></div>
                             <div className={styles.icon_num}>
@@ -206,24 +276,28 @@ class SimpleDetail extends PureComponent{
                         </div>
                         <div className={styles.tran_tabs}>
                             <ul>
-                                <li className={index==0?styles.on:""} onClick={this.countClick(0,level1)}><span>{level1}手</span><i></i></li>
-                                <li className={index==1?styles.on:""} onClick={this.countClick(1,level2)}><span>{level2}手</span><i></i></li>
-                                <li className={index==2?styles.on:""} onClick={this.countClick(2,level3)}><span>{level3}手</span><i></i></li>
-                                <li className={index==3?styles.on:""} onClick={this.countClick(3,level4)}><span>{level4}手</span><i></i></li>
+                                <li className={index==0?styles.on:""} onClick={this.countClick(0,level1)}><span>{level1+""+McIntl.message("lot")}</span><i></i></li>
+                                <li className={index==1?styles.on:""} onClick={this.countClick(1,level2)}><span>{level2+""+McIntl.message("lot")}</span><i></i></li>
+                                <li className={index==2?styles.on:""} onClick={this.countClick(2,level3)}><span>{level3+""+McIntl.message("lot")}</span><i></i></li>
+                                <li className={index==3?styles.on:""} onClick={this.countClick(3,level4)}><span>{level4+""+McIntl.message("lot")}</span><i></i></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                {keyBoard?null:
                 <div className={styles.bottom_btn_fixed}>
-                    <div className={styles.btn_buy_bottom} style={isClose?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.buyClick}>
-                        <span>买</span>
-                        <span className={"font-arial"}>{ask}</span>
+                    <div className={styles.btn_buy_bottom} style={isClose || this._mt4AccType==2?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.buyClick}>
+                        <span>{McIntl.message("buy2")}</span>
+                        <span className={"font-arial pd-lt-10"}>{ask}</span>
                     </div>
-                    <div className={styles.btn_sell_bottom} style={isClose?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.sellClick}>
-                        <span>卖</span>
-                        <span className={"font-arial"}>{bid}</span>
+                    <div className={styles.btn_sell_bottom} style={isClose || this._mt4AccType==2?{backgroundColor:"#b6b6b6",boxShadow: "none"}:null} onClick={this.sellClick}>
+                        <span>{McIntl.message("sell2")}</span>
+                        <span className={"font-arial pd-lt-10"}>{bid}</span>
                     </div>
                 </div>
+                
+                }
+                
                 {showIntro?(
                     <Intro onClose={this.closeIntro}/>
                 ):null}
