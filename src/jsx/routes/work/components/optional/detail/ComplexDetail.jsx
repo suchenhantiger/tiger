@@ -1,7 +1,7 @@
 import styles from './css/complexDetail.less';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
-import {showMessage,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
+import {showMessage,showConfirm,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
 import OpenSuccComplex from './OpenSuccComplex';
 import BuyDialog from './BuyDialog';
 import DatePicker from './DatePicker';
@@ -429,13 +429,15 @@ class ComplexDetail extends PureComponent{
     buyClick = ()=>{
         var {price} =this.props;
         var {isClose=false}=price;
+        
         this.checkComplete(()=>{
             if(isClose){
-                this.props.showMessage("error","闭市中");
+                //this.props.showMessage("error","闭市中");
+                this.props.showConfirm("闭市中");
                 return;
             }
             if(this._mt4AccType==2){
-                this.props.showMessage("error","请使用交易账户下单");
+                this.props.showConfirm("请使用交易账户下单");
                 return;
             }
 
@@ -463,7 +465,7 @@ class ComplexDetail extends PureComponent{
        var mt4Id = systemApi.getValue("mt4Id");
        if(mt4Id ==null || mt4Id.length==0 ){
            //没有账号或者账号异常
-           this.props.showMessage(ERROR,"请选择交易账号");
+           this.props.showConfirm("请选择交易账号");
 
             return;
        }
@@ -476,7 +478,7 @@ class ComplexDetail extends PureComponent{
           //  expireTime =  this.refs.timePicker.getTimeStamp();
             tradePrice = actualPrice;
             if(actualPrice == null){
-                this.props.showMessage(ERROR,"请设置成交价格");
+                this.props.showConfirm("请设置成交价格");
                 return;
             }
         }
@@ -557,6 +559,7 @@ class ComplexDetail extends PureComponent{
 
         var {price} =this.props;
         var {ask=0,bid=0,ctm,isClose=false,exchangeRate=0}=price;
+
         var totalMoney=0;
         if(trantype){
             totalMoney = num*exchangeRate*ask*this._marginRate;
@@ -730,7 +733,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder,showComplete,showCertification,showMessage};
+    return {openOrder,showComplete,showCertification,showMessage,showConfirm};
 }
 
 module.exports = connect(null,injectAction())(ComplexDetail);

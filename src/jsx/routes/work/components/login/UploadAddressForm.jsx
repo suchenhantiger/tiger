@@ -1,9 +1,9 @@
 import styles from '../me/css/certificationForm.less';
 import {connect} from 'react-redux';
 import {upLoadImage} from '../../actions/me/meAction';
-import {showMessage, showConfirmWithCb,ERROR, SUCCESS} from '../../../../store/actions';
+import {showMessage, showConfirm,showConfirmWithCb,ERROR, SUCCESS} from '../../../../store/actions';
 
-
+import OperationSelect from '../../components/me/OperationSelect';
 
 
 class UploadAddressForm extends PureComponent {
@@ -17,7 +17,7 @@ class UploadAddressForm extends PureComponent {
             idType: "",
             idNO:"",
             errMsg:"",
-            frontPic:""
+            frontPic:"",showChoose:false
         };
 
     }
@@ -27,6 +27,11 @@ class UploadAddressForm extends PureComponent {
     submit = ()=>{
         // var {back} = this.props;
         // back && back();
+        var {frontPic}=this.state;
+        if(frontPic.length==0){
+            this.props.showConfirm("请上传地址凭证");
+
+        }else
         this.props.showConfirmWithCb("地址凭证上传成功",()=>{
             hashHistory.goBack();
         });
@@ -34,14 +39,17 @@ class UploadAddressForm extends PureComponent {
     }
 
     getFrontPicture = ()=>{
+        this.setState({showChoose:true});
+    }
 
-        Client.getPicture((frontPic)=>{
-            this.props.upLoadImage(this,frontPic,4,()=>{
-                this.setState({frontPic});
-            });
-        },()=>{
+    getImg=(cbid,frontPic)=>{
+        this.props.upLoadImage(this,frontPic,4,()=>{
+                    this.setState({frontPic});
+                });
+    }
 
-        });
+    closeChoose=()=>{
+        this.setState({showChoose:false}); 
     }
 
 
@@ -49,7 +57,7 @@ class UploadAddressForm extends PureComponent {
     render() {
 
         var { name= "",
-        femail=1,errMsg="",frontPic="",
+        femail=1,errMsg="",frontPic="",showChoose,
         idType="",
         idNO=""} = this.state;
 
@@ -69,8 +77,8 @@ class UploadAddressForm extends PureComponent {
                   <div className={styles.login_bt_text2} onClick={this.submit}>
                     <div className={this.mergeClassName(styles.login_btn2, "mg-lr-30")}><button >确定</button></div>
                 </div>
-
-
+                {showChoose?<OperationSelect  tranImg={this.getImg} cancel={this.closeChoose}/>:null}
+                
             </div>
         );
     }
@@ -80,7 +88,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {upLoadImage,showMessage,showConfirmWithCb};
+    return {upLoadImage,showMessage,showConfirm,showConfirmWithCb};
 }
 
 module.exports = connect(null,injectAction())(UploadAddressForm);

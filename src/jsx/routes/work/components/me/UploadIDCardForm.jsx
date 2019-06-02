@@ -1,9 +1,9 @@
 import styles from './css/certificationForm.less';
 import {connect} from 'react-redux';
 import {upLoadImage} from '../../actions/me/meAction';
-import {showMessage, ERROR, SUCCESS} from '../../../../store/actions';
+import {showMessage,showConfirm, ERROR, SUCCESS} from '../../../../store/actions';
 
-
+import OperationSelect from './OperationSelect'
 
 
 class UploadIDCardForm extends PureComponent {
@@ -19,7 +19,8 @@ class UploadIDCardForm extends PureComponent {
             birthday:new Date(),
             errMsg:"",
             frontPic:"",
-            backPic:""
+            backPic:"",
+            showChoose:false
         };
 
     }
@@ -35,10 +36,10 @@ class UploadIDCardForm extends PureComponent {
         }=this.state;
 
         if(frontPic.length==0){
-            this.props.showMessage("error","请上传身份证正面照");
+            this.props.showConfirm("请上传身份证正面照");
             //this.setState({errMsg:"请上传身份证正面照"});
         }else if( backPic.length==0){
-            this.props.showMessage("error","请上传身份证背面照");
+            this.props.showConfirm("请上传身份证背面照");
             //this.setState({errMsg:"请上传身份证背面照"});
         }else{
             submit && submit();
@@ -48,26 +49,38 @@ class UploadIDCardForm extends PureComponent {
     }
 
     getFrontPicture = ()=>{
+        this.setState({showChoose:true,cbid:1});
 
-        Client.getPicture((frontPic)=>{
-            this.props.upLoadImage(this,frontPic,1,()=>{
-                this.setState({frontPic});
-            });
-        },()=>{
 
-        });
+         
+
     }
 
     getBackPicture =()=>{
-     
-        Client.getPicture((backPic)=>{
-            
-            this.props.upLoadImage(this,backPic,2,()=>{
-                this.setState({backPic});
-            });
-        },()=>{
+        this.setState({showChoose:true,cbid:2});
 
-        });
+
+            
+         
+
+    }
+
+    getImg=(cbid,idPic)=>{
+
+       if(cbid==1){
+            this.props.upLoadImage(this,idPic,1,()=>{
+                this.setState({frontPic:idPic});
+            });
+       }else{
+            this.props.upLoadImage(this,idPic,2,()=>{
+                this.setState({backPic:idPic});
+            });
+
+       }
+   }
+
+    closeChoose=()=>{
+        this.setState({showChoose:false});
     }
 
 
@@ -75,7 +88,7 @@ class UploadIDCardForm extends PureComponent {
     render() {
 
         var { name= "",
-        femail=1,errMsg="",frontPic="",backPic="",
+        femail=1,errMsg="",frontPic="",backPic="",showChoose,cbid,
         idType="",
         idNO=""} = this.state;
 
@@ -125,6 +138,7 @@ class UploadIDCardForm extends PureComponent {
                     <div className={this.mergeClassName(styles.login_btn2, "mg-lr-30")}><button >立即认证</button></div>
                 </div>
 
+                {showChoose?<OperationSelect cbid={cbid} tranImg={this.getImg} cancel={this.closeChoose}/>:null}
 
             </div>
         );
@@ -135,7 +149,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {upLoadImage,showMessage};
+    return {upLoadImage,showMessage,showConfirm};
 }
 
 module.exports = connect(null,injectAction())(UploadIDCardForm);

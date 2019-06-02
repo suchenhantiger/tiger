@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { addAccFundRecord,confirmRecharge} from '../../../actions/trade/tradeAction';
 import { upLoadAllImage} from '../../../actions/me/meAction';
 import { showMessage,showConfirm} from '../../../../../store/actions';
+import OperationSelect from '../../../components/me/OperationSelect';
+
 const PAY_MAP = [
     {id:"0",text:"电汇账户",desc:"电汇通常需要3-5个工作日到账"},
     {id:"1",text:"钱包",desc:""},
@@ -34,7 +36,8 @@ class ReChargeForm extends PureComponent {
             showRechareDialog:false,
             showConfirmSuccess:false,
             rechargeInfo:{},
-            certificateImg:""
+            certificateImg:"",
+            showChoose:false
             
 
         }
@@ -76,6 +79,8 @@ class ReChargeForm extends PureComponent {
         hashHistory.goBack();
         //this.setState({showRechareDialog:false});
     }
+
+    
 
     rechargeSubmit = ()=>{
         var {amount} = this.state;
@@ -191,16 +196,22 @@ systemApi.log("sch old:"+old);
     }
 
 
-    getCertificateImg = ()=>{
-        
-        Client.getPicture((certificateImg)=>{
-            this.props.upLoadAllImage(this,certificateImg,(attachmentId)=>{
-                this.attachmentId=attachmentId;
-                this.setState({certificateImg});
-            });
-        },()=>{
-
+    getImg=(cbid,certificateImg)=>{
+        this.props.upLoadAllImage(this,certificateImg,(attachmentId)=>{
+            this.attachmentId=attachmentId;
+            this.setState({certificateImg});
         });
+   }
+
+
+    getCertificateImg = ()=>{
+        this.setState({showChoose:true});
+           
+
+    }
+
+    closeChoose=()=>{
+        this.setState({showChoose:false});
     }
 
     closeSuccess =()=>{
@@ -224,7 +235,7 @@ systemApi.log("sch old:"+old);
     //渲染函数
     render() {
 
-        var {showDestSelect, showConfirmSuccess, showPaySelect, amount, destType,showAccount,showRechareDialog,rechargeInfo,certificateImg} = this.state;
+        var {showDestSelect, showChoose,showConfirmSuccess, showPaySelect, amount, destType,showAccount,showRechareDialog,rechargeInfo,certificateImg} = this.state;
         var {commission,
             amountUSD} =rechargeInfo;
         return (
@@ -320,7 +331,8 @@ systemApi.log("sch old:"+old);
                 {showAccount?<AccountSelect showOn={false} selectType={1} onSelect={this.selectAccount} onClose={this.closeAccount}/>:null}
                 {showRechareDialog?<RechareDialog data={rechargeInfo} onSure={this.gotoCharge} onClose={this.closeRechareDialog}/>:null}
                 {showConfirmSuccess?<RechareSuccessDialog  onSure={this.sureSuccess} onClose={this.closeSuccess}/>:null}
-                
+                {showChoose?<OperationSelect  tranImg={this.getImg} cancel={this.closeChoose}/>:null}
+
             </div>
             
             

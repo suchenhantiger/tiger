@@ -3,6 +3,8 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import { connect } from 'react-redux';
 import { uploadCertificate,upLoadAllImage} from '../../actions/me/meAction';
 import styles from './css/bankPage.less';
+import OperationSelect from '../../components/me/OperationSelect';
+import { showConfirm} from '../../../../store/actions';
 
 /********我的主页*********/
 class BankPage extends PageComponent {
@@ -12,7 +14,8 @@ class BankPage extends PageComponent {
         this.certificateid = props.params.certificateid;
         this.attachmentId = "";
         this.state={
-            certificateImg:""
+            certificateImg:"",
+            showChoose:false
         };
     }
 
@@ -22,16 +25,23 @@ class BankPage extends PageComponent {
 
 
     getCertificateImg = ()=>{
-        
-        Client.getPicture((certificateImg)=>{
-            this.props.upLoadAllImage(this,certificateImg,(attachmentId)=>{
-                this.attachmentId=attachmentId;
-                this.setState({certificateImg});
-            });
-        },()=>{
+        this.setState({showChoose:true});
 
-        });
+         
+
     }
+
+    closeChoose=()=>{
+        this.setState({showChoose:false});
+    }
+
+    getImg=(cbid,certificateImg)=>{
+        this.props.upLoadAllImage(this,certificateImg,(attachmentId)=>{
+            this.attachmentId=attachmentId;
+            this.setState({certificateImg});
+        });
+   }
+
 
 
     submit = ()=>{
@@ -41,7 +51,7 @@ class BankPage extends PageComponent {
         }=this.state;
 
         if(certificateImg.length==0 || this.attachmentId.length==0){
-            this.props.showMessage("error","请上传凭证");
+            this.props.showConfirm("请上传凭证");
         }else{
             this.props.uploadCertificate(this,{certificateId:this.certificateid,attachmentId:this.attachmentId},()=>{
                 Event.fire("refresh_recordlist");
@@ -57,7 +67,7 @@ class BankPage extends PageComponent {
 
     render() {
         systemApi.log("BankPage render");
-        var {certificateImg=""}=this.state;
+        var {certificateImg="",showChoose}=this.state;
 
         return (
             <FullScreenView>
@@ -77,13 +87,15 @@ class BankPage extends PageComponent {
                         </div>
                     </div>
                 </Content>
+                {showChoose?<OperationSelect  tranImg={this.getImg} cancel={this.closeChoose}/>:null}
+
             </FullScreenView>
         );
     }
 
 }
 function injectAction() {
-    return { upLoadAllImage,uploadCertificate};
+    return { upLoadAllImage,uploadCertificate,showConfirm};
 }
 
 module.exports = connect(null, injectAction())(BankPage);

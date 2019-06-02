@@ -7,6 +7,7 @@ import Confrim from '../../../../components/common/popup/Confirm';
 import ModifyDialog from '../../components/me/ModifyDialog';
 import ModifyPhoneAndEmailDialog from '../../components/me/ModifyPhoneAndEmailDialog';
 import styles from './css/personalInfoPage.less';
+import OperationSelect from '../../components/me/OperationSelect';
 
 /********我的主页*********/
 class PersonalInfoPage extends PageComponent {
@@ -17,7 +18,7 @@ class PersonalInfoPage extends PageComponent {
             showModify: false,
             photoImg:systemApi.getValue("avatarUrl"),
             showModifyPhoto:false,
-            modifyPhoneOrEMail:false
+            modifyPhoneOrEMail:false,
 
         }
         this.modifyKey=null;
@@ -96,16 +97,12 @@ class PersonalInfoPage extends PageComponent {
         });
     }
 
-    photoBtn =()=>{
-        Client.getPicture((photoImg)=>{
-            this.props.upLoadImage(this,photoImg,3,()=>{
-                this.setState({showModifyPhoto:false});
+    getImg=(cbid,photoImg)=>{
+         this.props.upLoadImage(this,photoImg,3,()=>{
                 this.updateUser();
             });
-        },()=>{
+    }
 
-        });
-    } 
 
     uploadAddressImg =()=>{
         hashHistory.push("/work/me/setting/personal/address");
@@ -136,7 +133,6 @@ class PersonalInfoPage extends PageComponent {
         if(photoImg ==null || photoImg.length==0){//现在这样处理
             photoImg = "./images/me/img03.png";
         }
-        var photoBtn = "选择图片";
 //securityCode
         return (
             <FullScreenView>
@@ -183,12 +179,12 @@ class PersonalInfoPage extends PageComponent {
                     modifyKey={this.modifyKey} modifyTitle={this.modifyTitle} 
                     onSure={this.sureClick} onCancel={this.cancelClick} />  
                 : null}
-                {showModifyPhoto ? (
+                {/* {showModifyPhoto ? (
                     <Confrim sureText={"选择"} cancelText="取消" onSure={this.photoBtn} onCancel={this.cancelPhoto}>
                         <p style={{fontSize:".3rem",textAlign:"center"}}>从相册中选择一张头像?</p>
                     </Confrim>
-                ) : null}
-
+                ) : null} */}
+ {showModifyPhoto?<OperationSelect  tranImg={this.getImg} cancel={this.cancelPhoto}/>:null}
                 {this.props.children}
             </FullScreenView>
         );

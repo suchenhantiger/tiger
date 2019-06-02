@@ -5,7 +5,7 @@ import InputFormate from './InputFormate';
 import {connect} from 'react-redux';
 import {openOrder} from '../../../actions/optional/optionalAction';
 import styles from './css/simpleDetail.less';
-import {showMessage,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
+import {showMessage,showConfirm,showComplete,showCertification, ERROR, SUCCESS} from '../../../../../store/actions';
 class SimpleDetail extends PureComponent{
 
     //构造函数
@@ -138,11 +138,11 @@ class SimpleDetail extends PureComponent{
         var {isClose=false}=price;
         this.checkComplete(()=>{
             if(isClose){
-                this.props.showMessage("error","闭市中");
+                this.props.showConfirm("闭市中");
                 return;
             }
             if(this._mt4AccType==2){
-                this.props.showMessage("error","请使用交易账户下单");
+                this.props.showConfirm("请使用交易账户下单");
                 return;
             }
             this.setState({tradeDirect:0, showBuyDialog:true});
@@ -155,11 +155,11 @@ class SimpleDetail extends PureComponent{
         var {isClose=false}=price;
         this.checkComplete(()=>{
             if(isClose){
-                this.props.showMessage("error","闭市中");
+                this.props.showConfirm("闭市中");
                 return;
             }
             if(this._mt4AccType==2){
-                this.props.showMessage("error","请使用交易账户下单");
+                this.props.showConfirm("请使用交易账户下单");
                 return;
             }
             this.setState({tradeDirect:1, showBuyDialog:true});
@@ -172,7 +172,7 @@ class SimpleDetail extends PureComponent{
 
         if(mt4Id ==null || mt4Id.length==0 ){
             //没有账号或者账号异常
-            this.props.showMessage(SUCCESS,"请选择交易账号");
+            this.props.showConfirm("请选择交易账号");
              return;
         }
 
@@ -318,7 +318,7 @@ function injectProps(state){
     return {accountArr};
 }
 function injectAction(){
-    return {openOrder,showMessage,showComplete,showCertification};
+    return {openOrder,showMessage,showComplete,showCertification,showConfirm};
 }
 
 module.exports = connect(injectProps,injectAction())(SimpleDetail);
