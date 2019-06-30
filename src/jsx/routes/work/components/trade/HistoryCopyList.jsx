@@ -17,7 +17,7 @@ class HistoryCopyList extends PureComponent {
 
         var {fowMt4Id,refreshScroll} =this.props;
         if(fowMt4Id && fowMt4Id.length>0){
-            this.props.myfollowers(this,false, { fowMt4Id,fowType:1 }, (data) => {
+            this.props.myfollowers(this,true, { fowMt4Id,fowType:1 }, (data) => {
                 this.setState({ allList: data },()=>{
                     refreshScroll && refreshScroll();
                 });

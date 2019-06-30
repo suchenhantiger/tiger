@@ -55,13 +55,14 @@ export function addBankCard(component, params,cb){
 
 export function queryBankCard(component, params,cb){
     return function(dispatch, state){
-        // dispatch(showLoading());
+         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
         component.requestJSON("bank/queryBankCard",params).done((data)=>{
-
+            dispatch(hideLoading());
             cb && cb(data);
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             
         });

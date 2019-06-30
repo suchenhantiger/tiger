@@ -27,7 +27,7 @@ export function updateUserInfo(component,cb,status){
         component.requestJSON("users/getUserMessage",params).done((data)=>{
             var { avatarUrl,
                 email,emailIsActive,
-                freeze,isFinger,isPushMsg,isReal,
+                freeze,isFinger,isPushMsg,isReal,addsproof,
                 nickname,tel,telActive,mt4Accs=[]
                 } = data;
                 if(status!=1)
@@ -41,6 +41,7 @@ export function updateUserInfo(component,cb,status){
                 systemApi.setValue("nickname",nickname);
                 systemApi.setValue("tel",tel);
                 systemApi.setValue("telActive",telActive);
+                systemApi.setValue("addsproof",addsproof);
 
                 if(mt4Accs && mt4Accs.length>0){
                     var currAcc = systemApi.getValue("mt4Id");
@@ -306,7 +307,7 @@ export function updateToken(component,cb,failCb){
                 clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
-                nickname,tel,telActive,syntoken,
+                nickname,tel,telActive,syntoken,addsproof,
                 token,mt4Accs=[],
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
@@ -324,6 +325,7 @@ export function updateToken(component,cb,failCb){
                 systemApi.setValue("nickname",nickname);
                 systemApi.setValue("tel",tel);
                 systemApi.setValue("telActive",telActive);
+                systemApi.setValue("addsproof",addsproof);
                 
                 if(mt4Accs && mt4Accs.length>0){
                     var currAcc = systemApi.getValue("mt4Id");
@@ -400,7 +402,7 @@ export function login(component, params,logintype,cb){
                 clientId,tokenVersion,
                 email,emailIsActive,
                 freeze,isFinger,isPushMsg,isReal,
-                nickname,tel,telActive,syntoken,
+                nickname,tel,telActive,syntoken,addsproof,
                 token,mt4Accs=[],
                 expireTime} = data;
                 token = Decrypt(token,key,"20190315mcappaes");
@@ -419,6 +421,7 @@ export function login(component, params,logintype,cb){
                 systemApi.setValue("telActive",telActive);
                 systemApi.setValue("tigertoken",token);
                 systemApi.setValue("expireTime",expireTime);
+                systemApi.setValue("addsproof",addsproof);
 
                 if(mt4Accs && mt4Accs.length>0){
                     var currAcc = systemApi.getValue("mt4Id");

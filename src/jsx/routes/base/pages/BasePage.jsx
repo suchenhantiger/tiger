@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import {showMessage,hideComplete,hideCertification,initOptionalList,
-    initProductList,getAppConfig,closeUpdateDialog,hideConfirm} from '../../../store/actions';
+    initProductList,closeUpdateDialog,hideConfirm} from '../../../store/actions';
 import Toast from '../../../components/common/popup/Toast';
 import Loading from '../../../components/common/loading/Loading';
 import Confrim from '../../../components/common/popup/Confirm';
@@ -22,10 +22,10 @@ class BasePage extends PureComponent{
         this.props.initProductList(()=>{
             this.props.initOptionalList();
         });
-        if(!updateflag){
-            updateflag=true; 
-            this.props.getAppConfig(this);
-        }
+        // if(!updateflag){
+        //     updateflag=true; 
+        //     this.props.getAppConfig(this);
+        // }
        
        
     //    if(vconsole){
@@ -65,7 +65,7 @@ class BasePage extends PureComponent{
     render(){
         systemApi.log("BasePage render");
         var {loading,messageshow,message,msgType,complete,completeMsg,certification,
-            vsRemark,downUrl,serverUrl,version,showUpdate,appType,confirming
+            vsRemark,downUrl,serverUrl,version,showUpdate,appType,confirming,updateType,newDownUrl
         } = this.props;
         return (
             <div>
@@ -81,7 +81,7 @@ class BasePage extends PureComponent{
                 {confirming?(<Confrim2 sureText={McIntl.message("confirm")} titleCenter={true} title="提示" showCancel={false}   onSure={this.closeConfirm2}  >
                 <p className={"font30 line-ht-48 mg-bt-30 center"} >{message}</p>
                 </Confrim2>):null}
-                {showUpdate>0?<UpdateDialog  onCancel={this.notUpdate} vsRemark ={vsRemark} downUrl={downUrl}
+                {showUpdate>0?<UpdateDialog newDownUrl={newDownUrl} updateType={updateType} onCancel={this.notUpdate} vsRemark ={vsRemark} downUrl={downUrl}
                  version={version} showUpdate={showUpdate} appType={appType}   />:null}
             
             </div>
@@ -92,13 +92,13 @@ class BasePage extends PureComponent{
 
 function injectProps(state){
     var {confirming,complete,certification,completeMsg,loading,messageshow,message,msgType,confirmCb,
-        vsRemark,downUrl,serverUrl,version,showUpdate,appType} = state.base || {};
+        vsRemark,downUrl,serverUrl,version,showUpdate,appType,updateType,newDownUrl} = state.base || {};
     return {complete,certification,loading,messageshow,message,msgType,completeMsg,
-        vsRemark,downUrl,serverUrl,version,appType,showUpdate,confirming,confirmCb};
+        vsRemark,downUrl,serverUrl,version,appType,updateType,showUpdate,confirming,confirmCb,newDownUrl};
 }
 
 function injectAction(){
-    return{hideConfirm,hideComplete,hideCertification,showMessage,initOptionalList,initProductList,getAppConfig,closeUpdateDialog};
+    return{hideConfirm,hideComplete,hideCertification,showMessage,initOptionalList,initProductList,closeUpdateDialog};
 }
 
 module.exports = connect(injectProps,injectAction())(BasePage);

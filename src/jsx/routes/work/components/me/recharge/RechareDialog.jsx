@@ -41,17 +41,18 @@ class RechareDialog extends PureComponent{
                 <div>
                     <p className="font30 mg-bt-10 font_bold center">提示</p>
                     <p className="font48 mg-bt-20 mg-tp-30 center">¥{amountCNY}</p>
+                    <p className="font36 mg-bt-10 mg-tp-10 center red">${amountUSD}</p>
                     <div className={styles.item2}>
-                        <span className={"left"}>预计到账金额:</span>
-                        <span className={"right"}>${amountUSD}</span>
+                        <span className={"left font30"}>预计到账金额:</span>
+                        <span className={"right font30"}>${amountUSD}</span>
                     </div>
                     <div className={styles.item2}>
-                        <span className={"left"}>充值金额</span>
-                        <span className={"right"}>¥{amountCNY}</span>
+                        <span className={"left font30"}>充值金额</span>
+                        <span className={"right font30"}>¥{amountCNY}</span>
                     </div>
                     <div className={styles.item2}>
-                        <span className={"left"}>手续费</span>
-                        <span className={"right"}>¥{commission}</span>
+                        <span className={"left font30"}>手续费</span>
+                        <span className={"right font30"}>¥{commission}</span>
                     </div>
                     
 

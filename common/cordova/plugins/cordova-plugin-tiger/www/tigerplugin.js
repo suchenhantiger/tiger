@@ -11,7 +11,9 @@ cordova.define("cordova-plugin-tiger.common", function(require, exports, module)
                },
                androidBack: function(success, failure){
                cordova.exec(success, failure, "TigerPlugin", "androidBack", []);
-                },
+                },appUpdate: function(appInfo,success, failure){
+                  cordova.exec(success, failure, "TigerPlugin", "appUpdate", [appInfo]);
+                   },
                 enterMeeting:function(success, fail, meeting_path,meeting_path_ios) {
                 cordova.exec(success, fail, "TigerPlugin", "enterMeeting", [meeting_path,meeting_path_ios]);
                 },

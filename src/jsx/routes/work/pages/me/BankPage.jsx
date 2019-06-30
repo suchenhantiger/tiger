@@ -3,7 +3,7 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import { connect } from 'react-redux';
 import { queryBankCard} from '../../actions/me/meAction';
 import styles from './css/bankPage.less';
-
+import {getBankCode} from '../../../../utils/util';
 /********我的主页*********/
 class BankPage extends PageComponent {
 
@@ -47,6 +47,14 @@ class BankPage extends PageComponent {
         hashHistory.push("/work/me/bank/add");
     }
 
+    modifyCard =(cardInfo)=> () =>{
+        // cardInfo = JSON.stringify(cardInfo);
+        // hashHistory.push({
+        //     pathname:"/work/me/bank/modify",
+        //     query:{cardInfo}
+        // })
+    }
+
     renderBankItem(){
         var {bankList}=this.state;
         return bankList.map((item,index)=>{
@@ -77,11 +85,12 @@ class BankPage extends PageComponent {
                     bankstyle = styles.bk_zh;
                     break;
             }
-            return <li className={bankstyle}>
+            cardno = getBankCode(cardno);
+            return <li className={bankstyle} onClick={this.modifyCard(item)}>
             {/* <i className={styles.icon_zh}></i> */}
             <p className={styles.bank_name}>{bankname}</p>
             <p><span>储蓄卡</span></p>
-            <p>{cardno}</p>
+            <p className={"font30"}>{cardno}</p>
         </li>
 
         })

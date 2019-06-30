@@ -118,7 +118,7 @@ class FlateDetail extends PureComponent{
             netProfit = grossProfit;
        }
 
-     //  console.log("sch netProfit  : "+netProfit);
+    //    console.log("sch netProfit  : "+netProfit);
 
         return(
             <div>

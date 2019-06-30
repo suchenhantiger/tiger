@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { myfollowers} from "../../actions/trade/tradeAction";
-import CopyItem from './CopyItem';
+import FollowMeItem from './FollowMeItem';
 import styles from './css/positionList.less'
 import EmptyFrame from './EmptyFrame';
-class CurrFowList extends PureComponent {
+class MyCurrFowList extends PureComponent {
 
     //构造函数
     constructor(props) {
@@ -15,17 +15,18 @@ class CurrFowList extends PureComponent {
     
     componentDidMount(){
         this.getMyfollowers(true);
-        Event.register("refresh_CurrFowList",this.getMyfollowers);
+      //  Event.register("refresh_MyCurrFowList",this.getMyfollowers);
     }
     componentWillUnmount(){
-        Event.unregister("refresh_CurrFowList",this.getMyfollowers);
+     //   Event.unregister("refresh_MyCurrFowList",this.getMyfollowers);
+     console.log("sch111componentWillUnmount");
         
     }
 
     getMyfollowers=(showloading)=>{
         var {fowMt4Id,refreshScroll} =this.props;
         if(fowMt4Id && fowMt4Id.length>0){
-            this.props.myfollowers(this,showloading, { fowMt4Id,fowType:0 }, (data) => {
+            this.props.myfollowers(this,showloading, { fowMt4Id,fowType:2 }, (data) => {
                 this.setState({ allList: data },()=>{
                     refreshScroll && refreshScroll();
                 });
@@ -35,23 +36,15 @@ class CurrFowList extends PureComponent {
     }
     
     onItemclick = (data) => {
-        var { onItemClick } = this.props;
-        onItemClick && onItemClick(data);
+      //  var { onItemClick } = this.props;
+      //  onItemClick && onItemClick(data);
     }
 
     renderList() {
         var {allList:data} = this.state;
-        var {couplist} = this.props;
         return data.map(item => {
-            var pl = 0;
-            var {followerId} = item;
-            for(var i=0,l=couplist.length;i<l;i++){
-                if(followerId == couplist[i].followerId){
-                    pl+= couplist[i].netProfit;
-                }
-            }
-
-            return <CopyItem pl={pl} type={1} data={item} onChoose={this.onItemclick} />
+ //nickname clientAvatarUrl  balance totalPL
+            return <FollowMeItem  data={item} onChoose={this.onItemclick} />
         })
     }
 
@@ -66,7 +59,7 @@ class CurrFowList extends PureComponent {
         var {allList=[]} = this.state;
         return (
             allList.length==0?
-            <EmptyFrame detail="没有跟随高手" btnText="逛逛高手榜" btnClick={this.gotoDocumentary} />:
+            <EmptyFrame detail="没有跟随的用户"  />:
             <ul className={styles.list}>
                 {this.renderList()}
             </ul>
@@ -84,4 +77,4 @@ function injectAction() {
     return {myfollowers}
 }
 
-module.exports = connect(null, injectAction())(CurrFowList);
+module.exports = connect(null, injectAction())(MyCurrFowList);

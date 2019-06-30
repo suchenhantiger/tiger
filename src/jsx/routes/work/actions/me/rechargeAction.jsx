@@ -7,12 +7,15 @@ export function getToUploadList(params, isAppend, cb, component,updateList){
         var {pageSize} = params;
         var clientId=systemApi.getValue("clientId");
         params.clientId=clientId;
+        dispatch(showLoading());
         component.requestJSON("bank/queryPayCertificate",params).done((data)=>{
+            dispatch(hideLoading());
             var {list} = data,
                 hasMore = list.length==pageSize;
             updateList && updateList(isAppend, list);
             cb && cb(null, hasMore);
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             cb && cb();
         });

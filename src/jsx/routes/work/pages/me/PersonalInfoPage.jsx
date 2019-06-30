@@ -104,8 +104,11 @@ class PersonalInfoPage extends PageComponent {
     }
 
 
-    uploadAddressImg =()=>{
-        hashHistory.push("/work/me/setting/personal/address");
+    uploadAddressImg=(addsproof)=> ()=>{
+        if(addsproof && addsproof.length>0){
+
+        }else
+            hashHistory.push("/work/me/setting/personal/address");
     }
 
     cancelPhoto =()=>{
@@ -116,6 +119,14 @@ class PersonalInfoPage extends PageComponent {
         this.setState({showModifyPhoto:true});
     }
 
+    onErr=()=>{
+        if(!this._lock){
+            $(this.refs.userPhoto).attr('src',"./images/me/img03.png");
+            this._lock=true;
+        }
+        
+    }
+
 
 
     render() {
@@ -124,6 +135,7 @@ class PersonalInfoPage extends PageComponent {
         var { email, showModify ,showModifyPhoto,modifyPhoneOrEMail,photoImg=""} = this.state;
         var nickname = systemApi.getValue("nickname");
         var isReal = systemApi.getValue("isReal");
+        var addsproof = systemApi.getValue("addsproof");
         var verify = "未认证";
         if(isReal==3){
             verify = "已认证";
@@ -133,6 +145,8 @@ class PersonalInfoPage extends PageComponent {
         if(photoImg ==null || photoImg.length==0){//现在这样处理
             photoImg = "./images/me/img03.png";
         }
+        var addsproofStr="上传地址凭证";
+        if(addsproof && addsproof.length>0) addsproofStr="已上传";
 //securityCode
         return (
             <FullScreenView>
@@ -143,7 +157,9 @@ class PersonalInfoPage extends PageComponent {
                             <ul>
                                 <li className={styles.item}>
                                     <div className={this.mergeClassName("left", "font26")}><p>头像</p></div>
-                                    <div className={this.mergeClassName("right", "c9")} onClick={this.openPhoto} ><img className={styles.header} src={photoImg}/></div>
+                                    <div className={this.mergeClassName("right", "c9")} onClick={this.openPhoto} >
+                                        <img className={styles.header} src={photoImg} ref="userPhoto"  onError={this.onErr}/>
+                                    </div>
                                 </li>
                                 <li className={styles.item} onClick={this.modify("nickname", "修改昵称")}>
                                     <div className={this.mergeClassName("left", "font26")}><p>昵称</p></div>
@@ -153,9 +169,9 @@ class PersonalInfoPage extends PageComponent {
                                     <div className={this.mergeClassName("left", "font26")}><p>实名认证</p></div>
                                     <div className={this.mergeClassName("right", "c9")} ><p>{verify}</p></div>
                                 </li>
-                                <li className={styles.item} onClick={this.uploadAddressImg}>
+                                <li className={styles.item} onClick={this.uploadAddressImg(addsproof)}>
                                     <div className={this.mergeClassName("left", "font26")}><p>地址认证</p></div>
-                                    <div className={this.mergeClassName("right", "c9")} ><p>上传地址凭证</p></div>
+                                    <div className={this.mergeClassName("right", "c9")} ><p>{addsproofStr}</p></div>
                                 </li>
                                 <li className={styles.item} onClick={this.modify("telephone", "修改手机号")}>
                                     <div className={this.mergeClassName("left", "font26")}><p>绑定手机</p></div>

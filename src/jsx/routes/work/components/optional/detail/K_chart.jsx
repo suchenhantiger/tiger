@@ -79,11 +79,14 @@ class K_chart extends PureComponent{
         this.getOneK();
        });
     }
-
-    updatePrice=(data)=>{
+    updatePrice=(data,type)=>{
         var {updatePrice}=this.props;
         var {quotedUD={},recentBars=[]} = data;
-        updatePrice && updatePrice(quotedUD);
+        
+        if(type!=1){
+            updatePrice && updatePrice(quotedUD);
+        }
+            
 
         if(typeof(recentBars)=="string")
             recentBars = JSON.parse(recentBars);
@@ -119,6 +122,23 @@ class K_chart extends PureComponent{
 
     }
 
+    updateDetail=(data)=>{
+        var {updateDetail,ticket}=this.props;
+        if(ticket){
+            var {ticket:wsTicket}=data;
+            if(wsTicket && wsTicket == ticket)
+                updateDetail && updateDetail();
+        }
+       
+
+    }
+
+    updateAllInfo=(data)=>{
+        var {updateInfo}=this.props;
+        updateInfo && updateInfo(data);
+
+    }
+
     setChart2 =(index)=>{
         this.setState({index2:index});
     }
@@ -128,8 +148,15 @@ class K_chart extends PureComponent{
     }
 
     getOneK=()=>{
-        var {prodCode} = this.props;
-        var reqStr = JSON.stringify({"funCode":"3010011","prodCode":prodCode,"period":this._period});
+        var {prodCode,ticket} = this.props;
+        this._mt4Id = systemApi.getValue("mt4Id");
+        var reqStr = "";
+        if(ticket){
+            reqStr = JSON.stringify({"ticket":ticket,"funCode":"3010011","prodCode":prodCode,"period":this._period,"mt4Id":this._mt4Id});
+        }else{
+            reqStr = JSON.stringify({"funCode":"3010011","prodCode":prodCode,"period":this._period,"mt4Id":this._mt4Id});
+        }
+        
         //重置回调函数
         WebSocketUtil.onClose=()=>{
             console.log("WebSocketClosed!");
@@ -142,7 +169,14 @@ class K_chart extends PureComponent{
                 var {funCode,data} = wsData[i];
                 if(funCode=="3010011"){
                     this.updatePrice(data);
-                    break;
+                }else if(funCode=="30100112"){
+                    this.updatePrice(data,1);
+                }else if(ticket && funCode=="3010032"){
+                    this.updateAllInfo(data);
+                    
+                }else if(ticket && funCode=="3010031"){
+                    this.updateDetail(data);
+                    
                 }
             }
 

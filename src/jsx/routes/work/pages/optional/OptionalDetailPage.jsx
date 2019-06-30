@@ -64,6 +64,8 @@ class OptionalDetailPage extends PageComponent{
         {
             price = JSON.parse(price);
         }
+        console.log(price);
+        console.log("-----------------");
          this.setState({price});
     }
     

@@ -3,6 +3,7 @@ import AppHeader from '../../../../components/common/appheader/AppHeader';
 import Confrim from '../../../../components/common/popup/Confirm';
 import { connect } from 'react-redux';
 import { getAccounts,updateAcc,openMt4Acc } from '../../actions/me/meAction';
+import {showConfirmWithCb} from '../../../../store/actions';
 import styles from './css/accountManagePage.less';
 import NewAccDialog from '../../components/me/NewAccDialog';
 import ChangeAccDialog from '../../components/me/ChangeAccDialog';
@@ -60,7 +61,10 @@ class AccountManagePage extends PageComponent {
     newAcc =(nickName)=>{
         this.props.openMt4Acc(this,nickName,()=>{
             this.setState({newAccConfirm:false});
-            this.props.getAccounts(this, this.update);
+            this.props.showConfirmWithCb("添加交易账号成功",()=>{
+                this.props.getAccounts(this, this.update);
+            });
+            
         });
         
     }
@@ -238,7 +242,7 @@ class AccountManagePage extends PageComponent {
 
 }
 function injectAction() {
-    return { getAccounts ,updateAcc,openMt4Acc};
+    return { getAccounts ,updateAcc,openMt4Acc,showConfirmWithCb};
 }
 
 module.exports = connect(null, injectAction())(AccountManagePage);

@@ -34,7 +34,8 @@ function baseReducer(state,action){
         confirming:false,
         confirmCb:null
     };
-
+    
+   
     if(type == SHOW_LOADING){
         return Object.assign({}, state, {loading:true});
     }
@@ -62,10 +63,10 @@ function baseReducer(state,action){
     }else if(type == "show_update_dialog"){
         var {data} = action;
         //"vsRemark":"222","downUrl":"222","appType":2,"serverUrl":"11","version":"22222"
-        var {vsRemark,downUrl,serverUrl,version,appType} = data;
+        var {vsRemark,downUrl,serverUrl,version,appType,updateType,newDownUrl} = data;
         var showUpdate = false;
         if(appType>0) showUpdate =true;
-        return Object.assign({}, state, {vsRemark,downUrl,serverUrl,version,appType,showUpdate});
+        return Object.assign({}, state, {vsRemark,downUrl,serverUrl,version,appType,showUpdate,updateType,newDownUrl});
 
     }else if(type == "close_update_dialog"){
       
@@ -203,6 +204,8 @@ function baseReducer(state,action){
                 }
             }
             floatPL+=orderlist[i].netProfit;
+            console.log("sch ttt:"+orderlist[i].netProfit);
+            console.log("sch ttt2:"+floatPL);
         }
         var f_floatPL = 0;
         for(var i=0,l1=couplist.length;i<l1;i++){//保留couplist的浮动盈亏
@@ -215,9 +218,11 @@ function baseReducer(state,action){
                     break;
                 }
             }
+            
             f_floatPL+=couplist[i].netProfit;
         }
         showfresh=  showfresh+1;
+        console.log("sch floatPL4"+floatPL);
         return Object.assign({}, state, {
             hanglist,couplist,orderlist,floatPL,f_floatPL,showfresh
         });
@@ -233,12 +238,92 @@ function baseReducer(state,action){
             floatPL:0,
             f_floatPL:0,
         });
-    }else if(type == "QUERY_POSITION_DATA"){
+    
+    }
+    else if(type == "SYN_MT4_LIST"){
+        if(typeof(action.data)=="string" ){
+            var floatTrade = JSON.parse(action.data);
+        }else 
+            var floatTrade = action.data;
+        
+        
+           var {hanglist,couplist,orderlist}=state;
+           for(var i=0,l=hanglist.length;i<l;i++){
+                let {ticket:oldTic,marketTime} = hanglist[i];
+                for(var j=0,l2=floatTrade.length;j<l2;j++){
+                    var tmpO = floatTrade[j];
+                    var {grossProfit,marketPrice,netProfit,ticket,marketTime:ctm} = tmpO;
+                    
+                    systemApi.log("oldTic "+oldTic+" ticket "+ticket +" ctm "+ ctm +" marketTime "+ marketTime);
+                    if(oldTic == ticket && ctm > marketTime){
+                    // systemApi.log("sch prodCode:"+prodCode+"ctm :"+ ctm+" markettime: "+ marketTime);
+                        hanglist[i] = Object.assign({}, hanglist[i],tmpO);
+                        break;
+                    }
+                }
+   
+           }
+
+           for(var i=0,l=couplist.length;i<l;i++){
+               let {ticket:oldTic,marketTime} = couplist[i];
+               for(var j=0,l2=floatTrade.length;j<l2;j++){
+                    var tmpO = floatTrade[j];
+                    var {grossProfit,marketPrice,netProfit,ticket,marketTime:ctm} = tmpO;
+                    
+                    systemApi.log("oldTic "+oldTic+" ticket "+ticket +" ctm "+ ctm +" marketTime "+ marketTime);
+                    if(oldTic == ticket && ctm > marketTime){
+                    // systemApi.log("sch prodCode:"+prodCode+"ctm :"+ ctm+" markettime: "+ marketTime);
+                    couplist[i] = Object.assign({}, couplist[i],tmpO);
+                        break;
+                    }
+                }
+           }
+           for(var i=0,l=orderlist.length;i<l;i++){
+                let {ticket:oldTic,marketTime} = orderlist[i];
+               for(var j=0,l2=floatTrade.length;j<l2;j++){
+                   var tmpO = floatTrade[j];
+                   var {grossProfit,marketPrice,netProfit,ticket,marketTime:ctm} = tmpO;
+                   systemApi.log("oldTic "+oldTic+" ticket "+ticket +" ctm "+ ctm +" marketTime "+ marketTime);
+                   if(oldTic == ticket && ctm > marketTime){
+                      // systemApi.log("sch prodCode:"+prodCode+"ctm :"+ ctm+" markettime: "+ marketTime);
+                       orderlist[i] = Object.assign({}, orderlist[i],tmpO);
+                       break;
+                   }
+               }
+   
+           }
+   
+           return Object.assign({},state,{
+               hanglist:hanglist.slice(),
+               couplist:couplist.slice(),
+               orderlist:orderlist.slice()
+           });
+
+
+    }else if(type == "SYN_MT4_INFO"){
+        // var {
+        //     balance,
+        //     clientId,
+        //     equity,
+        //     floatPL,
+        //     freeMargin,
+        //     mt4Id,
+        //     ratioMargin,
+        //     usedMargin} =action.data;
+console.log("sch floatPL:" +action.data.floatPL);
+            return Object.assign({},state,{
+                infoEquity:action.data,
+                floatPL:action.data.floatPL,f_floatPL:action.data.floatPL
+
+            });
+
+    }
+    else if(type == "QUERY_POSITION_DATA"){
 
   
-            return Object.assign({},state,{
-                infoEquity:action.data
-            });
+        return Object.assign({},state,{
+            infoEquity:action.data
+        });
         
       }else if(type == "QUERY_POSITION_LIST_DATA"){
         var floatTrade = action.data;
@@ -322,7 +407,7 @@ function baseReducer(state,action){
             floatPL += orderlist[i].netProfit;
 
         }
-
+        console.log("sch floatPL 2:"+floatPL);
         return Object.assign({},state,{
             hanglist:hanglist.slice(),
             couplist:couplist.slice(),

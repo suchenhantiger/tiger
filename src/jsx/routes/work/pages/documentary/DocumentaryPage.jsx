@@ -19,7 +19,37 @@ class DocumentaryPage extends PageComponent{
     
     componentDidMount(){
         document.addEventListener("backbutton", this.onBackKeyDown, false);
+        this.sendWS();
     }
+
+
+sendWS=()=>{
+    
+            if(!WebSocketUtil.isValid()){
+                    //进入自选股开始推送，离开时关闭推送
+                    var reqStr = "0";
+                    WebSocketUtil.onOpen=()=>{
+                        console.log("----open-----");
+    
+                      //  WebSocketUtil.send(reqStr)            
+                    };
+                    
+                    WebSocketUtil.onClose=()=>{
+                  //  console.log("WebSocketClosed!");
+                    };
+                    WebSocketUtil.onMessage=(wsData)=>{
+                    //   console.log("sch optList ws new data");
+                
+                    };
+                    WebSocketUtil.onError=(evt)=>{
+                    console.log("WebSocketError!");
+                    };
+                    WebSocketUtil.send(reqStr)
+
+            }else{
+    
+            }
+        }
     componentWillUnmount(){
         document.removeEventListener("backbutton", this.onBackKeyDown, false);
         super.componentWillUnmount();

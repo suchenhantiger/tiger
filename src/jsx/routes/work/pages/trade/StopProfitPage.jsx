@@ -284,7 +284,7 @@ class StopProfitPage extends PageComponent {
 
         var {stopPrice, showConfirm,profitPrice,keyBoard} = this.state;
 
-        var {prodInfo,price}=this.props;
+        var {prodInfo,price,digit}=this.props;
         var { 
            marketPrice,
             openPrice="--"
@@ -306,7 +306,7 @@ class StopProfitPage extends PageComponent {
                                     <p className={this.mergeClassName("c9", "mg-tp-10")}>开仓价格</p>
                                 </li>
                                 <li>
-                                    <p className={"font36"}>${marketPrice}</p>
+                                    <p className={"font36"}>${marketPrice.toFixed(this._digits)}</p>
                                     <p className={this.mergeClassName("c9", "mg-tp-10")}>现在价格</p>
                                 </li>
                             </ul>

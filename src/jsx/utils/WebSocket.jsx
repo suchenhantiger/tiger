@@ -1,11 +1,14 @@
 
 
 var webSocket = {
+    lastUrl:"",
+    lastReqStr:"",
     webSocketIns:null,
     errNum:0,
     timeoutNum:0,
     interval:null,
     creatWebSocket:function (url){
+        this.lastUrl = url;
         if(this.isValid()){
             systemApi.log("WebSocket create failue ! "+ this.errNum);
             return false;
@@ -28,7 +31,7 @@ var webSocket = {
             try{
                 this.webSocketIns = new WebSocket(url);
             }catch(e) {
-                console.log(e);
+                systemApi.log(e);
                 this.errNum++;
                 return;
 
@@ -42,41 +45,48 @@ var webSocket = {
                 this.onOpen && this.onOpen(evt);
             };
             this.webSocketIns.onmessage = (evt)=>{
-                systemApi.log("WebSocket onmessage");
+                systemApi.log("WebSocket onmessage :"+this.timeoutNum);
                 systemApi.log(evt.data);
                 this.timeoutNum=0;
+                
                 this.onMessage && this.onMessage(evt.data);
             };
             this.webSocketIns.onclose = (evt)=>{
                 systemApi.log("WebSocket Closed!");
-                this.clearIntervalIns();
+               // this.clearIntervalIns();
                 this.onClose && this.onClose(evt);
             };
             this.webSocketIns.onerror = (evt)=>{
-                this.clearIntervalIns();
+               // this.clearIntervalIns();
                 this.errNum++;
                 systemApi.log("WebSocket Error!"+this.errNum);
                 this.onError && this.onError(evt);
             };
 
-            this.clearIntervalIns();
-            systemApi.log("WebSocket create interval!"+this.errNum);
-            this.interval = setInterval(()=>{
-                systemApi.log("WebSocket interval");
-                this.timeoutNum++;
-                if(this.timeoutNum>5){
-                    systemApi.log("WebSocket timeout Error!"+this.errNum);
-                    this.errNum++;
-                    this.clearIntervalIns();
-                    this.close();
-                }
-            },2000);
+            this.createIntervalIns();
 
 
 
         }
 
 
+        
+    },
+    retryConnect:function(){
+        systemApi.log("WebSocket retry connecting ");
+        if(this.lastReqStr == ""){
+            systemApi.log("WebSocket lastReqStr is null ");
+            return;
+
+        }
+
+        //发送失败就重新创建一个
+        this.webSocketIns.onopen = (evt)=>{
+            systemApi.log("WebSocket retry onopen");
+            this.timeoutNum=0;
+            this.send(this.lastReqStr)
+        };
+        this.creatWebSocket(this.lastUrl);
         
     },
     clearIntervalIns:function(){
@@ -93,12 +103,31 @@ var webSocket = {
         if(this.webSocketIns!=null )
         this.webSocketIns.close();
     },
+    createIntervalIns:function(){
+        this.clearIntervalIns();
+        systemApi.log("WebSocket create interval!"+this.errNum);
+        this.interval = setInterval(()=>{
+            systemApi.log("WebSocket interval "+this.timeoutNum);
+            this.timeoutNum++;
+            if(this.timeoutNum>5){
+                systemApi.log("WebSocket timeout Error!"+this.errNum);
+                this.errNum++;
+                this.clearIntervalIns();
+                this.close();
+                this.retryConnect();
+            }
+        },2000);
+
+    },
     send:function(reqStr){
-        //return;
+        
+        this.lastReqStr = reqStr;
         if(this.isValid()){
             return false;
         }
         if(this.webSocketIns!=null &&this.webSocketIns.readyState==1){
+            if(this.interval ==null )
+                this.createIntervalIns();
             this.webSocketIns.send(reqStr);
             systemApi.log("WebSocket send :"+reqStr);
             return true;

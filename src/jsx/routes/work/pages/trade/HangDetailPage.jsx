@@ -47,7 +47,10 @@ class HangDetailPage extends PageComponent {
     }
 
     updatePrice = (price) => {
-
+        if(typeof(price)=="string")
+        {
+            price = JSON.parse(price);
+        }
         this.setState({ price });
     }
 
@@ -120,7 +123,7 @@ class HangDetailPage extends PageComponent {
                     <FlateHangDetail price={price} data={this._prodInfo}/>
                     <div className={styles.bottom_btn_fixed}>
 
-                    <div className={styles.bt_btn_50}> <span className={styles.nowprice} > 现价:{marketPrice}</span></div>
+                    <div className={styles.bt_btn_50}> <span className={styles.nowprice} > 现价:{marketPrice.toFixed(digits)}</span></div>
                     <div className={styles.bt_btn_50}><button  className={styles.btn_blue}  onClick={this.flatClick(1)} >删除</button></div>
                      
                     </div>

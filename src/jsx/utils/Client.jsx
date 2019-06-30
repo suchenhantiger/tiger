@@ -218,6 +218,15 @@ var Client = {
             console.log("backForAndroid click");
         }
     },
+    appUpdate:function(appInfo){
+        if(!isDebug){
+            window.plugins.TigerPlugin.appUpdate(appInfo,doNothing, doNothing);
+        }
+        else{
+            console.log("appUpdate click");
+            console.log(appInfo)
+        }
+    },
     backButton:function(type){
         //type : add-添加，delete-删除
         Bridge.call("xybackbutton",{type}, doNothing, "");

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getPositionInfo, updatePositionInfo,
+import { getPositionInfo, updatePositionInfo,synMt4List,synMt4Info,
     updatePositionList,getPositionAllOrder,
      flatOrder } from "../../actions/trade/tradeAction";
 import LazyLoad from '../../../../components/common/subtabs/LazyLoad';
@@ -8,6 +8,7 @@ import HangList from "./HangList";
 import AccountSelect from '../../components/me/AccountSelect';
 import CopyAllList from "./CopyAllList";
 import CurrFowList from "./CurrFowList";
+import MyCurrFowList from "./MyCurrFowList";
 import NoMt4Frame from "../me/NoMt4Frame";
 
 
@@ -37,21 +38,10 @@ class Position extends PureComponent {
     componentDidMount() {
 
         this.refreshAllData();
-       
-        Event.register("refresh_order_list",this.refreshOrderList);
+        Event.register("refresh_order_list",this.refreshAllData);
         Event.register("ws_trade_list",this.wsPush);
         Event.register("chanege_mt4id",this.refreshAllData);
-        // this._interval1 = setInterval(()=>{
-        //     var {iscroll} = this.refs;
-        //     if(iscroll){
-        //         var {y} = iscroll.wrapper,
-        //             yRem = this.calculateRem(0, y);
-        //         this.setState({ fixTabs: yRem < -3.34 });;
-        //     }
-        // }, 50);
-
-
-        
+    
     }
 
     
@@ -71,10 +61,10 @@ class Position extends PureComponent {
 
     startWs =(str)=>{
         //测试代码
-        this._interval1 = setInterval(()=>{
-            var ttt={"symbol":"XAUUSD.","ask":1285.14,"bid":1284.74,"ctm":1558706099,"exchangeRate":1.0,"isClose":true};
-            this.updateFloat(ttt);
-        }, 1000);
+        // this._interval1 = setInterval(()=>{
+        //     var ttt={"symbol":"XAUUSD.","ask":1285.14,"bid":1284.74,"ctm":1558706099,"exchangeRate":1.0,"isClose":true};
+        //     this.updateFloat(ttt);
+        // }, 1000);
 
 
         if(str)
@@ -94,6 +84,7 @@ class Position extends PureComponent {
         WebSocketUtil.onMessage=(wsData)=>{
             wsData = JSON.parse(wsData);
             // console.log(wsData);
+            
             for(var i=0,l=wsData.length;i<l;i++){
                 var {funCode,data,ver} = wsData[i];
                 if(funCode=="301003"){
@@ -103,9 +94,16 @@ class Position extends PureComponent {
                          this.updatePosition(data);
                     }
                    
-
                 }else if(funCode=="3010031"){
-                    this.refreshOrderList();
+                    this.refreshAllData();
+                }else if(funCode=="3010032"){
+                    if(ver && ver>=this._ver){
+                        this.synMt4List(data);
+                   }
+                }else if(funCode=="3010022"){
+                    if(ver && ver>=this._ver){
+                        this.synMt4Info(data);
+                   }
                 }
             }
 
@@ -124,8 +122,15 @@ class Position extends PureComponent {
     
     }
 
-    updatePosition = (ver,data)=>{
-        this.props.updatePositionInfo(ver,data);
+    synMt4List = (data)=>{
+        this.props.synMt4List(data);
+    }
+    synMt4Info = (data)=>{
+        this.props.synMt4Info(data);
+    }
+
+    updatePosition = (data)=>{
+        this.props.updatePositionInfo(data);
     }
 
     updateFloat = (data)=>{
@@ -140,6 +145,7 @@ class Position extends PureComponent {
         var showloading = false;
         if(balance ==null)
             showloading=true;
+   
         this._mt4Id = systemApi.getValue("mt4Id");
         this._mt4AccType = systemApi.getValue("mt4AccType");
         this._mt4NickName = systemApi.getValue("mt4NickName");
@@ -220,8 +226,8 @@ class Position extends PureComponent {
         if(this.shouldFresh){
             var {y} = iscroll.wrapper;
             var {showfresh} = this.props;
-            systemApi.log("sch up 1 : "+this.oldShowfresh);
-            systemApi.log("sch up 2 : "+showfresh);
+            // systemApi.log("sch up 1 : "+this.oldShowfresh);
+            // systemApi.log("sch up 2 : "+showfresh);
             if(this.oldShowfresh != showfresh){
                 iscroll && iscroll.refresh();
             //    console.log("sch refresh:");
@@ -276,6 +282,15 @@ class Position extends PureComponent {
                     
                     <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>全部订单<i></i></span>
                     <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>正在跟随<i></i></span>
+                </div>
+            )
+
+        }else if(this._mt4AccType==3){
+            return (
+                <div className={this.mergeClassName("center", styles.hd_tabs, "mg-tp-20")}>
+                    <span className={subIndex == 0 ? styles.on : ""} onClick={this.tabClick(0)}>自主持仓<i></i></span>
+                    <span className={subIndex == 1 ? styles.on : ""} onClick={this.tabClick(1)}>挂单交易<i></i></span>
+                    <span className={subIndex == 2 ? styles.on : ""} onClick={this.tabClick(2)}>正在跟随<i></i></span>
                 </div>
             )
 
@@ -368,12 +383,11 @@ class Position extends PureComponent {
 
         // if(orderlist[0])
         // console.log("sch :"+JSON.stringify(orderlist[0].ask));
-
         var tmpfloatPL = floatPL;
         if(this._mt4AccType==2)
             tmpfloatPL = f_floatPL
         tmpfloatPL =(+tmpfloatPL).toFixed(2);
-    //    console.log("sch "+this._mt4AccType+" "+accName);
+      console.log("sch111 "+this._mt4AccType+" "+accName);
         return (
             <div>
                 <IScrollView onScroll={this.scrolling}  onStep={this.scrolling} className={this.getScrollStyle()}
@@ -426,12 +440,26 @@ class Position extends PureComponent {
                         
                         <div className={styles.detail_info}>
                             {this.renderTabs()}
-                            <LazyLoad index={subIndex}>
-                                {this._mt4AccType==2?<CopyAllList  data={couplist} onItemClick={this.clickOrder} />:null}
-                                {this._mt4AccType==2?<CurrFowList refreshScroll={this.refreshScroll} couplist={couplist} fowMt4Id={this._mt4Id}   onItemClick={this.clickOrder} />:null}
-                                {this._mt4AccType==2?null:<PositionAllList  data={orderlist} onItemClick={this.clickOrder} />}
-                                {this._mt4AccType==2?null:<HangList  data={hanglist} onItemClick={this.clickHang} />}
+                            {this._mt4AccType==2?<LazyLoad index={subIndex}>
+                                <CopyAllList  data={couplist} onItemClick={this.clickOrder} />
+                                <CurrFowList refreshScroll={this.refreshScroll} couplist={couplist} fowMt4Id={this._mt4Id}   onItemClick={this.clickOrder} />
+                                
                             </LazyLoad>
+                            :null}
+                            {this._mt4AccType==3?<LazyLoad index={subIndex}>
+           
+                                <PositionAllList  data={orderlist} onItemClick={this.clickOrder} />
+                                <HangList  data={hanglist} onItemClick={this.clickHang} />
+                                <MyCurrFowList fowMt4Id={this._mt4Id}   onItemClick={this.clickHang} />
+                                
+                            </LazyLoad>:null}
+                            {this._mt4AccType!=3 && this._mt4AccType!=2?<LazyLoad index={subIndex}>
+           
+                                <PositionAllList  data={orderlist} onItemClick={this.clickOrder} />
+                                <HangList  data={hanglist} onItemClick={this.clickHang} />
+                                <MyCurrFowList fowMt4Id={this._mt4Id}   onItemClick={this.clickHang} />
+                                
+                            </LazyLoad>:null}
                         </div>
                     </div>
 
@@ -451,7 +479,7 @@ function injectProps(state) {
     return { infoEquity,floatPL,f_floatPL,hanglist,couplist,orderlist,showfresh };
 }
 function injectAction() {
-    return { getPositionInfo, getPositionAllOrder, flatOrder ,updatePositionInfo,updatePositionList}
+    return { getPositionInfo, getPositionAllOrder, flatOrder ,updatePositionInfo,updatePositionList,synMt4List,synMt4Info}
 }
 
 module.exports = connect(injectProps, injectAction())(Position);

@@ -130,17 +130,27 @@ export function showMessage(type, message, duration){
 }
 
 
-export function getAppConfig(component,cb){
+export function getAppConfig(component,url,cb,failCb){
     return function(dispatch, state){
         var time =  (new Date()).getTime();
-        component.requestJSON("loginregister/version",{time,version:h5version,phoneType:systemApi.isAndroid?0:1},null,{needToken:false}).done((data)=>{
-           
-            dispatch({type:"show_update_dialog",data:data});
+        component.requestJSON("loginregister/version",{time,version:h5version,phoneType:systemApi.isAndroid?0:1},null,{tempurl:url,needToken:false}).done((data)=>{
+            cb && cb(data); 
+
         }).fail((data)=>{
-           // dispatch(showMessage(ERROR, data.message));
+           // dispatch(showMessage(ERROR, data.message));failCb
+           failCb && failCb();
         });
     }
 }
+
+export function showUpdateDialog(data){
+    return function(dispatch, state){
+
+        dispatch({type:"show_update_dialog",data:data});
+
+    }
+}
+
 
 export function closeUpdateDialog(component,cb){
     return function(dispatch, state){

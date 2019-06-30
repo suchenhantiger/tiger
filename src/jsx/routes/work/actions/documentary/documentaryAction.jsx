@@ -28,11 +28,11 @@ export function queryFollReportProd(component, params,cb){
     }
 }
 
-export function followRelieve(component, params,cb){
+export function followRelieve(component, params,cb,noMsg){
     return function(dispatch, state){
         dispatch(showLoading());
         var clientId=systemApi.getValue("clientId");
-        var {fowType,noMsg} = params;
+        var {fowType} = params;
         params.clientId=clientId;
         component.requestJSON("follower/followRelieve",params).done((data)=>{
             dispatch(hideLoading());

@@ -147,12 +147,12 @@ module.exports = {
             paramStr = [],
             ver = ajaxVer++,
             timeStamp = new Date().getTime(),
-            {needToken} = otherParams,
+            {needToken,tempurl} = otherParams,
             jsoncallback = "jQuery_" + timeStamp + "_" + ver;
 
         //记录ajax编号
         ajaxQueue[ver] = true;
-
+        var rootUrl=tempurl==undefined?systemApi.getValue("rootUrl"):tempurl;
         needToken = needToken==undefined?true:needToken;
 
         var deferred = $.Deferred();
@@ -171,7 +171,7 @@ module.exports = {
                 sendParams.signVersion = systemApi.getValue("signVersion");
             }
             
-            var sendUrl = systemApi.getValue("rootUrl") + url;
+            var sendUrl = rootUrl + url;
             cordovaHTTP.post(
                 sendUrl,
                 sendParams,
@@ -202,7 +202,8 @@ module.exports = {
             params["_"] = "" + timeStamp + ver;
 
             //拼装请求url
-            var sendUrl = systemApi.getValue("rootUrl") + url + "?" + paramStr.join("&");
+            var sendUrl = rootUrl + url + "?" + paramStr.join("&");
+            
             //打印请求url
             systemApi.log(sendUrl + "&jsoncallback=" + jsoncallback);
 

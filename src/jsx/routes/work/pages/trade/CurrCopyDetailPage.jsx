@@ -157,10 +157,10 @@ class CurrCopyDetailPage extends PageComponent {
  
         var f_mt4Id= systemApi.getValue("f_mt4Id");
         this.setState({showDialog:false});
-        this.props.followRelieve(this,{followerId:this.followerId,fowType,fowMt4Id:f_mt4Id,noMsg:true},(data)=>{
+        this.props.followRelieve(this,{followerId:this.followerId,fowType,fowMt4Id:f_mt4Id},(data)=>{
             this.setState({fowInfo:data,showCancel:false,showSuccess:true,cancelType});
 
-        });
+        },true);
     }
 
 

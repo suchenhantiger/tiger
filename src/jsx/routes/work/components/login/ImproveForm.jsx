@@ -2,6 +2,7 @@ import styles from './css/loginForm.less';
 import {connect} from 'react-redux';
 import {saveAccMt4,getEmailPwd,updateUserInfo} from '../../actions/login/loginAction';
 import {checkEmail} from '../../../../utils/util';
+import {showConfirmWithCb} from '../../../../store/actions';
 class ImproveForm extends PureComponent {
 
     //构造函数
@@ -70,9 +71,12 @@ class ImproveForm extends PureComponent {
         else{
           //  console.log(encodeURIComponent(encodeURIComponent(nickname)));
             this.props.saveAccMt4(this,{nickname:nickname,email,emailCode,country:"china",address:address},()=>{
-                this.props.updateUserInfo(this,()=>{
-                    hashHistory.goBack();
+                this.props.showConfirmWithCb("已为您创建体验账户",()=>{
+                    this.props.updateUserInfo(this,()=>{
+                        hashHistory.goBack();
+                    });
                 });
+               
        
             });
 
@@ -191,7 +195,7 @@ function injectProps(state){
     return {};
 }
 function injectAction(){
-    return {saveAccMt4,getEmailPwd,updateUserInfo};
+    return {saveAccMt4,getEmailPwd,updateUserInfo,showConfirmWithCb};
 }
 
 module.exports = connect(null,injectAction())(ImproveForm);

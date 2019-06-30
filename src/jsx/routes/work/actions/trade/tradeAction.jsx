@@ -10,7 +10,7 @@ export function myfollowers(component, showload,params, update){
         params.clientId =clientId;
         component.requestJSON("follower/myfollowers",params).done((data)=>{
             if(showload) dispatch(hideLoading());
-            console.log(data);
+            systemApi.log(data);
             update && update(data);
         }).fail((data)=>{
             if(showload) dispatch(hideLoading());
@@ -38,7 +38,20 @@ export function getPositionInfo(component,params,loading, update,fail){
         });
     }
 }
+export function synMt4List(data){
+    return function(dispatch, state){
 
+        dispatch({type:"SYN_MT4_LIST",data});
+
+    }
+}
+export function synMt4Info(data){
+    return function(dispatch, state){
+
+        dispatch({type:"SYN_MT4_INFO",data});
+
+    }
+}
 export function updatePositionInfo(data){
     return function(dispatch, state){
 
@@ -183,12 +196,15 @@ export function getHistoryList(component, params, isAppend, updateList,cb){
 export function getFundRecordList(component, params, isAppend, updateList,cb){
     var {pageSize} = params;
     return function(dispatch, state){
+        dispatch(showLoading());
         component.requestJSON("bank/queryAccFundRecord",params).done((data)=>{
+            dispatch(hideLoading());
             var {list} = data,
                 hasMore = list.length==pageSize;
             updateList && updateList(isAppend, list);
             cb && cb(null, hasMore);
         }).fail((data)=>{
+            dispatch(hideLoading());
             dispatch(showMessage(ERROR, data.message));
             cb && cb();
         });

@@ -122,18 +122,21 @@ var systemApi = {
 };
 systemApi.initDeviceMessage();
 systemApi.overrideES6JS();
-if(TestEnvironment){
-	//http://192.168.103.112:8080/jeeplus/mcapp/optionalstock/getOptionalStock
-	//http://192.168.103.108:8080/jeeplus/mcapp/optionalstock/getOptionalStock
-	// "192.168.103.108"mcAppServer http://192.168.103.108:8010/mcAppServer/mcapp
-	//47.101.164.147    8089    http://127.0.0.1/ 8010    180.235.132.36 180.235.135.206
-	//var rootIP = "180.235.135.206";
-	var rootIP = "47.101.164.147";//192.168.103.108:8010
-	systemApi.setValue("rootUrl","http://"+rootIP+":8088/mcAppServer/mcapp/");
-	systemApi.setValue("websocketUrl","ws://"+rootIP+":8086"); 
-}
-else{
-	systemApi.setValue("rootUrl","");
-}
+// if(TestEnvironment){
+// 	//http://192.168.103.112:8080/jeeplus/mcapp/optionalstock/getOptionalStock
+// 	//http://192.168.103.108:8080/jeeplus/mcapp/optionalstock/getOptionalStock
+// 	// "192.168.103.108"mcAppServer http://192.168.103.108:8010/mcAppServer/mcapp
+// 	//47.101.164.147    8089    http://127.0.0.1/ 8010    180.235.132.36 180.235.135.206
+// 	var rootIP = "180.235.135.206";
+// 	//var rootIP = "47.101.164.147";//192.168.103.108:8010
+// 	systemApi.setValue("rootUrl","http://"+rootIP+":8088/mcAppServer/mcapp/");
+// 	systemApi.setValue("websocketUrl","ws://"+rootIP+":8086"); 
+// }
+// else{
+// 	var rootIP = "180.235.135.206";
+// 	//var rootIP = "47.101.164.147";//192.168.103.108:8010
+// 	systemApi.setValue("rootUrl","http://"+rootIP+":8088/mcAppServer/mcapp/");
+// 	systemApi.setValue("websocketUrl","ws://"+rootIP+":8086"); 
+// }
 
 module.exports = systemApi;

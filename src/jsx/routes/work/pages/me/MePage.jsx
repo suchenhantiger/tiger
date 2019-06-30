@@ -52,11 +52,19 @@ class MePage extends PageComponent {
         hashHistory.push("/work/me/notice");
     }
 
+    onErr=()=>{
+        if(!this._lock){
+            $(this.refs.userPhoto).attr('src',"./images/me/img03.png");
+            this._lock=true;
+        }
+        
+    }
+
     renderLeft() {
         var avatarUrl = systemApi.getValue("avatarUrl");
         if(avatarUrl == null ||avatarUrl.length==0) avatarUrl= "./images/me/img03.png" ;
         return <div>
-                <div className={styles.head_portrait}><img src={avatarUrl} alt="" /></div>
+                <div className={styles.head_portrait}><img ref="userPhoto" src={avatarUrl} alt="" onError={this.onErr}/></div>
                 <span  className={styles.head_name} >{this._nickname}</span>
                 </div>
     }

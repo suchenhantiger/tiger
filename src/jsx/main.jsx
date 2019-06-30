@@ -63,6 +63,8 @@ ReactDOM.render(
                         <Route path="dailyreport" getComponent={require('./routes/work/config/me/dailyreport')(store)}></Route>
                         <Route path="bank" getComponent={require('./routes/work/config/me/bank')(store)}>
                             <Route path="add" getComponent={require('./routes/work/config/me/addbank')(store)}></Route>
+                            <Route path="modify" getComponent={require('./routes/work/config/me/modifybank')(store)}></Route>
+
                         </Route>
                         <Route path="server" getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
                         <Route path="help" getComponent={require('./routes/work/config/login/agreement')(store)}></Route>
