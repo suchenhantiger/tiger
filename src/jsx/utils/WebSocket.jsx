@@ -64,13 +64,8 @@ var webSocket = {
             };
 
             this.createIntervalIns();
-
-
-
         }
-
-
-        
+     
     },
     retryConnect:function(){
         systemApi.log("WebSocket retry connecting ");
